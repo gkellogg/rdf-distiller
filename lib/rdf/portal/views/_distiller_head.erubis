@@ -1,0 +1,28 @@
+<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+// Navigation
+$(function () {
+  // Display field sets having class of
+  // Clicking on a tab hides fieldsets not having that hash element as a class
+  $('nav.distiller a').click(function() {
+    var cls = this.hash.substr(1);
+    $('fieldset').hide();
+    $('fieldset.' + cls).show();
+    $('nav.distiller a').removeClass('selected');
+    $(this).addClass('selected');
+    window.location.hash = '#' + cls;
+  });
+
+  // Default tab, if none selected
+  if (window.location.hash === '') {
+    var dflt_hash = $('nav.distiller a:first').attr('href');
+    window.location.hash = dflt_hash;
+  }
+  
+  // Select appropriate nav tab
+  var cls = window.location.hash.substr(1);
+  $('nav.distiller a.' + cls).click();
+
+});
+
+</script>
