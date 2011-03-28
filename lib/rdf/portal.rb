@@ -5,6 +5,8 @@ require 'erubis'
 
 module RDF
   module Portal
+    autoload :VERSION, 'rdf/rdfa/version'
+
     class Application < Sinatra::Base
       #register Sinatra::LinkedData
       helpers Sinatra::Partials
@@ -132,6 +134,7 @@ module RDF
   end
 end
 
+# Extensions to RDF classes to retrieve appropriate format symbol
 module RDF
   class Format
     def self.to_sym
