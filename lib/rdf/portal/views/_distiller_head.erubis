@@ -1,4 +1,3 @@
-<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 // Navigation
 $(function () {
@@ -10,18 +9,18 @@ $(function () {
     $('fieldset.' + cls).show();
     $('nav.distiller a').removeClass('selected');
     $(this).addClass('selected');
-    window.location.hash = '#' + cls;
+    return(false); // No bubbling, leave history alone.
   });
 
-  // Default tab, if none selected
-  if (window.location.hash === '') {
-    var dflt_hash = $('nav.distiller a:first').attr('href');
-    window.location.hash = dflt_hash;
-  }
-  
+  // Hid fieldsets
+  $('fieldset').hide();
+
   // Select appropriate nav tab
   var cls = window.location.hash.substr(1);
-  $('nav.distiller a.' + cls).click();
+  $('nav.distiller a:first').each(function(){
+    $('fieldset.' + this.className).show();
+    $(this).addClass('selected');
+  })
 
 });
 
