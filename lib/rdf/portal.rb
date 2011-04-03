@@ -5,7 +5,8 @@ require 'erubis'
 
 module RDF
   module Portal
-    autoload :VERSION, 'rdf/rdfa/version'
+    autoload :VERSION,        'rdf/portal/version'
+    autoload :DISTILER_HAML,  'rdf/portal/rdfa_template'
 
     class Application < Sinatra::Base
       #register Sinatra::LinkedData
@@ -41,7 +42,7 @@ module RDF
       def distil
         content_type, content = parse
         puts "content_type: #{content_type}"
-        if !params["raw"].to_s.empty? || content_type !~ /html/
+        if !params["raw"].to_s.empty?
           status 200
           headers "Allow" => "GET, POST", "Content-Type" => content_type
           body content
@@ -103,7 +104,7 @@ module RDF
         when !params["content"].to_s.empty?
           raise "Specify input format" if params["in_fmt"].nil? || params["in_fmt"] == 'content'
           reader = RDF::Reader.for(params["in_fmt"]).new(content, reader_opts)
-        when !params["uri"].empty?
+        when !params["uri"].to_s.empty?
           reader = RDF::Reader.open(params["uri"], reader_opts)
           params["in_fmt"] = reader.class.to_sym if params["in_fmt"].nil? || params["in_fmt"] == 'content'
         else
@@ -114,7 +115,17 @@ module RDF
         graph = RDF::Graph.new << reader
         
         params["fmt"] = writer(params["fmt"])
-        [content_type, graph.dump(params["fmt"].to_sym, reader_opts)]
+        
+        writer_opts = reader_opts
+        case params["fmt"]
+        when :rdfa, :html, :xhtml, :svg
+          haml = DISTILER_HAML.dup
+          root = request.url[0,request.url.index(request.path)]
+          haml[:doc] = haml[:doc].gsub(/--root--/, root)
+          writer_opts[:haml] = haml
+          writer_opts[:haml_options] = {:ugly => false}
+        end
+        [content_type, graph.dump(params["fmt"].to_sym, writer_opts)]
       rescue Exception => e
         @error = "#{e.class}: #{e.message}"
         puts @error  # to log
