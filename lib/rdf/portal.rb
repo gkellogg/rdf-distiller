@@ -126,8 +126,8 @@ module RDF
           writer_opts[:haml_options] = {:ugly => false}
         end
         [content_type, graph.dump(params["fmt"].to_sym, writer_opts)]
-      rescue Exception => e
-        @error = "#{e.class}: #{e.message}"
+      rescue
+        @error = "#{$!.class}: #{$!.message}"
         puts @error  # to log
         content_type ||= accepts.first
         case content_type

@@ -36,6 +36,12 @@ Distills between formats supported in [Linked Data][linkeddata].
 ## AUTHOR
 * [Gregg Kellogg](http://github.com/gkellogg) - <http://kellogg-assoc.com/>
 
+## Site5 Notes
+* public/.htaccess set up for installation on Site5 server.
+* Bundle installed using:
+
+    bundle install --path vendor/bundler
+
 ## License
 
 This is free and unencumbered public domain software. For more information,
