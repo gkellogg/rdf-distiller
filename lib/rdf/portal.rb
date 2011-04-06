@@ -138,7 +138,6 @@ module RDF
         else
           [content_type, @error]
         end
-        raise
       end
 
     end
