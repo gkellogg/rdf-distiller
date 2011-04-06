@@ -41,8 +41,8 @@ module RDF
       # Handle GET/POST /distiller
       def distil
         content_type, content = parse
-        puts "content_type: #{content_type}"
         if !params["raw"].to_s.empty?
+          puts "render distilled content as type #{content_type}"
           status 200
           headers "Allow" => "GET, POST", "Content-Type" => content_type
           body content
@@ -66,15 +66,18 @@ module RDF
 
       # Parse HTTP Accept header and find an suitable RDF writer
       def writer(format = nil)
-        return format.to_sym if format && format.to_sym != :accept
+        if format && format.to_sym != :accept
+          fmt = RDF::Format.for(format.to_sym)
+          return [format.to_sym, fmt.content_type.first] if fmt
+        end
         
         # Look for formats matching accept headers
         accepts.each do |t|
           writer = RDF::Writer.for(:content_type => t)
-          return writer.to_sym if writer
+          return [writer.to_sym, t] if writer
         end
 
-        return :ntriples
+        return [:ntriples, "text/plain"]
       end
       
       # Format symbol for RDF formats
@@ -110,11 +113,10 @@ module RDF
         else
           return ["text/html", ""]
         end
-        content_type = reader.class.format.content_type.first
 
         graph = RDF::Graph.new << reader
         
-        params["fmt"] = writer(params["fmt"])
+        params["fmt"], content_type = writer(params["fmt"])
         
         writer_opts = reader_opts
         case params["fmt"]
