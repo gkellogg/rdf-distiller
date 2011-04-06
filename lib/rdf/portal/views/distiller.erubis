@@ -44,6 +44,8 @@
             <option value="<%=sym.downcase%>" <%= 'selected="selected"' if params["fmt"].to_s == sym.to_s %>><%=sym %></option>
           <% end %>
         </select>
+      </p>
+      <p>
         <label for="debug">Show Parser debug information:</label>
         <input id="debug" name="debug" type="checkbox" value="true" />
         <label for="validate">Validate Input:</label>
@@ -71,6 +73,7 @@
 
 <% if @output -%>
   <h2>Result</h2>
+  <p>Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.</p>
   <textarea rows="20" cols="120"><%= CGI.escapeHTML(@output)%></textarea>
 <% end -%>
 
@@ -80,7 +83,7 @@
 <% end %>
 
 <h2>Alternative access to the Distiller</h2>
-<p>The distiller URI may be used directly with an HTML GET by passing the source URI and fmt options as parameters:</p>
+<p>The distiller URI may be used directly with an HTML GET by passing the source URI and other options as parameters:</p>
 <pre class="alt_acess">
   <%=
     url = url('/distiller')
@@ -88,7 +91,7 @@
     url_params = ["raw=true"]
     url_params << %(fmt=#{params["fmt"]}) unless params["fmt"].nil? || params["fmt"].to_s == "accept"
     url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
-    url_params << %(uri=#{CGI.escape(base)})
+    url_params << %(uri=#{base})
     url += "?#{url_params.join('&')}" unless url_params.empty?
     %(<a href="#{url}">#{url}</a>)
   %>
