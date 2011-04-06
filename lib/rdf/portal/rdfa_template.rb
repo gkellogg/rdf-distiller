@@ -18,8 +18,12 @@ module RDF::Portal
             %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js", :type => "text/javascript"}
             %script{:src => "--root--/js/distiller.js", :type => "text/javascript"}
         %body
+          - if base
+            %p= "RDFa serialization URI base: &lt;#{base}&gt;"
           - subjects.each do |subject|
             != yield(subject)
+          %footer
+            %p= "Written by <a href='http://rdf.rubyforge.org/rdfa'>RDF::RDFa</a> version #{RDF::RDFa::VERSION}"
     ),
 
     # Output for non-leaf resources
