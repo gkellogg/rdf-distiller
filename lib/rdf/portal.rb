@@ -118,7 +118,7 @@ module RDF
         
         writer_opts = reader_opts
         case params["fmt"]
-        when :rdfa, :html, :xhtml, :svg
+        when :rdfa
           haml = DISTILER_HAML.dup
           root = request.url[0,request.url.index(request.path)]
           haml[:doc] = haml[:doc].gsub(/--root--/, root)
