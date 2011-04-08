@@ -72,7 +72,7 @@ module RDF::Portal
     :property_value => %q(
       - object = objects.first
       - if heading_predicates.include?(predicate) && object.literal?
-        %h1{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}&= get_value(object)
+        %h1{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
       - else
         %tr.property
           %td.label
@@ -87,7 +87,7 @@ module RDF::Portal
           - elsif object.datatype == RDF.XMLLiteral
             %td{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_dt_curie(object)}<!= get_value(object)
           - else
-            %td{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}&= get_value(object)
+            %td{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
     ),
 
     # Output for multi-valued properties
@@ -110,7 +110,7 @@ module RDF::Portal
               - elsif object.datatype == RDF.XMLLiteral
                 %li{:lang => get_lang(object), :datatype => get_curie(object.datatype)}<!= get_value(object)
               - else
-                %li{:content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}&= get_value(object)
+                %li{:content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
     ),
   }
 end
