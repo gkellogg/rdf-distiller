@@ -20,7 +20,18 @@ $(function () {
   $('nav.distiller a:first').each(function(){
     $('fieldset.' + this.className).show();
     $(this).addClass('selected');
-  })
+  });
+  
+  // If the output format is rdfa, re-write the result text area
+  // as an iFrame and add results
+  $('div.results textarea.rdfa').each(function(){
+    $(this).after($('<iframe width="100%" scrolling="no"/>'));
+    var iframe = $('div.results iframe')[0];
+    var iframe_doc = iframe.contentWindow.document;
+    iframe_doc.open(); iframe_doc.close(); // must open and close document object to start using it!
+    iframe_doc.write($(this).val());
+    $(iframe).attr('height', iframe_doc.height);
+  }).hide();
 
 });
 

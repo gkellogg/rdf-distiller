@@ -28,7 +28,7 @@
       <p>
         <label for="in_fmt">Input Format:</label>
         <select id="in_fmt" name="in_fmt">
-          <option value="content" <%= 'selected="selected"' if params["in_fmt"].to_s. == "content" %>>
+          <option value="content" <%= 'selected="selected"' if params["in_fmt"].to_s == "content" %>>
             Content Detect
           </option>
           <% formats(:reader).each do |sym| %>
@@ -67,33 +67,41 @@
 </form>
 
 <% if @error -%>
+<div class="errors">
   <h2>Errors</h2>
   <pre><%= CGI.escapeHTML(@error) %></pre>
+</div>
 <% end -%>
 
+<div class="results">
 <% if @output -%>
   <h2>Result</h2>
   <p>Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.</p>
-  <textarea rows="20" cols="120"><%= CGI.escapeHTML(@output)%></textarea>
+  <textarea class="<%= params["fmt"] %>" rows="20" cols="120"><%= CGI.escapeHTML(@output)%></textarea>
+  </div>
 <% end -%>
 
 <% if @debug %>
+<div class="debug">
   <h2>Parser Debug Information:</h2>
   <textarea rows="20" cols="120"><%= CGI.escapeHTML(@debug.join("\n")) %></textarea>
+</div>
 <% end %>
 
-<h2>Alternative access to the Distiller</h2>
-<p>The distiller URI may be used directly with an HTML GET by passing the source URI and other options as parameters:</p>
-<pre class="alt_acess">
-  <%=
-    url = url('/distiller')
-    base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
-    url_params = ["raw=true"]
-    url_params << %(fmt=#{params["fmt"]}) unless params["fmt"].nil? || params["fmt"].to_s == "accept"
-    url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
-    url_params << %(uri=#{base})
-    url += "?#{url_params.join('&')}" unless url_params.empty?
-    %(<a href="#{url}">#{url}</a>)
-  %>
-</pre>
+<div>
+  <h2>Alternative access to the Distiller</h2>
+  <p>The distiller URI may be used directly with an HTML GET by passing the source URI and other options as parameters:</p>
+  <pre class="alt_acess">
+    <%=
+      url = url('/distiller')
+      base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
+      url_params = ["raw=true"]
+      url_params << %(fmt=#{params["fmt"]}) unless params["fmt"].nil? || params["fmt"].to_s == "accept"
+      url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
+      url_params << %(uri=#{base})
+      url += "?#{url_params.join('&')}" unless url_params.empty?
+      %(<a href="#{url}">#{url}</a>)
+    %>
+  </pre>
+</div>
 
