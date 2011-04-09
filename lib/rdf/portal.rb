@@ -47,7 +47,7 @@ module RDF
           headers "Allow" => "GET, POST", "Content-Type" => content_type
           body content
         else
-          @output = content
+          @output = content unless content == @error
           erubis :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
         end
       end
@@ -100,22 +100,29 @@ module RDF
         }
         reader_opts[:format] = params["in_fmt"].to_sym unless params["in_fmt"].nil? || params["in_fmt"] == 'content'
         reader_opts[:debug] = @debug = [] if params["debug"]
+        
+        graph = RDF::Graph.new
+        format = params["in_fmt"].to_sym if params["in_fmt"]
+
         case
-        when !params["datafile"].to_s.empty?
-          raise "Specify input format" if params["in_fmt"].nil? || params["in_fmt"] == 'content'
-          reader = RDF::Reader.for(params["in_fmt"]).new(content, reader_opts)
+        when !params["datafile"].nil?
+          raise RDF::ReaderError, "Specify input format" if format.nil? || format == :content
+          puts "Open datafile with format #{format}"
+          tempfile = 
+          reader = RDF::Reader.for(format).new(tempfile, reader_opts) {|r| graph << r}
         when !params["content"].to_s.empty?
-          raise "Specify input format" if params["in_fmt"].nil? || params["in_fmt"] == 'content'
-          reader = RDF::Reader.for(params["in_fmt"]).new(content, reader_opts)
+          raise RDF::ReaderError, "Specify input format" if format.nil? || format == :content
+          puts "Open form data with format #{format}"
+          @content = params["content"]
+          reader = RDF::Reader.for(format).new(@content, reader_opts) {|r| graph << r}
         when !params["uri"].to_s.empty?
-          reader = RDF::Reader.open(params["uri"], reader_opts)
-          params["in_fmt"] = reader.class.to_sym if params["in_fmt"].nil? || params["in_fmt"] == 'content'
+          puts "Open uri <#{params["uri"]}> with format #{format}"
+          reader = RDF::Reader.open(params["uri"], reader_opts) {|r| graph << r}
+          params["in_fmt"] = reader.class.to_sym if format.nil? || format == :content
         else
           return ["text/html", ""]
         end
 
-        graph = RDF::Graph.new << reader
-        
         params["fmt"], content_type = writer(params["fmt"])
         
         writer_opts = reader_opts
@@ -128,6 +135,18 @@ module RDF
           writer_opts[:haml_options] = {:ugly => false}
         end
         [content_type, graph.dump(params["fmt"].to_sym, writer_opts)]
+      rescue RDF::ReaderError => e
+        @error = "RDF::ReaderError: #{e.message}"
+        puts @error  # to log
+        content_type ||= accepts.first
+        case content_type
+        when /html/
+          [content_type, @error] # XXX
+        when /xml/
+          [content_type, @error.to_xml]
+        else
+          [content_type, @error]
+        end
       rescue
         @error = "#{$!.class}: #{$!.message}"
         puts @error  # to log
@@ -140,6 +159,7 @@ module RDF
         else
           [content_type, @error]
         end
+        raise unless settings.environment == :production
       end
 
     end
