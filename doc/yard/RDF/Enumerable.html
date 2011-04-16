@@ -1,0 +1,4240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module: RDF::Enumerable</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (E)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
+     &raquo; 
+    <span class="title">Enumerable</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Module: RDF::Enumerable
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+      <dt class="r1">Extended by:</dt>
+      <dd class="r1"><span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></dd>
+      
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2">Enumerable, <span class='object_link'><a href="Countable.html" title="RDF::Countable (module)">Countable</a></span>, <span class='object_link'><a href="Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></dd>
+      
+    
+  
+  
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="Graph.html" title="RDF::Graph (class)">Graph</a></span>, <span class='object_link'><a href="List.html" title="RDF::List (class)">List</a></span>, <span class='object_link'><a href="Query/Solution.html" title="RDF::Query::Solution (class)">Query::Solution</a></span>, <span class='object_link'><a href="Reader.html" title="RDF::Reader (class)">Reader</a></span>, <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span>, <span class='object_link'><a href="../Spira/Resource/InstanceMethods.html" title="Spira::Resource::InstanceMethods (module)">Spira::Resource::InstanceMethods</a></span></dd>
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/rdf-isomorphic-0.3.4/lib/rdf/isomorphic.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>An RDF statement enumeration mixin.</p>
+
+<p>Classes that include this module must implement an <code>#each</code> method that
+yields <span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF statements</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Checking whether any statements exist</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+</pre>
+    
+      <h4><div class='inline'><p>Checking how many statements exist</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='count identifier id'>count</span>
+</pre>
+    
+      <h4><div class='inline'><p>Checking whether a specific statement exists</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_statement? fid id'>has_statement?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_triple? fid id'>has_triple?</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_quad? fid id'>has_quad?</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Checking whether a specific value exists</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_subject? fid id'>has_subject?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_predicate? fid id'>has_predicate?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span><span class='rparen token'>)</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_object? fid id'>has_object?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='string val'>&quot;Hello!&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:language</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:en</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='has_context? fid id'>has_context?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rubyforge.org/&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Enumerating all statements</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+  <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+<span class='end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Enumerating all statements in the form of triples</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_triple identifier id'>each_triple</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='bitor op'>|</span>
+  <span class='puts identifier id'>puts</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+<span class='end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Enumerating all statements in the form of quads</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_quad identifier id'>each_quad</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span><span class='bitor op'>|</span>
+  <span class='puts identifier id'>puts</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+<span class='end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Enumerating all terms</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_subject identifier id'>each_subject</span>   <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span> <span class='rbrace token'>}</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_predicate identifier id'>each_predicate</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span> <span class='rbrace token'>}</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_object identifier id'>each_object</span>    <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span> <span class='rbrace token'>}</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='each_context identifier id'>each_context</span>   <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='term identifier id'>term</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span> <span class='rbrace token'>}</span>
+</pre>
+    
+      <h4><div class='inline'><p>Obtaining all statements</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='statements identifier id'>statements</span>  <span class='comment val'>#=&gt; [RDF::Statement(subject1, predicate1, object1), ...]</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='triples identifier id'>triples</span>     <span class='comment val'>#=&gt; [[subject1, predicate1, object1], ...]</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='quads identifier id'>quads</span>       <span class='comment val'>#=&gt; [[subject1, predicate1, object1, context1], ...]</span>
+</pre>
+    
+      <h4><div class='inline'><p>Obtaining all unique values</p></div></h4>
+      <pre class="example code"><span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='subjects identifier id'>subjects</span>    <span class='comment val'>#=&gt; [subject1, subject2, subject3, ...]</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='predicates identifier id'>predicates</span>  <span class='comment val'>#=&gt; [predicate1, predicate2, predicate3, ...]</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='objects identifier id'>objects</span>     <span class='comment val'>#=&gt; [object1, object2, object3, ...]</span>
+<span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='contexts identifier id'>contexts</span>    <span class='comment val'>#=&gt; [context1, context2, context3, ...]</span>
+</pre>
+    
+  </div>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Graph.html" title="RDF::Graph (class)">Graph</a></span></li>
+    
+      <li><span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span></li>
+    
+  </ul>
+
+</div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#contexts-instance_method" title="#contexts (instance method)">- (Enumerator&lt;RDF::Resource&gt;) <strong>contexts</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all unique RDF contexts.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dump-instance_method" title="#dump (instance method)">- (String) <strong>dump</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a serialized string representation of <code>self</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_context-instance_method" title="#each_context (instance method)">- <strong>each_context</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each unique RDF context.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_graph-instance_method" title="#each_graph (instance method)">- <strong>each_graph</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF graph in <code>self</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_object-instance_method" title="#each_object (instance method)">- <strong>each_object</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each unique RDF object term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_predicate-instance_method" title="#each_predicate (instance method)">- <strong>each_predicate</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each unique RDF predicate term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_quad-instance_method" title="#each_quad (instance method)">- <strong>each_quad</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF quad.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_statement-instance_method" title="#each_statement (instance method)">- <strong>each_statement</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF statement.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_subject-instance_method" title="#each_subject (instance method)">- <strong>each_subject</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each unique RDF subject term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_triple-instance_method" title="#each_triple (instance method)">- <strong>each_triple</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF triple.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_context-instance_method" title="#enum_context (instance method)">- (Enumerator) <strong>enum_context</strong> </a>
+    
+
+    
+      (also: #enum_contexts)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_context-instance_method" title="RDF::Enumerable#each_context (method)">#each_context</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_graph-instance_method" title="#enum_graph (instance method)">- (Enumerator) <strong>enum_graph</strong> </a>
+    
+
+    
+      (also: #enum_graphs)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_object-instance_method" title="#enum_object (instance method)">- (Enumerator) <strong>enum_object</strong> </a>
+    
+
+    
+      (also: #enum_objects)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_predicate-instance_method" title="#enum_predicate (instance method)">- (Enumerator) <strong>enum_predicate</strong> </a>
+    
+
+    
+      (also: #enum_predicates)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_quad-instance_method" title="#enum_quad (instance method)">- (Enumerator) <strong>enum_quad</strong> </a>
+    
+
+    
+      (also: #enum_quads)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_statement-instance_method" title="#enum_statement (instance method)">- (Enumerator) <strong>enum_statement</strong> </a>
+    
+
+    
+      (also: #enum_statements)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_subject-instance_method" title="#enum_subject (instance method)">- (Enumerator) <strong>enum_subject</strong> </a>
+    
+
+    
+      (also: #enum_subjects)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_triple-instance_method" title="#enum_triple (instance method)">- (Enumerator) <strong>enum_triple</strong> </a>
+    
+
+    
+      (also: #enum_triples)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an enumerator for <span class='object_link'><a href="#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_context%3F-instance_method" title="#has_context? (instance method)">- (Boolean) <strong>has_context?</strong>(value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF context.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_object%3F-instance_method" title="#has_object? (instance method)">- (Boolean) <strong>has_object?</strong>(value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF object term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_predicate%3F-instance_method" title="#has_predicate? (instance method)">- (Boolean) <strong>has_predicate?</strong>(value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF predicate term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_quad%3F-instance_method" title="#has_quad? (instance method)">- (Boolean) <strong>has_quad?</strong>(quad) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF quad.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_statement%3F-instance_method" title="#has_statement? (instance method)">- (Boolean) <strong>has_statement?</strong>(statement) </a>
+    
+
+    
+      (also: #include?)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF statement.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_subject%3F-instance_method" title="#has_subject? (instance method)">- (Boolean) <strong>has_subject?</strong>(value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF subject term.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_triple%3F-instance_method" title="#has_triple? (instance method)">- (Boolean) <strong>has_triple?</strong>(triple) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> contains the given RDF triple.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#objects-instance_method" title="#objects (instance method)">- (Enumerator&lt;RDF::Term&gt;) <strong>objects</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all unique RDF object terms.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#predicates-instance_method" title="#predicates (instance method)">- (Enumerator&lt;RDF::URI&gt;) <strong>predicates</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all unique RDF predicate terms.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quads-instance_method" title="#quads (instance method)">- (Enumerator&lt;Array(RDF::Resource, RDF::URI, RDF::Term, RDF::Resource)&gt;) <strong>quads</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF quads.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#statements-instance_method" title="#statements (instance method)">- (Enumerator&lt;RDF::Statement&gt;) <strong>statements</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF statements.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#subjects-instance_method" title="#subjects (instance method)">- (Enumerator&lt;RDF::Resource&gt;) <strong>subjects</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all unique RDF subject terms.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_a-instance_method" title="#to_a (instance method)">- (Array) <strong>to_a</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF statements in <code>self</code> as an array.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-instance_method" title="#to_hash (instance method)">- (Hash) <strong>to_hash</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF object terms indexed by their subject and predicate
+terms.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_set-instance_method" title="#to_set (instance method)">- (Set) <strong>to_set</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF statements in <code>self</code> as a set.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#triples-instance_method" title="#triples (instance method)">- (Enumerator&lt;Array(RDF::Resource, RDF::URI, RDF::Term)&gt;) <strong>triples</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns all RDF triples.</p></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">alias_method</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Countable.html" title="RDF::Countable (module)">Countable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Countable.html#count-instance_method" title="RDF::Countable#count (method)">#count</a></span>, <span class='object_link'><a href="Countable.html#empty%3F-instance_method" title="RDF::Countable#empty? (method)">#empty?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Isomorphic.html#bijection_to-instance_method" title="RDF::Isomorphic#bijection_to (method)">#bijection_to</a></span>, <span class='object_link'><a href="Isomorphic.html#isomorphic_with%3F-instance_method" title="RDF::Isomorphic#isomorphic_with? (method)">#isomorphic_with?</a></span></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="contexts-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>&gt;</tt>) <strong>contexts</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all unique RDF contexts.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="name">:unique</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_context-instance_method" title="RDF::Enumerable#each_context (method)">#each_context</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_context-instance_method" title="RDF::Enumerable#enum_context (method)">#enum_context</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+455
+456
+457
+458
+459
+460
+461</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 455</span>
+
+<span class='def def kw'>def</span> <span class='contexts identifier id'>contexts</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:context</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+  <span class='else else kw'>else</span>
+    <span class='enum_context identifier id'>enum_context</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="dump-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>dump</strong>(*args) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a serialized string representation of <code>self</code>.</p>
+
+<p>Before calling this method you may need to explicitly require a
+serialization plugin for the specified format.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Serializing into N-Triples format</p></div></h4>
+      <pre class="example code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
+<span class='ntriples identifier id'>ntriples</span> <span class='assign token'>=</span> <span class='enumerable identifier id'>enumerable</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>&gt;</tt>)</span>
+      
+      
+        <span class='name'>args</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the last argument is a hash, it is passed as keyword options to
+<span class='object_link'><a href="Writer.html#dump-class_method" title="RDF::Writer.dump (method)">Writer.dump</a></span>.</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Writer.html#dump-class_method" title="RDF::Writer.dump (method)">Writer.dump</a></span></li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+615
+616
+617
+618</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 615</span>
+
+<span class='def def kw'>def</span> <span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_context-instance_method">
+  
+    
+      <span class="overload">- <strong>each_context</strong> {|context| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_context</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each unique RDF context.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which values are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_context</strong> {|context| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>context</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each context term</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>context</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_context</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_context-instance_method" title="RDF::Enumerable#enum_context (method)">#enum_context</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 491</span>
+
+<span class='def def kw'>def</span> <span class='each_context identifier id'>each_context</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='context identifier id'>context</span>
+      <span class='unless unless kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+        <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_context identifier id'>enum_context</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_graph-instance_method">
+  
+    
+      <span class="overload">- <strong>each_graph</strong> {|graph| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_graph</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF graph in <code>self</code>.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which graphs are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_graph</strong> {|graph| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>graph</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each graph</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></tt>)</span>
+      
+      
+        <span class='name'>graph</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_graph</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span></li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.9</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+535
+536
+537
+538
+539
+540
+541
+542
+543</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 535</span>
+
+<span class='def def kw'>def</span> <span class='each_graph identifier id'>each_graph</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='symbol val'>:data</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='each_context identifier id'>each_context</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='context identifier id'>context</span><span class='bitor op'>|</span>
+      <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='context identifier id'>context</span><span class='comma token'>,</span> <span class='symbol val'>:data</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_graph identifier id'>enum_graph</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_object-instance_method">
+  
+    
+      <span class="overload">- <strong>each_object</strong> {|object| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_object</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each unique RDF object term.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which values are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_object</strong> {|object| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>object</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each object term</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>object</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_object</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 423</span>
+
+<span class='def def kw'>def</span> <span class='each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='comment val'># FIXME: deduplication</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='object identifier id'>object</span>
+      <span class='unless unless kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+        <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_object identifier id'>enum_object</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_predicate-instance_method">
+  
+    
+      <span class="overload">- <strong>each_predicate</strong> {|predicate| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_predicate</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each unique RDF predicate term.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which values are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_predicate</strong> {|predicate| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>predicate</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each predicate term</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>predicate</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_predicate</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 355</span>
+
+<span class='def def kw'>def</span> <span class='each_predicate identifier id'>each_predicate</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span>
+      <span class='unless unless kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+        <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_predicate identifier id'>enum_predicate</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_quad-instance_method">
+  
+    
+      <span class="overload">- <strong>each_quad</strong> {|subject, predicate, object, context| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_quad</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF quad.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which quads are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_quad</strong> {|subject, predicate, object, context| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>subject</tt>, <tt>predicate</tt>, <tt>object</tt>, <tt>context</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each quad</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>subject</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>predicate</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>object</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>context</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_quad</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+224
+225
+226
+227
+228
+229
+230
+231</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 224</span>
+
+<span class='def def kw'>def</span> <span class='each_quad identifier id'>each_quad</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='to_quad identifier id'>to_quad</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_quad identifier id'>enum_quad</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_statement-instance_method">
+  
+    
+      <span class="overload">- <strong>each_statement</strong> {|statement| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_statement</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF statement.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which statements are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_statement</strong> {|statement| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>statement</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each statement</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></tt>)</span>
+      
+      
+        <span class='name'>statement</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_statement</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='comment val'># Invoke {#each} in the containing class:</span>
+    <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_statement identifier id'>enum_statement</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_subject-instance_method">
+  
+    
+      <span class="overload">- <strong>each_subject</strong> {|subject| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_subject</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each unique RDF subject term.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which values are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_subject</strong> {|subject| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>subject</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each subject term</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>subject</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_subject</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 287</span>
+
+<span class='def def kw'>def</span> <span class='each_subject identifier id'>each_subject</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span>
+      <span class='unless unless kw'>unless</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+        <span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+        <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_subject identifier id'>enum_subject</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_triple-instance_method">
+  
+    
+      <span class="overload">- <strong>each_triple</strong> {|subject, predicate, object| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_triple</strong> </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF triple.</p>
+
+<p>If no block was given, returns an enumerator.</p>
+
+<p>The order in which triples are yielded is undefined.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>each_triple</strong> {|subject, predicate, object| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>subject</tt>, <tt>predicate</tt>, <tt>object</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>each triple</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>subject</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>predicate</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>object</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_triple</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167
+168
+169
+170</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 163</span>
+
+<span class='def def kw'>def</span> <span class='each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+      <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='enum_triple identifier id'>enum_triple</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_context-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_context</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_contexts-instance_method'>enum_contexts</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_context-instance_method" title="RDF::Enumerable#each_context (method)">#each_context</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_context-instance_method" title="RDF::Enumerable#each_context (method)">#each_context</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+510
+511
+512</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 510</span>
+
+<span class='def def kw'>def</span> <span class='enum_context identifier id'>enum_context</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_context</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_graph-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_graph</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_graphs-instance_method'>enum_graphs</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span></li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.9</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+551
+552
+553</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 551</span>
+
+<span class='def def kw'>def</span> <span class='enum_graph identifier id'>enum_graph</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_graph</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_object-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_object</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_objects-instance_method'>enum_objects</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+442
+443
+444</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 442</span>
+
+<span class='def def kw'>def</span> <span class='enum_object identifier id'>enum_object</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_object</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_predicate-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_predicate</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_predicates-instance_method'>enum_predicates</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+374
+375
+376</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 374</span>
+
+<span class='def def kw'>def</span> <span class='enum_predicate identifier id'>enum_predicate</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_predicate</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_quad-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_quad</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_quads-instance_method'>enum_quads</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+238
+239
+240</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 238</span>
+
+<span class='def def kw'>def</span> <span class='enum_quad identifier id'>enum_quad</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_quad</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_statement-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_statement</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_statements-instance_method'>enum_statements</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 117</span>
+
+<span class='def def kw'>def</span> <span class='enum_statement identifier id'>enum_statement</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_statement</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Queryable constant id'>Queryable</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Enumerable constant id'>Enumerable</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_subject-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_subject</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_subjects-instance_method'>enum_subjects</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+306
+307
+308</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 306</span>
+
+<span class='def def kw'>def</span> <span class='enum_subject identifier id'>enum_subject</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_subject</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="enum_triple-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>enum_triple</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='enum_triples-instance_method'>enum_triples</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an enumerator for <span class='object_link'><a href="#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 177</span>
+
+<span class='def def kw'>def</span> <span class='enum_triple identifier id'>enum_triple</span>
+  <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_triple</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_context?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_context?</strong>(value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF context.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+468
+469
+470</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 468</span>
+
+<span class='def def kw'>def</span> <span class='has_context? fid id'>has_context?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='enum_context identifier id'>enum_context</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_object?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_object?</strong>(value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF object term.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+400
+401
+402</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 400</span>
+
+<span class='def def kw'>def</span> <span class='has_object? fid id'>has_object?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='enum_object identifier id'>enum_object</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_predicate?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_predicate?</strong>(value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF predicate term.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+332
+333
+334</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 332</span>
+
+<span class='def def kw'>def</span> <span class='has_predicate? fid id'>has_predicate?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='enum_predicate identifier id'>enum_predicate</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_quad?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_quad?</strong>(quad) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF quad.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>, <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>)</tt>)</span>
+      
+      
+        <span class='name'>quad</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 198</span>
+
+<span class='def def kw'>def</span> <span class='has_quad? fid id'>has_quad?</span><span class='lparen token'>(</span><span class='quad identifier id'>quad</span><span class='rparen token'>)</span>
+  <span class='enum_quad identifier id'>enum_quad</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='quad identifier id'>quad</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_statement?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_statement?</strong>(statement) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='include?-instance_method'>include?</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF statement.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></tt>)</span>
+      
+      
+        <span class='name'>statement</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 80</span>
+
+<span class='def def kw'>def</span> <span class='has_statement? fid id'>has_statement?</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='notop op'>!</span><span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='find identifier id'>find</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='s identifier id'>s</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_subject?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_subject?</strong>(value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF subject term.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+264
+265
+266</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 264</span>
+
+<span class='def def kw'>def</span> <span class='has_subject? fid id'>has_subject?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='enum_subject identifier id'>enum_subject</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_triple?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_triple?</strong>(triple) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if <code>self</code> contains the given RDF triple.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)</tt>)</span>
+      
+      
+        <span class='name'>triple</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 138</span>
+
+<span class='def def kw'>def</span> <span class='has_triple? fid id'>has_triple?</span><span class='lparen token'>(</span><span class='triple identifier id'>triple</span><span class='rparen token'>)</span>
+  <span class='enum_triple identifier id'>enum_triple</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='triple identifier id'>triple</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="objects-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>&gt;</tt>) <strong>objects</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all unique RDF object terms.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="name">:unique</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+387
+388
+389
+390
+391
+392
+393</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 387</span>
+
+<span class='def def kw'>def</span> <span class='objects identifier id'>objects</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:object</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+  <span class='else else kw'>else</span>
+    <span class='enum_object identifier id'>enum_object</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="predicates-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>&gt;</tt>) <strong>predicates</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all unique RDF predicate terms.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="name">:unique</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+319
+320
+321
+322
+323
+324
+325</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 319</span>
+
+<span class='def def kw'>def</span> <span class='predicates identifier id'>predicates</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:predicate</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+  <span class='else else kw'>else</span>
+    <span class='enum_predicate identifier id'>enum_predicate</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="quads-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>, <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>)&gt;</tt>) <strong>quads</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF quads.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>, <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>)&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+189
+190
+191</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 189</span>
+
+<span class='def def kw'>def</span> <span class='quads identifier id'>quads</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_quad</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="statements-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span>&gt;</tt>) <strong>statements</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF statements.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span>&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='statements identifier id'>statements</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='enum_statement identifier id'>enum_statement</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="subjects-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>&gt;</tt>) <strong>subjects</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all unique RDF subject terms.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="name">:unique</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+251
+252
+253
+254
+255
+256
+257</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 251</span>
+
+<span class='def def kw'>def</span> <span class='subjects identifier id'>subjects</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:unique</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='false false kw'>false</span>
+    <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:subject</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+  <span class='else else kw'>else</span>
+    <span class='enum_subject identifier id'>enum_subject</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_a-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>) <strong>to_a</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF statements in <code>self</code> as an array.</p>
+
+<p>Mixes in <code>RDF::Enumerable</code> into the returned object.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+563
+564
+565</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 563</span>
+
+<span class='def def kw'>def</span> <span class='to_a identifier id'>to_a</span>
+  <span class='super super kw'>super</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Enumerable constant id'>Enumerable</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_hash-instance_method">
+  
+    - (<tt>Hash</tt>) <strong>to_hash</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF object terms indexed by their subject and predicate
+terms.</p>
+
+<p>The return value is a <code>Hash</code> instance that has the structure:
+<code>{subject =&gt; {predicate =&gt; [*objects]}}</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 587</span>
+
+<span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='next next kw'>next</span> <span class='if if_mod kw'>if</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='invalid? fid id'>invalid?</span> <span class='comment val'># skip any incomplete statements</span>
+
+    <span class='result identifier id'>result</span><span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='values identifier id'>values</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='values identifier id'>values</span> <span class='lshft op'>&lt;&lt;</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='object identifier id'>object</span> <span class='unless unless_mod kw'>unless</span> <span class='values identifier id'>values</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='result identifier id'>result</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_set-instance_method">
+  
+    - (<tt>Set</tt>) <strong>to_set</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF statements in <code>self</code> as a set.</p>
+
+<p>Mixes in <code>RDF::Enumerable</code> into the returned object.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Set</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+574
+575
+576
+577</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 574</span>
+
+<span class='def def kw'>def</span> <span class='to_set identifier id'>to_set</span>
+  <span class='require identifier id'>require</span> <span class='string val'>'set'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Set constant id'>Set</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Enumerable constant id'>Enumerable</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="triples-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)&gt;</tt>) <strong>triples</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns all RDF triples.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Boolean}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>, <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)&gt;</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span></li>
+    
+      <li><span class='object_link'><a href="#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/mixin/enumerable.rb', line 129</span>
+
+<span class='def def kw'>def</span> <span class='triples identifier id'>triples</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='enum_statement identifier id'>enum_statement</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_triple</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_enum identifier id'>to_enum</span> <span class='comment val'># TODO: optimize</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:34:16 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

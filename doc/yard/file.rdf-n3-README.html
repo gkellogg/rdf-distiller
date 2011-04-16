@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File: rdf-n3-README</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: rdf-n3-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>RDF::N3 reader/writer</h1>
+
+<p>Notation-3 and Turtle reader/writer for <a href="http://rdf.rubyforge.org/">RDF.rb</a> .</p>
+
+<h2>Description</h2>
+
+<p>RDF::N3 is an Notation-3 parser for Ruby using the <a href="http://rdf.rubyforge.org/">RDF.rb</a>  library suite.</p>
+
+<p>Reader inspired from TimBL predictiveParser and Python librdf implementation.</p>
+
+<h2>Features</h2>
+
+<p>RDF::N3 parses <a href="http://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a>, <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> and <a href="http://www.w3.org/2001/sw/RDFCore/ntriples/">N-Triples</a> into statements or triples. It also serializes to Turtle.</p>
+
+<p>Install with <code>gem install rdf-n3</code></p>
+
+<h2>Limitations</h2>
+
+<ul>
+<li>Full support of Unicode input requires Ruby version 1.9 or greater.</li>
+<li>Support for Variables in Formulae dependent on underlying repository. Existential variables are quantified to RDF::Node instances, Universals to RDF::Query::Variable, with the URI of the variable target used as the variable name.</li>
+<li>No support for N3 Reification. If there were, it would be through a :reify option to the reader.</li>
+</ul>
+
+
+<h2>Usage</h2>
+
+<p>Instantiate a reader from a local file:</p>
+
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='N3 constant id'>N3</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/foaf.n3&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
+   <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+   <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Define <code>@base</code> and <code>@prefix</code> definitions, and use for serialization using <code>:base_uri</code> an <code>:prefixes</code> options</p>
+
+<p>Write a graph to a file:</p>
+
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='N3 constant id'>N3</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.n3&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='writer identifier id'>writer</span><span class='bitor op'>|</span>
+   <span class='writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='graph identifier id'>graph</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>Formulae</h3>
+
+<p>N3 Formulae are introduced with the { statement-list } syntax. A given formula is assigned an RDF::Node instance, which is also used as the context for RDF::Statement instances provided to RDF::N3::Reader#each_statement. For example, the following N3 generates the associated statements:</p>
+
+<pre class="code"><span class='lbrace token'>{</span> <span class='lbrack token'>[</span> <span class='x identifier id'>x</span><span class='symbol val'>:firstname</span>  <span class='string val'>&quot;Ora&quot;</span> <span class='rbrack token'>]</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:wrote</span> <span class='lbrack token'>[</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:title</span>  <span class='string val'>&quot;Moby Dick&quot;</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span> <span class='a identifier id'>a</span> <span class='n3 identifier id'>n3</span><span class='symbol val'>:falsehood</span> <span class='dot token'>.</span>
+</pre>
+
+<p>results in</p>
+
+<pre class="code"><span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='o identifier id'>o</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='rdf identifier id'>rdf</span><span class='symbol val'>:type</span> <span class='n3 identifier id'>n3</span><span class='symbol val'>:falsehood</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='x identifier id'>x</span><span class='symbol val'>:firstname</span><span class='comma token'>,</span> <span class='string val'>&quot;Ora&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:wrote</span><span class='comma token'>,</span> <span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='string val'>&quot;Moby Dick&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
+</pre>
+
+<h3>Variables</h3>
+
+<p>N3 Variables are introduced with @forAll, @forEach, or ?x. Variables reference URIs described in formulae, typically defined in the default vocabulary (e.g., ":x"). Existential variables are replaced with an allocated RDF::Node instance. Universal variables are replaced with a RDF::Query::Variable instance. For example, the following N3 generates the associated statements:</p>
+
+<pre class="code"><span class='@forAll ivar id'>@forAll</span> <span class='lt op'>&lt;</span><span class='comment val'>#h&gt;. @forSome &lt;#g&gt;. &lt;#g&gt; &lt;#loves&gt; &lt;#h&gt; .</span>
+</pre>
+
+<p>results in:</p>
+
+<pre class="code"><span class='h identifier id'>h</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lt op'>&lt;</span><span class='comment val'>#h&gt;)</span>
+<span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='lt op'>&lt;</span><span class='comment val'>#loves&gt;, h)</span>
+</pre>
+
+<h2>Implementation Notes</h2>
+
+<p>The parser is driven through a rules table contained in lib/rdf/n3/reader/meta.rb. This includes
+branch rules to indicate productions to be taken based on a current production. Terminals are denoted
+through a set of regular expressions used to match each type of terminal.</p>
+
+<p>The [meta.rb][file:lib/rdf/n3/reader/meta.rb] file is generated from lib/rdf/n3/reader/n3-selectors.n3
+(taken from http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3) which is the result of parsing
+http://www.w3.org/2000/10/swap/grammar/n3.n3 (along with bnf-rules.n3) using cwm using the following command sequence:</p>
+
+<pre class="code"><span class='cwm identifier id'>cwm</span> <span class='n3 identifier id'>n3</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='bnf identifier id'>bnf</span><span class='minus op'>-</span><span class='rules identifier id'>rules</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='think identifier id'>think</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='purge identifier id'>purge</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='data identifier id'>data</span> <span class='gt op'>&gt;</span> <span class='n3 identifier id'>n3</span><span class='minus op'>-</span><span class='selectors identifier id'>selectors</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span>
+</pre>
+
+<p>[n3-selectors.n3][file:lib/rdf/n3/reader/n3-selectors.rb] is itself used to generate meta.rb using script/build_meta.</p>
+
+<h2>TODO</h2>
+
+<ul>
+<li>Generate Formulae and solutions using BGP and SPARQL CONSTRUCT mechanisms</li>
+<li>Create equivalent to <code>--think</code> to iterate on solutions.</li>
+</ul>
+
+
+<h2>Dependencies</h2>
+
+<ul>
+<li><a href="http://rubygems.org/gems/rdf">RDF.rb</a> (>= 0.3.1)</li>
+</ul>
+
+
+<h2>Documentation</h2>
+
+<p>Full documentation available on <a href="http://rdf.rubyforge.org/n3">RubyForge</a></p>
+
+<h3>Principle Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">RDF::N3</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Format.html" title="RDF::N3::Format (class)">RDF::N3::Format</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Reader.html" title="RDF::N3::Reader (class)">RDF::N3::Reader</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Writer.html" title="RDF::N3::Writer (class)">RDF::N3::Writer</a></span></li>
+</ul>
+
+
+<h3>Additional vocabularies</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/LOG.html" title="RDF::LOG (class)">RDF::LOG</a></span></li>
+<li><span class='object_link'><a href="RDF/REI.html" title="RDF::REI (class)">RDF::REI</a></span></li>
+</ul>
+
+
+<h3>Patches</h3>
+
+<ul>
+<li><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span></li>
+<li><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></li>
+</ul>
+
+
+<h2>Resources</h2>
+
+<ul>
+<li><a href="http://rdf.rubyforge.org/">RDF.rb</a></li>
+<li><a href="http://distiller.kellogg-assoc">Distiller</a></li>
+<li><a href="http://rdf.rubyforge.org/n3">Documentation</a></li>
+<li><a href="file:file.History.html">History</a></li>
+<li><a href="http://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a></li>
+<li><a href="http://www.w3.org/2000/10/swap/Primer.html">N3 Primer</a></li>
+<li><a href="http://www.w3.org/DesignIssues/Reify.html">N3 Reification</a></li>
+<li><a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a></li>
+<li><a href="http://www.w3.org/2000/10/swap/test/README.html">W3C SWAP Test suite</a></li>
+<li><a href="http://www.w3.org/2001/sw/DataAccess/df1/tests/README.txt">W3C Turtle Test suite</a></li>
+<li><a href="http://www.w3.org/2001/sw/RDFCore/ntriples/">N-Triples</a></li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+
+<h2>Feedback</h2>
+
+<ul>
+<li><a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#103;&#114;&#101;&#103;&#x67;&#64;&#107;&#101;&#108;&#108;&#x6f;&#103;&#103;&#45;&#97;&#115;&#x73;&#x6f;&#99;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#114;&#x65;&#103;&#103;&#x40;&#x6b;&#x65;&#x6c;&#108;&#x6f;&#x67;&#x67;&#45;&#97;&#x73;&#115;&#111;&#99;&#46;&#99;&#111;&#109;</a></li>
+<li><a href="http://rubygems.org/gem/rdf-n3">http://rubygems.org/gem/rdf-n3</a></li>
+<li><a href="http://github.com/gkellogg/rdf-n3">http://github.com/gkellogg/rdf-n3</a></li>
+<li><a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/">http://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+</div></div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:11 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

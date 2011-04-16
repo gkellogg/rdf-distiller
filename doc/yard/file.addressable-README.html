@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File: addressable-README</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: addressable-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><p>== About</p>
+
+<p>Homepage::  Addressable[http://addressable.rubyforge.org/]
+Authors::   Bob Aman (mailto:bob@sporkmonger.com)
+Copyright:: Copyright 2010 Bob Aman
+License::   MIT</p>
+
+<p>Addressable is a replacement for the URI implementation that is part of
+Ruby's standard library. It more closely conforms to the relevant RFCs and
+adds support for IRIs and URI templates.  Additionally, it provides extensive
+support for URI templates.</p>
+
+<p>== Classes
+- Addressable::URI
+- Addressable::Template</p>
+
+<p>== Example usage
+  require "addressable/uri"</p>
+
+<p>  uri = Addressable::URI.parse("http://example.com/path/to/resource/")
+  uri.scheme
+  #=> "http"
+  uri.host
+  #=> "example.com"
+  uri.path
+  #=> "/path/to/resource/"</p>
+
+<p>  uri = Addressable::URI.parse("http://www.詹姆斯.com/")
+  uri.normalize
+  #=> #&lt;Addressable::URI:0xc9a4c8 URI:http://www.xn--8ws00zhy3a.com/></p>
+
+<p>  require "addressable/template"</p>
+
+<p>  template = Addressable::Template.new("http://example.com/-list|+|query/")
+  template.expand({</p>
+
+<pre class="code"><span class='string val'>&quot;query&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;an example query&quot;</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
+</pre>
+
+<p>  })
+  #=> #&lt;Addressable::URI:0xc9d95c URI:http://example.com/an+example+query/></p>
+
+<p>  template = Addressable::Template.new(</p>
+
+<pre class="code"><span class='string val'>&quot;http://example.com/{-join|&amp;|one,two,three}/&quot;</span>
+</pre>
+
+<p>  )
+  template.partial_expand(=> "1", "three" => 3).pattern
+  #=> "http://example.com/?one=1-prefix|&amp;amp;two=|two&amp;three=3"</p>
+
+<p>  template = Addressable::Template.new(</p>
+
+<pre class="code"><span class='string val'>&quot;http://{host}/{-suffix|/|segments}?{-join|&amp;|one,two,bogus}\#{fragment}&quot;</span>
+</pre>
+
+<p>  )
+  uri = Addressable::URI.parse(</p>
+
+<pre class="code"><span class='string val'>&quot;http://example.com/a/b/c/?one=1&amp;two=2#foo&quot;</span>
+</pre>
+
+<p>  )
+  template.extract(uri)
+  #=>
+  # {
+  #   "host" => "example.com",
+  #   "segments" => ["a", "b", "c"],
+  #   "one" => "1",
+  #   "two" => "2",
+  #   "fragment" => "foo"
+  # }</p></div></div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:10 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

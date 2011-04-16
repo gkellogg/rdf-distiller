@@ -1,0 +1,2641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: RDF::Statement</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
+     &raquo; 
+    <span class="title">Statement</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: RDF::Statement
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">RDF::Statement</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>An RDF statement.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Creating an RDF statement</p></div></h4>
+      <pre class="example code"><span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rubygems.org/gems/rdf&quot;</span><span class='rparen token'>)</span>
+<span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span>
+<span class='o identifier id'>o</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://ar.to/#self&quot;</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='comma token'>,</span> <span class='o identifier id'>o</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Creating an RDF statement with a context</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='comma token'>,</span> <span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Creating an RDF statement from a <code>Hash</code></p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span>
+  <span class='symbol val'>:subject</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rubygems.org/gems/rdf&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+  <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='creator identifier id'>creator</span><span class='comma token'>,</span>
+  <span class='symbol val'>:object</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://ar.to/#self&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+<span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Query/Pattern.html" title="RDF::Query::Pattern (class)">Query::Pattern</a></span></p>
+</div>
+
+
+  
+  
+  
+  
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#context-instance_method" title="#context (instance method)">- (RDF::Resource) <strong>context</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#id-instance_method" title="#id (instance method)">- (Object) <strong>id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#object-instance_method" title="#object (instance method)">- (RDF::Term) <strong>object</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#predicate-instance_method" title="#predicate (instance method)">- (RDF::URI) <strong>predicate</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#subject-instance_method" title="#subject (instance method)">- (RDF::Resource) <strong>subject</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%3D-instance_method" title="#== (instance method)">- (Boolean) <strong>==</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%3D%3D-instance_method" title="#=== (instance method)">- (Boolean) <strong>===</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D-instance_method" title="#[] (instance method)">- (RDF::Term) <strong>[]</strong>(index) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%5B%5D%3D-instance_method" title="#[]= (instance method)">- (RDF::Term) <strong>[]=</strong>(index, value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#asserted%3F-instance_method" title="#asserted? (instance method)">- (Boolean) <strong>asserted?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#eql%3F-instance_method" title="#eql? (instance method)">- (Boolean) <strong>eql?</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_blank_nodes%3F-instance_method" title="#has_blank_nodes? (instance method)">- (Boolean) <strong>has_blank_nodes?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if the subject or object of this statement is a blank
+node.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_context%3F-instance_method" title="#has_context? (instance method)">- (Boolean) <strong>has_context?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_graph%3F-instance_method" title="#has_graph? (instance method)">- (Boolean) <strong>has_graph?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_object%3F-instance_method" title="#has_object? (instance method)">- (Boolean) <strong>has_object?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_predicate%3F-instance_method" title="#has_predicate? (instance method)">- (Boolean) <strong>has_predicate?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_subject%3F-instance_method" title="#has_subject? (instance method)">- (Boolean) <strong>has_subject?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inferred%3F-instance_method" title="#inferred? (instance method)">- (Boolean) <strong>inferred?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Statement) <strong>initialize</strong>(subject = nil, predicate = nil, object = nil, options = {}) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Statement.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#invalid%3F-instance_method" title="#invalid? (instance method)">- (Boolean) <strong>invalid?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#quoted%3F-instance_method" title="#quoted? (instance method)">- (Boolean) <strong>quoted?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reified-instance_method" title="#reified (instance method)">- (RDF::Graph) <strong>reified</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a graph containing this statement in reified form.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#statement%3F-instance_method" title="#statement? (instance method)">- (Boolean) <strong>statement?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> to indicate that this value is a statement.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-instance_method" title="#to_hash (instance method)">- (Hash{Symbol =&gt; RDF::Term}) <strong>to_hash</strong>(subject_key = :subject, predicate_key = :predicate, object_key = :object, context_key = :context) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the terms of this statement as a <code>Hash</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_quad-instance_method" title="#to_quad (instance method)">- (Array(RDF::Term)) <strong>to_quad</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_s-instance_method" title="#to_s (instance method)">- (String) <strong>to_s</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a string representation of this statement.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_triple-instance_method" title="#to_triple (instance method)">- (Array(RDF::Term)) <strong>to_triple</strong> </a>
+    
+
+    
+      (also: #to_ary, #to_a)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#valid%3F-instance_method" title="#valid? (instance method)">- (Boolean) <strong>valid?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Value.html#graph%3F-instance_method" title="RDF::Value#graph? (method)">#graph?</a></span>, <span class='object_link'><a href="Value.html#inspect-instance_method" title="RDF::Value#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Value.html#inspect%21-instance_method" title="RDF::Value#inspect! (method)">#inspect!</a></span>, <span class='object_link'><a href="Value.html#iri%3F-instance_method" title="RDF::Value#iri? (method)">#iri?</a></span>, <span class='object_link'><a href="Value.html#literal%3F-instance_method" title="RDF::Value#literal? (method)">#literal?</a></span>, <span class='object_link'><a href="Value.html#node%3F-instance_method" title="RDF::Value#node? (method)">#node?</a></span>, <span class='object_link'><a href="Value.html#resource%3F-instance_method" title="RDF::Value#resource? (method)">#resource?</a></span>, <span class='object_link'><a href="Value.html#to_ntriples-instance_method" title="RDF::Value#to_ntriples (method)">#to_ntriples</a></span>, <span class='object_link'><a href="Value.html#to_rdf-instance_method" title="RDF::Value#to_rdf (method)">#to_rdf</a></span>, <span class='object_link'><a href="Value.html#type_error-instance_method" title="RDF::Value#type_error (method)">#type_error</a></span>, <span class='object_link'><a href="Value.html#uri%3F-instance_method" title="RDF::Value#uri? (method)">#uri?</a></span>, <span class='object_link'><a href="Value.html#variable%3F-instance_method" title="RDF::Value#variable? (method)">#variable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>initialize</strong>(options = {}) </span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>initialize</strong>(subject, predicate, object, options = {}) </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>A new instance of Statement</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>initialize</strong>(options = {}) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="name">:subject</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+        <li>
+          <span class="type">(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+          <span class="name">:predicate</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+        <li>
+          <span class="type">(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+          <span class="name">:object</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+        <li>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="name">:context</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>initialize</strong>(subject, predicate, object, options = {}) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+        <span class='name'>subject</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>predicate</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>object</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="name">:context</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </tr>
+      
+    </ul>
+  
+
+</div>
+      </li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='subject identifier id'>subject</span>
+    <span class='when when kw'>when</span> <span class='Hash constant id'>Hash</span>
+      <span class='@options ivar id'>@options</span>   <span class='assign token'>=</span> <span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+      <span class='@subject ivar id'>@subject</span>   <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:subject</span><span class='rparen token'>)</span>
+      <span class='@predicate ivar id'>@predicate</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:predicate</span><span class='rparen token'>)</span>
+      <span class='@object ivar id'>@object</span>    <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span>
+    <span class='else else kw'>else</span>
+      <span class='@options ivar id'>@options</span>   <span class='assign token'>=</span> <span class='notop op'>!</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+      <span class='@subject ivar id'>@subject</span>   <span class='assign token'>=</span> <span class='subject identifier id'>subject</span>
+      <span class='@predicate ivar id'>@predicate</span> <span class='assign token'>=</span> <span class='predicate identifier id'>predicate</span>
+      <span class='@object ivar id'>@object</span>    <span class='assign token'>=</span> <span class='object identifier id'>object</span>
+  <span class='end end kw'>end</span>
+  <span class='@id ivar id'>@id</span>      <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:id</span><span class='rparen token'>)</span>
+  <span class='@context ivar id'>@context</span> <span class='assign token'>=</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:context</span><span class='rparen token'>)</span>
+  <span class='initialize! fid id'>initialize!</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="context=-instance_method"></span>
+      <span id="context-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="context-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>) <strong>context</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='context identifier id'>context</span>
+  <span class='@context ivar id'>@context</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="id=-instance_method"></span>
+      <span id="id-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="id-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>id</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='id identifier id'>id</span>
+  <span class='@id ivar id'>@id</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="object=-instance_method"></span>
+      <span id="object-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="object-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>) <strong>object</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='object identifier id'>object</span>
+  <span class='@object ivar id'>@object</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="predicate=-instance_method"></span>
+      <span id="predicate-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="predicate-instance_method">
+  
+    - (<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>predicate</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 48</span>
+
+<span class='def def kw'>def</span> <span class='predicate identifier id'>predicate</span>
+  <span class='@predicate ivar id'>@predicate</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="subject=-instance_method"></span>
+      <span id="subject-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="subject-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>) <strong>subject</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 45</span>
+
+<span class='def def kw'>def</span> <span class='subject identifier id'>subject</span>
+  <span class='@subject ivar id'>@subject</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="==-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>==</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 186</span>
+
+<span class='def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='to_a identifier id'>to_a</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="===-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>===</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::Statement (class)">Statement</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+193
+194
+195
+196
+197
+198
+199</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 193</span>
+
+<span class='def def kw'>def</span> <span class='eqq op'>===</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='has_context? fid id'>has_context?</span>   <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='context identifier id'>context</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='dot token'>.</span><span class='context identifier id'>context</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='has_subject? fid id'>has_subject?</span>   <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='has_predicate? fid id'>has_predicate?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='predicate identifier id'>predicate</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='false false kw'>false</span> <span class='if if_mod kw'>if</span> <span class='has_object? fid id'>has_object?</span>    <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="[]-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>) <strong>[]</strong>(index) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <span class='name'>index</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+204
+205
+206
+207
+208
+209
+210
+211
+212</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 204</span>
+
+<span class='def def kw'>def</span> <span class='aref op'>[]</span><span class='lparen token'>(</span><span class='index identifier id'>index</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='index identifier id'>index</span>
+    <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span>
+    <span class='when when kw'>when</span> <span class='integer val'>1</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span>
+    <span class='when when kw'>when</span> <span class='integer val'>2</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='object identifier id'>object</span>
+    <span class='when when kw'>when</span> <span class='integer val'>3</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='context identifier id'>context</span>
+    <span class='else else kw'>else</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="[]=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>) <strong>[]=</strong>(index, value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+        <span class='name'>index</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+        <span class='name'>value</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+218
+219
+220
+221
+222
+223
+224
+225
+226</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 218</span>
+
+<span class='def def kw'>def</span> <span class='aset op'>[]=</span><span class='lparen token'>(</span><span class='index identifier id'>index</span><span class='comma token'>,</span> <span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='index identifier id'>index</span>
+    <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span>   <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='when when kw'>when</span> <span class='integer val'>1</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='when when kw'>when</span> <span class='integer val'>2</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='object identifier id'>object</span>    <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='when when kw'>when</span> <span class='integer val'>3</span> <span class='then then kw'>then</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='context identifier id'>context</span>   <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+    <span class='else else kw'>else</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="asserted?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>asserted?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+121
+122
+123</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 121</span>
+
+<span class='def def kw'>def</span> <span class='asserted? fid id'>asserted?</span>
+  <span class='notop op'>!</span><span class='quoted? fid id'>quoted?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="eql?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>eql?</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::Statement (class)">Statement</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+179
+180
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 179</span>
+
+<span class='def def kw'>def</span> <span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Statement constant id'>Statement</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='self self kw'>self</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='context identifier id'>context</span> <span class='orop op'>||</span> <span class='false false kw'>false</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='dot token'>.</span><span class='context identifier id'>context</span> <span class='orop op'>||</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_blank_nodes?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_blank_nodes?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if the subject or object of this statement is a blank
+node.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 172</span>
+
+<span class='def def kw'>def</span> <span class='has_blank_nodes? fid id'>has_blank_nodes?</span>
+  <span class='lparen token'>(</span><span class='has_object? fid id'>has_object?</span> <span class='andop op'>&amp;&amp;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='node? fid id'>node?</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='has_subject? fid id'>has_subject?</span> <span class='andop op'>&amp;&amp;</span> <span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='node? fid id'>node?</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_context?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_context?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 145</span>
+
+<span class='def def kw'>def</span> <span class='has_context? fid id'>has_context?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='context identifier id'>context</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_graph?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_graph?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+139
+140
+141</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 139</span>
+
+<span class='def def kw'>def</span> <span class='has_graph? fid id'>has_graph?</span>
+  <span class='has_context? fid id'>has_context?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_object?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_object?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 163</span>
+
+<span class='def def kw'>def</span> <span class='has_object? fid id'>has_object?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='object identifier id'>object</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_predicate?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_predicate?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 157</span>
+
+<span class='def def kw'>def</span> <span class='has_predicate? fid id'>has_predicate?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='predicate identifier id'>predicate</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_subject?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_subject?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='has_subject? fid id'>has_subject?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='subject identifier id'>subject</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="inferred?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>inferred?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 133</span>
+
+<span class='def def kw'>def</span> <span class='inferred? fid id'>inferred?</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="invalid?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>invalid?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='invalid? fid id'>invalid?</span>
+  <span class='notop op'>!</span><span class='valid? fid id'>valid?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="quoted?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>quoted?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='quoted? fid id'>quoted?</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="reified-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></tt>) <strong>reified</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a graph containing this statement in reified form.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/rdf-primer/#reification" target="_parent" title="http://www.w3.org/TR/rdf-primer/#reification">http://www.w3.org/TR/rdf-primer/#reification</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+286
+287
+288
+289
+290
+291
+292
+293
+294</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 286</span>
+
+<span class='def def kw'>def</span> <span class='reified identifier id'>reified</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='graph identifier id'>graph</span><span class='bitor op'>|</span>
+    <span class='subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:subject</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='comma token'>,</span>      <span class='RDF constant id'>RDF</span><span class='lbrack token'>[</span><span class='symbol val'>:Statement</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+    <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span>   <span class='self self kw'>self</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='rbrack token'>]</span>
+    <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rbrack token'>]</span>
+    <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='comma token'>,</span>    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="statement?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>statement?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> to indicate that this value is a statement.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 103</span>
+
+<span class='def def kw'>def</span> <span class='statement? fid id'>statement?</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_hash-instance_method">
+  
+    - (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>) <strong>to_hash</strong>(subject_key = :subject, predicate_key = :predicate, object_key = :object, context_key = :context) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the terms of this statement as a <code>Hash</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <span class='name'>subject_key</span>
+      
+      
+        <em class="default">(defaults to: <tt>:subject</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <span class='name'>predicate_key</span>
+      
+      
+        <em class="default">(defaults to: <tt>:predicate</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <span class='name'>object_key</span>
+      
+      
+        <em class="default">(defaults to: <tt>:object</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+250
+251
+252</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 250</span>
+
+<span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span><span class='lparen token'>(</span><span class='subject_key identifier id'>subject_key</span> <span class='assign token'>=</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='predicate_key identifier id'>predicate_key</span> <span class='assign token'>=</span> <span class='symbol val'>:predicate</span><span class='comma token'>,</span> <span class='object_key identifier id'>object_key</span> <span class='assign token'>=</span> <span class='symbol val'>:object</span><span class='comma token'>,</span> <span class='context_key identifier id'>context_key</span> <span class='assign token'>=</span> <span class='symbol val'>:context</span><span class='rparen token'>)</span>
+  <span class='lbrace token'>{</span><span class='subject_key identifier id'>subject_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate_key identifier id'>predicate_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object_key identifier id'>object_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context_key identifier id'>context_key</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='context identifier id'>context</span><span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_quad-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)</tt>) <strong>to_quad</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 230</span>
+
+<span class='def def kw'>def</span> <span class='to_quad identifier id'>to_quad</span>
+  <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='context identifier id'>context</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_s-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>to_s</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a string representation of this statement.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 258</span>
+
+<span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
+  <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='open identifier id'>open</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='buffer identifier id'>buffer</span><span class='bitor op'>|</span>
+    <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='case case kw'>case</span> <span class='subject identifier id'>subject</span>
+      <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span>    <span class='then then kw'>then</span> <span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span>     <span class='then then kw'>then</span> <span class='dstring node'>&quot;&lt;#{subject}&gt;&quot;</span>
+      <span class='else else kw'>else</span> <span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+    <span class='end end kw'>end</span>
+    <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='dstring node'>&quot; &lt;#{predicate}&gt; &quot;</span>
+    <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='case case kw'>case</span> <span class='object identifier id'>object</span>
+      <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span> <span class='then then kw'>then</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span>    <span class='then then kw'>then</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span>     <span class='then then kw'>then</span> <span class='dstring node'>&quot;&lt;#{object}&gt;&quot;</span>
+      <span class='else else kw'>else</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+    <span class='end end kw'>end</span>
+    <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='case case kw'>case</span> <span class='context identifier id'>context</span>
+      <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span> <span class='then then kw'>then</span> <span class='string val'>&quot; .&quot;</span>
+      <span class='else else kw'>else</span> <span class='dstring node'>&quot; &lt;#{context}&gt; .&quot;</span>
+    <span class='end end kw'>end</span>
+    <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='string identifier id'>string</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_triple-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)</tt>) <strong>to_triple</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='to_ary-instance_method'>to_ary</span>, <span id='to_a-instance_method'>to_a</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>)</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+236
+237
+238</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 236</span>
+
+<span class='def def kw'>def</span> <span class='to_triple identifier id'>to_triple</span>
+  <span class='lbrack token'>[</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="valid?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>valid?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/statement.rb', line 115</span>
+
+<span class='def def kw'>def</span> <span class='valid? fid id'>valid?</span>
+  <span class='has_subject? fid id'>has_subject?</span> <span class='andop op'>&amp;&amp;</span> <span class='has_predicate? fid id'>has_predicate?</span> <span class='andop op'>&amp;&amp;</span> <span class='has_object? fid id'>has_object?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:57 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

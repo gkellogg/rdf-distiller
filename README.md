@@ -16,22 +16,42 @@ Distills between formats supported in [Linked Data][linkeddata].
 * Includes [TriX][] support using the [RDF::TriX][] gem.
 
 ## Dependencies
-* [RDF.rb][RDF.rb] (>= 0.3.0)
-* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.0)
-* [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 0.3.0)
-* [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.0)
-* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.3.3)
-* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.0)
-* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.0)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.0)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.0)
-* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.0)
+* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.3)
+* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.2)
+* [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 0.3.1)
+* [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
+* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.4.4)
+* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.1)
+* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.3)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.3)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.3)
+* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.1)
 
-### Principle Classes
-* {RDF::Portal}
+## Documentation
+### Core libraries
+* {file:rdf-README RDF.rb}
+  * {file:rdf-json-README RDF::JSON}
+  * {file:rdf-n3-README RDF::N3}
+  * {file:rdf-rdfa-README RDF::RDFa}
+  * {file:rdf-rdfxml-README RDF::RDFXML}
+  * {file:rdf-trix-README RDF::TriX}
+
+### Rollup libraries
+* {file:linkeddata-README Linked Data}
+  * {file:rack-linkeddata-README Linked Data for Rack}
+  * {file:sinatra-linkeddata-README Linked Data for Sinatrra}
+
+### Query/Access
+* {file:sparql-algebra-README SPARQL Algebra}
+* {file:sparql-client-README SPARQL Client}
+* {file:sparql-grammar-README SPARQL Grammar}
+* {file:spira-README Spira}
+
+### Storage
+* {file:rdf-do-README RDF Dataobjects}
 
 ## Resources
-* [RDF Portal](http://rdf.kellogg-assoc)
+* [RDF Portal](http://rdf.kellogg-assoc.com)
 
 ## AUTHOR
 * [Gregg Kellogg](http://github.com/gkellogg) - <http://kellogg-assoc.com/>
@@ -54,17 +74,11 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <http://github.com/gkellogg/rdf-portal>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
-[linkeddata]:       http://linkeddata.org/
+[linkeddata]:     {file:linkeddata-README}
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
 [Notation3]:      http://en.wikipedia.org/wiki/Notation3
-[RDF.rb]:           http://rdf.rubyforge.org/
 [RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification
-[RDF/XML]:        http://en.wikipedia.org/wiki/RDF/XML
-[RDF::JSON]:        http://rdf.rubyforge.org/json/
-[RDF::N3]:          http://rdoc.info/github/gkellogg/rdf-n3
-[RDF::RDFa]:        http://rdoc.info/github/gkellogg/rdf-rdfa
-[RDF::RDFXML]:      http://rdoc.info/github/gkellogg/rdf-rdfxml
-[RDF::TriX]:        http://rdf.rubyforge.org/trix/
+[RDF/XML]:        http://www.w3.org/TR/rdf-syntax-grammar/
 [RDFa]:           http://en.wikipedia.org/wiki/RDFa
-[TriX]:           http://www.w3.org/2004/03/trix/
+[TriX]:           http://en.wikipedia.org/wiki/TriX_(syntax)
 [Turtle]:         http://en.wikipedia.org/wiki/Turtle_(syntax)

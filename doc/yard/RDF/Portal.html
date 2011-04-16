@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Module: RDF::Portal</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
+     &raquo; 
+    <span class="title">Portal</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Module: RDF::Portal
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/rdf/portal/rdfa_template.rb<span class="defines">,<br />
+  lib/rdf/portal.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Default HAML templates used for generating output from the writer</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Portal/VERSION.html" title="RDF::Portal::VERSION (module)">VERSION</a></span>
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Portal/Application.html" title="RDF::Portal::Application (class)">Application</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="DISTILER_HAML-constant" class="">DISTILER_HAML =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='comment val'># Document</span>
+  <span class='comment val'># Locals: language, title, profile, prefix, base, subjects</span>
+  <span class='comment val'># Yield: subjects.each</span>
+  <span class='symbol val'>:doc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
+    !!! XML
+    !!! 5
+    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :profile =&gt; profile, :prefix =&gt; prefix}
+      - if base || title
+        %head
+          - if base
+            %base{:href =&gt; base}
+          - if title
+            %title= title
+          %link{:rel =&gt; &quot;stylesheet&quot;, :href =&gt; &quot;--root--/css/distiller.css&quot;, :type =&gt; &quot;text/css&quot;}
+          %script{:src =&gt; &quot;https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js&quot;, :type =&gt; &quot;text/javascript&quot;}
+          %script{:src =&gt; &quot;--root--/js/distiller.js&quot;, :type =&gt; &quot;text/javascript&quot;}
+      %body
+        - if base
+          %p= &quot;RDFa serialization URI base: &amp;lt;#{base}&amp;gt;&quot;
+        - subjects.each do |subject|
+          != yield(subject)
+        %footer
+          %p= &quot;Written by &lt;a href='http://rdf.rubyforge.org/rdfa'&gt;RDF::RDFa&lt;/a&gt; version #{RDF::RDFa::VERSION}&quot;
+  )</span><span class='comma token'>,</span>
+
+  <span class='comment val'># Output for non-leaf resources</span>
+  <span class='comment val'># Note that @about may be omitted for Nodes that are not referenced</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># If _rel_ and _resource_ are not nil, the tag will be written relative</span>
+  <span class='comment val'># to a previous subject. If _element_ is :li, the tag will be written</span>
+  <span class='comment val'># with &lt;li&gt; instead of &lt;div&gt;.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># Note that @rel and @resource can be used together, or @about and @typeof, but</span>
+  <span class='comment val'># not both.</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># Locals: subject, typeof, predicates, rel, element</span>
+  <span class='comment val'># Yield: predicates.each</span>
+  <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
+    - if element == :li
+      %td{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
+        - if typeof
+          %span.type!= typeof
+        - predicates.each do |predicate|
+          != yield(predicate)
+    - elsif rel &amp;&amp; typeof
+      %td{:rel =&gt; get_curie(rel)}
+        %div{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
+          %span.type!= typeof
+          - predicates.each do |predicate|
+            != yield(predicate)
+    - elsif rel
+      %td{:rel =&gt; get_curie(rel), :resource =&gt; get_curie(subject)}
+        - predicates.each do |predicate|
+          != yield(predicate)
+    - else
+      %div{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
+        - if typeof
+          %span.type!= typeof
+        %table.properties
+          - predicates.each do |predicate|
+            != yield(predicate)
+  )</span><span class='comma token'>,</span>
+
+  <span class='comment val'># Output for single-valued properties</span>
+  <span class='comment val'># Locals: property, objects</span>
+  <span class='comment val'># Yields: object</span>
+  <span class='comment val'># If nil is returned, render as a leaf</span>
+  <span class='comment val'># Otherwise, render result</span>
+  <span class='symbol val'>:property_value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
+    - object = objects.first
+    - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
+      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+    - else
+      %tr.property
+        %td.label
+          = get_predicate_name(predicate)
+        - if res = yield(object)
+          != res
+        - elsif object.node?
+          %td{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate)}= get_curie(object)
+        - elsif object.uri?
+          %td
+            %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate)}= object.to_s
+        - elsif object.datatype == RDF.XMLLiteral
+          %td{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
+        - else
+          %td{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+  )</span><span class='comma token'>,</span>
+
+  <span class='comment val'># Output for multi-valued properties</span>
+  <span class='comment val'># Locals: property, rel, :objects</span>
+  <span class='comment val'># Yields: object for leaf resource rendering</span>
+  <span class='symbol val'>:property_values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span>  <span class='string val'>%q(
+    %tr.property
+      %td.label
+        = get_predicate_name(predicate)
+      %td{:rel =&gt; (get_curie(rel) if rel), :property =&gt; (get_curie(property) if property)}
+        %ul
+          - objects.each do |object|
+            - if res = yield(object)
+              != res
+            - elsif object.node?
+              %li{:resource =&gt; get_curie(object)}= get_curie(object)
+            - elsif object.uri?
+              %li
+                %a{:href =&gt; object.to_s}= object.to_s
+            - elsif object.datatype == RDF.XMLLiteral
+              %li{:lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype)}&lt;!= get_value(object)
+            - else
+              %li{:content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+  )</span><span class='comma token'>,</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+</div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:35 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

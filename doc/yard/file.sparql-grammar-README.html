@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File: sparql-grammar-README</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: sparql-grammar-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>SPARQL Lexer and Parser for RDF.rb</h1>
+
+<p>This is a <a href="http://ruby-lang.org/">Ruby</a> implementation of a <a href="http://en.wikipedia.org/wiki/SPARQL">SPARQL</a> parser for
+<a href="http://rdf.rubyforge.org/">RDF.rb</a>.</p>
+
+<ul>
+<li><a href="http://github.com/gkellogg/sparql-grammar">http://github.com/gkellogg/sparql-grammar</a></li>
+</ul>
+
+
+<h2>Features</h2>
+
+<ul>
+<li>100% free and unencumbered <a href="http://unlicense.org/">public domain</a> software.</li>
+<li>Implements a complete parser for the <a href="http://www.w3.org/TR/rdf-sparql-query/">SPARQL 1.0</a> <a href="http://www.w3.org/TR/rdf-sparql-query/#grammar">grammar</a>.</li>
+<li>Generates SPARQL S-Expressions <a href="http://openjena.org/wiki/SSE">SSE</a> syntax, and implemented in the <a href="http://sxp.rubyforge.org/">SXP</a> library for Ruby.</li>
+<li>Compatible with Ruby 1.8.7+, Ruby 1.9.x, and JRuby 1.4/1.5.</li>
+<li>Supports Unicode query strings both on Ruby 1.8.x and 1.9.x.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'sparql/grammar'</span>
+</pre>
+
+<h3>Executing a SPARQL query against a repository</h3>
+
+<pre class="code"><span class='queryable identifier id'>queryable</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://usefulinc.com/ns/doap&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='rparen token'>)</span>
+</pre>
+
+<h3>Parsing a SPARQL query string to SSE</h3>
+
+<pre class="code"><span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='to_sxp identifier id'>to_sxp</span>
+</pre>
+
+<h3>Command line processing</h3>
+
+<pre class="code"><span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/usefulinc.com/n</span><span class='s identifier id'>s</span><span class='div op'>/</span><span class='doap identifier id'>doap</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * FROM &lt;http://usefulinc.com/ns/doap&gt; WHERE { ?s ?p ?o }&quot;</span>
+
+<span class='sparql2sse identifier id'>sparql2sse</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql2sse identifier id'>sparql2sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span>
+</pre>
+
+<h2>Documentation</h2>
+
+<p><a href="http://sparql.rubyforge.org/grammar/">http://sparql.rubyforge.org/grammar/</a></p>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL/Grammar.html" title="SPARQL::Grammar (module)">SPARQL::Grammar</a></span>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL/Grammar/Parser.html" title="SPARQL::Grammar::Parser (class)">SPARQL::Grammar::Parser</a></span></li>
+<li><span class='object_link'><a href="SPARQL/Grammar/Lexer.html" title="SPARQL::Grammar::Lexer (class)">SPARQL::Grammar::Lexer</a></span></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Representation</h2>
+
+<p>The parser natively generates  native SPARQL S-Expressions (SSE),
+a hierarch of <code>SPARQL::Algebra::Operator</code> instances
+which can be executed against a queryable object, such as a Repository identically
+to <code>RDF::Query</code>.</p>
+
+<p>Other elements within the hierarchy
+are generated using RDF objects, such as <code>RDF::URI</code>, <code>RDF::Node</code>, <code>RDF::Literal</code>, and <code>RDF::Query</code>.</p>
+
+<p>See <span class='object_link'><a href="SPARQL/Grammar/Parser.html" title="SPARQL::Grammar::Parser (class)">SPARQL::Grammar::Parser</a></span> for a full listing
+of algebra operations and RDF objects generated by the parser.</p>
+
+<p>The native SSE representation may be serialized to a textual representation of SSE as
+serialized general S-Expressions (SXP).
+The SXP generated closely follows that of <a href="http://openjena.org/wiki/SSE">OpenJena ARQ</a>, which is intended principally for
+running the SPARQL rules. Additionally, SSE is generated for CONSTRUCT, ASK, DESCRIBE and FROM operators.</p>
+
+<p>SXP is generated by serializing the parser result as follows:</p>
+
+<pre class="code"><span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<span class='sxp identifier id'>sxp</span> <span class='assign token'>=</span> <span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='to_sxp identifier id'>to_sxp</span>
+</pre>
+
+<p>The following examples illustrate SPARQL transformations:</p>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span> <span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span> <span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+  <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='rbrace token'>}</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='FROM constant id'>FROM</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span> <span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span> <span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Dataset constant id'>Dataset</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='dataset identifier id'>dataset</span> <span class='lparen token'>(</span><span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='FROM constant id'>FROM</span> <span class='NAMED constant id'>NAMED</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span> <span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span> <span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Dataset constant id'>Dataset</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='symbol val'>:named</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='dataset identifier id'>dataset</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='named identifier id'>named</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='DISTINCT constant id'>DISTINCT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span><span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Distinct constant id'>Distinct</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='distinct identifier id'>distinct</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span><span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Project constant id'>Project</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='comma token'>,</span> 
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='CONSTRUCT constant id'>CONSTRUCT</span> <span class='lbrace token'>{</span><span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rbrace token'>}</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span><span class='integer val'>?a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span> <span class='FILTER constant id'>FILTER</span> <span class='lparen token'>(</span><span class='integer val'>?a</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Construct constant id'>Construct</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Pattern constant id'>Pattern</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+  <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Filter constant id'>Filter</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+      <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='rbrace token'>}</span>
+  <span class='rparen token'>)</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='construct identifier id'>construct</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='filter identifier id'>filter</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='a identifier id'>a</span> <span class='question op'>?</span><span class='b identifier id'>b</span> <span class='question op'>?</span><span class='c identifier id'>c</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span><span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='b identifier id'>b</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='c identifier id'>c</span><span class='gt op'>&gt;</span> <span class='OPTIONAL constant id'>OPTIONAL</span> <span class='lbrace token'>{</span><span class='lt op'>&lt;</span><span class='d identifier id'>d</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='e identifier id'>e</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='f identifier id'>f</span><span class='gt op'>&gt;</span><span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='LeftJoin constant id'>LeftJoin</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;d&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;e&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;f&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='leftjoin identifier id'>leftjoin</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='b identifier id'>b</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='c identifier id'>c</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='lt op'>&lt;</span><span class='d identifier id'>d</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='e identifier id'>e</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='f identifier id'>f</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span><span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='b identifier id'>b</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='c identifier id'>c</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='lt op'>&lt;</span><span class='d identifier id'>d</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='e identifier id'>e</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='f identifier id'>f</span><span class='gt op'>&gt;</span><span class='rbrace token'>}</span><span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Join constant id'>Join</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;a&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;b&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;c&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span><span class='comma token'>,</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+    <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;d&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;e&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;f&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+  <span class='rbrace token'>}</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='join identifier id'>join</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='lt op'>&lt;</span><span class='a identifier id'>a</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='b identifier id'>b</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='c identifier id'>c</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='lt op'>&lt;</span><span class='d identifier id'>d</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='e identifier id'>e</span><span class='gt op'>&gt;</span> <span class='lt op'>&lt;</span><span class='f identifier id'>f</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>SPARQL:</p>
+
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span> 
+
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> 
+<span class='lbrace token'>{</span> 
+   <span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span> <span class='rbrace token'>}</span>
+  <span class='UNION constant id'>UNION</span>
+   <span class='lbrace token'>{</span> <span class='GRAPH constant id'>GRAPH</span> <span class='question op'>?</span><span class='g identifier id'>g</span> <span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span>
+</pre>
+
+<p>SSE:</p>
+
+<pre class="code"><span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Prefix constant id'>Prefix</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+  <span class='lbrack token'>[</span><span class='lbrack token'>[</span><span class='symbol val'>:&quot;:&quot;</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;http://example/&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+  <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span><span class='colon2 op'>::</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Union constant id'>Union</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
+    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lbrace token'>{</span>
+      <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;s&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;p&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;o&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='rbrace token'>}</span><span class='comma token'>,</span>
+    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;g&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span>
+      <span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;s&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;p&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;o&quot;</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='rbrace token'>}</span>
+  <span class='rparen token'>)</span>
+<span class='rparen token'>)</span>
+</pre>
+
+<p>SXP:</p>
+
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='union identifier id'>union</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='graph identifier id'>graph</span> <span class='question op'>?</span><span class='g identifier id'>g</span>
+      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<h2>Implementation Notes</h2>
+
+<p>The parser is driven through a rules table contained in lib/sparql/grammar/parser/meta.rb. This includes
+branch rules to indicate productions to be taken based on a current production.</p>
+
+<p>The meta.rb file is generated from etc/sparql-selectors.n3 which is the result of parsing
+http://www.w3.org/2000/10/swap/grammar/sparql.n3 (along with bnf-token-rules.n3) using cwm using the following command sequence:</p>
+
+<pre class="code"><span class='cwm identifier id'>cwm</span> <span class='dot2 op'>..</span><span class='regexp val'>/grammar/s</span><span class='parql identifier id'>parql</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='bnf identifier id'>bnf</span><span class='minus op'>-</span><span class='token identifier id'>token</span><span class='minus op'>-</span><span class='rules identifier id'>rules</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='think identifier id'>think</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='purge identifier id'>purge</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='data identifier id'>data</span> <span class='gt op'>&gt;</span> <span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='selectors identifier id'>selectors</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span>
+</pre>
+
+<p>sparql-selectors.n3 is itself used to generate lib/sparql/grammar/parser/meta.rb using script/build_meta.</p>
+
+<p>Note that The SWAP version of sparql.n3 is an older version of the grammar with the newest in http://www.w3.org/2001/sw/DataAccess/rq23/parsers/sparql.ttl,
+which uses the EBNF form. Sparql.n3 file has been updated by hand to be consistent with the etc/sparql.ttl version.
+A future direction will be to generate rules from etc/sparql.ttl to generate branch tables similar to those
+expressed in meta.rb, but this requires rules not currently available.</p>
+
+<h2>Next Steps for Parsing EBNF</h2>
+
+<p>A more modern approach is to use the EBNF grammar (e.g., etc/sparql.bnf) to generate a Turtle/N3 representation of the grammar, transform
+this to and LL1 representation and use this to create meta.rb.</p>
+
+<p>Using SWAP utilities, this would seemingly be done as follows:</p>
+
+<pre class="code"><span class='python identifier id'>python</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2000</span><span class='div op'>/</span><span class='integer val'>10</span><span class='div op'>/</span><span class='swap identifier id'>swap</span><span class='div op'>/</span><span class='grammar identifier id'>grammar</span><span class='div op'>/</span><span class='ebnf2turtle identifier id'>ebnf2turtle</span><span class='dot token'>.</span><span class='py identifier id'>py</span> \
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2001</span><span class='div op'>/</span><span class='sw identifier id'>sw</span><span class='div op'>/</span><span class='DataAccess constant id'>DataAccess</span><span class='div op'>/</span><span class='rq23 identifier id'>rq23</span><span class='div op'>/</span><span class='parsers identifier id'>parsers</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='bnf identifier id'>bnf</span> \
+  <span class='en identifier id'>en</span> \
+  <span class='string val'>'http://www.w3.org/2001/sw/DataAccess/parsers/sparql#'</span> <span class='gt op'>&gt;</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span>
+
+<span class='python identifier id'>python</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2000</span><span class='div op'>/</span><span class='integer val'>10</span><span class='div op'>/</span><span class='swap identifier id'>swap</span><span class='div op'>/</span><span class='cwm identifier id'>cwm</span><span class='dot token'>.</span><span class='py identifier id'>py</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span> \
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2000</span><span class='div op'>/</span><span class='integer val'>10</span><span class='div op'>/</span><span class='swap identifier id'>swap</span><span class='div op'>/</span><span class='grammar identifier id'>grammar</span><span class='div op'>/</span><span class='ebnf2bnf identifier id'>ebnf2bnf</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> \
+  <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2000</span><span class='div op'>/</span><span class='integer val'>10</span><span class='div op'>/</span><span class='swap identifier id'>swap</span><span class='div op'>/</span><span class='grammar identifier id'>grammar</span><span class='div op'>/</span><span class='first_follow identifier id'>first_follow</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> \
+  <span class='minus op'>-</span><span class='minus op'>-</span><span class='think identifier id'>think</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='data identifier id'>data</span> <span class='gt op'>&gt;</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='ll1 identifier id'>ll1</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span>
+</pre>
+
+<p>At this point, a variation of script/build_meta should be able to extract first/follow information to re-create the meta branch tables.</p>
+
+<h2>Dependencies</h2>
+
+<ul>
+<li><a href="http://ruby-lang.org/">Ruby</a> (>= 1.8.7) or (>= 1.8.1 with <a href="http://rubygems.org/gems/backports">Backports</a>)</li>
+<li><a href="http://rubygems.org/gems/rdf">RDF.rb</a> (>= 0.3.0)</li>
+<li><a href="https://rubygems.org/gems/sparql-algebra">SPARQL::Algebra</a> (>= 0.0.4)</li>
+<li><a href="https://rubygems.org/gems/sxp">SXP</a> (>= 0.0.13)</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<p>The recommended installation method is via <a href="http://rubygems.org/">RubyGems</a>.
+To install the latest official release of the <code>SPARQL::Grammar</code> gem, do:</p>
+
+<pre class="code"><span class='string val'>% [sudo] </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='grammar identifier id'>grammar</span>
+</pre>
+
+<h2>Download</h2>
+
+<p>To get a local working copy of the development repository, do:</p>
+
+<pre class="code"><span class='string val'>% git </span><span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='grammar identifier id'>grammar</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+
+<p>Alternatively, download the latest development version as a tarball as
+follows:</p>
+
+<pre class="code"><span class='string val'>% wget </span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='grammar identifier id'>grammar</span><span class='div op'>/</span><span class='tarball identifier id'>tarball</span><span class='div op'>/</span><span class='master identifier id'>master</span>
+</pre>
+
+<h2>Mailing List</h2>
+
+<ul>
+<li><a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/">http://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+
+
+<h2>Author</h2>
+
+<ul>
+<li><a href="http://github.com/gkellogg">Gregg Kellogg</a> - <a href="http://kellogg-assoc.com/">http://kellogg-assoc.com/</a></li>
+<li><a href="http://github.com/bendiken">Arto Bendiken</a> - <a href="http://ar.to/">http://ar.to/</a></li>
+</ul>
+
+
+<h2>Contributors</h2>
+
+<p>Refer to the accompanying <a href="file.CREDITS.html" title="CREDITS">CREDITS</a> file.</p>
+
+<h2>Contributing</h2>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don't use hard tabs, and don't leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="http://yardoc.org/">YARD</a> annotations. Read the
+<a href="http://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don't touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="http://unlicense.org/#unlicensing-contributions">public domain dedication</a> on record from you.</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p></div></div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:12 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

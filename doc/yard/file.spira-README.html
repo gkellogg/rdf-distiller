@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File: spira-README</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: spira-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Spira</h1>
+
+<p>It's time to breathe life into your linked data.</p>
+
+<hr />
+
+<h2>Synopsis</h2>
+
+<p>Spira is a framework for using the information in <a href="http://rdf.rubyforge.org">RDF.rb</a> repositories as model
+objects.  It gives you the ability to work in a resource-oriented way without
+losing access to statement-oriented nature of linked data, if you so choose.
+It can be used either to access existing RDF data in a resource-oriented way,
+or to create a new store of RDF data based on simple defaults.</p>
+
+<p>An introductory blog post is at <a href="http://blog.datagraph.org/2010/05/spira">http://blog.datagraph.org/2010/05/spira</a></p>
+
+<p>A changelog is available in the <a href="file.CHANGES.html" title="CHANGES.md">CHANGES.md</a> file.</p>
+
+<h3>Example</h3>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Person constant id'>Person</span>
+
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+
+  <span class='base_uri identifier id'>base_uri</span> <span class='string val'>&quot;http://example.org/example/people&quot;</span>
+
+  <span class='property identifier id'>property</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='String constant id'>String</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:age</span><span class='comma token'>,</span>  <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='age identifier id'>age</span><span class='comma token'>,</span>  <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Integer constant id'>Integer</span>
+
+<span class='end end kw'>end</span>
+
+<span class='bob identifier id'>bob</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;http://example.org/people/bob&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='as identifier id'>as</span><span class='lparen token'>(</span><span class='Person constant id'>Person</span><span class='rparen token'>)</span>
+<span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='age identifier id'>age</span>  <span class='assign token'>=</span> <span class='integer val'>15</span>
+<span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;Bob Smith&quot;</span>
+<span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+
+<span class='bob identifier id'>bob</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span> <span class='puts identifier id'>puts</span> <span class='s identifier id'>s</span><span class='rbrace token'>}</span>
+<span class='comment val'>#=&gt; RDF::Statement:0x80abb80c(&lt;http://example.org/example/people/bob&gt; &lt;http://xmlns.com/foaf/0.1/name&gt; &quot;Bob Smith&quot; .)</span>
+<span class='comment val'>#=&gt; RDF::Statement:0x80abb8fc(&lt;http://example.org/example/people/bob&gt; &lt;http://xmlns.com/foaf/0.1/age&gt; &quot;15&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt; .)</span>
+</pre>
+
+<h3>Features</h3>
+
+<ul>
+<li>Extensible validations system</li>
+<li>Extensible types system</li>
+<li>Easy to use multiple data sources</li>
+<li>Easy to adapt models to existing data</li>
+<li>Open-world semantics</li>
+<li>Objects are still RDF.rb-compatible enumerable objects</li>
+<li>No need to put everything about an object into Spira</li>
+<li>Easy to use a resource as multiple models</li>
+</ul>
+
+
+<h2>Getting Started</h2>
+
+<p>The easiest way to work with Spira is to install it via Rubygems:</p>
+
+<pre class="code">$ <span class='sudo identifier id'>sudo</span> <span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='spira identifier id'>spira</span>
+</pre>
+
+<p>Downloads will be available on the github project page, as well as on Rubyforge.</p>
+
+<h2>Defining Model Classes</h2>
+
+<p>To use Spira, define model classes for your RDF data.  Spira classes include
+RDF, and thus have access to all <code>RDF::Vocabulary</code> classes and <code>RDF::URI</code>
+without the <code>RDF::</code> prefix.  For example:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'spira'</span>
+
+<span class='class class kw'>class</span> <span class='CD constant id'>CD</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='base_uri identifier id'>base_uri</span> <span class='string val'>'http://example.org/cds'</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:name</span><span class='comma token'>,</span>   <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='comma token'>,</span>   <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='string identifier id'>string</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:artist</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/vocab/artist'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:artist</span>
+<span class='end end kw'>end</span>
+
+<span class='class class kw'>class</span> <span class='Artist constant id'>Artist</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='base_uri identifier id'>base_uri</span> <span class='string val'>'http://example.org/artists'</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:name</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='string identifier id'>string</span>
+  <span class='has_many identifier id'>has_many</span> <span class='symbol val'>:cds</span><span class='comma token'>,</span>  <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/vocab/published_cd'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='string identifier id'>string</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Then use your model classes, in a way more or less similar to any number of ORMs:</p>
+
+<pre class="code"><span class='cd identifier id'>cd</span> <span class='assign token'>=</span> <span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;queens-greatest-hits&quot;</span><span class='rparen token'>)</span>
+<span class='cd identifier id'>cd</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;Queen's greatest hits&quot;</span>
+<span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;queen&quot;</span><span class='rparen token'>)</span>
+<span class='artist identifier id'>artist</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;Queen&quot;</span>
+
+<span class='cd identifier id'>cd</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='artist identifier id'>artist</span>
+<span class='cd identifier id'>cd</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+<span class='artist identifier id'>artist</span><span class='dot token'>.</span><span class='cds identifier id'>cds</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='cd identifier id'>cd</span><span class='rbrack token'>]</span>
+<span class='artist identifier id'>artist</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+
+<span class='queen identifier id'>queen</span> <span class='assign token'>=</span> <span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>'queen'</span><span class='rparen token'>)</span>
+<span class='hits identifier id'>hits</span> <span class='assign token'>=</span> <span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='for identifier id'>for</span> <span class='string val'>'queens-greatest-hits'</span>
+<span class='hits identifier id'>hits</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='eq op'>==</span> <span class='artist identifier id'>artist</span> <span class='eq op'>==</span> <span class='queen identifier id'>queen</span>
+</pre>
+
+<h3>URIs and Blank Nodes</h3>
+
+<p>Spira instances have a subject, which is either a URI or a blank node.</p>
+
+<p>A class with a base URI can instantiate with a string (or anything, via to_s),
+and it will have a URI representation:</p>
+
+<pre class="code"><span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>'queen'</span><span class='rparen token'>)</span>
+</pre>
+
+<p>However, a class is not required to have a base URI, and even if it does, it
+can always access classes with a full URI:</p>
+
+<pre class="code"><span class='nk identifier id'>nk</span> <span class='assign token'>=</span> <span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/my-hidden-cds/new-kids'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+
+<p>If you have a URI that you would like to look at as a Spira resource, you can instantiate it from the URI:</p>
+
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/my-hidden-cds/new-kids'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='as identifier id'>as</span><span class='lparen token'>(</span><span class='Artist constant id'>Artist</span><span class='rparen token'>)</span>
+<span class='comment val'># =&gt; &lt;Artist @subject=http://example.org/my-hidden-cds/new-kids&gt;</span>
+</pre>
+
+<p>Any call to 'for' with a valid identifier will always return an object with nil
+fields.  It's a way of looking at a given resource, not a closed-world mapping
+to one.</p>
+
+<p>You can also use blank nodes more or less as you would a URI:</p>
+
+<pre class="code"><span class='remix_artist identifier id'>remix_artist</span> <span class='assign token'>=</span> <span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span>
+<span class='comment val'># =&gt; &lt;Artist @subject=#&lt;RDF::Node:0xd1d314(_:g13751060)&gt;&gt;</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='dot token'>.</span><span class='as identifier id'>as</span><span class='lparen token'>(</span><span class='Artist constant id'>Artist</span><span class='rparen token'>)</span>
+<span class='comment val'># =&gt; &lt;Artist @subject=#&lt;RDF::Node:0xd1d314(_:g13751040)&gt;&gt;</span>
+</pre>
+
+<p>Finally, you can create an instance of a Spira projection with #new, and you'll
+get an instance with a shiny new blank node subject:</p>
+
+<pre class="code"><span class='formerly_known_as_prince identifier id'>formerly_known_as_prince</span> <span class='assign token'>=</span> <span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='comment val'># =&gt; &lt;Artist @subject=#&lt;RDF::Node:0xd1d314(_:g13747140)&gt;&gt;</span>
+</pre>
+
+<h3>Class Options</h3>
+
+<p>A number of options are available for Spira classes.</p>
+
+<h4>base_uri</h4>
+
+<p>A class with a <code>base_uri</code> set (either an <code>RDF::URI</code> or a <code>String</code>) will
+use that URI as a base URI for non-absolute <code>for</code> calls.</p>
+
+<p>Example</p>
+
+<pre class="code"><span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='for identifier id'>for</span> <span class='string val'>'queens-greatest-hits'</span> <span class='comment val'># is the same as...</span>
+<span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='for identifier id'>for</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/cds/queens-greatest-hits'</span><span class='rparen token'>)</span>
+</pre>
+
+<h4>type</h4>
+
+<p>A class with a <code>type</code> set is assigned an <code>RDF.type</code> on creation and saving.</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Album constant id'>Album</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='type identifier id'>type</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/types/album'</span><span class='rparen token'>)</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:name</span><span class='comma token'>,</span>   <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span>
+<span class='end end kw'>end</span>
+
+<span class='rolling_stones identifier id'>rolling_stones</span> <span class='assign token'>=</span> <span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='for identifier id'>for</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/cds/rolling-stones-hits'</span><span class='rparen token'>)</span>
+<span class='comment val'># See RDF.rb at http://rdf.rubyforge.org/RDF/Enumerable.html for more information about #has_predicate?</span>
+<span class='rolling_stones identifier id'>rolling_stones</span><span class='dot token'>.</span><span class='has_predicate? fid id'>has_predicate?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+<span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='type identifier id'>type</span> <span class='comment val'>#=&gt; RDF::URI('http://example.org/types/album')</span>
+</pre>
+
+<p>In addition, one can count the members of a class with a <code>type</code> defined:</p>
+
+<pre class="code"><span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='count identifier id'>count</span>  <span class='comment val'>#=&gt; 1 </span>
+</pre>
+
+<h4>property</h4>
+
+<p>A class declares property members with the <code>property</code> function.  See <code>Property Options</code> for more information.</p>
+
+<h4>has_many</h4>
+
+<p>A class declares list members with the <code>has_many</code> function.  See <code>Property Options</code> for more information.</p>
+
+<h4>default_vocabulary</h4>
+
+<p>A class with a <code>default_vocabulary</code> set will transparently create predicates for defined properties:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Song constant id'>Song</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='default_vocabulary identifier id'>default_vocabulary</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/vocab'</span><span class='rparen token'>)</span>
+  <span class='base_uri identifier id'>base_uri</span> <span class='string val'>'http://example.org/songs'</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:title</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:author</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:artist</span>
+<span class='end end kw'>end</span>
+
+<span class='dancing_queen identifier id'>dancing_queen</span> <span class='assign token'>=</span> <span class='Song constant id'>Song</span><span class='dot token'>.</span><span class='for identifier id'>for</span> <span class='string val'>'dancing-queen'</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='title identifier id'>title</span> <span class='assign token'>=</span> <span class='string val'>&quot;Dancing Queen&quot;</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='abba identifier id'>abba</span>
+<span class='comment val'># See RDF::Enumerable for #has_predicate?</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='has_predicate? fid id'>has_predicate?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/vocab/title'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>  <span class='comment val'>#=&gt; true</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='has_predicate? fid id'>has_predicate?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/vocab/artist'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+</pre>
+
+<h4>default_source</h4>
+
+<p>Provides this class with a default repository to use instead of the <code>:default</code>
+repository if one is not set.</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Song constant id'>Song</span>
+  <span class='default_source identifier id'>default_source</span> <span class='symbol val'>:songs</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>See 'Defining Repositories' for more information.</p>
+
+<h4>validate</h4>
+
+<p>Provides the name of a function which does some sort of validation.  See
+'Validations' for more information.</p>
+
+<h3>Property Options</h3>
+
+<p>Spira classes can have properties that are either singular or a list.  For a
+list, define the property with <code>has_many</code>, for a property with a single item,
+use <code>property</code>.  The semantics are otherwise the same.  A <code>has_many</code> property
+will always return a list, including an empty list for no value.  All options
+for <code>property</code> work for <code>has_many</code>.</p>
+
+<pre class="code"><span class='property identifier id'>property</span> <span class='symbol val'>:artist</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:artist</span>    <span class='comment val'>#=&gt; cd.artist returns a single value</span>
+<span class='has_many identifier id'>has_many</span> <span class='symbol val'>:cds</span><span class='comma token'>,</span>    <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:cd</span>        <span class='comment val'>#=&gt; artist.cds returns an array</span>
+</pre>
+
+<p>Property always takes a symbol name as a name, and a variable list of options.  The supported options are:</p>
+
+<ul>
+<li><code>:type</code>: The type for this property.  This can be a Ruby base class, an
+RDF::XSD entry, or another Spira model class, referenced as a symbol.  See
+<strong>Types</strong> below.  Default: <code>Any</code></li>
+<li><code>:predicate</code>: The predicate to use for this type.  This can be any RDF URI.
+This option is required unless the <code>default_vocabulary</code> has been used.</li>
+</ul>
+
+
+<h3>Types</h3>
+
+<p>A property's type can be either a class which includes Spira::Type or a
+reference to another Spira model class, given as a symbol.</p>
+
+<h4>Relations</h4>
+
+<p>If the <code>:type</code> of a spira class is the name of another Spira class as a symbol,
+such as <code>:artist</code> for <code>Artist</code>, Spira will attempt to load the referenced
+object when the appropriate property is accessed.</p>
+
+<p>In the RDF store, this will be represented by the URI of the referenced object.</p>
+
+<h4>Type Classes</h4>
+
+<p>A type class includes Spira::Type, and can implement serialization and
+deserialization functions, and register aliases to themselves if their datatype
+is usually expressed as a URI.  Here is the built-in Spira Integer class:</p>
+
+<pre class="code"><span class='module module kw'>module</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Types constant id'>Types</span>
+  <span class='class class kw'>class</span> <span class='Integer constant id'>Integer</span>
+
+    <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='object identifier id'>object</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+
+    <span class='register_alias identifier id'>register_alias</span> <span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='integer identifier id'>integer</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Classes can now use this particular type like so:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Test constant id'>Test</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:test1</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Integer constant id'>Integer</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:test2</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='integer identifier id'>integer</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Spira classes include the Spira::Types namespace, where several default types
+are implemented:</p>
+
+<ul>
+<li><code>Integer</code></li>
+<li><code>Float</code></li>
+<li><code>Boolean</code></li>
+<li><code>String</code></li>
+<li><code>Any</code></li>
+</ul>
+
+
+<p>The default type for a Spira property is <code>Spira::Types::Any</code>, which uses
+<code>RDF::Literal</code>'s automatic boxing/unboxing of XSD types as best it can.  See
+<code>[RDF::Literal](http://rdf.rubyforge.org/RDF/Literal.html)</code> for more information.</p>
+
+<p>You can implement your own types as well.  Your class' serialize method should
+turn an RDF::Value into a ruby object, and vice versa.</p>
+
+<pre class="code"><span class='module module kw'>module</span> <span class='MyModule constant id'>MyModule</span>
+  <span class='class class kw'>class</span> <span class='MyType constant id'>MyType</span>
+    <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Type constant id'>Type</span>
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+
+    <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+      <span class='dot3 op'>...</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+
+<span class='class class kw'>class</span> <span class='MyClass constant id'>MyClass</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:property1</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='MyModule constant id'>MyModule</span><span class='colon2 op'>::</span><span class='MyType constant id'>MyType</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h2>Defining Repositories</h2>
+
+<p>You can define multiple repositories with Spira, and use more than one at a time:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'rdf/sesame'</span>
+<span class='Spira constant id'>Spira</span><span class='dot token'>.</span><span class='add_repository! fid id'>add_repository!</span> <span class='symbol val'>:cds</span><span class='comma token'>,</span>    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Sesame constant id'>Sesame</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='string val'>'some_server'</span>
+<span class='Spira constant id'>Spira</span><span class='dot token'>.</span><span class='add_repository! fid id'>add_repository!</span> <span class='symbol val'>:albums</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>'some_file.nt'</span><span class='rparen token'>)</span>
+
+<span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span> <span class='assign token'>=</span> <span class='symbol val'>:cds</span>
+<span class='Album constant id'>Album</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span> <span class='assign token'>=</span> <span class='symbol val'>:albums</span>
+</pre>
+
+<p>Objects can reference each other cross-repository.</p>
+
+<p>If no repository has been specified, the <code>:default</code> repository will be used.</p>
+
+<pre class="code"><span class='repo identifier id'>repo</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='Spira constant id'>Spira</span><span class='dot token'>.</span><span class='add_repository! fid id'>add_repository!</span> <span class='symbol val'>:default</span><span class='comma token'>,</span> <span class='repo identifier id'>repo</span>
+<span class='Artist constant id'>Artist</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span> <span class='eq op'>==</span> <span class='repo identifier id'>repo</span> <span class='comment val'>#=&gt; true</span>
+</pre>
+
+<p>Classes can specify a default repository to use other than <code>:default</code> with the
+<code>default_source</code> function:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='Song constant id'>Song</span>
+  <span class='default_source identifier id'>default_source</span> <span class='symbol val'>:songs</span>
+<span class='end end kw'>end</span>
+
+<span class='Song constant id'>Song</span><span class='dot token'>.</span><span class='repository identifier id'>repository</span> <span class='comment val'>#=&gt; nil, won't use :default</span>
+</pre>
+
+<h2>Validations</h2>
+
+<p>You may declare any number of validation functions with the <code>validate</code> function.
+Before saving, each referenced validation will be run, and the instance's
+<span class='object_link'><a href="Spira/Errors.html" title="Spira::Errors (class)">Spira::Errors</a></span> object will be populated with any errors.  You can use the
+built in <code>assert</code> and assert helpers such as <code>assert_set</code> and
+<code>asssert_numeric</code>.</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='CD constant id'>CD</span>
+  <span class='validate identifier id'>validate</span> <span class='symbol val'>:is_real_music</span>
+  <span class='def def kw'>def</span> <span class='is_real_music identifier id'>is_real_music</span>
+    <span class='assert identifier id'>assert</span><span class='lparen token'>(</span><span class='artist identifier id'>artist</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='neq op'>!=</span> <span class='string val'>&quot;Nickelback&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:artist</span><span class='comma token'>,</span> <span class='string val'>&quot;cannot be Nickelback&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='validate identifier id'>validate</span> <span class='symbol val'>:track_count_numeric</span>
+  <span class='def def kw'>def</span> <span class='track_count_numeric identifier id'>track_count_numeric</span>
+    <span class='assert_numeric identifier id'>assert_numeric</span><span class='lparen token'>(</span><span class='track_count identifier id'>track_count</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='nickelback identifier id'>nickelback</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>  <span class='comment val'>#=&gt; ValidationError</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='comment val'>#=&gt; [&quot;artist cannot be Nickelback&quot;]</span>
+
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='abba identifier id'>abba</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>  <span class='comment val'>#=&gt; true</span>
+</pre>
+
+<h2>Hooks</h2>
+
+<p>Spira supports <code>before_create</code>, <code>after_create</code>, <code>after_update</code>, <code>before_save</code>,
+<code>after_save</code>, and <code>before_destroy</code> hooks:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='CD constant id'>CD</span>
+  <span class='def def kw'>def</span> <span class='before_save identifier id'>before_save</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='publisher identifier id'>publisher</span> <span class='assign token'>=</span> <span class='string val'>'No publisher set'</span> <span class='if if_mod kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='publisher identifier id'>publisher</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>The <code>after_update</code> hook only fires on the <code>update</code> method, not simple property
+accessors (to allow you to easily set properties in these without going into a
+recursive loop):</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='CD constant id'>CD</span>
+  <span class='def def kw'>def</span> <span class='after_update identifier id'>after_update</span>
+    <span class='self self kw'>self</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span> <span class='assign token'>=</span> <span class='string val'>'Queen'</span> <span class='comment val'># every artist should be Queen!</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+
+<span class='comment val'># ...snip ...</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span>
+<span class='comment val'>#=&gt; &quot;ABBA&quot;</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='string val'>&quot;Dancing Queen&quot;</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span>
+<span class='comment val'>#=&gt; &quot;ABBA&quot;</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='update identifier id'>update</span><span class='lparen token'>(</span><span class='symbol val'>:name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;Dancing Queen&quot;</span><span class='rparen token'>)</span>
+<span class='dancing_queen identifier id'>dancing_queen</span><span class='dot token'>.</span><span class='artist identifier id'>artist</span>
+<span class='comment val'>#=&gt; &quot;Queen&quot;</span>
+</pre>
+
+<h2>Inheritance</h2>
+
+<p>You can extend Spira resources without a problem:</p>
+
+<pre class="code"><span class='class class kw'>class</span> <span class='BoxedSet constant id'>BoxedSet</span> <span class='lt op'>&lt;</span> <span class='CD constant id'>CD</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='property identifier id'>property</span> <span class='cd_count identifier id'>cd_count</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='CD constant id'>CD</span><span class='dot token'>.</span><span class='count identifier id'>count</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Integer constant id'>Integer</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>You can also make Spira modules and include them into other classes:</p>
+
+<pre class="code"><span class='module module kw'>module</span> <span class='Media constant id'>Media</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='property identifier id'>property</span> <span class='symbol val'>:format</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='Media constant id'>Media</span><span class='dot token'>.</span><span class='format identifier id'>format</span>
+<span class='end end kw'>end</span>
+
+<span class='class class kw'>class</span> <span class='CD constant id'>CD</span>
+  <span class='include identifier id'>include</span> <span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span>
+  <span class='include identifier id'>include</span> <span class='Media constant id'>Media</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h2>Using Model Objects as RDF.rb Objects</h2>
+
+<p>All model objects are fully-functional as <code>RDF::Enumerable</code>, <code>RDF::Queryable</code>,
+and <code>RDF::Mutable</code>.  This lets you manipulate objects on the RDF statement
+level.  You can also access attributes that are not defined as properties.</p>
+
+<h2>Support</h2>
+
+<p>There are a number of ways to ask for help.  In declining order of preference:</p>
+
+<ul>
+<li>Fork the project and write a failing test, or a pending test for a feature request</li>
+<li>Ask on the <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/">public-rdf-ruby w3c mailing list</a></li>
+<li>You can post issues to the Github issue queue</li>
+<li>(there might one day be a google group or other such support channel, but not yet)</li>
+</ul>
+
+
+<h2>Authors, Development, and License</h2>
+
+<h4>Authors</h4>
+
+<ul>
+<li>Ben Lavender <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#58;&#x62;&#108;&#97;&#118;&#x65;&#x6e;&#100;&#101;&#114;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#98;&#x6c;&#x61;&#118;&#x65;&#x6e;&#100;&#x65;&#114;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></li>
+</ul>
+
+
+<h4>'License'</h4>
+
+<p>Spira is free and unemcumbered software released into the public
+domain.  For more information, see the included UNLICENSE file.</p>
+
+<h4>Contributing</h4>
+
+<p>Fork it on Github and go.  Please make sure you're kosher with the UNLICENSE
+file before contributing.</p></div></div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:12 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

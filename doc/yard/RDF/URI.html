@@ -1,0 +1,3830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: RDF::URI</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (U)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
+     &raquo; 
+    <span class="title">URI</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: RDF::URI
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">RDF::URI</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">Resource</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/extensions.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/gems/spira-0.0.12/lib/spira.rb,<br /> vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/writer.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A Uniform Resource Identifier (URI).</p>
+
+<p><code>RDF::URI</code> supports all the instance methods of <code>Addressable::URI</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Creating a URI reference (1)</p></div></h4>
+      <pre class="example code"><span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Creating a URI reference (2)</p></div></h4>
+      <pre class="example code"><span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:scheme</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http'</span><span class='comma token'>,</span> <span class='symbol val'>:host</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'rdf.rubyforge.org'</span><span class='comma token'>,</span> <span class='symbol val'>:path</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'/'</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Creating an interned URI reference</p></div></h4>
+      <pre class="example code"><span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Getting the string representation of a URI</p></div></h4>
+      <pre class="example code"><span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='comment val'>#=&gt; &quot;http://rdf.rubyforge.org/&quot;</span>
+</pre>
+    
+  </div>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://en.wikipedia.org/wiki/Uniform_Resource_Identifier" target="_parent" title="http://en.wikipedia.org/wiki/Uniform_Resource_Identifier">http://en.wikipedia.org/wiki/Uniform_Resource_Identifier</a></li>
+    
+      <li><a href="http://addressable.rubyforge.org/" target="_parent" title="http://addressable.rubyforge.org/">http://addressable.rubyforge.org/</a></li>
+    
+  </ul>
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="CACHE_SIZE-constant" class="">CACHE_SIZE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Defines the maximum number of interned URI references that can be held
+cached in memory at any one time.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='integer val'>-1</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#intern-class_method" title="intern (class method)">+ (RDF::URI) <strong>intern</strong>(str) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns an interned <code>RDF::URI</code> instance based on the given <code>uri</code>
+string.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse-class_method" title="parse (class method)">+ (RDF::URI) <strong>parse</strong>(str) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Creates a new <code>RDF::URI</code> instance based on the given <code>uri</code> string.</p></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%2B-instance_method" title="#+ (instance method)">- (RDF::URI) <strong>+</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Simple concatenation operator.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%2F-instance_method" title="#/ (instance method)">- (RDF::URI) <strong>/</strong>(fragment) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>'Smart separator' URI builder.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%3D-instance_method" title="#== (instance method)">- (Boolean) <strong>==</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Checks whether this URI is equal to <code>other</code> (type checking).</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%3D%3D-instance_method" title="#=== (instance method)">- (Boolean) <strong>===</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Checks for case equality to the given <code>other</code> object.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#%3D%7E-instance_method" title="#=~ (instance method)">- (Integer) <strong>=~</strong>(pattern) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Performs a pattern match using the given regular expression.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#anonymous%3F-instance_method" title="#anonymous? (instance method)">- (Boolean) <strong>anonymous?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>false</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as-instance_method" title="#as (instance method)">- (Klass) <strong>as</strong>(klass, *args) {|self| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a projection of this URI as the given Spira::Resource class.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#canonicalize-instance_method" title="#canonicalize (instance method)">- (RDF::URI) <strong>canonicalize</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a copy of this URI converted into its canonical lexical
+representation.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#canonicalize%21-instance_method" title="#canonicalize! (instance method)">- (RDF::URI) <strong>canonicalize!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Converts this URI into its canonical lexical representation.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dup-instance_method" title="#dup (instance method)">- (RDF::URI) <strong>dup</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a duplicate copy of <code>self</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#end_with%3F-instance_method" title="#end_with? (instance method)">- (Boolean) <strong>end_with?</strong>(string) </a>
+    
+
+    
+      (also: #ends_with?)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI ends with the given <code>string</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#eql%3F-instance_method" title="#eql? (instance method)">- (Boolean) <strong>eql?</strong>(other) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Checks whether this URI the same term as `other'.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_parent%3F-instance_method" title="#has_parent? (instance method)">- (Boolean) <strong>has_parent?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI's path component isn't equal to <code>/</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hash-instance_method" title="#hash (instance method)">- (Fixnum) <strong>hash</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a hash code for this URI.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (URI) <strong>initialize</strong>(uri_or_options) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of URI.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#join-instance_method" title="#join (instance method)">- (RDF::URI) <strong>join</strong>(*uris) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Joins several URIs together.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#length-instance_method" title="#length (instance method)">- (Integer) <strong>length</strong> </a>
+    
+
+    
+      (also: #size)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the string length of this URI.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lexical-instance_method" title="#lexical (instance method)">- (Object) <strong>lexical</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lexical%3D-instance_method" title="#lexical= (instance method)">- (Object) <strong>lexical=</strong>(value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Original lexical value of this URI to allow for round-trip serialization.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parent-instance_method" title="#parent (instance method)">- (RDF::URI) <strong>parent</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a copy of this URI with the path component ascended to the
+parent directory, if any.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#qname-instance_method" title="#qname (instance method)">- (Array(Symbol, Symbol)) <strong>qname</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a qualified name (QName) for this URI, if possible.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#respond_to%3F-instance_method" title="#respond_to? (instance method)">- (Boolean) <strong>respond_to?</strong>(symbol) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI instance supports the <code>symbol</code> method.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#root-instance_method" title="#root (instance method)">- (RDF::URI) <strong>root</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a copy of this URI with the path component set to <code>/</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#root%3F-instance_method" title="#root? (instance method)">- (Boolean) <strong>root?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI's path component is equal to <code>/</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#start_with%3F-instance_method" title="#start_with? (instance method)">- (Boolean) <strong>start_with?</strong>(string) </a>
+    
+
+    
+      (also: #starts_with?)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI starts with the given <code>string</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_str-instance_method" title="#to_str (instance method)">- (String) <strong>to_str</strong> </a>
+    
+
+    
+      (also: #to_s)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the string representation of this URI.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_sxp-instance_method" title="#to_sxp (instance method)">- (String) <strong>to_sxp</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the SXP representation of this object.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_uri-instance_method" title="#to_uri (instance method)">- (RDF::URI) <strong>to_uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>self</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uri%3F-instance_method" title="#uri? (instance method)">- (Boolean) <strong>uri?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url%3F-instance_method" title="#url? (instance method)">- (Boolean) <strong>url?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI is a URL.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#urn%3F-instance_method" title="#urn? (instance method)">- (Boolean) <strong>urn?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this URI is a URN.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#validate%21-instance_method" title="#validate! (instance method)">- (RDF::URI) <strong>validate!</strong> </a>
+    
+
+    
+      (also: #validate)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Validates this URI, raising an error if it is invalid.</p></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">Resource</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span>, <span class='object_link'><a href="Resource.html#resource%3F-instance_method" title="RDF::Resource#resource? (method)">#resource?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Term.html" title="RDF::Term (module)">Term</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Term.html#%3C%3D%3E-instance_method" title="RDF::Term#<=> (method)">#<=></a></span>, <span class='object_link'><a href="Term.html#constant%3F-instance_method" title="RDF::Term#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="Term.html#evaluate-instance_method" title="RDF::Term#evaluate (method)">#evaluate</a></span>, <span class='object_link'><a href="Term.html#variable%3F-instance_method" title="RDF::Term#variable? (method)">#variable?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../SPARQL/Algebra/Expression.html" title="SPARQL::Algebra::Expression (module)">SPARQL::Algebra::Expression</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../SPARQL/Algebra/Expression.html#cast-class_method" title="SPARQL::Algebra::Expression.cast (method)">cast</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#constant%3F-instance_method" title="SPARQL::Algebra::Expression#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#evaluate-instance_method" title="SPARQL::Algebra::Expression#evaluate (method)">#evaluate</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#for-class_method" title="SPARQL::Algebra::Expression.for (method)">for</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#open-class_method" title="SPARQL::Algebra::Expression.open (method)">open</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#optimize-instance_method" title="SPARQL::Algebra::Expression#optimize (method)">#optimize</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#to_sse-instance_method" title="SPARQL::Algebra::Expression#to_sse (method)">#to_sse</a></span>, <span class='object_link'><a href="../SPARQL/Algebra/Expression.html#variable%3F-instance_method" title="SPARQL::Algebra::Expression#variable? (method)">#variable?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Value.html#graph%3F-instance_method" title="RDF::Value#graph? (method)">#graph?</a></span>, <span class='object_link'><a href="Value.html#inspect-instance_method" title="RDF::Value#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Value.html#inspect%21-instance_method" title="RDF::Value#inspect! (method)">#inspect!</a></span>, <span class='object_link'><a href="Value.html#iri%3F-instance_method" title="RDF::Value#iri? (method)">#iri?</a></span>, <span class='object_link'><a href="Value.html#literal%3F-instance_method" title="RDF::Value#literal? (method)">#literal?</a></span>, <span class='object_link'><a href="Value.html#node%3F-instance_method" title="RDF::Value#node? (method)">#node?</a></span>, <span class='object_link'><a href="Value.html#resource%3F-instance_method" title="RDF::Value#resource? (method)">#resource?</a></span>, <span class='object_link'><a href="Value.html#statement%3F-instance_method" title="RDF::Value#statement? (method)">#statement?</a></span>, <span class='object_link'><a href="Value.html#to_ntriples-instance_method" title="RDF::Value#to_ntriples (method)">#to_ntriples</a></span>, <span class='object_link'><a href="Value.html#to_rdf-instance_method" title="RDF::Value#to_rdf (method)">#to_rdf</a></span>, <span class='object_link'><a href="Value.html#type_error-instance_method" title="RDF::Value#type_error (method)">#type_error</a></span>, <span class='object_link'><a href="Value.html#variable%3F-instance_method" title="RDF::Value#variable? (method)">#variable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>URI.new</strong>(uri) </span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>URI.new</strong>(options = {}) </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>A new instance of URI</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>URI.new</strong>(uri) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>uri</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>URI.new</strong>(options = {}) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>} options</tt>)</span>
+      
+      
+        <span class='name'>Hash{Symbol</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>=> Object} options</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='uri_or_options identifier id'>uri_or_options</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='uri_or_options identifier id'>uri_or_options</span>
+    <span class='when when kw'>when</span> <span class='Hash constant id'>Hash</span>
+      <span class='@uri ivar id'>@uri</span> <span class='assign token'>=</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='uri_or_options identifier id'>uri_or_options</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span>
+      <span class='@uri ivar id'>@uri</span> <span class='assign token'>=</span> <span class='uri_or_options identifier id'>uri_or_options</span>
+    <span class='else else kw'>else</span>
+      <span class='@uri ivar id'>@uri</span> <span class='assign token'>=</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='uri_or_options identifier id'>uri_or_options</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <p class="signature first" id="method_missing-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>method_missing</strong>(symbol, *args) { ... } <span class="extras">(protected)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>symbol</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>&gt;</tt>)</span>
+      
+      
+        <span class='name'>args</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'></span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 558</span>
+
+<span class='def def kw'>def</span> <span class='method_missing identifier id'>method_missing</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span>
+    <span class='case case kw'>case</span> <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+      <span class='when when kw'>when</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span>
+        <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span> <span class='result identifier id'>result</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="intern-class_method">
+  
+    + (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>intern</strong>(str) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns an interned <code>RDF::URI</code> instance based on the given <code>uri</code>
+string.</p>
+
+<p>The maximum number of cached interned URI references is given by the
+<code>CACHE_SIZE</code> constant. This value is unlimited by default, in which
+case an interned URI object will be purged only when the last strong
+reference to it is garbage collected (i.e., when its finalizer runs).</p>
+
+<p>Excepting special memory-limited circumstances, it should always be
+safe and preferred to construct new URI references using
+<code>RDF::URI.intern</code> instead of <code>RDF::URI.new</code>, since if an interned
+object can't be returned for some reason, this method will fall back
+to returning a freshly-allocated one.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>str</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>an immutable, frozen URI object</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 56</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='cache identifier id'>cache</span><span class='lbrack token'>[</span><span class='str identifier id'>str</span> <span class='assign token'>=</span> <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse-class_method">
+  
+    + (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>parse</strong>(str) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Creates a new <code>RDF::URI</code> instance based on the given <code>uri</code> string.</p>
+
+<p>This is just an alias for <span class='object_link'><a href="#initialize-instance_method" title="RDF::URI#initialize (method)">RDF::URI.new</a></span> for compatibity
+with <code>Addressable::URI.parse</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>str</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 68</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="+-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>+</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Simple concatenation operator.  Returns a URI formed from concatenating
+the string form of two elements.</p>
+
+<p>For building URIs from fragments, you may want to use the smart
+separator, <code>#/</code>.  <code>#join</code> implements another set of URI building
+semantics.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Concatenating a string to a URI</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/test'</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'test'</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/testtest')</span>
+</pre>
+    
+      <h4><div class='inline'><p>Concatenating two URIs</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/test'</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'test'</span><span class='rparen token'>)</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/testtest')</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Any</tt>)</span>
+      
+      
+        <span class='name'></span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#%2F-instance_method" title="RDF::URI#/ (method)">#/</a></span></li>
+    
+      <li><span class='object_link'><a href="#join-instance_method" title="RDF::URI#join (method)">#join</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+289
+290
+291</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 289</span>
+
+<span class='def def kw'>def</span> <span class='plus op'>+</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="/-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>/</strong>(fragment) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>'Smart separator' URI builder</p>
+
+<p>This method attempts to use some understanding of the most common use
+cases for URLs and URNs to create a simple method for building new URIs
+from fragments.  This means that it will always insert a separator of
+some sort, will remove duplicate seperators, will always assume that a
+fragment argument represents a relative and not absolute path, and throws
+an exception when an absolute URI is received for a fragment argument.</p>
+
+<p>This is separate from the semantics for <code>#join</code>, which are well-defined by
+RFC3986 section 5.2 as part of the merging and normalization process;
+this method does not perform any normalization, removal of spurious
+paths, or removal of parent directory references <code>(/../)</code>.</p>
+
+<p>See also <code>#+</code>, which concatenates the string forms of two URIs without
+any sort of checking or processing.</p>
+
+<p>For an up-to-date list of edge case behavior, see the shared examples for
+RDF::URI in the rdf-spec project.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Building a HTTP URL</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org'</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='string val'>'jhacker'</span> <span class='div op'>/</span> <span class='string val'>'foaf.ttl'</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/jhacker/foaf.ttl')</span>
+</pre>
+    
+      <h4><div class='inline'><p>Building a HTTP URL</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='string val'>'/jhacker/'</span> <span class='div op'>/</span> <span class='string val'>'/foaf.ttl'</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/jhacker/foaf.ttl')</span>
+</pre>
+    
+      <h4><div class='inline'><p>Using an anchored base URI</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/users#'</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='string val'>'jhacker'</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/users#jhacker')</span>
+</pre>
+    
+      <h4><div class='inline'><p>Building a URN</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'urn:isbn'</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='integer val'>125235111</span>
+<span class='comment val'>#=&gt; RDF::URI('urn:isbn:125235111')</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Any</tt>)</span>
+      
+      
+        <span class='name'>fragment</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A URI fragment to be appended to this URI</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#%2B-instance_method" title="RDF::URI#+ (method)">#+</a></span></li>
+    
+      <li><span class='object_link'><a href="#join-instance_method" title="RDF::URI#join (method)">#join</a></span></li>
+    
+      <li><a href="<http://tools.ietf.org/html/rfc3986#section-5.2>" target="_parent" title="&lt;http://tools.ietf.org/html/rfc3986#section-5.2&gt;"><http://tools.ietf.org/html/rfc3986#section-5.2></a></li>
+    
+      <li><a href="<http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb>" target="_parent" title="&lt;http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb&gt;"><http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb></a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 246</span>
+
+<span class='def def kw'>def</span> <span class='div op'>/</span><span class='lparen token'>(</span><span class='fragment identifier id'>fragment</span><span class='rparen token'>)</span>
+  <span class='fragment identifier id'>fragment</span> <span class='assign token'>=</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_uri</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_uri identifier id'>to_uri</span> <span class='colon op'>:</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Non-absolute URI or string required, got #{fragment}&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='relative? fid id'>relative?</span>
+  <span class='if if kw'>if</span> <span class='urn? fid id'>urn?</span>
+    <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/:+$/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>':'</span> <span class='plus op'>+</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^:+/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span> <span class='comment val'># !urn?</span>
+    <span class='case case kw'>case</span> <span class='to_s identifier id'>to_s</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
+      <span class='when when kw'>when</span> <span class='string val'>'#'</span>
+        <span class='case case kw'>case</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
+          <span class='when when kw'>when</span> <span class='string val'>'/'</span> <span class='then then kw'>then</span> <span class='comment val'># Base ending with '#', fragment beginning with '/'.  The fragment wins, we use '/'.</span>
+          <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/#+$/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'/'</span> <span class='plus op'>+</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^\/+/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+        <span class='else else kw'>else</span>
+          <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/#+$/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'#'</span> <span class='plus op'>+</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^#+/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+        <span class='end end kw'>end</span>
+      <span class='else else kw'>else</span> <span class='comment val'># includes '/'.  Results from bases ending in '/' are the same as if there were no trailing slash.</span>
+        <span class='case case kw'>case</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
+          <span class='when when kw'>when</span> <span class='string val'>'#'</span> <span class='then then kw'>then</span> <span class='comment val'># Base ending with '/', fragment beginning with '#'.  The fragment wins, we use '#'.</span>
+            <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/\/+$/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'#'</span> <span class='plus op'>+</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^#+/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+          <span class='else else kw'>else</span>
+            <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/\/+$/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='string val'>'/'</span> <span class='plus op'>+</span> <span class='fragment identifier id'>fragment</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^\/+/</span><span class='comma token'>,</span><span class='string val'>''</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+          <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="==-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>==</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Checks whether this URI is equal to <code>other</code> (type checking).</p>
+
+<p>Per SPARQL data-r2/expr-equal/eq-2-2, numeric can't be compared with other types</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'http://t.co/'</span>              <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span>        <span class='comment val'>#=&gt; true</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/rdf-sparql-query/#func-RDFterm-equal" target="_parent" title="http://www.w3.org/TR/rdf-sparql-query/#func-RDFterm-equal">http://www.w3.org/TR/rdf-sparql-query/#func-RDFterm-equal</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 464</span>
+
+<span class='def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='other identifier id'>other</span>
+  <span class='when when kw'>when</span> <span class='Literal constant id'>Literal</span>
+    <span class='comment val'># If other is a Literal, reverse test to consolodate complex type checking logic</span>
+    <span class='other identifier id'>other</span> <span class='eq op'>==</span> <span class='self self kw'>self</span>
+  <span class='when when kw'>when</span> <span class='String constant id'>String</span> <span class='then then kw'>then</span> <span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span>
+  <span class='when when kw'>when</span> <span class='URI constant id'>URI</span><span class='comma token'>,</span> <span class='Addressable constant id'>Addressable</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span> <span class='then then kw'>then</span> <span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='else else kw'>else</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_uri</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='to_uri identifier id'>to_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="===-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>===</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Checks for case equality to the given <code>other</code> object.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span> <span class='eqq op'>===</span> <span class='regexp val'>/example/</span>           <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span> <span class='eqq op'>===</span> <span class='regexp val'>/foobar/</span>            <span class='comment val'>#=&gt; false</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span> <span class='eqq op'>===</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span>   <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span> <span class='eqq op'>===</span> <span class='string val'>'http://t.co/'</span>             <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span> <span class='eqq op'>===</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span>       <span class='comment val'>#=&gt; true</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+488
+489
+490
+491
+492
+493</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 488</span>
+
+<span class='def def kw'>def</span> <span class='eqq op'>===</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='other identifier id'>other</span>
+    <span class='when when kw'>when</span> <span class='Regexp constant id'>Regexp</span> <span class='then then kw'>then</span> <span class='other identifier id'>other</span> <span class='eqq op'>===</span> <span class='to_s identifier id'>to_s</span>
+    <span class='else else kw'>else</span> <span class='self self kw'>self</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="=~-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>) <strong>=~</strong>(pattern) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Performs a pattern match using the given regular expression.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span> <span class='match op'>=~</span> <span class='regexp val'>/example/</span>            <span class='comment val'>#=&gt; 7</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span> <span class='match op'>=~</span> <span class='regexp val'>/foobar/</span>             <span class='comment val'>#=&gt; nil</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Regexp.html" title="Regexp (class)">Regexp</a></span></tt>)</span>
+      
+      
+        <span class='name'>pattern</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the position the match starts</p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li>String#=~</li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+506
+507
+508
+509
+510
+511</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 506</span>
+
+<span class='def def kw'>def</span> <span class='match op'>=~</span><span class='lparen token'>(</span><span class='pattern identifier id'>pattern</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='pattern identifier id'>pattern</span>
+    <span class='when when kw'>when</span> <span class='Regexp constant id'>Regexp</span> <span class='then then kw'>then</span> <span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='pattern identifier id'>pattern</span>
+    <span class='else else kw'>else</span> <span class='super super kw'>super</span> <span class='comment val'># `Object#=~` returns `false`</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="anonymous?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>anonymous?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>false</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='anonymous? fid id'>anonymous?</span>
+  <span class='false false kw'>false</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="as-instance_method">
+  
+    - (<tt>Klass</tt>) <strong>as</strong>(klass, *args) {|self| ... }
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Create a projection of this URI as the given Spira::Resource class.
+Equivalent to <code>klass.for(self, *args)</code></p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Instantiating a URI as a Spira Resource</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/person/bob'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='as identifier id'>as</span><span class='lparen token'>(</span><span class='Person constant id'>Person</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+        <span class='name'>klass</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt>*Any</tt>)</span>
+      
+      
+        <span class='name'>args</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Any arguments to pass to klass.for</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Executes a given block and calls <code>#save!</code></p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+        <span class='name'>self</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The newly created instance</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Klass</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An instance of klass</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/spira-0.0.12/lib/spira.rb', line 133</span>
+
+<span class='def def kw'>def</span> <span class='as identifier id'>as</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{klass} is not a Spira resource&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Class constant id'>Class</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='ancestors identifier id'>ancestors</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span><span class='rparen token'>)</span>
+  <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='for identifier id'>for</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="canonicalize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>canonicalize</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a copy of this URI converted into its canonical lexical
+representation.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 163</span>
+
+<span class='def def kw'>def</span> <span class='canonicalize identifier id'>canonicalize</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='dot token'>.</span><span class='canonicalize! fid id'>canonicalize!</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="canonicalize!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>canonicalize!</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Converts this URI into its canonical lexical representation.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p></div>
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 172</span>
+
+<span class='def def kw'>def</span> <span class='canonicalize! fid id'>canonicalize!</span>
+  <span class='comment val'># TODO: canonicalize this URI</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="dup-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>dup</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a duplicate copy of <code>self</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+394
+395
+396</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 394</span>
+
+<span class='def def kw'>def</span> <span class='dup identifier id'>dup</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="end_with?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>end_with?</strong>(string) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='ends_with?-instance_method'>ends_with?</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI ends with the given <code>string</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string val'>'/'</span><span class='rparen token'>)</span>          <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string val'>'#'</span><span class='rparen token'>)</span>          <span class='comment val'>#=&gt; false</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>string</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li>String#end_with?</li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+432
+433
+434</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 432</span>
+
+<span class='def def kw'>def</span> <span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="eql?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>eql?</strong>(other) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Checks whether this URI the same term as `other'.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='string val'>'http://t.co/'</span><span class='rparen token'>)</span>           <span class='comment val'>#=&gt; false</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='rparen token'>)</span>     <span class='comment val'>#=&gt; false</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+        <span class='name'>other</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+447
+448
+449</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 447</span>
+
+<span class='def def kw'>def</span> <span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='other identifier id'>other</span><span class='rparen token'>)</span>
+  <span class='other identifier id'>other</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='URI constant id'>URI</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='self self kw'>self</span> <span class='eq op'>==</span> <span class='other identifier id'>other</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="has_parent?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_parent?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI's path component isn't equal to <code>/</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='has_parent? fid id'>has_parent?</span>             <span class='comment val'>#=&gt; false</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/path/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='has_parent? fid id'>has_parent?</span>        <span class='comment val'>#=&gt; true</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+331
+332
+333</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 331</span>
+
+<span class='def def kw'>def</span> <span class='has_parent? fid id'>has_parent?</span>
+  <span class='notop op'>!</span><span class='root? fid id'>root?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="hash-instance_method">
+  
+    - (<tt>Fixnum</tt>) <strong>hash</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a hash code for this URI.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Fixnum</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+537
+538
+539</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 537</span>
+
+<span class='def def kw'>def</span> <span class='hash identifier id'>hash</span>
+  <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='hash identifier id'>hash</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="join-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>join</strong>(*uris) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Joins several URIs together.</p>
+
+<p>This method conforms to join normalization semantics as per RFC3986,
+section 5.2.  This method normalizes URIs, removes some duplicate path
+information, such as double slashes, and other behavior specified in the
+RFC.</p>
+
+<p>Other URI building methods are <code>#/</code> and <code>#+</code>.</p>
+
+<p>For an up-to-date list of edge case behavior, see the shared examples for
+RDF::URI in the rdf-spec project.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Joining two URIs</p></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/foo/bar'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'/foo'</span><span class='rparen token'>)</span>
+<span class='comment val'>#=&gt; RDF::URI('http://example.org/foo')</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>, <span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span>, #to_s&gt;</tt>)</span>
+      
+      
+        <span class='name'>uris</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="<http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb>" target="_parent" title="&lt;http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb&gt;"><http://github.com/bendiken/rdf-spec/blob/master/lib/rdf/spec/uri.rb></a></li>
+    
+      <li><a href="<http://tools.ietf.org/html/rfc3986#section-5.2>" target="_parent" title="&lt;http://tools.ietf.org/html/rfc3986#section-5.2&gt;"><http://tools.ietf.org/html/rfc3986#section-5.2></a></li>
+    
+      <li><span class='object_link'><a href="#%2F-instance_method" title="RDF::URI#/ (method)">#/</a></span></li>
+    
+      <li><span class='object_link'><a href="#%2B-instance_method" title="RDF::URI#+ (method)">#+</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+199
+200
+201
+202
+203
+204
+205</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 199</span>
+
+<span class='def def kw'>def</span> <span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='uris identifier id'>uris</span><span class='rparen token'>)</span>
+  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='uris identifier id'>uris</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='uri identifier id'>uri</span><span class='bitor op'>|</span>
+    <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='result identifier id'>result</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="length-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>) <strong>length</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='size-instance_method'>size</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the string length of this URI.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='length identifier id'>length</span>                  <span class='comment val'>#=&gt; 19</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 140</span>
+
+<span class='def def kw'>def</span> <span class='length identifier id'>length</span>
+  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='length identifier id'>length</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="lexical-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>lexical</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/extensions.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='lexical identifier id'>lexical</span><span class='semicolon token'>;</span> <span class='@lexical ivar id'>@lexical</span> <span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="lexical=-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>lexical=</strong>(value) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Original lexical value of this URI to allow for round-trip serialization.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/extensions.rb', line 19</span>
+
+<span class='def def kw'>def</span> <span class='lexical= identifier id'>lexical=</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='@lexical ivar id'>@lexical</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span> <span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parent-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>parent</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a copy of this URI with the path component ascended to the
+parent directory, if any.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parent identifier id'>parent</span>                  <span class='comment val'>#=&gt; nil</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/path/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parent identifier id'>parent</span>             <span class='comment val'>#=&gt; RDF::URI('http://example.org/')</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 344</span>
+
+<span class='def def kw'>def</span> <span class='parent identifier id'>parent</span>
+  <span class='case case kw'>case</span>
+    <span class='when when kw'>when</span> <span class='root? fid id'>root?</span> <span class='then then kw'>then</span> <span class='nil nil kw'>nil</span>
+    <span class='else else kw'>else</span>
+      <span class='require identifier id'>require</span> <span class='string val'>'pathname'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='Pathname constant id'>Pathname</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='Pathname constant id'>Pathname</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parent identifier id'>parent</span>
+        <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+        <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='path identifier id'>path</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+        <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>'/'</span> <span class='unless unless_mod kw'>unless</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='root? fid id'>root?</span>
+        <span class='uri identifier id'>uri</span>
+      <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="qname-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>)</tt>) <strong>qname</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a qualified name (QName) for this URI, if possible.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='qname identifier id'>qname</span>             <span class='comment val'>#=&gt; [:dc, nil]</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/title'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='qname identifier id'>qname</span>        <span class='comment val'>#=&gt; [:dc, :title]</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='dot token'>.</span><span class='qname identifier id'>qname</span>                                     <span class='comment val'>#=&gt; [:dc, :title]</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>(<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>, <span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>)</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>or <code>nil</code> if no QName found</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 367</span>
+
+<span class='def def kw'>def</span> <span class='qname identifier id'>qname</span>
+  <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>%r([:/#]([^:/#]*)$)</span>
+    <span class='local_name identifier id'>local_name</span> <span class='assign token'>=</span> <span class='$1 nth_ref id'>$1</span>
+    <span class='vocab_uri identifier id'>vocab_uri</span>  <span class='assign token'>=</span> <span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='colon op'>:</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot3 op'>...</span><span class='minus op'>-</span><span class='lparen token'>(</span><span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='Vocabulary constant id'>Vocabulary</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='vocab identifier id'>vocab</span><span class='bitor op'>|</span>
+      <span class='if if kw'>if</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='to_uri identifier id'>to_uri</span> <span class='eq op'>==</span> <span class='vocab_uri identifier id'>vocab_uri</span>
+        <span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='equal? fid id'>equal?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:rdf</span> <span class='colon op'>:</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='__prefix__ identifier id'>__prefix__</span>
+        <span class='return return kw'>return</span> <span class='lbrack token'>[</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='else else kw'>else</span>
+    <span class='Vocabulary constant id'>Vocabulary</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='vocab identifier id'>vocab</span><span class='bitor op'>|</span>
+      <span class='vocab_uri identifier id'>vocab_uri</span> <span class='assign token'>=</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='to_uri identifier id'>to_uri</span>
+      <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='vocab_uri identifier id'>vocab_uri</span><span class='rparen token'>)</span>
+        <span class='prefix identifier id'>prefix</span> <span class='assign token'>=</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='equal? fid id'>equal?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:rdf</span> <span class='colon op'>:</span> <span class='vocab identifier id'>vocab</span><span class='dot token'>.</span><span class='__prefix__ identifier id'>__prefix__</span>
+        <span class='local_name identifier id'>local_name</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='lbrack token'>[</span><span class='vocab_uri identifier id'>vocab_uri</span><span class='dot token'>.</span><span class='length identifier id'>length</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span>
+        <span class='return return kw'>return</span> <span class='lbrack token'>[</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='local_name identifier id'>local_name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span> <span class='comment val'># no QName found</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="respond_to?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>respond_to?</strong>(symbol) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI instance supports the <code>symbol</code> method.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>symbol</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+546
+547
+548</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 546</span>
+
+<span class='def def kw'>def</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span>
+  <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='super super kw'>super</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="root-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>root</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a copy of this URI with the path component set to <code>/</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='root identifier id'>root</span>                    <span class='comment val'>#=&gt; RDF::URI('http://example.org/')</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/path/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='root identifier id'>root</span>               <span class='comment val'>#=&gt; RDF::URI('http://example.org/')</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+313
+314
+315
+316
+317
+318
+319
+320
+321</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 313</span>
+
+<span class='def def kw'>def</span> <span class='root identifier id'>root</span>
+  <span class='if if kw'>if</span> <span class='root? fid id'>root?</span>
+    <span class='self self kw'>self</span>
+  <span class='else else kw'>else</span>
+    <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+    <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='string val'>'/'</span>
+    <span class='uri identifier id'>uri</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="root?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>root?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI's path component is equal to <code>/</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='root? fid id'>root?</span>                   <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/path/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='root? fid id'>root?</span>              <span class='comment val'>#=&gt; false</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+301
+302
+303</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 301</span>
+
+<span class='def def kw'>def</span> <span class='root? fid id'>root?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='eq op'>==</span> <span class='string val'>'/'</span> <span class='orop op'>||</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='path identifier id'>path</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="start_with?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>start_with?</strong>(string) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='starts_with?-instance_method'>starts_with?</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI starts with the given <code>string</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string val'>'http'</span><span class='rparen token'>)</span>     <span class='comment val'>#=&gt; true</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string val'>'ftp'</span><span class='rparen token'>)</span>      <span class='comment val'>#=&gt; false</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>string</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li>String#start_with?</li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+416
+417
+418</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 416</span>
+
+<span class='def def kw'>def</span> <span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='rparen token'>)</span>
+  <span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string identifier id'>string</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_str-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>to_str</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='to_s-instance_method'>to_s</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the string representation of this URI.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_str identifier id'>to_str</span>                  <span class='comment val'>#=&gt; 'http://example.org/'</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+528
+529
+530</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 528</span>
+
+<span class='def def kw'>def</span> <span class='to_str identifier id'>to_str</span>
+  <span class='@uri ivar id'>@uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_sxp-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>to_sxp</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the SXP representation of this object.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/writer.rb', line 158</span>
+
+<span class='def def kw'>def</span> <span class='to_sxp identifier id'>to_sxp</span><span class='semicolon token'>;</span> <span class='lexical identifier id'>lexical</span> <span class='orop op'>||</span> <span class='dstring node'>&quot;&lt;#{self}&gt;&quot;</span> <span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_uri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>to_uri</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>self</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+517
+518
+519</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 517</span>
+
+<span class='def def kw'>def</span> <span class='to_uri identifier id'>to_uri</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="uri?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>uri?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://en.wikipedia.org/wiki/Uniform_Resource_Identifier" target="_parent" title="http://en.wikipedia.org/wiki/Uniform_Resource_Identifier">http://en.wikipedia.org/wiki/Uniform_Resource_Identifier</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 102</span>
+
+<span class='def def kw'>def</span> <span class='uri? fid id'>uri?</span>
+  <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="url?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>url?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI is a URL.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='url? fid id'>url?</span>                    <span class='comment val'>#=&gt; true</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://en.wikipedia.org/wiki/Uniform_Resource_Locator" target="_parent" title="http://en.wikipedia.org/wiki/Uniform_Resource_Locator">http://en.wikipedia.org/wiki/Uniform_Resource_Locator</a></li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 128</span>
+
+<span class='def def kw'>def</span> <span class='url? fid id'>url?</span>
+  <span class='notop op'>!</span><span class='urn? fid id'>urn?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="urn?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>urn?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this URI is a URN.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://example.org/'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='urn? fid id'>urn?</span>                    <span class='comment val'>#=&gt; false</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+      
+    </li>
+  
+</ul>
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://en.wikipedia.org/wiki/Uniform_Resource_Name" target="_parent" title="http://en.wikipedia.org/wiki/Uniform_Resource_Name">http://en.wikipedia.org/wiki/Uniform_Resource_Name</a></li>
+    
+  </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 115</span>
+
+<span class='def def kw'>def</span> <span class='urn? fid id'>urn?</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string val'>'urn:'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="validate!-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>validate!</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='validate-instance_method'>validate</span></span>
+    </span>
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Validates this URI, raising an error if it is invalid.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p></div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the URI is invalid</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-ba565bd566df/lib/rdf/model/uri.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='validate! fid id'>validate!</span>
+  <span class='comment val'># TODO: raise error if the URI fails validation</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:34:11 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

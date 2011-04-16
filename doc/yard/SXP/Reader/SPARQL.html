@@ -1,0 +1,1333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Class: SXP::Reader::SPARQL</title>
+<link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../../SXP.html" title="SXP (module)">SXP</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Reader.html" title="SXP::Reader (class)">Reader</a></span></span>
+     &raquo; 
+    <span class="title">SPARQL</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: SXP::Reader::SPARQL
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Extended.html" title="SXP::Reader::Extended (class)">Extended</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Reader.html" title="SXP::Reader (class)">SXP::Reader</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="Basic.html" title="SXP::Reader::Basic (class)">Basic</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="Extended.html" title="SXP::Reader::Extended (class)">Extended</a></span></li>
+          
+            <li class="next">SXP::Reader::SPARQL</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A SPARQL Syntax Expressions (SSE) parser.</p>
+
+<p>Requires <a href="http://rdf.rubyforge.org/">RDF.rb</a>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><a href="http://openjena.org/wiki/SSE" target="_parent" title="http://openjena.org/wiki/SSE">http://openjena.org/wiki/SSE</a></li>
+    
+  </ul>
+
+</div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="A-constant" class="">A =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Alias for rdf:type</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^a$/</span>
+</pre></dd>
+      
+        <dt id="BASE-constant" class="">BASE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Base token, causes next URI to be treated as the <code>base_uri</code> for further URI expansion</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^base$/i</span>
+</pre></dd>
+      
+        <dt id="PREFIX-constant" class="">PREFIX =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Prefix token, causes following prefix and URI pairs to be used for transforming
+<span class='object_link'><a href="#PNAME-constant" title="SXP::Reader::SPARQL::PNAME (constant)">PNAME</a></span> tokens into URIs.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^prefix$/i</span>
+</pre></dd>
+      
+        <dt id="NIL-constant" class="">NIL =
+          
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^nil$/i</span>
+</pre></dd>
+      
+        <dt id="FALSE-constant" class="">FALSE =
+          
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^false$/i</span>
+</pre></dd>
+      
+        <dt id="TRUE-constant" class="">TRUE =
+          
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^true$/i</span>
+</pre></dd>
+      
+        <dt id="EXPONENT-constant" class="">EXPONENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/[eE][+-]?[0-9]+/</span>
+</pre></dd>
+      
+        <dt id="DECIMAL-constant" class="">DECIMAL =
+          
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^[+-]?(\d*)?\.\d*$/</span>
+</pre></dd>
+      
+        <dt id="DOUBLE-constant" class="">DOUBLE =
+          
+        </dt>
+        <dd><pre class="code"><span class='dregexp node'>/^[+-]?(\d*)?\.\d*#{EXPONENT}$/</span>
+</pre></dd>
+      
+        <dt id="BNODE_ID-constant" class="">BNODE_ID =
+          <div class="docstring">
+  <div class="discussion">
+    <p>BNode with identifier</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^_:([A-Za-z][A-Za-z0-9]*)/</span>
+</pre></dd>
+      
+        <dt id="BNODE_NEW-constant" class="">BNODE_NEW =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Anonymous BNode</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^_:$/</span>
+</pre></dd>
+      
+        <dt id="VAR_ID-constant" class="">VAR_ID =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Distinguished variable with an optional name</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^\?([A-Za-z][A-Za-z0-9]*)?/</span>
+</pre></dd>
+      
+        <dt id="ND_VAR-constant" class="">ND_VAR =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Non-distinguished variable with an optional identifier</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^\?\?([0-9]*)/</span>
+</pre></dd>
+      
+        <dt id="URIREF-constant" class="">URIREF =
+          <div class="docstring">
+  <div class="discussion">
+    <p>A URI reference, subject to expansion using <code>base_uri</code></p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/^&lt;([^&gt;]+)&gt;/</span>
+</pre></dd>
+      
+        <dt id="PNAME-constant" class="">PNAME =
+          <div class="docstring">
+  <div class="discussion">
+    <p>A QName, subject to expansion to URIs using <span class='object_link'><a href="#PREFIX-constant" title="SXP::Reader::SPARQL::PREFIX (constant)">PREFIX</a></span></p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+        </dt>
+        <dd><pre class="code"><span class='regexp val'>/([^:]*):([^:]*)/</span>
+</pre></dd>
+      
+        <dt id="RDF_TYPE-constant" class="">RDF_TYPE =
+          
+        </dt>
+        <dd><pre class="code"><span class='lparen token'>(</span><span class='a identifier id'>a</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span><span class='semicolon token'>;</span> <span class='a identifier id'>a</span><span class='dot token'>.</span><span class='lexical identifier id'>lexical</span> <span class='assign token'>=</span> <span class='string val'>'a'</span><span class='semicolon token'>;</span> <span class='a identifier id'>a</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+  
+  
+  
+  
+  <h3 class="inherited">Constants inherited from <span class='object_link'><a href="Extended.html" title="SXP::Reader::Extended (class)">Extended</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Extended.html#ATOM-constant" title="SXP::Reader::Extended::ATOM (constant)">ATOM</a></span>, <span class='object_link'><a href="Extended.html#LPARENS-constant" title="SXP::Reader::Extended::LPARENS (constant)">LPARENS</a></span>, <span class='object_link'><a href="Extended.html#RPARENS-constant" title="SXP::Reader::Extended::RPARENS (constant)">RPARENS</a></span></p>
+
+  
+  
+  
+  
+  <h3 class="inherited">Constants inherited from <span class='object_link'><a href="Basic.html" title="SXP::Reader::Basic (class)">Basic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Basic.html#ATOM-constant" title="SXP::Reader::Basic::ATOM (constant)">ATOM</a></span>, <span class='object_link'><a href="Basic.html#DECIMAL-constant" title="SXP::Reader::Basic::DECIMAL (constant)">DECIMAL</a></span>, <span class='object_link'><a href="Basic.html#INTEGER-constant" title="SXP::Reader::Basic::INTEGER (constant)">INTEGER</a></span>, <span class='object_link'><a href="Basic.html#LPARENS-constant" title="SXP::Reader::Basic::LPARENS (constant)">LPARENS</a></span>, <span class='object_link'><a href="Basic.html#RATIONAL-constant" title="SXP::Reader::Basic::RATIONAL (constant)">RATIONAL</a></span>, <span class='object_link'><a href="Basic.html#RPARENS-constant" title="SXP::Reader::Basic::RPARENS (constant)">RPARENS</a></span></p>
+
+  
+  
+  
+  
+  
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#base_uri-instance_method" title="#base_uri (instance method)">- (Object) <strong>base_uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Base URI as specified or when parsing parsing a BASE token using the immediately following
+token, which must be a URI.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prefixes-instance_method" title="#prefixes (instance method)">- (Hash{Object =&gt; RDF::URI}) <strong>prefixes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Prefixes defined while parsing.</p></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (SPARQL) <strong>initialize</strong>(input, options = {}, &amp;block) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initializes the reader.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prefix-instance_method" title="#prefix (instance method)">- (RDF::URI) <strong>prefix</strong>(name, uri = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Defines the given named URI prefix for this parser.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read_rdf_literal-instance_method" title="#read_rdf_literal (instance method)">- (RDF::Literal) <strong>read_rdf_literal</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Reads literals corresponding to SPARQL/Turtle/Notation-3 syntax.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read_rdf_uri-instance_method" title="#read_rdf_uri (instance method)">- (RDF::URI) <strong>read_rdf_uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Reads a URI in SPARQL/Turtle/Notation-3 syntax.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read_token-instance_method" title="#read_token (instance method)">- (Object) <strong>read_token</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Reads SSE Tokens, including <span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span>, <span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> and RDF::Node.</p></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Extended.html" title="SXP::Reader::Extended (class)">Extended</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Extended.html#skip_comments-instance_method" title="SXP::Reader::Extended#skip_comments (method)">#skip_comments</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Basic.html" title="SXP::Reader::Basic (class)">Basic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Basic.html#read_atom-instance_method" title="SXP::Reader::Basic#read_atom (method)">#read_atom</a></span>, <span class='object_link'><a href="Basic.html#read_character-instance_method" title="SXP::Reader::Basic#read_character (method)">#read_character</a></span>, <span class='object_link'><a href="Basic.html#read_literal-instance_method" title="SXP::Reader::Basic#read_literal (method)">#read_literal</a></span>, <span class='object_link'><a href="Basic.html#read_string-instance_method" title="SXP::Reader::Basic#read_string (method)">#read_string</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Reader.html" title="SXP::Reader (class)">SXP::Reader</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Reader.html#each-instance_method" title="SXP::Reader#each (method)">#each</a></span>, <span class='object_link'><a href="../Reader.html#eof%3F-instance_method" title="SXP::Reader#eof? (method)">#eof?</a></span>, <span class='object_link'><a href="../Reader.html#peek_char-instance_method" title="SXP::Reader#peek_char (method)">#peek_char</a></span>, <span class='object_link'><a href="../Reader.html#read-instance_method" title="SXP::Reader#read (method)">#read</a></span>, <span class='object_link'><a href="../Reader.html#read-class_method" title="SXP::Reader.read (method)">read</a></span>, <span class='object_link'><a href="../Reader.html#read_all-class_method" title="SXP::Reader.read_all (method)">read_all</a></span>, <span class='object_link'><a href="../Reader.html#read_all-instance_method" title="SXP::Reader#read_all (method)">#read_all</a></span>, <span class='object_link'><a href="../Reader.html#read_atom-instance_method" title="SXP::Reader#read_atom (method)">#read_atom</a></span>, <span class='object_link'><a href="../Reader.html#read_char-instance_method" title="SXP::Reader#read_char (method)">#read_char</a></span>, <span class='object_link'><a href="../Reader.html#read_character-instance_method" title="SXP::Reader#read_character (method)">#read_character</a></span>, <span class='object_link'><a href="../Reader.html#read_chars-instance_method" title="SXP::Reader#read_chars (method)">#read_chars</a></span>, <span class='object_link'><a href="../Reader.html#read_file-class_method" title="SXP::Reader.read_file (method)">read_file</a></span>, <span class='object_link'><a href="../Reader.html#read_files-class_method" title="SXP::Reader.read_files (method)">read_files</a></span>, <span class='object_link'><a href="../Reader.html#read_integer-instance_method" title="SXP::Reader#read_integer (method)">#read_integer</a></span>, <span class='object_link'><a href="../Reader.html#read_list-instance_method" title="SXP::Reader#read_list (method)">#read_list</a></span>, <span class='object_link'><a href="../Reader.html#read_literal-instance_method" title="SXP::Reader#read_literal (method)">#read_literal</a></span>, <span class='object_link'><a href="../Reader.html#read_sharp-instance_method" title="SXP::Reader#read_sharp (method)">#read_sharp</a></span>, <span class='object_link'><a href="../Reader.html#read_string-instance_method" title="SXP::Reader#read_string (method)">#read_string</a></span>, <span class='object_link'><a href="../Reader.html#read_url-class_method" title="SXP::Reader.read_url (method)">read_url</a></span>, <span class='object_link'><a href="../Reader.html#skip_comments-instance_method" title="SXP::Reader#skip_comments (method)">#skip_comments</a></span>, <span class='object_link'><a href="../Reader.html#skip_line-instance_method" title="SXP::Reader#skip_line (method)">#skip_line</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="SXP::Reader::SPARQL (class)">SPARQL</a></span></tt>) <strong>initialize</strong>(input, options = {}, &amp;block) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Initializes the reader.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>IO</tt>, <tt>StringIO</tt>, <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+        <span class='name'>input</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 76</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='lbrace token'>{</span> <span class='@prefixes ivar id'>@prefixes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='semicolon token'>;</span> <span class='@bnodes ivar id'>@bnodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='semicolon token'>;</span> <span class='@list_depth ivar id'>@list_depth</span> <span class='assign token'>=</span> <span class='integer val'>0</span> <span class='rbrace token'>}</span>
+
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+    <span class='case case kw'>case</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span>
+      <span class='when when kw'>when</span> <span class='integer val'>1</span> <span class='then then kw'>then</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+      <span class='else else kw'>else</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="base_uri=-instance_method"></span>
+      <span id="base_uri-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="base_uri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>base_uri</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Base URI as specified or when parsing parsing a BASE token using the immediately following
+token, which must be a URI.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='base_uri identifier id'>base_uri</span>
+  <span class='@base_uri ivar id'>@base_uri</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="prefixes=-instance_method"></span>
+      <span id="prefixes-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="prefixes-instance_method">
+  
+    - (<tt>Hash{<span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>prefixes</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Prefixes defined while parsing</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='prefixes identifier id'>prefixes</span>
+  <span class='@prefixes ivar id'>@prefixes</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="prefix-instance_method">
+  
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>prefix</strong>(name, uri) </span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>prefix</strong>(name) </span>
+    
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Defines the given named URI prefix for this parser.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Defining a URI prefix</p></div></h4>
+      <pre class="example code"><span class='parser identifier id'>parser</span><span class='dot token'>.</span><span class='prefix identifier id'>prefix</span> <span class='symbol val'>:dc</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Returning a URI prefix</p></div></h4>
+      <pre class="example code"><span class='parser identifier id'>parser</span><span class='dot token'>.</span><span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='symbol val'>:dc</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; RDF::URI('http://purl.org/dc/terms/')</span>
+</pre>
+    
+  </div>
+
+  <h3>Overloads:</h3>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>prefix</strong>(name, uri) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>name</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>uri</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>prefix</strong>(name) </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <span class='name'>name</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 66</span>
+
+<span class='def def kw'>def</span> <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span> <span class='colon op'>:</span> <span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+  <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='@prefixes ivar id'>@prefixes</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='@prefixes ivar id'>@prefixes</span><span class='lbrack token'>[</span><span class='name identifier id'>name</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='uri identifier id'>uri</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="read_rdf_literal-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span></tt>) <strong>read_rdf_literal</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Reads literals corresponding to SPARQL/Turtle/Notation-3 syntax</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='string val'>&quot;a plain literal&quot;</span>
+<span class='string val'>&quot;a literal with a language&quot;</span><span class='@en ivar id'>@en</span>
+<span class='string val'>&quot;a typed literal&quot;</span><span class='bitxor op'>^</span><span class='bitxor op'>^</span><span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span>
+<span class='string val'>&quot;a typed literal with a PNAME&quot;</span><span class='bitxor op'>^</span><span class='bitxor op'>^</span><span class='xsd identifier id'>xsd</span><span class='symbol val'>:string</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 156</span>
+
+<span class='def def kw'>def</span> <span class='read_rdf_literal identifier id'>read_rdf_literal</span>
+  <span class='value identifier id'>value</span>   <span class='assign token'>=</span> <span class='read_string identifier id'>read_string</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='peek_char identifier id'>peek_char</span>
+    <span class='when when kw'>when</span> <span class='integer val'>?@</span>
+      <span class='skip_char identifier id'>skip_char</span> <span class='comment val'># '@'</span>
+      <span class='lbrace token'>{</span><span class='symbol val'>:language</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='read_atom identifier id'>read_atom</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span><span class='rbrace token'>}</span>
+    <span class='when when kw'>when</span> <span class='integer val'>?^</span>
+      <span class='float val'>2</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='lbrace token'>{</span> <span class='skip_char identifier id'>skip_char</span> <span class='rbrace token'>}</span> <span class='comment val'># '^^'</span>
+      <span class='lbrace token'>{</span><span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='read_token identifier id'>read_token</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rbrace token'>}</span>
+    <span class='else else kw'>else</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="read_rdf_uri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>read_rdf_uri</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Reads a URI in SPARQL/Turtle/Notation-3 syntax</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span>
+</pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 177</span>
+
+<span class='def def kw'>def</span> <span class='read_rdf_uri identifier id'>read_rdf_uri</span>
+      <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='String constant id'>String</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+      <span class='skip_char identifier id'>skip_char</span> <span class='comment val'># '&lt;'</span>
+      <span class='return return kw'>return</span> <span class='symbol val'>:&lt;</span> <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='peek_char identifier id'>peek_char</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='char identifier id'>char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='nmatch op'>!~</span> <span class='ATOM constant id'>ATOM</span> <span class='comment val'># FIXME: nasty special case for the '&lt; symbol</span>
+      <span class='return return kw'>return</span> <span class='symbol val'>:&lt;=</span> <span class='if if kw'>if</span> <span class='peek_char identifier id'>peek_char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span><span class='dot token'>.</span><span class='eql? fid id'>eql?</span><span class='lparen token'>(</span><span class='integer val'>?=</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='read_char identifier id'>read_char</span>    <span class='comment val'># FIXME: nasty special case for the '&lt;= symbol</span>
+      <span class='until until kw'>until</span> <span class='peek_char identifier id'>peek_char</span> <span class='eq op'>==</span> <span class='integer val'>?&gt;</span>
+        <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='read_char identifier id'>read_char</span> <span class='comment val'># TODO: unescaping</span>
+      <span class='end end kw'>end</span>
+      <span class='skip_char identifier id'>skip_char</span> <span class='comment val'># '&gt;'</span>
+
+      <span class='comment val'># If we have a base URI, use that when constructing a new URI</span>
+      <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span>
+        <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
+        <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='lexical identifier id'>lexical</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;&lt;#{buffer}&gt;&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='buffer identifier id'>buffer</span>  <span class='comment val'># So that it can be re-serialized properly</span>
+        <span class='u identifier id'>u</span>
+      <span class='else else kw'>else</span>
+        <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+      
+      <span class='comment val'># If we previously parsed a &quot;BASE&quot; element, then this URI is used to set that value</span>
+      <span class='if if kw'>if</span> <span class='@parsed_base ivar id'>@parsed_base</span>
+        <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span> <span class='assign token'>=</span> <span class='uri identifier id'>uri</span>
+        <span class='@parsed_base ivar id'>@parsed_base</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+      <span class='end end kw'>end</span>
+      
+      <span class='comment val'># If we previously parsed a &quot;PREFIX&quot; element, associate this URI with the prefix</span>
+      <span class='if if kw'>if</span> <span class='@parsed_prefix ivar id'>@parsed_prefix</span>
+        <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='@parsed_prefix ivar id'>@parsed_prefix</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
+        <span class='@parsed_prefix ivar id'>@parsed_prefix</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+      <span class='end end kw'>end</span>
+      
+      <span class='uri identifier id'>uri</span>
+    <span class='end end kw'>end</span>
+
+    <span class='comment val'>##</span>
+    <span class='comment val'># Reads an SSE Atom</span>
+    <span class='comment val'>#</span>
+    <span class='comment val'># Atoms parsed including `base`, `prefix`, `true`, `false`, numeric, BNodes and variables.</span>
+    <span class='comment val'>#</span>
+    <span class='comment val'># Creates {RDF::Literal}, RDF::Node, or {RDF::Query::Variable} instances where appropriate.</span>
+    <span class='comment val'>#</span>
+    <span class='comment val'># @return [Object]</span>
+    <span class='def def kw'>def</span> <span class='read_atom identifier id'>read_atom</span>
+      <span class='case case kw'>case</span> <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='read_literal identifier id'>read_literal</span>
+        <span class='when when kw'>when</span> <span class='string val'>'.'</span>       <span class='then then kw'>then</span> <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+        <span class='when when kw'>when</span> <span class='A constant id'>A</span>         <span class='then then kw'>then</span> <span class='RDF_TYPE constant id'>RDF_TYPE</span>
+        <span class='when when kw'>when</span> <span class='BASE constant id'>BASE</span>      <span class='then then kw'>then</span> <span class='@parsed_base ivar id'>@parsed_base</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='semicolon token'>;</span> <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+        <span class='when when kw'>when</span> <span class='NIL constant id'>NIL</span>       <span class='then then kw'>then</span> <span class='nil nil kw'>nil</span>
+        <span class='when when kw'>when</span> <span class='FALSE constant id'>FALSE</span>     <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='false false kw'>false</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='TRUE constant id'>TRUE</span>      <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='true true kw'>true</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='DOUBLE constant id'>DOUBLE</span>    <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='colon2 op'>::</span><span class='Double constant id'>Double</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='DECIMAL constant id'>DECIMAL</span>   <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='colon2 op'>::</span><span class='Decimal constant id'>Decimal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='INTEGER constant id'>INTEGER</span>   <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='colon2 op'>::</span><span class='Integer constant id'>Integer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='BNODE_ID constant id'>BNODE_ID</span>  <span class='then then kw'>then</span> <span class='@bnodes ivar id'>@bnodes</span><span class='lbrack token'>[</span><span class='$1 nth_ref id'>$1</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='BNODE_NEW constant id'>BNODE_NEW</span> <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+        <span class='when when kw'>when</span> <span class='ND_VAR constant id'>ND_VAR</span>   <span class='then then kw'>then</span> <span class='variable identifier id'>variable</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='false false kw'>false</span><span class='rparen token'>)</span>
+        <span class='when when kw'>when</span> <span class='VAR_ID constant id'>VAR_ID</span>    <span class='then then kw'>then</span> <span class='variable identifier id'>variable</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+        <span class='else else kw'>else</span> <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='comment val'>##</span>
+    <span class='comment val'># @return [void]</span>
+    <span class='def def kw'>def</span> <span class='skip_comments identifier id'>skip_comments</span>
+      <span class='until until kw'>until</span> <span class='eof? fid id'>eof?</span>
+        <span class='case case kw'>case</span> <span class='lparen token'>(</span><span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='peek_char identifier id'>peek_char</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
+          <span class='when when kw'>when</span> <span class='regexp val'>/\s+/</span> <span class='then then kw'>then</span> <span class='skip_char identifier id'>skip_char</span>
+          <span class='when when kw'>when</span> <span class='regexp val'>/;/</span>   <span class='then then kw'>then</span> <span class='skip_line identifier id'>skip_line</span>
+          <span class='when when kw'>when</span> <span class='regexp val'>/#/</span>   <span class='then then kw'>then</span> <span class='skip_line identifier id'>skip_line</span>
+          <span class='else else kw'>else</span> <span class='break break kw'>break</span>
+        <span class='end end kw'>end</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+    
+    <span class='comment val'>##</span>
+    <span class='comment val'># Return variable allocated to an ID.</span>
+    <span class='comment val'># If no ID is provided, a new variable</span>
+    <span class='comment val'># is allocated. Otherwise, any previous assignment will be used.</span>
+    <span class='comment val'>#</span>
+    <span class='comment val'># The variable has a #distinguished? method applied depending on if this</span>
+    <span class='comment val'># is a disinguished or non-distinguished variable. Non-distinguished</span>
+    <span class='comment val'># variables are effectively the same as BNodes.</span>
+    <span class='comment val'># @return [RDF::Query::Variable]</span>
+    <span class='def def kw'>def</span> <span class='variable identifier id'>variable</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='comma token'>,</span> <span class='distinguished identifier id'>distinguished</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='id identifier id'>id</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+      
+      <span class='if if kw'>if</span> <span class='id identifier id'>id</span>
+        <span class='@vars ivar id'>@vars</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+        <span class='@vars ivar id'>@vars</span><span class='lbrack token'>[</span><span class='id identifier id'>id</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+          <span class='v identifier id'>v</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+          <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='distinguished identifier id'>distinguished</span> <span class='assign token'>=</span> <span class='distinguished identifier id'>distinguished</span>
+          <span class='v identifier id'>v</span>
+        <span class='end end kw'>end</span>
+      <span class='else else kw'>else</span>
+        <span class='v identifier id'>v</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+        <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='distinguished identifier id'>distinguished</span> <span class='assign token'>=</span> <span class='distinguished identifier id'>distinguished</span>
+        <span class='v identifier id'>v</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span> <span class='comment val'># SPARQL</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="read_token-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>read_token</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Reads SSE Tokens, including <span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span>, <span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> and RDF::Node.</p>
+
+<p>Performs forward reference for prefix and base URI representations and saves in
+<span class='object_link'><a href="#base_uri-instance_method" title="SXP::Reader::SPARQL#base_uri (method)">#base_uri</a></span> and <span class='object_link'><a href="#prefixes-instance_method" title="SXP::Reader::SPARQL#prefixes (method)">#prefixes</a></span> accessors.</p>
+
+<p>Transforms tokens matching a <span class='object_link'><a href="#PNAME-constant" title="SXP::Reader::SPARQL::PNAME (constant)">PNAME</a></span> pattern into <span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> instances if a match is
+found with a previously identified <span class='object_link'><a href="#PREFIX-constant" title="SXP::Reader::SPARQL::PREFIX (constant)">PREFIX</a></span>.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>)</span>
+      
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/sparql.rb', line 96</span>
+
+<span class='def def kw'>def</span> <span class='read_token identifier id'>read_token</span>
+  <span class='case case kw'>case</span> <span class='peek_char identifier id'>peek_char</span>
+  <span class='when when kw'>when</span> <span class='integer val'>?&quot;</span> <span class='then then kw'>then</span> <span class='lbrack token'>[</span><span class='symbol val'>:atom</span><span class='comma token'>,</span> <span class='read_rdf_literal identifier id'>read_rdf_literal</span><span class='rbrack token'>]</span> <span class='comment val'># &quot;</span>
+  <span class='when when kw'>when</span> <span class='integer val'>?&lt;</span> <span class='then then kw'>then</span> <span class='lbrack token'>[</span><span class='symbol val'>:atom</span><span class='comma token'>,</span> <span class='read_rdf_uri identifier id'>read_rdf_uri</span><span class='rbrack token'>]</span>
+  <span class='else else kw'>else</span>
+    <span class='tok identifier id'>tok</span> <span class='assign token'>=</span> <span class='super super kw'>super</span>
+    
+    <span class='comment val'># If we just parsed &quot;PREFIX&quot;, and this is an opening list, then</span>
+    <span class='comment val'># record list depth and process following as token, URI pairs</span>
+    <span class='comment val'>#</span>
+    <span class='comment val'># Once we've closed the list, go out of prefix mode</span>
+    <span class='if if kw'>if</span> <span class='tok identifier id'>tok</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='symbol val'>:list</span>
+      <span class='if if kw'>if</span> <span class='string val'>'(['</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='@list_depth ivar id'>@list_depth</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+      <span class='else else kw'>else</span>
+        <span class='@list_depth ivar id'>@list_depth</span> <span class='opasgn op'>-=</span> <span class='integer val'>1</span>
+        <span class='@prefix_depth ivar id'>@prefix_depth</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span> <span class='if if_mod kw'>if</span> <span class='@prefix_depth ivar id'>@prefix_depth</span> <span class='andop op'>&amp;&amp;</span> <span class='@list_depth ivar id'>@list_depth</span> <span class='lt op'>&lt;</span> <span class='@prefix_depth ivar id'>@prefix_depth</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+
+    <span class='if if kw'>if</span> <span class='tok identifier id'>tok</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='symbol val'>:atom</span> <span class='andop op'>&amp;&amp;</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Symbol constant id'>Symbol</span><span class='rparen token'>)</span>
+      <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+
+      <span class='comment val'># We previously parsed a PREFIX, this will be the map value</span>
+      <span class='@parsed_prefix ivar id'>@parsed_prefix</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='chop identifier id'>chop</span> <span class='if if_mod kw'>if</span> <span class='@prefix_depth ivar id'>@prefix_depth</span> <span class='andop op'>&amp;&amp;</span> <span class='@prefix_depth ivar id'>@prefix_depth</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span>
+      
+      <span class='comment val'># If we just saw PREFIX, then this starts the parsing mode</span>
+      <span class='@prefix_depth ivar id'>@prefix_depth</span> <span class='assign token'>=</span> <span class='@list_depth ivar id'>@list_depth</span> <span class='plus op'>+</span> <span class='integer val'>1</span> <span class='if if_mod kw'>if</span> <span class='value identifier id'>value</span> <span class='match op'>=~</span> <span class='PREFIX constant id'>PREFIX</span>
+      
+      <span class='comment val'># If the token is of the form 'prefix:suffix', create a URI and give it the</span>
+      <span class='comment val'># token as a QName</span>
+      <span class='if if kw'>if</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='PNAME constant id'>PNAME</span> <span class='andop op'>&amp;&amp;</span> <span class='base identifier id'>base</span> <span class='assign token'>=</span> <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='rparen token'>)</span>
+        <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='$2 nth_ref id'>$2</span>
+        <span class='comment val'>#STDERR.puts &quot;read_tok lexical: pfx: #{$1.inspect} =&gt; #{prefix($1).inspect}, sfx: #{suffix.inspect}&quot;</span>
+        <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^\#/</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>&quot;#&quot;</span><span class='rparen token'>)</span>
+        <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='suffix identifier id'>suffix</span><span class='rparen token'>)</span>
+        <span class='comment val'>#STDERR.puts &quot;read_tok lexical uri: #{uri.inspect}&quot;</span>
+
+        <span class='comment val'># Cause URI to be serialized as a lexical</span>
+        <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='lexical identifier id'>lexical</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span>
+        <span class='lbrack token'>[</span><span class='symbol val'>:atom</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='rbrack token'>]</span>
+      <span class='else else kw'>else</span>
+        <span class='tok identifier id'>tok</span>
+      <span class='end end kw'>end</span>
+    <span class='else else kw'>else</span>
+      <span class='tok identifier id'>tok</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:34:09 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

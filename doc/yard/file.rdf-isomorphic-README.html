@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File: rdf-isomorphic-README</title>
+<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: rdf-isomorphic-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>RDF Isomorphism</h1>
+
+<p>This is an RDF.rb plugin for RDF Isomorphism functionality for RDF::Enumerables.
+That includes RDF::Repository, RDF::Graph, query results, and more.</p>
+
+<p>For more information about RDF.rb, see <a href="http://rdf.rubyforge.org">http://rdf.rubyforge.org</a></p>
+
+<h2>Synopsis:</h2>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
+
+
+<span class='a identifier id'>a</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-1.nt'</span>
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='comment val'># &lt; RDF::Statement:0xd344c4(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:abc&gt; .) &gt;</span>
+
+<span class='b identifier id'>b</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-2.nt'</span>
+<span class='b identifier id'>b</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='comment val'># &lt; RDF::Statement:0xd3801a(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:testing&gt; .) &gt;</span>
+
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='isomorphic_with? fid id'>isomorphic_with?</span> <span class='b identifier id'>b</span>
+<span class='comment val'># true</span>
+
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='bijection_to identifier id'>bijection_to</span> <span class='b identifier id'>b</span>
+<span class='comment val'># { #&lt;RDF::Node:0xd345a0(_:abc)&gt;=&gt;#&lt;RDF::Node:0xd38574(_:testing)&gt; }</span>
+</pre>
+
+<h2>Algorithm</h2>
+
+<p>The algorithm used here is very similar to the one described by Jeremy Carroll
+in <a href="http://www.hpl.hp.com/techreports/2001/HPL-2001-293.pdf">http://www.hpl.hp.com/techreports/2001/HPL-2001-293.pdf</a>.  See
+<a href="http://blog.datagraph.org/2010/03/rdf-isomorphism">http://blog.datagraph.org/2010/03/rdf-isomorphism</a>.</p>
+
+<p>Generally speaking, the Carroll algorithm is a very good fit for RDF graphs. It
+is a specialization of the naive factorial-time test for graph isomorphism,
+wherein non-anonymous RDF data lets us eliminate vast quantities of options well
+before we try them.  Pathological cases, such as graphs which only contain
+anonymous resources, may experience poor performance.</p>
+
+<h3>Equality</h3>
+
+<p>Although it was considered to provide <code>==</code> to mean isomorphic, RDF isomorphism
+can sometimes be a factorial-complexity problem and it seemed better to perhaps
+not overwrite such a commonly used method for that.  But it's really useful for
+specs in RDF libraries.  Try this in your tests:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='module module kw'>module</span> <span class='RDF constant id'>RDF</span>
+  <span class='module module kw'>module</span> <span class='Isomorphic constant id'>Isomorphic</span>
+    <span class='alias_method identifier id'>alias_method</span> <span class='symbol val'>:==</span><span class='comma token'>,</span> <span class='symbol val'>:isomorphic_with?</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+
+<span class='describe identifier id'>describe</span> <span class='string val'>'something'</span> <span class='do do kw'>do</span>
+  <span class='context identifier id'>context</span> <span class='string val'>'does'</span> <span class='do do kw'>do</span>
+    <span class='it identifier id'>it</span> <span class='string val'>'should be equal'</span> <span class='do do kw'>do</span>
+      <span class='repository_a identifier id'>repository_a</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='repository_b identifier id'>repository_b</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<h3>Information</h3>
+
+<ul>
+<li>Author: Ben Lavender <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x62;&#x6c;&#97;&#118;&#101;&#x6e;&#100;&#x65;&#114;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x62;&#108;&#97;&#x76;&#x65;&#110;&#x64;&#x65;&#114;&#x40;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> - <a href="http://bhuga.net">http://bhuga.net</a></li>
+<li>Author: Arto Bendiken <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x61;&#114;&#116;&#111;&#46;&#98;&#101;&#110;&#x64;&#x69;&#x6b;&#101;&#110;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;">&#x61;&#114;&#116;&#x6f;&#46;&#98;&#101;&#x6e;&#x64;&#x69;&#107;&#101;&#x6e;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#109;</a> - <a href="http://ar.to">http://ar.to</a></li>
+<li>Source: <a href="http://github.com/bhuga/RDF-Isomorphic">http://github.com/bhuga/RDF-Isomorphic</a></li>
+<li>Issues: <a href="http://github.com/bhuga/RDF-Isomorphic/issues">http://github.com/bhuga/RDF-Isomorphic/issues</a></li>
+</ul>
+
+
+<h3>See also</h3>
+
+<ul>
+<li>RDF.rb: <a href="http://rdf.rubyforge.org">http://rdf.rubyforge.org</a></li>
+<li>RDF.rb source: <a href="http://github.com/bendiken/rdf">http://github.com/bendiken/rdf</a></li>
+</ul>
+
+
+<h3>"License"</h3>
+
+<p>rdf-isomorphic is free and unemcumbered software in the public domain.  For
+more information, see the accompanying UNLICENSE file or <a href="http://unlicense.org">http://unlicense.org</a></p></div></div>
+    
+    <div id="footer">
+  Generated on Fri Apr 15 17:33:11 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.6.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

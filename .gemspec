@@ -27,9 +27,9 @@ GEMSPEC = Gem::Specification.new do |gem|
   gem.required_ruby_version      = '>= 1.8.7'
   gem.requirements               = []
   gem.add_runtime_dependency     'sinatra',             '>= 1.2.1'
-  gem.add_runtime_dependency     'sinatra-linkeddata',  '>= 0.3.0'
+  gem.add_runtime_dependency     'sinatra-linkeddata',  '>= 0.3.1'
   gem.add_runtime_dependency     'erubis',              '>= 2.6.6'
-  gem.add_development_dependency 'yard' ,               '>= 0.6.0'
+  gem.add_development_dependency 'yard' ,               '>= 0.6.7'
   gem.add_development_dependency 'rspec',               '>= 2.5.0'
   gem.add_development_dependency 'shotgun',             '>= 0.9'
   gem.post_install_message       = nil
