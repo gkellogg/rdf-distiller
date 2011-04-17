@@ -105,7 +105,7 @@ module RDF
         format = params["in_fmt"].to_sym if params["in_fmt"]
 
         case
-        when !params["datafile"].nil?
+        when !params["datafile"].to_s.empty?
           raise RDF::ReaderError, "Specify input format" if format.nil? || format == :content
           puts "Open datafile with format #{format}"
           tempfile = 
