@@ -24,13 +24,23 @@ $(function () {
   
   // If the output format is rdfa, re-write the result text area
   // as an iFrame and add results
-  $('div.results textarea.rdfa').each(function(){
-    $(this).after($('<iframe width="100%" scrolling="no"/>'));
-    var iframe = $('div.results iframe')[0];
-    var iframe_doc = iframe.contentWindow.document;
-    iframe_doc.open(); iframe_doc.close(); // must open and close document object to start using it!
-    $('body', iframe_doc).append($(this).val());
-    $(iframe).attr('height', $('body', iframe_doc).height());
+  $('div.results textarea.rdfa').each(function() {
+    var content = $(this).val();
+    $(this).after($('<iframe width="100%"/>'));
+    setTimeout(function() {
+      var iframe = $('div.results iframe')[0];
+      var iframe_doc = iframe.contentWindow.document;
+      iframe_doc.open(); iframe_doc.close(); // must open and close document object to start using it!
+      iframe_doc.write(content);
+      setTimeout(function() {
+        var innerDoc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
+        var height = innerDoc.body.offsetHeight;
+        if (height === null && iframe.Document && iframe.Document.body.scrollHeight) {
+          height = iframe.Document.body.scrollHeight;
+        }
+        $(iframe).attr('height', height);
+      }, 10);
+    }, 1);
   }).hide();
 
 });
