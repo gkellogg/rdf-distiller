@@ -6,7 +6,7 @@ require 'erubis'
 module RDF
   module Portal
     autoload :VERSION,        'rdf/portal/version'
-    autoload :DISTILER_HAML,  'rdf/portal/rdfa_template'
+    autoload :DISTILLER_HAML,  'rdf/portal/rdfa_template'
 
     class Application < Sinatra::Base
       #register Sinatra::LinkedData
@@ -128,7 +128,7 @@ module RDF
         writer_opts = reader_opts
         case params["fmt"]
         when :rdfa
-          haml = DISTILER_HAML.dup
+          haml = DISTILLER_HAML.dup
           root = request.url[0,request.url.index(request.path)]
           haml[:doc] = haml[:doc].gsub(/--root--/, root)
           writer_opts[:haml] = haml

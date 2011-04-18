@@ -1,6 +1,6 @@
 # Default HAML templates used for generating output from the writer
 module RDF::Portal
-  DISTILER_HAML = {
+  DISTILLER_HAML = {
     # Document
     # Locals: language, title, profile, prefix, base, subjects
     # Yield: subjects.each
@@ -43,18 +43,21 @@ module RDF::Portal
         %td{:about => get_curie(subject), :typeof => typeof}
           - if typeof
             %span.type!= typeof
-          - predicates.each do |predicate|
-            != yield(predicate)
+          %table.properties
+            - predicates.each do |predicate|
+              != yield(predicate)
       - elsif rel && typeof
         %td{:rel => get_curie(rel)}
           %div{:about => get_curie(subject), :typeof => typeof}
             %span.type!= typeof
-            - predicates.each do |predicate|
-              != yield(predicate)
+            %table.properties
+              - predicates.each do |predicate|
+                != yield(predicate)
       - elsif rel
         %td{:rel => get_curie(rel), :resource => get_curie(subject)}
-          - predicates.each do |predicate|
-            != yield(predicate)
+          %table.properties
+            - predicates.each do |predicate|
+              != yield(predicate)
       - else
         %div{:about => get_curie(subject), :typeof => typeof}
           - if typeof
