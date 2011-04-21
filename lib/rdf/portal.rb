@@ -161,37 +161,6 @@ module RDF
         end
         raise unless settings.environment == :production
       end
-
-    end
-  end
-end
-
-# Extensions to RDF classes to retrieve appropriate format symbol
-module RDF
-  class Format
-    def self.to_sym
-      elements = self.to_s.split("::")
-      sym = elements.pop
-      sym = elements.pop if sym == 'Format'
-      sym.downcase.to_s
-    end
-  end
-
-  class Reader
-    def self.to_sym
-      elements = self.to_s.split("::")
-      sym = elements.pop
-      sym = elements.pop if sym == 'Reader'
-      sym.downcase.to_s
-    end
-  end
-
-  class Writer
-    def self.to_sym
-      elements = self.to_s.split("::")
-      sym = elements.pop
-      sym = elements.pop if sym == 'Writer'
-      sym.downcase.to_s
     end
   end
 end
