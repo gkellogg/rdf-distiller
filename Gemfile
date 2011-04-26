@@ -3,14 +3,14 @@ source 'http://rubygems.org'
 # Include non-released gems first
 gem 'addressable',      '2.2.4'
 gem 'rdf',              :git => "https://github.com/gkellogg/rdf.git", :branch => "type-check-mixin"
-gem 'rdf-n3',           :git => "https://github.com/gkellogg/rdf-n3.git", :require => "rdf/n3"
-gem 'rdf-rdfa',         :git => "https://github.com/gkellogg/rdf-rdfa.git", :require => "rdf/rdfa"
-gem 'rdf-rdfxml',       :git => "https://github.com/gkellogg/rdf-rdfxml.git", :require => "rdf/rdfxml"
 gem 'linkeddata',       :git => "https://github.com/gkellogg/linkeddata.git", :branch => "0.4.x", :require => "rdf/rdfxml"
 gem 'rack-linkeddata',  :git => "https://github.com/gkellogg/rack-linkeddata.git", :branch => "0.4.x", :require => "rack/linkeddata"
-gem 'rdf-isomorphic',   '>= 0.3.4', :require => 'rdf/isomorphic'
 gem 'rdf-json',         :git => "https://github.com/gkellogg/rdf-json.git", :branch => "0.4.x", :require => 'rdf/json'
 gem 'rdf-trix',         :git => "https://github.com/gkellogg/rdf-trix.git", :branch => "0.4.x", :require => 'rdf/trix'
+gem 'rdf-n3',           '>= 0.3.3', :require => "rdf/n3"
+gem 'rdf-rdfa',         '>= 0.3.3', :require => "rdf/rdfa"
+gem 'rdf-rdfxml',       '>= 0.3.3', :require => "rdf/rdfxml"
+gem 'rdf-isomorphic',   '>= 0.3.4', :require => 'rdf/isomorphic'
 gem 'rdf-do'
 gem 'spira',            '>= 0.0.12'
 gem 'sxp',              '>= 0.0.5'
