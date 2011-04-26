@@ -88,7 +88,7 @@ module RDF
         RDF::Format.select do |f|
           reader_or_writer != :reader || f.reader
           reader_or_writer != :writer || f.writer
-        end.map(&:to_sym).sort
+        end.map(&:to_sym).sort_by(&:to_s)
       end
 
       # Parse the an input file and re-serialize based on params and/or content-type/accept headers
@@ -148,19 +148,35 @@ module RDF
           [content_type, @error]
         end
       rescue
+        raise unless settings.environment == :production
         @error = "#{$!.class}: #{$!.message}"
         puts @error  # to log
-        content_type ||= accepts.first
+        content_type ||= "text/html" if accepts.include?("text/html")
+        content_type ||= "application/xml" if accepts.include?("application/xml")
+        content_type ||= "text/plain"
         case content_type
-        when /html/
-          [content_type, @error] # XXX
-        when /xml/
+        when "application/xml"
           [content_type, @error.to_xml]
+        when "text/html"
+          [content_type, @error] # XXX
         else
-          [content_type, @error]
+          ["text/plain", @error]
         end
-        raise unless settings.environment == :production
       end
+    end
+  end
+
+  module Util::File
+    ##
+    # Override to use Net::HTTP, which means that it only opens URIs.
+    #
+    # @param [String] filename_or_url to open
+    # @param  [Hash{Symbol => Object}] options
+    #   any options to pass through to the underlying UUID library
+    # @return [IO] File stream
+    # @yield [IO] File stream
+    def self.open_file(filename_or_url, options = {}, &block)
+      Kernel.open(filename_or_url, {"User-Agent" => "Ruby RDF Distiller"}, &block)
     end
   end
 end
