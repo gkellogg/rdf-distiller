@@ -80,7 +80,9 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/exprlist.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/exprlist.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/exprlist.rb,<br /> vendor/bundler/ruby/1.9.1/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/exprlist.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -99,14 +101,13 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?v</span> <span class='question op'>?</span><span class='w identifier id'>w</span><span class='rparen token'>)</span>
-    <span class='lparen token'>(</span><span class='filter identifier id'>filter</span> <span class='lparen token'>(</span><span class='exprlist identifier id'>exprlist</span> <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='integer val'>?v</span> <span class='integer val'>2</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='integer val'>?w</span> <span class='integer val'>3</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span>
-        <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='symbol val'>:p</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span>
-        <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='symbol val'>:q</span> <span class='question op'>?</span><span class='w identifier id'>w</span><span class='rparen token'>)</span>
-      <span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-</pre>
+      <pre class="example code">(prefix ((: &lt;http://example/&gt;))
+  (project (?v ?w)
+    (filter (exprlist (= ?v 2) (= ?w 3))
+      (bgp
+        (triple ?s :p ?v)
+        (triple ?s :q ?w)
+      ))))</pre>
     
   </div>
 
@@ -125,8 +126,7 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:exprlist</span><span class='rbrack token'>]</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:exprlist</span><span class='rbracket'>]</span></pre></dd>
       
     </dl>
   
@@ -266,8 +266,7 @@
     
       <h4><div class='inline'></div></h4>
       <pre class="example code">
-<span class='lparen token'>(</span><span class='exprlist identifier id'>exprlist</span> <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='integer val'>1</span> <span class='integer val'>1</span><span class='rparen token'>)</span> <span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>1</span> <span class='integer val'>0</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-</pre>
+(exprlist (= 1 1) (!= 1 0))</pre>
     
   </div>
 <h3>Parameters:</h3>
@@ -334,11 +333,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/exprlist.rb', line 36</span>
 
-<span class='def def kw'>def</span> <span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='bindings identifier id'>bindings</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='all? fid id'>all?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='op identifier id'>op</span><span class='bitor op'>|</span> <span class='boolean identifier id'>boolean</span><span class='lparen token'>(</span><span class='op identifier id'>op</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='bindings identifier id'>bindings</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='true? fid id'>true?</span> <span class='rbrace token'>}</span>
-  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='res identifier id'>res</span><span class='rparen token'>)</span> <span class='comment val'># FIXME: error handling</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='id bindings'>bindings</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id res'>res</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id all?'>all?</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id op'>op</span><span class='op'>|</span> <span class='id boolean'>boolean</span><span class='lparen'>(</span><span class='id op'>op</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='id bindings'>bindings</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id true?'>true?</span> <span class='rbrace'>}</span>
+  <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='id res'>res</span><span class='rparen'>)</span> <span class='comment'># FIXME: error handling
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -390,10 +388,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/exprlist.rb', line 47</span>
 
-<span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
-  <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id optimize'>optimize</span>
+  <span class='id operands'>operands</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optimize</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -404,9 +401,9 @@
 </div>
     
     <div id="footer">
-  Generated on Fri Apr 15 17:33:41 2011 by 
+  Generated on Fri May  6 18:14:55 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.5 (ruby-1.8.7).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

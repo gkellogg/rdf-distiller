@@ -76,7 +76,9 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.9.1/gems/sxp-0.0.14/lib/sxp/reader/basic.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -101,38 +103,32 @@
         <dt id="LPARENS-constant" class="">LPARENS =
           
         </dt>
-        <dd><pre class="code"><span class='lbrack token'>[</span><span class='integer val'>?(</span><span class='rbrack token'>]</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='CHAR'>?(</span><span class='rbracket'>]</span></pre></dd>
       
         <dt id="RPARENS-constant" class="">RPARENS =
           
         </dt>
-        <dd><pre class="code"><span class='lbrack token'>[</span><span class='integer val'>?)</span><span class='rbrack token'>]</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='CHAR'>?)</span><span class='rbracket'>]</span></pre></dd>
       
         <dt id="ATOM-constant" class="">ATOM =
           
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^[^\s()]+/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[^\s()]+</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="RATIONAL-constant" class="">RATIONAL =
           
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^([+-]?\d+)\/(\d+)$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^([+-]?\d+)\/(\d+)$</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="DECIMAL-constant" class="">DECIMAL =
           
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^[+-]?(\d*)?\.\d*$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[+-]?(\d*)?\.\d*$</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="INTEGER-constant" class="">INTEGER =
           
         </dt>
-        <dd><pre class="code"><span class='regexp val'>/^[+-]?\d+$/</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[+-]?\d+$</span><span class='regexp_end'>/</span></span></pre></dd>
       
     </dl>
   
@@ -330,16 +326,15 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb', line 24</span>
 
-<span class='def def kw'>def</span> <span class='read_atom identifier id'>read_atom</span>
-  <span class='case case kw'>case</span> <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='read_literal identifier id'>read_literal</span>
-    <span class='when when kw'>when</span> <span class='string val'>'.'</span>      <span class='then then kw'>then</span> <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-    <span class='when when kw'>when</span> <span class='RATIONAL constant id'>RATIONAL</span> <span class='then then kw'>then</span> <span class='Rational constant id'>Rational</span><span class='lparen token'>(</span><span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span> <span class='$2 nth_ref id'>$2</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='DECIMAL constant id'>DECIMAL</span>  <span class='then then kw'>then</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span> <span class='comment val'># FIXME?</span>
-    <span class='when when kw'>when</span> <span class='INTEGER constant id'>INTEGER</span>  <span class='then then kw'>then</span> <span class='Integer constant id'>Integer</span><span class='lparen token'>(</span><span class='buffer identifier id'>buffer</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span> <span class='buffer identifier id'>buffer</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id read_atom'>read_atom</span>
+  <span class='kw'>case</span> <span class='id buffer'>buffer</span> <span class='op'>=</span> <span class='id read_literal'>read_literal</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.</span><span class='tstring_end'>'</span></span>      <span class='kw'>then</span> <span class='id buffer'>buffer</span><span class='period'>.</span><span class='id to_sym'>to_sym</span>
+    <span class='kw'>when</span> <span class='const'>RATIONAL</span> <span class='kw'>then</span> <span class='const'>Rational</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='period'>.</span><span class='id to_i'>to_i</span><span class='comma'>,</span> <span class='backref'>$2</span><span class='period'>.</span><span class='id to_i'>to_i</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'>DECIMAL</span>  <span class='kw'>then</span> <span class='const'>Float</span><span class='lparen'>(</span><span class='id buffer'>buffer</span><span class='rparen'>)</span> <span class='comment'># FIXME?
+</span>    <span class='kw'>when</span> <span class='const'>INTEGER</span>  <span class='kw'>then</span> <span class='const'>Integer</span><span class='lparen'>(</span><span class='id buffer'>buffer</span><span class='rparen'>)</span>
+    <span class='kw'>else</span> <span class='id buffer'>buffer</span><span class='period'>.</span><span class='id to_sym'>to_sym</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -397,21 +392,20 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb', line 52</span>
 
-<span class='def def kw'>def</span> <span class='read_character identifier id'>read_character</span>
-  <span class='case case kw'>case</span> <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='read_char identifier id'>read_char</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?b</span>  <span class='then then kw'>then</span> <span class='integer val'>?\b</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?f</span>  <span class='then then kw'>then</span> <span class='integer val'>?\f</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?n</span>  <span class='then then kw'>then</span> <span class='integer val'>?\n</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?r</span>  <span class='then then kw'>then</span> <span class='integer val'>?\r</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?t</span>  <span class='then then kw'>then</span> <span class='integer val'>?\t</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?u</span>  <span class='then then kw'>then</span> <span class='read_chars identifier id'>read_chars</span><span class='lparen token'>(</span><span class='integer val'>4</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='lparen token'>(</span><span class='integer val'>16</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?U</span>  <span class='then then kw'>then</span> <span class='read_chars identifier id'>read_chars</span><span class='lparen token'>(</span><span class='integer val'>8</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='lparen token'>(</span><span class='integer val'>16</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?&quot;</span>  <span class='then then kw'>then</span> <span class='char identifier id'>char</span> <span class='comment val'>#&quot;</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?\\</span> <span class='then then kw'>then</span> <span class='char identifier id'>char</span>
-    <span class='else else kw'>else</span> <span class='char identifier id'>char</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id read_character'>read_character</span>
+  <span class='kw'>case</span> <span class='id char'>char</span> <span class='op'>=</span> <span class='id read_char'>read_char</span>
+    <span class='kw'>when</span> <span class='CHAR'>?b</span>  <span class='kw'>then</span> <span class='CHAR'>?\b</span>
+    <span class='kw'>when</span> <span class='CHAR'>?f</span>  <span class='kw'>then</span> <span class='CHAR'>?\f</span>
+    <span class='kw'>when</span> <span class='CHAR'>?n</span>  <span class='kw'>then</span> <span class='CHAR'>?\n</span>
+    <span class='kw'>when</span> <span class='CHAR'>?r</span>  <span class='kw'>then</span> <span class='CHAR'>?\r</span>
+    <span class='kw'>when</span> <span class='CHAR'>?t</span>  <span class='kw'>then</span> <span class='CHAR'>?\t</span>
+    <span class='kw'>when</span> <span class='CHAR'>?u</span>  <span class='kw'>then</span> <span class='id read_chars'>read_chars</span><span class='lparen'>(</span><span class='int'>4</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_i'>to_i</span><span class='lparen'>(</span><span class='int'>16</span><span class='rparen'>)</span><span class='period'>.</span><span class='id chr'>chr</span>
+    <span class='kw'>when</span> <span class='CHAR'>?U</span>  <span class='kw'>then</span> <span class='id read_chars'>read_chars</span><span class='lparen'>(</span><span class='int'>8</span><span class='rparen'>)</span><span class='period'>.</span><span class='id to_i'>to_i</span><span class='lparen'>(</span><span class='int'>16</span><span class='rparen'>)</span><span class='period'>.</span><span class='id chr'>chr</span>
+    <span class='kw'>when</span> <span class='CHAR'>?&quot;</span>  <span class='kw'>then</span> <span class='id char'>char</span> <span class='comment'>#&quot;
+</span>    <span class='kw'>when</span> <span class='CHAR'>?\\</span> <span class='kw'>then</span> <span class='id char'>char</span>
+    <span class='kw'>else</span> <span class='id char'>char</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -461,13 +455,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb', line 69</span>
 
-<span class='def def kw'>def</span> <span class='read_literal identifier id'>read_literal</span>
-  <span class='grammar identifier id'>grammar</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='symbol val'>:ATOM</span><span class='rparen token'>)</span>
-  <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='String constant id'>String</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
-  <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span> <span class='read_char identifier id'>read_char</span> <span class='while while_mod kw'>while</span> <span class='notop op'>!</span><span class='eof? fid id'>eof?</span> <span class='andop op'>&amp;&amp;</span> <span class='peek_char identifier id'>peek_char</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='match op'>=~</span> <span class='grammar identifier id'>grammar</span>
-  <span class='buffer identifier id'>buffer</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id read_literal'>read_literal</span>
+  <span class='id grammar'>grammar</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id class'>class</span><span class='period'>.</span><span class='id const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:ATOM</span><span class='rparen'>)</span>
+  <span class='id buffer'>buffer</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id new'>new</span>
+  <span class='id buffer'>buffer</span> <span class='op'>&lt;&lt;</span> <span class='id read_char'>read_char</span> <span class='kw'>while</span> <span class='op'>!</span><span class='id eof?'>eof?</span> <span class='op'>&amp;&amp;</span> <span class='id peek_char'>peek_char</span><span class='period'>.</span><span class='id chr'>chr</span> <span class='op'>=~</span> <span class='id grammar'>grammar</span>
+  <span class='id buffer'>buffer</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -524,20 +517,19 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb', line 36</span>
 
-<span class='def def kw'>def</span> <span class='read_string identifier id'>read_string</span>
-  <span class='buffer identifier id'>buffer</span> <span class='assign token'>=</span> <span class='String constant id'>String</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
-  <span class='skip_char identifier id'>skip_char</span> <span class='comment val'># '&quot;'</span>
-  <span class='until until kw'>until</span> <span class='peek_char identifier id'>peek_char</span> <span class='eq op'>==</span> <span class='integer val'>?&quot;</span> <span class='comment val'>#&quot;</span>
-    <span class='buffer identifier id'>buffer</span> <span class='lshft op'>&lt;&lt;</span>
-      <span class='case case kw'>case</span> <span class='char identifier id'>char</span> <span class='assign token'>=</span> <span class='read_char identifier id'>read_char</span>
-        <span class='when when kw'>when</span> <span class='integer val'>?\\</span> <span class='then then kw'>then</span> <span class='read_character identifier id'>read_character</span>
-        <span class='else else kw'>else</span> <span class='char identifier id'>char</span>
-      <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-  <span class='skip_char identifier id'>skip_char</span> <span class='comment val'># '&quot;'</span>
-  <span class='buffer identifier id'>buffer</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id read_string'>read_string</span>
+  <span class='id buffer'>buffer</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id new'>new</span>
+  <span class='id skip_char'>skip_char</span> <span class='comment'># '&quot;'
+</span>  <span class='kw'>until</span> <span class='id peek_char'>peek_char</span> <span class='op'>==</span> <span class='CHAR'>?&quot;</span> <span class='comment'>#&quot;
+</span>    <span class='id buffer'>buffer</span> <span class='op'>&lt;&lt;</span>
+      <span class='kw'>case</span> <span class='id char'>char</span> <span class='op'>=</span> <span class='id read_char'>read_char</span>
+        <span class='kw'>when</span> <span class='CHAR'>?\\</span> <span class='kw'>then</span> <span class='id read_character'>read_character</span>
+        <span class='kw'>else</span> <span class='id char'>char</span>
+      <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id skip_char'>skip_char</span> <span class='comment'># '&quot;'
+</span>  <span class='id buffer'>buffer</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -588,14 +580,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/reader/basic.rb', line 14</span>
 
-<span class='def def kw'>def</span> <span class='read_token identifier id'>read_token</span>
-  <span class='case case kw'>case</span> <span class='peek_char identifier id'>peek_char</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?(</span><span class='comma token'>,</span> <span class='integer val'>?)</span> <span class='then then kw'>then</span> <span class='lbrack token'>[</span><span class='symbol val'>:list</span><span class='comma token'>,</span> <span class='read_char identifier id'>read_char</span><span class='rbrack token'>]</span>
-    <span class='when when kw'>when</span> <span class='integer val'>?&quot;</span>     <span class='then then kw'>then</span> <span class='lbrack token'>[</span><span class='symbol val'>:atom</span><span class='comma token'>,</span> <span class='read_string identifier id'>read_string</span><span class='rbrack token'>]</span> <span class='comment val'>#&quot;</span>
-    <span class='else else kw'>else</span> <span class='super super kw'>super</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id read_token'>read_token</span>
+  <span class='kw'>case</span> <span class='id peek_char'>peek_char</span>
+    <span class='kw'>when</span> <span class='CHAR'>?(</span><span class='comma'>,</span> <span class='CHAR'>?)</span> <span class='kw'>then</span> <span class='lbracket'>[</span><span class='symbol'>:list</span><span class='comma'>,</span> <span class='id read_char'>read_char</span><span class='rbracket'>]</span>
+    <span class='kw'>when</span> <span class='CHAR'>?&quot;</span>     <span class='kw'>then</span> <span class='lbracket'>[</span><span class='symbol'>:atom</span><span class='comma'>,</span> <span class='id read_string'>read_string</span><span class='rbracket'>]</span> <span class='comment'>#&quot;
+</span>    <span class='kw'>else</span> <span class='kw'>super</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -606,9 +597,9 @@
 </div>
     
     <div id="footer">
-  Generated on Fri Apr 15 17:33:27 2011 by 
+  Generated on Fri May  6 18:14:27 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.5 (ruby-1.8.7).
+  0.6.8 (ruby-1.9.2).
 </div>
 
   </body>

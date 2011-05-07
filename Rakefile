@@ -4,7 +4,7 @@ require 'fileutils'
 require 'yard'
 
 
-task :yard => [:clean_doc, :link_readmes]
+task :yard => [:clean_doc, :readme]
 
 YARD::Rake::YardocTask.new do |y|
   y.files = Dir.glob("lib/**/*.rb") +
@@ -16,11 +16,13 @@ YARD::Rake::YardocTask.new do |y|
             Dir.glob("*-README")
 end
 
+desc "Clean documentation"
 task :clean_doc do
   FileUtils.rm_rf 'doc'
 end
 
-task :link_readmes do
+desc "Create README links"
+task :readme do
   Dir.glob("*-README").each {|d| FileUtils.rm d}
   Dir.glob('vendor/bundler/**/README').each do |path|
     d = path.split('/')[-2]
