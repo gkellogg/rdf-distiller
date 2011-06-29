@@ -9,6 +9,7 @@ task :yard => [:clean_doc, :readme]
 YARD::Rake::YardocTask.new do |y|
   y.files = Dir.glob("lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/rdf*/lib/**/*.rb") +
+            Dir.glob("vendor/bundler/**/json-ld/lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/sparql*/lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/spira*/lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/sxp*/lib/**/*.rb") +

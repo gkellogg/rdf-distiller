@@ -14,6 +14,8 @@ Distills between formats supported in [Linked Data][linkeddata].
 * Includes [RDFa][] support using the [RDF::RDFa][] gem.
 * Includes [RDF/JSON][] support using the [RDF::JSON][] gem.
 * Includes [TriX][] support using the [RDF::TriX][] gem.
+* Includes [Microdata][] support using the [RDF::Microdata][] gem.
+* Includes [JSON-LD][] support using the [JSON::LD][] gem.
 
 ## Dependencies
 * [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.3)
@@ -22,19 +24,23 @@ Distills between formats supported in [Linked Data][linkeddata].
 * [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
 * [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.4.4)
 * [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.1)
+* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.1.0)
 * [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.3)
 * [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.3)
 * [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.3)
 * [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.1)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.0.4)
 
 ## Documentation
 ### Core libraries
 * {file:rdf-README RDF.rb}
   * {file:rdf-json-README RDF::JSON}
+  * {file:rdf-microdata-README RDF::Microdata}
   * {file:rdf-n3-README RDF::N3}
   * {file:rdf-rdfa-README RDF::RDFa}
   * {file:rdf-rdfxml-README RDF::RDFXML}
   * {file:rdf-trix-README RDF::TriX}
+  * {file:json-ld-README JSON::LD}
 
 ### Rollup libraries
 * {file:linkeddata-README Linked Data}
@@ -74,7 +80,9 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <http://github.com/gkellogg/rdf-portal>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
+[JSON-LD]:        http://json-ld.org/spec/latest/
 [linkeddata]:     {file:linkeddata-README}
+[Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
 [Notation3]:      http://en.wikipedia.org/wiki/Notation3
 [RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification

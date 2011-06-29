@@ -2,6 +2,8 @@ require 'sinatra'
 require 'sinatra/linkeddata'   # Can't use this, as we may need to set by hand, and have to pass options to the serializer
 require 'sinatra/partials'
 require 'erubis'
+require 'rdf/microdata'
+require 'json/ld'
 
 module RDF
   module Portal

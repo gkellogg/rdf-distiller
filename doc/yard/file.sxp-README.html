@@ -2,17 +2,27 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>File: sxp-README</title>
-<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: sxp-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   relpath = '';
   if (relpath != '') relpath += '/';
 </script>
-<script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
 
   </head>
   <body>
@@ -31,11 +41,14 @@
 </div>
 
       <div id="search">
-  <a id="class_list_link" href="#">Class List</a>
-  <a id="method_list_link" href="#">Method List</a>
-  <a id ="file_list_link" href="#">File List</a>
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
 </div>
-
       <div class="clear"></div>
     </div>
     
@@ -63,37 +76,42 @@
 
 <h2>Examples</h2>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'sxp'</span>
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sxp</span><span class='tstring_end'>'</span></span>
 </pre>
 
 <h3>Parsing basic S-expressions</h3>
 
-<pre class="code"><span class='SXP constant id'>SXP</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='string val'>&quot;(* 6 7)&quot;</span>  <span class='comment val'>#=&gt; [:*, 6, 7]</span>
+<pre class="code">SXP.read &quot;(* 6 7)&quot;  #=&gt; [:*, 6, 7]
 
-<span class='SXP constant id'>SXP</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='string val'>&quot;(define (fact n)\n(if (= n 0)\n1\n(* n (fact (- n 1)))))\n&quot;</span>
+SXP.read &lt;&lt;-EOF
+  (define (fact n)
+    (if (= n 0)
+        1
+        (* n (fact (- n 1)))))
+EOF
 
-<span class='comment val'>#=&gt; [:define, [:fact, :n],</span>
-      <span class='lbrack token'>[</span><span class='symbol val'>:if</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:&quot;=&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:n</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
-            <span class='integer val'>1</span><span class='comma token'>,</span>
-            <span class='lbrack token'>[</span><span class='symbol val'>:*</span><span class='comma token'>,</span> <span class='symbol val'>:n</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:fact</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:-</span><span class='comma token'>,</span> <span class='symbol val'>:n</span><span class='comma token'>,</span> <span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
+#=&gt; [:define, [:fact, :n],
+      [:if, [:&quot;=&quot;, :n, 0],
+            1,
+            [:*, :n, [:fact, [:-, :n, 1]]]]]
 </pre>
 
 <h3>Parsing Scheme S-expressions</h3>
 
-<pre class="code"><span class='SXP constant id'>SXP</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='colon2 op'>::</span><span class='Scheme constant id'>Scheme</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='string val'>%q((and #t #f))</span>             <span class='comment val'>#=&gt; [:and, true, false]</span>
-</pre>
+<pre class="code"><span class='const'>SXP</span><span class='op'>::</span><span class='const'>Reader</span><span class='op'>::</span><span class='const'>Scheme</span><span class='period'>.</span><span class='id read'>read</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>(and #t #f)</span><span class='tstring_end'>)</span></span>             <span class='comment'>#=&gt; [:and, true, false]
+</span></pre>
 
 <h3>Parsing Common Lisp S-expressions</h3>
 
-<pre class="code"><span class='SXP constant id'>SXP</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='colon2 op'>::</span><span class='CommonLisp constant id'>CommonLisp</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='string val'>%q((or t nil))</span>          <span class='comment val'>#=&gt; [:or, true, nil]</span>
-</pre>
+<pre class="code"><span class='const'>SXP</span><span class='op'>::</span><span class='const'>Reader</span><span class='op'>::</span><span class='const'>CommonLisp</span><span class='period'>.</span><span class='id read'>read</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>(or t nil)</span><span class='tstring_end'>)</span></span>          <span class='comment'>#=&gt; [:or, true, nil]
+</span></pre>
 
 <h3>Parsing SPARQL S-expressions</h3>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf'</span>
+<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf</span><span class='tstring_end'>'</span></span>
 
-<span class='SXP constant id'>SXP</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='colon2 op'>::</span><span class='SPARQL constant id'>SPARQL</span><span class='dot token'>.</span><span class='read identifier id'>read</span> <span class='string val'>%q((base &lt;http://ar.to/&gt;))</span>  <span class='comment val'>#=&gt; [:base, RDF::URI('http://ar.to/')]</span>
-</pre>
+<span class='const'>SXP</span><span class='op'>::</span><span class='const'>Reader</span><span class='op'>::</span><span class='const'>SPARQL</span><span class='period'>.</span><span class='id read'>read</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>(base &lt;http://ar.to/&gt;)</span><span class='tstring_end'>)</span></span>  <span class='comment'>#=&gt; [:base, RDF::URI('http://ar.to/')]
+</span></pre>
 
 <h2>Documentation</h2>
 
@@ -160,20 +178,20 @@ S-expressions</li>
 <p>The recommended installation method is via <a href="http://rubygems.org/">RubyGems</a>.
 To install the latest official release of the SXP.rb gem, do:</p>
 
-<pre class="code"><span class='string val'>% [sudo] </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sxp identifier id'>sxp</span>
+<pre class="code">% [sudo] gem install sxp
 </pre>
 
 <h2>Download</h2>
 
 <p>To get a local working copy of the development repository, do:</p>
 
-<pre class="code"><span class='string val'>% git </span><span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sxp identifier id'>sxp</span><span class='minus op'>-</span><span class='ruby identifier id'>ruby</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+<pre class="code">% git clone git://github.com/bendiken/sxp-ruby.git
 </pre>
 
 <p>Alternatively, you can download the latest development version as a tarball
 as follows:</p>
 
-<pre class="code"><span class='string val'>% wget </span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sxp identifier id'>sxp</span><span class='minus op'>-</span><span class='ruby identifier id'>ruby</span><span class='div op'>/</span><span class='tarball identifier id'>tarball</span><span class='div op'>/</span><span class='master identifier id'>master</span>
+<pre class="code">% wget http://github.com/bendiken/sxp-ruby/tarball/master
 </pre>
 
 <h2>Resources</h2>
@@ -209,9 +227,9 @@ as follows:</p>
 information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying UNLICENSE file.</p></div></div>
     
     <div id="footer">
-  Generated on Fri Apr 15 17:33:12 2011 by 
+  Generated on Wed Jun 29 16:28:09 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.6.5 (ruby-1.8.7).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>
