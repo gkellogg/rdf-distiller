@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: rdf-isomorphic-README
   
@@ -63,24 +63,24 @@ That includes RDF::Repository, RDF::Graph, query results, and more.</p>
 
 <h2>Synopsis:</h2>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/isomorphic</span><span class='tstring_end'>'</span></span>
-<span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/ntriples</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
 
 
-<span class='id a'>a</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Repository</span><span class='period'>.</span><span class='id load'>load</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>./tests/isomorphic/test1/test1-1.nt</span><span class='tstring_end'>'</span></span>
-<span class='id a'>a</span><span class='period'>.</span><span class='id first'>first</span>
-<span class='comment'># &lt; RDF::Statement:0xd344c4(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:abc&gt; .) &gt;
-</span>
-<span class='id b'>b</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Repository</span><span class='period'>.</span><span class='id load'>load</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>./tests/isomorphic/test1/test1-2.nt</span><span class='tstring_end'>'</span></span>
-<span class='id b'>b</span><span class='period'>.</span><span class='id first'>first</span>
-<span class='comment'># &lt; RDF::Statement:0xd3801a(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:testing&gt; .) &gt;
-</span>
-<span class='id a'>a</span><span class='period'>.</span><span class='id isomorphic_with?'>isomorphic_with?</span> <span class='id b'>b</span>
-<span class='comment'># true
-</span>
-<span class='id a'>a</span><span class='period'>.</span><span class='id bijection_to'>bijection_to</span> <span class='id b'>b</span>
-<span class='comment'># { #&lt;RDF::Node:0xd345a0(_:abc)&gt;=&gt;#&lt;RDF::Node:0xd38574(_:testing)&gt; }
-</span></pre>
+<span class='a identifier id'>a</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-1.nt'</span>
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='comment val'># &lt; RDF::Statement:0xd344c4(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:abc&gt; .) &gt;</span>
+
+<span class='b identifier id'>b</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-2.nt'</span>
+<span class='b identifier id'>b</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='comment val'># &lt; RDF::Statement:0xd3801a(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:testing&gt; .) &gt;</span>
+
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='isomorphic_with? fid id'>isomorphic_with?</span> <span class='b identifier id'>b</span>
+<span class='comment val'># true</span>
+
+<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='bijection_to identifier id'>bijection_to</span> <span class='b identifier id'>b</span>
+<span class='comment val'># { #&lt;RDF::Node:0xd345a0(_:abc)&gt;=&gt;#&lt;RDF::Node:0xd38574(_:testing)&gt; }</span>
+</pre>
 
 <h2>Algorithm</h2>
 
@@ -101,20 +101,20 @@ can sometimes be a factorial-complexity problem and it seemed better to perhaps
 not overwrite such a commonly used method for that.  But it's really useful for
 specs in RDF libraries.  Try this in your tests:</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/isomorphic</span><span class='tstring_end'>'</span></span>
-<span class='kw'>module</span> <span class='const'>RDF</span>
-  <span class='kw'>module</span> <span class='const'>Isomorphic</span>
-    <span class='id alias_method'>alias_method</span> <span class='symbol'>:==</span><span class='comma'>,</span> <span class='symbol'>:isomorphic_with?</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='module module kw'>module</span> <span class='RDF constant id'>RDF</span>
+  <span class='module module kw'>module</span> <span class='Isomorphic constant id'>Isomorphic</span>
+    <span class='alias_method identifier id'>alias_method</span> <span class='symbol val'>:==</span><span class='comma token'>,</span> <span class='symbol val'>:isomorphic_with?</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 
-<span class='id describe'>describe</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>something</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
-  <span class='id context'>context</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>does</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
-    <span class='id it'>it</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>should be equal</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
-      <span class='id repository_a'>repository_a</span><span class='period'>.</span><span class='id should'>should</span> <span class='op'>==</span> <span class='id repository_b'>repository_b</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+<span class='describe identifier id'>describe</span> <span class='string val'>'something'</span> <span class='do do kw'>do</span>
+  <span class='context identifier id'>context</span> <span class='string val'>'does'</span> <span class='do do kw'>do</span>
+    <span class='it identifier id'>it</span> <span class='string val'>'should be equal'</span> <span class='do do kw'>do</span>
+      <span class='repository_a identifier id'>repository_a</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='repository_b identifier id'>repository_b</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <h3>Information</h3>
@@ -141,9 +141,9 @@ specs in RDF libraries.  Try this in your tests:</p>
 more information, see the accompanying UNLICENSE file or <a href="http://unlicense.org">http://unlicense.org</a></p></div></div>
     
     <div id="footer">
-  Generated on Wed Jun 29 16:28:09 2011 by 
+  Generated on Wed Jun 29 20:17:42 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>

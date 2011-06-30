@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: rdf-n3-0.3.3
   
@@ -83,52 +83,52 @@
 
 <p>Instantiate a reader from a local file:</p>
 
-<pre class="code"><span class='const'>RDF</span><span class='op'>::</span><span class='const'>N3</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.n3</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id reader'>reader</span><span class='op'>|</span>
-   <span class='id reader'>reader</span><span class='period'>.</span><span class='id each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id statement'>statement</span><span class='op'>|</span>
-     <span class='id puts'>puts</span> <span class='id statement'>statement</span><span class='period'>.</span><span class='id inspect'>inspect</span>
-   <span class='kw'>end</span>
-<span class='kw'>end</span>
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='N3 constant id'>N3</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/foaf.n3&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
+   <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+     <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+   <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Define <code>@base</code> and <code>@prefix</code> definitions, and use for serialization using <code>:base_uri</code> an <code>:prefixes</code> options</p>
 
 <p>Write a graph to a file:</p>
 
-<pre class="code"><span class='const'>RDF</span><span class='op'>::</span><span class='const'>N3</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/test.n3</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id writer'>writer</span><span class='op'>|</span>
-   <span class='id writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id graph'>graph</span>
-<span class='kw'>end</span>
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='N3 constant id'>N3</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.n3&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='writer identifier id'>writer</span><span class='bitor op'>|</span>
+   <span class='writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='graph identifier id'>graph</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <h3>Formulae</h3>
 
 <p>N3 Formulae are introduced with the { statement-list } syntax. A given formula is assigned an RDF::Node instance, which is also used as the context for RDF::Statement instances provided to RDF::N3::Reader#each_statement. For example, the following N3 generates the associated statements:</p>
 
-<pre class="code">{ [ x:firstname  &quot;Ora&quot; ] dc:wrote [ dc:title  &quot;Moby Dick&quot; ] } a n3:falsehood .
+<pre class="code"><span class='lbrace token'>{</span> <span class='lbrack token'>[</span> <span class='x identifier id'>x</span><span class='symbol val'>:firstname</span>  <span class='string val'>&quot;Ora&quot;</span> <span class='rbrack token'>]</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:wrote</span> <span class='lbrack token'>[</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:title</span>  <span class='string val'>&quot;Moby Dick&quot;</span> <span class='rbrack token'>]</span> <span class='rbrace token'>}</span> <span class='a identifier id'>a</span> <span class='n3 identifier id'>n3</span><span class='symbol val'>:falsehood</span> <span class='dot token'>.</span>
 </pre>
 
 <p>results in</p>
 
-<pre class="code">f = RDF::Node.new
-s = RDF::Node.new
-o = RDF::Node.new
-RDF::Statement(f, rdf:type n3:falsehood)
-RDF::Statement(s, x:firstname, &quot;Ora&quot;, :context =&gt; f)
-RDF::Statement(s, dc:wrote, o, :context =&gt; f)
-RDF::Statement(o, dc:title, &quot;Moby Dick&quot;, :context =&gt; f)
+<pre class="code"><span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='s identifier id'>s</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='o identifier id'>o</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='rdf identifier id'>rdf</span><span class='symbol val'>:type</span> <span class='n3 identifier id'>n3</span><span class='symbol val'>:falsehood</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='x identifier id'>x</span><span class='symbol val'>:firstname</span><span class='comma token'>,</span> <span class='string val'>&quot;Ora&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='comma token'>,</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:wrote</span><span class='comma token'>,</span> <span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='dc identifier id'>dc</span><span class='symbol val'>:title</span><span class='comma token'>,</span> <span class='string val'>&quot;Moby Dick&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='f identifier id'>f</span><span class='rparen token'>)</span>
 </pre>
 
 <h3>Variables</h3>
 
 <p>N3 Variables are introduced with @forAll, @forEach, or ?x. Variables reference URIs described in formulae, typically defined in the default vocabulary (e.g., ":x"). Existential variables are replaced with an allocated RDF::Node instance. Universal variables are replaced with a RDF::Query::Variable instance. For example, the following N3 generates the associated statements:</p>
 
-<pre class="code">@forAll &lt;#h&gt;. @forSome &lt;#g&gt;. &lt;#g&gt; &lt;#loves&gt; &lt;#h&gt; .
+<pre class="code"><span class='@forAll ivar id'>@forAll</span> <span class='lt op'>&lt;</span><span class='comment val'>#h&gt;. @forSome &lt;#g&gt;. &lt;#g&gt; &lt;#loves&gt; &lt;#h&gt; .</span>
 </pre>
 
 <p>results in:</p>
 
-<pre class="code">h = RDF::Query::Variable.new(&lt;#h&gt;)
-g = RDF::Node.new()
-RDF::Statement.new(f, &lt;#loves&gt;, h)
+<pre class="code"><span class='h identifier id'>h</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='lt op'>&lt;</span><span class='comment val'>#h&gt;)</span>
+<span class='g identifier id'>g</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='comma token'>,</span> <span class='lt op'>&lt;</span><span class='comment val'>#loves&gt;, h)</span>
 </pre>
 
 <h2>Implementation Notes</h2>
@@ -141,7 +141,7 @@ through a set of regular expressions used to match each type of terminal.</p>
 (taken from http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3) which is the result of parsing
 http://www.w3.org/2000/10/swap/grammar/n3.n3 (along with bnf-rules.n3) using cwm using the following command sequence:</p>
 
-<pre class="code">cwm n3.n3 bnf-rules.n3 --think --purge --data &gt; n3-selectors.n3
+<pre class="code"><span class='cwm identifier id'>cwm</span> <span class='n3 identifier id'>n3</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='bnf identifier id'>bnf</span><span class='minus op'>-</span><span class='rules identifier id'>rules</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='think identifier id'>think</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='purge identifier id'>purge</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='data identifier id'>data</span> <span class='gt op'>&gt;</span> <span class='n3 identifier id'>n3</span><span class='minus op'>-</span><span class='selectors identifier id'>selectors</span><span class='dot token'>.</span><span class='n3 identifier id'>n3</span>
 </pre>
 
 <p>[n3-selectors.n3][file:lib/rdf/n3/reader/n3-selectors.rb] is itself used to generate meta.rb using script/build_meta.</p>
@@ -255,9 +255,9 @@ see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanyin
 </div></div>
     
     <div id="footer">
-  Generated on Wed Jun 29 16:28:09 2011 by 
+  Generated on Wed Jun 29 20:17:42 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>

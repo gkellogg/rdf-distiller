@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: sparql-algebra-README
   
@@ -77,129 +77,129 @@ strength reduction, and memoization.</li>
 
 <h2>Examples</h2>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sparql/algebra</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'sparql/algebra'</span>
 
-<span class='id include'>include</span> <span class='const'>SPARQL</span><span class='op'>::</span><span class='const'>Algebra</span>
+<span class='include identifier id'>include</span> <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Algebra constant id'>Algebra</span>
 </pre>
 
 <h3>Example Queries</h3>
 
 <h4>Basic Query</h4>
 
-<pre class="code">BASE &lt;http://example.org/x/&gt; 
-PREFIX : &lt;&gt;
+<pre class="code"><span class='BASE constant id'>BASE</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/</span><span class='x identifier id'>x</span><span class='div op'>/</span><span class='gt op'>&gt;</span> 
+<span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='gt op'>&gt;</span>
 
-SELECT * WHERE { :x ?p ?v } 
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span> <span class='symbol val'>:x</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='v identifier id'>v</span> <span class='rbrace token'>}</span> 
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((: &lt;http://example.org/x/&gt;))
-  (bgp (triple :x ?p ?v)))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/</span><span class='x identifier id'>x</span><span class='div op'>/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='symbol val'>:x</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Prefixes</h4>
 
-<pre class="code">PREFIX ns: &lt;http://example.org/ns#&gt;
-PREFIX x:  &lt;http://example.org/x/&gt;
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='ns identifier id'>ns</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/n</span><span class='s identifier id'>s</span><span class='comment val'>#&gt;</span>
+<span class='PREFIX constant id'>PREFIX</span> <span class='x identifier id'>x</span><span class='colon op'>:</span>  <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/</span><span class='x identifier id'>x</span><span class='div op'>/</span><span class='gt op'>&gt;</span>
 
-SELECT * WHERE { x:x ns:p ?v } 
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> <span class='WHERE constant id'>WHERE</span> <span class='lbrace token'>{</span> <span class='x identifier id'>x</span><span class='symbol val'>:x</span> <span class='ns identifier id'>ns</span><span class='symbol val'>:p</span> <span class='question op'>?</span><span class='v identifier id'>v</span> <span class='rbrace token'>}</span> 
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((ns: &lt;http://example.org/ns#&gt;)
-         (x: &lt;http://example.org/x/&gt;))
-  (bgp (triple x:x ns:p ?v)))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='ns identifier id'>ns</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/n</span><span class='s identifier id'>s</span><span class='comment val'>#&gt;)</span>
+         <span class='lparen token'>(</span><span class='x identifier id'>x</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/</span><span class='x identifier id'>x</span><span class='div op'>/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='x identifier id'>x</span><span class='symbol val'>:x</span> <span class='ns identifier id'>ns</span><span class='symbol val'>:p</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Ask</h4>
 
-<pre class="code">(prefix ((: &lt;http://example/&gt;))
-  (ask
-    (bgp (triple :x :p ?x))))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='ask identifier id'>ask</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='symbol val'>:x</span> <span class='symbol val'>:p</span> <span class='question op'>?</span><span class='x identifier id'>x</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Datasets</h4>
 
-<pre class="code">PREFIX : &lt;http://example/&gt; 
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span> 
 
-SELECT * 
-FROM &lt;data-g1.ttl&gt;
-FROM NAMED &lt;data-g2.ttl&gt;
-{ ?s ?p ?o }
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> 
+<span class='FROM constant id'>FROM</span> <span class='lt op'>&lt;</span><span class='data identifier id'>data</span><span class='minus op'>-</span><span class='g1 identifier id'>g1</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span><span class='gt op'>&gt;</span>
+<span class='FROM constant id'>FROM</span> <span class='NAMED constant id'>NAMED</span> <span class='lt op'>&lt;</span><span class='data identifier id'>data</span><span class='minus op'>-</span><span class='g2 identifier id'>g2</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span><span class='gt op'>&gt;</span>
+<span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span> <span class='rbrace token'>}</span>
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((: &lt;http://example/&gt;))
-  (dataset (&lt;data-g1.ttl&gt; (named &lt;data-g2.ttl&gt;))
-    (bgp (triple ?s ?p ?o))))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='dataset identifier id'>dataset</span> <span class='lparen token'>(</span><span class='lt op'>&lt;</span><span class='data identifier id'>data</span><span class='minus op'>-</span><span class='g1 identifier id'>g1</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='named identifier id'>named</span> <span class='lt op'>&lt;</span><span class='data identifier id'>data</span><span class='minus op'>-</span><span class='g2 identifier id'>g2</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Join</h4>
 
-<pre class="code">PREFIX : &lt;http://example/&gt; 
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span> 
 
-SELECT * 
-{ 
-   ?s ?p ?o
-   GRAPH ?g { ?s ?q ?v }
-}
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> 
+<span class='lbrace token'>{</span> 
+   <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span>
+   <span class='GRAPH constant id'>GRAPH</span> <span class='question op'>?</span><span class='g identifier id'>g</span> <span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='q identifier id'>q</span> <span class='question op'>?</span><span class='v identifier id'>v</span> <span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((: &lt;http://example/&gt;))
-  (join
-    (bgp (triple ?s ?p ?o))
-    (graph ?g
-      (bgp (triple ?s ?q ?v)))))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='join identifier id'>join</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='graph identifier id'>graph</span> <span class='question op'>?</span><span class='g identifier id'>g</span>
+      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='q identifier id'>q</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Union</h4>
 
-<pre class="code">PREFIX : &lt;http://example/&gt; 
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span> 
 
-SELECT * 
-{ 
-   { ?s ?p ?o }
-  UNION
-   { GRAPH ?g { ?s ?p ?o } }
-}
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span> 
+<span class='lbrace token'>{</span> 
+   <span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span> <span class='rbrace token'>}</span>
+  <span class='UNION constant id'>UNION</span>
+   <span class='lbrace token'>{</span> <span class='GRAPH constant id'>GRAPH</span> <span class='question op'>?</span><span class='g identifier id'>g</span> <span class='lbrace token'>{</span> <span class='integer val'>?s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span> <span class='rbrace token'>}</span> <span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((: &lt;http://example/&gt;))
-  (union
-    (bgp (triple ?s ?p ?o))
-    (graph ?g
-      (bgp (triple ?s ?p ?o)))))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='union identifier id'>union</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='graph identifier id'>graph</span> <span class='question op'>?</span><span class='g identifier id'>g</span>
+      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>LeftJoin</h4>
 
-<pre class="code">PREFIX :    &lt;http://example/&gt;
+<pre class="code"><span class='PREFIX constant id'>PREFIX</span> <span class='colon op'>:</span>    <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span>
 
-SELECT *
-{ 
-  ?x :p ?v .
-  OPTIONAL
-  { 
-    ?y :q ?w .
-    FILTER(?v=2)
-  }
-}
+<span class='SELECT constant id'>SELECT</span> <span class='mult op'>*</span>
+<span class='lbrace token'>{</span> 
+  <span class='integer val'>?x</span> <span class='symbol val'>:p</span> <span class='question op'>?</span><span class='v identifier id'>v</span> <span class='dot token'>.</span>
+  <span class='OPTIONAL constant id'>OPTIONAL</span>
+  <span class='lbrace token'>{</span> 
+    <span class='integer val'>?y</span> <span class='symbol val'>:q</span> <span class='question op'>?</span><span class='w identifier id'>w</span> <span class='dot token'>.</span>
+    <span class='FILTER constant id'>FILTER</span><span class='lparen token'>(</span><span class='integer val'>?v</span><span class='assign token'>=</span><span class='integer val'>2</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span>
+<span class='rbrace token'>}</span>
 </pre>
 
 <p>is equivalent to</p>
 
-<pre class="code">(prefix ((: &lt;http://example/&gt;))
-  (leftjoin
-    (bgp (triple ?x :p ?v))
-    (bgp (triple ?y :q ?w))
-    (= ?v 2)))
+<pre class="code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='leftjoin identifier id'>leftjoin</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='x identifier id'>x</span> <span class='symbol val'>:p</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='y identifier id'>y</span> <span class='symbol val'>:q</span> <span class='question op'>?</span><span class='w identifier id'>w</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='integer val'>?v</span> <span class='integer val'>2</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Complex</h4>
@@ -208,88 +208,88 @@ SELECT *
 
 <h4>Constructing operator expressions manually</h4>
 
-<pre class="code"><span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isBlank</span><span class='rparen'>)</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span><span class='lparen'>(</span><span class='symbol'>:foobar</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isIRI</span><span class='rparen'>)</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://rdf.rubyforge.org/</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isLiteral</span><span class='rparen'>)</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:str</span><span class='rparen'>)</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:datatype</span><span class='rparen'>)</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<pre class="code"><span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isBlank</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='lparen token'>(</span><span class='symbol val'>:foobar</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isIRI</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://rdf.rubyforge.org/'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isLiteral</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='float val'>3.1415</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:str</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:datatype</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='float val'>3.1415</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Constructing operator expressions using SSE forms</h4>
 
-<pre class="code"><span class='const'>Expression</span><span class='lbracket'>[</span><span class='symbol'>:isBlank</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span><span class='lparen'>(</span><span class='symbol'>:foobar</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-<span class='const'>Expression</span><span class='lbracket'>[</span><span class='symbol'>:isIRI</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>http://rdf.rubyforge.org/</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
-<span class='const'>Expression</span><span class='lbracket'>[</span><span class='symbol'>:isLiteral</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-<span class='const'>Expression</span><span class='lbracket'>[</span><span class='symbol'>:str</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:datatype</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<pre class="code"><span class='Expression constant id'>Expression</span><span class='lbrack token'>[</span><span class='symbol val'>:isBlank</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='lparen token'>(</span><span class='symbol val'>:foobar</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='Expression constant id'>Expression</span><span class='lbrack token'>[</span><span class='symbol val'>:isIRI</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://rdf.rubyforge.org/'</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='Expression constant id'>Expression</span><span class='lbrack token'>[</span><span class='symbol val'>:isLiteral</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='float val'>3.1415</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+<span class='Expression constant id'>Expression</span><span class='lbrack token'>[</span><span class='symbol val'>:str</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:datatype</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='float val'>3.1415</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
 </pre>
 
 <h4>Constructing operator expressions using SSE strings</h4>
 
-<pre class="code"><span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(isBlank _:foobar)</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(isIRI &lt;http://rdf.rubyforge.org/&gt;)</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(isLiteral 3.1415)</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(str (datatype 3.1415))</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+<pre class="code"><span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(isBlank _:foobar)'</span><span class='rparen token'>)</span>
+<span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(isIRI &lt;http://rdf.rubyforge.org/&gt;)'</span><span class='rparen token'>)</span>
+<span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(isLiteral 3.1415)'</span><span class='rparen token'>)</span>
+<span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(str (datatype 3.1415))'</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Evaluating operators standalone</h4>
 
-<pre class="code"><span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isBlank</span><span class='rparen'>)</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span><span class='lparen'>(</span><span class='symbol'>:foobar</span><span class='rparen'>)</span><span class='rparen'>)</span>              <span class='comment'>#=&gt; RDF::Literal::TRUE
-</span><span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isIRI</span><span class='rparen'>)</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id title'>title</span><span class='rparen'>)</span>                     <span class='comment'>#=&gt; RDF::Literal::TRUE
-</span><span class='const'>Operator</span><span class='lparen'>(</span><span class='symbol'>:isLiteral</span><span class='rparen'>)</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='rparen'>)</span>          <span class='comment'>#=&gt; RDF::Literal::TRUE
-</span></pre>
+<pre class="code"><span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isBlank</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='lparen token'>(</span><span class='symbol val'>:foobar</span><span class='rparen token'>)</span><span class='rparen token'>)</span>              <span class='comment val'>#=&gt; RDF::Literal::TRUE</span>
+<span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isIRI</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='rparen token'>)</span>                     <span class='comment val'>#=&gt; RDF::Literal::TRUE</span>
+<span class='Operator constant id'>Operator</span><span class='lparen token'>(</span><span class='symbol val'>:isLiteral</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='float val'>3.1415</span><span class='rparen token'>)</span><span class='rparen token'>)</span>          <span class='comment val'>#=&gt; RDF::Literal::TRUE</span>
+</pre>
 
 <h4>Evaluating expressions on a solution sequence</h4>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/triples</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/triples'</span>
 
-<span class='comment'># Find all people and their names &amp; e-mail addresses:
-</span><span class='id solutions'>solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='period'>.</span><span class='id execute'>execute</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id load'>load</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>etc/doap.nt</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id query'>query</span><span class='op'>|</span>
-  <span class='id query'>query</span><span class='period'>.</span><span class='id pattern'>pattern</span> <span class='lbracket'>[</span><span class='symbol'>:person</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='period'>.</span><span class='id type'>type</span><span class='comma'>,</span>  <span class='const'>FOAF</span><span class='period'>.</span><span class='const'>Person</span><span class='rbracket'>]</span>
-  <span class='id query'>query</span><span class='period'>.</span><span class='id pattern'>pattern</span> <span class='lbracket'>[</span><span class='symbol'>:person</span><span class='comma'>,</span> <span class='const'>FOAF</span><span class='period'>.</span><span class='id name'>name</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='rbracket'>]</span>
-  <span class='id query'>query</span><span class='period'>.</span><span class='id pattern'>pattern</span> <span class='lbracket'>[</span><span class='symbol'>:person</span><span class='comma'>,</span> <span class='const'>FOAF</span><span class='period'>.</span><span class='id mbox'>mbox</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
-<span class='kw'>end</span>
+<span class='comment val'># Find all people and their names &amp; e-mail addresses:</span>
+<span class='solutions identifier id'>solutions</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>'etc/doap.nt'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='query identifier id'>query</span><span class='bitor op'>|</span>
+  <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='comma token'>,</span>  <span class='FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='Person constant id'>Person</span><span class='rbrack token'>]</span>
+  <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='rbrack token'>]</span>
+  <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='mbox identifier id'>mbox</span><span class='comma token'>,</span> <span class='symbol val'>:email</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:optional</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span>
+<span class='end end kw'>end</span>
 
-<span class='comment'># Find people who have a name but don't have a known e-mail address:
-</span><span class='id expression'>expression</span> <span class='op'>=</span> <span class='const'>Expression</span><span class='lbracket'>[</span><span class='symbol'>:not</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:bound</span><span class='comma'>,</span> <span class='const'>Variable</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rbracket'>]</span>    <span class='comment'># ...or just...
-</span><span class='id expression'>expression</span> <span class='op'>=</span> <span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(not (bound ?email))</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
-<span class='id solutions'>solutions</span><span class='period'>.</span><span class='id filter!'>filter!</span><span class='lparen'>(</span><span class='id expression'>expression</span><span class='rparen'>)</span>
+<span class='comment val'># Find people who have a name but don't have a known e-mail address:</span>
+<span class='expression identifier id'>expression</span> <span class='assign token'>=</span> <span class='Expression constant id'>Expression</span><span class='lbrack token'>[</span><span class='symbol val'>:not</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='symbol val'>:bound</span><span class='comma token'>,</span> <span class='Variable constant id'>Variable</span><span class='lparen token'>(</span><span class='symbol val'>:email</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>    <span class='comment val'># ...or just...</span>
+<span class='expression identifier id'>expression</span> <span class='assign token'>=</span> <span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(not (bound ?email))'</span><span class='rparen token'>)</span>
+<span class='solutions identifier id'>solutions</span><span class='dot token'>.</span><span class='filter! fid id'>filter!</span><span class='lparen token'>(</span><span class='expression identifier id'>expression</span><span class='rparen token'>)</span>
 </pre>
 
 <h4>Optimizing expressions containing constant subexpressions</h4>
 
-<pre class="code"><span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(sameTerm ?var ?var)</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id optimize'>optimize</span>            <span class='comment'>#=&gt; RDF::Literal::TRUE
-</span><span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>(* -2 (- (* (+ 1 2) (+ 3 4))))</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id optimize'>optimize</span>  <span class='comment'>#=&gt; RDF::Literal(42)
-</span></pre>
+<pre class="code"><span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(sameTerm ?var ?var)'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span>            <span class='comment val'>#=&gt; RDF::Literal::TRUE</span>
+<span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>'(* -2 (- (* (+ 1 2) (+ 3 4))))'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span>  <span class='comment val'>#=&gt; RDF::Literal(42)</span>
+</pre>
 
 <h2>Optimizations</h2>
 
 <p>Some very simple optimizations are currently implemented for <code>FILTER</code>
 expressions. Use the following to obtain optimized SSE forms:</p>
 
-<pre class="code"><span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='id sse'>sse</span><span class='rparen'>)</span><span class='period'>.</span><span class='id optimize'>optimize</span><span class='period'>.</span><span class='id to_sse'>to_sse</span>
+<pre class="code"><span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='sse identifier id'>sse</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span><span class='dot token'>.</span><span class='to_sse identifier id'>to_sse</span>
 </pre>
 
 <h3>Constant comparison folding</h3>
 
-<pre class="code">(sameTerm ?x ?x)   #=&gt; true
+<pre class="code"><span class='lparen token'>(</span><span class='sameTerm identifier id'>sameTerm</span> <span class='question op'>?</span><span class='x identifier id'>x</span> <span class='question op'>?</span><span class='x identifier id'>x</span><span class='rparen token'>)</span>   <span class='comment val'>#=&gt; true</span>
 </pre>
 
 <h3>Constant arithmetic folding</h3>
 
-<pre class="code">(!= ?x (+ 123))    #=&gt; (!= ?x 123)
-(!= ?x (- -1.0))   #=&gt; (!= ?x 1.0)
-(!= ?x (+ 1 2))    #=&gt; (!= ?x 3)
-(!= ?x (- 4 5))    #=&gt; (!= ?x -1)
-(!= ?x (* 6 7))    #=&gt; (!= ?x 42)
-(!= ?x (/ 0 0.0))  #=&gt; (!= ?x NaN)
-</pre>
+<pre class="code"><span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='plus op'>+</span> <span class='integer val'>123</span><span class='rparen token'>)</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; (!= ?x 123)</span>
+<span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='minus op'>-</span> <span class='float val'>-1.0</span><span class='rparen token'>)</span><span class='rparen token'>)</span>   <span class='comment val'>#=&gt; (!= ?x 1.0)</span>
+<span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='plus op'>+</span> <span class='integer val'>1</span> <span class='integer val'>2</span><span class='rparen token'>)</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; (!= ?x 3)</span>
+<span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='minus op'>-</span> <span class='integer val'>4</span> <span class='integer val'>5</span><span class='rparen token'>)</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; (!= ?x -1)</span>
+<span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='mult op'>*</span> <span class='integer val'>6</span> <span class='integer val'>7</span><span class='rparen token'>)</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; (!= ?x 42)</span>
+<span class='lparen token'>(</span><span class='neq op'>!=</span> <span class='integer val'>?x</span> <span class='lparen token'>(</span><span class='regexp val'>/ 0 0.0))  #=&gt; (!= ?x NaN)
+</span></pre>
 
 <h3>Memoization</h3>
 
 <p>Expressions can optionally be <a href="http://en.wikipedia.org/wiki/Memoization">memoized</a>, which can speed up
 repeatedly executing the expression on a solution sequence:</p>
 
-<pre class="code"><span class='const'>Expression</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='id sse'>sse</span><span class='comma'>,</span> <span class='symbol'>:memoize</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
-<span class='const'>Operator</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id operands'>operands</span><span class='comma'>,</span> <span class='symbol'>:memoize</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<pre class="code"><span class='Expression constant id'>Expression</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='sse identifier id'>sse</span><span class='comma token'>,</span> <span class='symbol val'>:memoize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+<span class='Operator constant id'>Operator</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='operands identifier id'>operands</span><span class='comma token'>,</span> <span class='symbol val'>:memoize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
 </pre>
 
 <p>Memoization is implemented using RDF.rb's <a href="http://rdf.rubyforge.org/RDF/Util/Cache.html">RDF::Util::Cache</a> utility
@@ -386,20 +386,20 @@ scarcity.</p>
 <p>The recommended installation method is via <a href="http://rubygems.org/">RubyGems</a>.
 To install the latest official release of the <code>SPARQL::Algebra</code> gem, do:</p>
 
-<pre class="code">% [sudo] gem install sparql-algebra
+<pre class="code"><span class='string val'>% [sudo] </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='algebra identifier id'>algebra</span>
 </pre>
 
 <h2>Download</h2>
 
 <p>To get a local working copy of the development repository, do:</p>
 
-<pre class="code">% git clone git://github.com/bendiken/sparql-algebra.git
+<pre class="code"><span class='string val'>% git </span><span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='algebra identifier id'>algebra</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
 </pre>
 
 <p>Alternatively, download the latest development version as a tarball as
 follows:</p>
 
-<pre class="code">% wget http://github.com/bendiken/sparql-algebra/tarball/master
+<pre class="code"><span class='string val'>% wget </span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='algebra identifier id'>algebra</span><span class='div op'>/</span><span class='tarball identifier id'>tarball</span><span class='div op'>/</span><span class='master identifier id'>master</span>
 </pre>
 
 <h2>Mailing List</h2>
@@ -446,9 +446,9 @@ see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanyin
 <p>Portions of tests are derived from <a href="http://www.w3.org/2001/sw/DataAccess/tests/">W3C DAWG tests</a> and have <a href="http://www.w3.org/2001/sw/DataAccess/tests/data-r2/LICENSE">other licensing terms</a>.</p></div></div>
     
     <div id="footer">
-  Generated on Wed Jun 29 16:28:09 2011 by 
+  Generated on Wed Jun 29 20:17:43 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>

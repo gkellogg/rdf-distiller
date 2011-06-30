@@ -114,10 +114,11 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code">(prefix ((foaf: &lt;http://xmlns.com/foaf/0.1/&gt;))
-  (project (?name)
-    (order ((asc ?name))
-      (bgp (triple ?x foaf:name ?name)))))</pre>
+      <pre class="example code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='foaf identifier id'>foaf</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/xmlns.com/</span><span class='foaf identifier id'>foaf</span><span class='div op'>/</span><span class='integer val'>0</span><span class='integer val'>.1</span><span class='div op'>/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?n</span><span class='ame identifier id'>ame</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='order identifier id'>order</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='asc identifier id'>asc</span> <span class='question op'>?</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='x identifier id'>x</span> <span class='foaf identifier id'>foaf</span><span class='symbol val'>:name</span> <span class='question op'>?</span><span class='name identifier id'>name</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
     
   </div>
 
@@ -136,7 +137,8 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:order</span><span class='rbracket'>]</span></pre></dd>
+        <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:order</span><span class='rbrack token'>]</span>
+</pre></dd>
       
     </dl>
   
@@ -422,33 +424,34 @@ an array of expressions and/or variables specified in operand(0)</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/order.rb', line 30</span>
 
-<span class='kw'>def</span> <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Order</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id last'>last</span><span class='period'>.</span><span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id order'>order</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id a'>a</span><span class='comma'>,</span> <span class='id b'>b</span><span class='op'>|</span>
-    <span class='id operand'>operand</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span><span class='period'>.</span><span class='id inject'>inject</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id memo'>memo</span><span class='comma'>,</span> <span class='id op'>op</span><span class='op'>|</span>
-      <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt; </span><span class='embexpr_beg'>#{</span><span class='id op'>op</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-      <span class='id memo'>memo</span> <span class='op'>||=</span> <span class='kw'>begin</span>
-        <span class='id comp'>comp</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id op'>op</span>
-        <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Variable</span>
-          <span class='id a'>a</span><span class='lbracket'>[</span><span class='id op'>op</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>&lt;=&gt;</span> <span class='id b'>b</span><span class='lbracket'>[</span><span class='id op'>op</span><span class='period'>.</span><span class='id to_sym'>to_sym</span><span class='rbracket'>]</span>
-        <span class='kw'>when</span> <span class='const'>Operator</span><span class='comma'>,</span> <span class='const'>Array</span>
-          <span class='id a_eval'>a_eval</span><span class='comma'>,</span> <span class='id b_eval'>b_eval</span> <span class='op'>=</span> <span class='id op'>op</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='id a'>a</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id op'>op</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='id b'>b</span><span class='rparen'>)</span>
-          <span class='kw'>if</span> <span class='id a_eval'>a_eval</span><span class='period'>.</span><span class='id nil?'>nil?</span>
-            <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-          <span class='kw'>elsif</span> <span class='id b_eval'>b_eval</span><span class='period'>.</span><span class='id nil?'>nil?</span>
-            <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span>
-          <span class='kw'>else</span>
-            <span class='const'>Operator</span><span class='op'>::</span><span class='const'>Compare</span><span class='period'>.</span><span class='id evaluate'>evaluate</span><span class='lparen'>(</span><span class='id a_eval'>a_eval</span><span class='comma'>,</span> <span class='id b_eval'>b_eval</span><span class='rparen'>)</span>
-          <span class='kw'>end</span>
-        <span class='kw'>else</span>
-          <span class='id raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unexpected order expression </span><span class='embexpr_beg'>#{</span><span class='id op'>op</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-        <span class='kw'>end</span>
-        <span class='id comp'>comp</span> <span class='op'>=</span> <span class='op'>-</span><span class='id comp'>comp</span> <span class='kw'>if</span> <span class='id op'>op</span><span class='period'>.</span><span class='id is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Operator</span><span class='op'>::</span><span class='const'>Desc</span><span class='rparen'>)</span>
-        <span class='id comp'>comp</span> <span class='op'>==</span> <span class='int'>0</span> <span class='op'>?</span> <span class='kw'>false</span> <span class='op'>:</span> <span class='id comp'>comp</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span> <span class='op'>||</span> <span class='int'>0</span>  <span class='comment'># They compare equivalently if there are no matches
-</span>  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;Order&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='order identifier id'>order</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='a identifier id'>a</span><span class='comma token'>,</span> <span class='b identifier id'>b</span><span class='bitor op'>|</span>
+    <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='inject identifier id'>inject</span><span class='lparen token'>(</span><span class='false false kw'>false</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='memo identifier id'>memo</span><span class='comma token'>,</span> <span class='op identifier id'>op</span><span class='bitor op'>|</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; #{op.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='memo identifier id'>memo</span> <span class='opasgn op'>||=</span> <span class='begin begin kw'>begin</span>
+        <span class='comp identifier id'>comp</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='op identifier id'>op</span>
+        <span class='when when kw'>when</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Variable constant id'>Variable</span>
+          <span class='a identifier id'>a</span><span class='lbrack token'>[</span><span class='op identifier id'>op</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span> <span class='cmp op'>&lt;=&gt;</span> <span class='b identifier id'>b</span><span class='lbrack token'>[</span><span class='op identifier id'>op</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rbrack token'>]</span>
+        <span class='when when kw'>when</span> <span class='Operator constant id'>Operator</span><span class='comma token'>,</span> <span class='Array constant id'>Array</span>
+          <span class='a_eval identifier id'>a_eval</span><span class='comma token'>,</span> <span class='b_eval identifier id'>b_eval</span> <span class='assign token'>=</span> <span class='op identifier id'>op</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='a identifier id'>a</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='op identifier id'>op</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='b identifier id'>b</span><span class='rparen token'>)</span>
+          <span class='if if kw'>if</span> <span class='a_eval identifier id'>a_eval</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+            <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='integer val'>-1</span><span class='rparen token'>)</span>
+          <span class='elsif elsif kw'>elsif</span> <span class='b_eval identifier id'>b_eval</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+            <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span>
+          <span class='else else kw'>else</span>
+            <span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Compare constant id'>Compare</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='a_eval identifier id'>a_eval</span><span class='comma token'>,</span> <span class='b_eval identifier id'>b_eval</span><span class='rparen token'>)</span>
+          <span class='end end kw'>end</span>
+        <span class='else else kw'>else</span>
+          <span class='raise identifier id'>raise</span> <span class='TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Unexpected order expression #{op.inspect}&quot;</span>
+        <span class='end end kw'>end</span>
+        <span class='comp identifier id'>comp</span> <span class='assign token'>=</span> <span class='minus op'>-</span><span class='comp identifier id'>comp</span> <span class='if if_mod kw'>if</span> <span class='op identifier id'>op</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Operator constant id'>Operator</span><span class='colon2 op'>::</span><span class='Desc constant id'>Desc</span><span class='rparen token'>)</span>
+        <span class='comp identifier id'>comp</span> <span class='eq op'>==</span> <span class='integer val'>0</span> <span class='question op'>?</span> <span class='false false kw'>false</span> <span class='colon op'>:</span> <span class='comp identifier id'>comp</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span> <span class='orop op'>||</span> <span class='integer val'>0</span>  <span class='comment val'># They compare equivalently if there are no matches</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -500,9 +503,10 @@ an array of expressions and/or variables specified in operand(0)</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/order.rb', line 64</span>
 
-<span class='kw'>def</span> <span class='id optimize'>optimize</span>
-  <span class='id operands'>operands</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optimize</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
+  <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -513,9 +517,9 @@ an array of expressions and/or variables specified in operand(0)</p>
 </div>
     
     <div id="footer">
-  Generated on Wed Jun 29 16:28:42 2011 by 
+  Generated on Wed Jun 29 20:18:11 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>
