@@ -22,8 +22,6 @@ module RDF::Portal
             %p= "RDFa serialization URI base: &lt;#{base}&gt;"
           - subjects.each do |subject|
             != yield(subject)
-          %footer
-            %p= "Written by <a href='http://rdf.rubyforge.org/rdfa'>RDF::RDFa</a> version #{RDF::RDFa::VERSION}"
     ),
 
     # Output for non-leaf resources

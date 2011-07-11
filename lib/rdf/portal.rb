@@ -127,7 +127,7 @@ module RDF
 
         params["fmt"], content_type = writer(params["fmt"])
         
-        writer_opts = reader_opts
+        writer_opts = reader_opts.merge(:standard_prefixes => true)
         case params["fmt"]
         when :rdfa
           haml = DISTILLER_HAML.dup
@@ -136,6 +136,7 @@ module RDF
           writer_opts[:haml] = haml
           writer_opts[:haml_options] = {:ugly => false}
         end
+        puts "Writer options: #{writer_opts.inspect}"
         [content_type, graph.dump(params["fmt"].to_sym, writer_opts)]
       rescue RDF::ReaderError => e
         @error = "RDF::ReaderError: #{e.message}"
