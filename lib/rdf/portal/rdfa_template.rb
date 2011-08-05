@@ -38,26 +38,26 @@ module RDF::Portal
     # Yield: predicates.each
     :subject => %q(
       - if element == :li
-        %td{:about => get_curie(subject), :typeof => typeof}
+        %li{:about => resource, :typeof => typeof}
           - if typeof
             %span.type!= typeof
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
       - elsif rel && typeof
-        %td{:rel => get_curie(rel)}
-          %div{:about => get_curie(subject), :typeof => typeof}
+        %td{:rel => rel}
+          %div{:about => resource, :typeof => typeof}
             %span.type!= typeof
             %table.properties
               - predicates.each do |predicate|
                 != yield(predicate)
       - elsif rel
-        %td{:rel => get_curie(rel), :resource => get_curie(subject)}
+        %td{:rel => rel, :resource => resource}
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
       - else
-        %div{:about => get_curie(subject), :typeof => typeof}
+        %div{:about => about, :typeof => typeof}
           - if typeof
             %span.type!= typeof
           %table.properties
@@ -66,14 +66,13 @@ module RDF::Portal
     ),
 
     # Output for single-valued properties
-    # Locals: property, objects
+    # Locals: property, rel, object
     # Yields: object
     # If nil is returned, render as a leaf
     # Otherwise, render result
     :property_value => %q(
-      - object = objects.first
       - if heading_predicates.include?(predicate) && object.literal?
-        %h1{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
+        %h1{:property => property, :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
       - else
         %tr.property
           %td.label
@@ -81,14 +80,14 @@ module RDF::Portal
           - if res = yield(object)
             != res
           - elsif object.node?
-            %td{:resource => get_curie(object), :rel => get_curie(predicate)}= get_curie(object)
+            %td{:resource => get_curie(object), :rel => rel}= get_curie(object)
           - elsif object.uri?
             %td
-              %a{:href => object.to_s, :rel => get_curie(predicate)}= object.to_s
+              %a{:href => object.to_s, :rel => rel}= object.to_s
           - elsif object.datatype == RDF.XMLLiteral
-            %td{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_dt_curie(object)}<!= get_value(object)
+            %td{:property => property, :lang => get_lang(object), :datatype => get_dt_curie(object)}<!= get_value(object)
           - else
-            %td{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
+            %td{:property => property, :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
     ),
 
     # Output for multi-valued properties
@@ -98,7 +97,7 @@ module RDF::Portal
       %tr.property
         %td.label
           = get_predicate_name(predicate)
-        %td{:rel => (get_curie(rel) if rel), :property => (get_curie(property) if property)}
+        %td{:rel => rel, :property => property}
           %ul
             - objects.each do |object|
               - if res = yield(object)
