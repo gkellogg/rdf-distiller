@@ -25,11 +25,11 @@ Distills between formats supported in [Linked Data][linkeddata].
 * [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.4.4)
 * [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.1)
 * [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.1.0)
-* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.3)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.3)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.3)
+* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.4)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.5)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.4)
 * [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.1)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.0.6)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.0.7)
 
 ## Documentation
 ### Core libraries

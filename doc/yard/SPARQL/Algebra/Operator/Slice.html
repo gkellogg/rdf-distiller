@@ -114,12 +114,11 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/n</span><span class='s identifier id'>s</span><span class='comment val'>#&gt;))</span>
-  <span class='lparen token'>(</span><span class='slice identifier id'>slice</span> <span class='integer val'>1</span> <span class='integer val'>1</span>
-    <span class='lparen token'>(</span><span class='project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?v</span><span class='rparen token'>)</span>
-      <span class='lparen token'>(</span><span class='order identifier id'>order</span> <span class='lparen token'>(</span><span class='integer val'>?v</span><span class='rparen token'>)</span>
-        <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='integer val'>?0</span> <span class='symbol val'>:num</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-</pre>
+      <pre class="example code">(prefix ((: &lt;http://example.org/ns#&gt;))
+  (slice 1 1
+    (project (?v)
+      (order (?v)
+        (bgp (triple ??0 :num ?v))))))</pre>
     
   </div>
 
@@ -138,8 +137,7 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:slice</span><span class='rbrack token'>]</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:slice</span><span class='rbracket'>]</span></pre></dd>
       
     </dl>
   
@@ -341,10 +339,9 @@ second operand.</p>
     
       <h4><div class='inline'></div></h4>
       <pre class="example code">
-<span class='lparen token'>(</span><span class='slice identifier id'>slice</span> <span class='integer val'>1</span> <span class='integer val'>2</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>   <span class='comment val'># Returns at most two solutions starting with the second solution.</span>
-<span class='lparen token'>(</span><span class='slice identifier id'>slice</span> <span class='_ identifier id'>_</span> <span class='integer val'>2</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>   <span class='comment val'># Returns at most two solutions starting with the first solution.</span>
-<span class='lparen token'>(</span><span class='slice identifier id'>slice</span> <span class='integer val'>1</span> <span class='_ identifier id'>_</span> <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>   <span class='comment val'># Returns all solution after the first.</span>
-</pre>
+(slice 1 2 (bgp (triple ?s ?p ?o)))   # Returns at most two solutions starting with the second solution.
+(slice _ 2 (bgp (triple ?s ?p ?o)))   # Returns at most two solutions starting with the first solution.
+(slice 1 _ (bgp (triple ?s ?p ?o)))   # Returns all solution after the first.</pre>
     
   </div>
 <h3>Parameters:</h3>
@@ -421,13 +418,12 @@ second operand.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/slice.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='@solutions ivar id'>@solutions</span><span class='dot token'>.</span><span class='offset identifier id'>offset</span><span class='lparen token'>(</span><span class='operands identifier id'>operands</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='operands identifier id'>operands</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='symbol val'>:_</span>
-  <span class='@solutions ivar id'>@solutions</span><span class='dot token'>.</span><span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='operands identifier id'>operands</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='operands identifier id'>operands</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='symbol val'>:_</span>
-  <span class='@solutions ivar id'>@solutions</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id last'>last</span><span class='period'>.</span> <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id offset'>offset</span><span class='lparen'>(</span><span class='id operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span>
+  <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id limit'>limit</span><span class='lparen'>(</span><span class='id operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span>
+  <span class='ivar'>@solutions</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -479,10 +475,9 @@ second operand.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/slice.rb', line 55</span>
 
-<span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
-  <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id optimize'>optimize</span>
+  <span class='id operands'>operands</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optimize</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -493,9 +488,9 @@ second operand.</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 11 10:20:06 2011 by 
+  Generated on Mon Aug 22 16:49:59 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.8.7).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

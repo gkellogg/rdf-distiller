@@ -95,8 +95,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/project.rb,<br /> vendor/bundler/ruby/1.9.1/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb</span>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/project.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb,<br /> vendor/bundler/ruby/1.9.1/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb</span>
 </dd>
   
 </dl>
@@ -114,11 +114,10 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='lparen token'>(</span><span class='select identifier id'>select</span> <span class='lparen token'>(</span><span class='integer val'>?v</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?v</span><span class='rparen token'>)</span>
-    <span class='lparen token'>(</span><span class='filter identifier id'>filter</span> <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='integer val'>?v</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
-      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='p identifier id'>p</span><span class='gt op'>&gt;</span> <span class='integer val'>?v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-</pre>
+      <pre class="example code">(select (?v)
+  (project (?v)
+    (filter (= ?v 2)
+      (bgp (triple ?s &lt;http://example/p&gt; ?v)))))</pre>
     
   </div>
 
@@ -137,8 +136,7 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:project</span><span class='rbrack token'>]</span>
-</pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:project</span><span class='rbracket'>]</span></pre></dd>
       
     </dl>
   
@@ -399,14 +397,13 @@ Reduces the result set to the variables listed in the first operand</p>
 33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/project.rb', line 29</span>
 
-<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span>
-    <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span>
-    <span class='project identifier id'>project</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='lparen token'>(</span><span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id last'>last</span><span class='period'>.</span>
+    <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span>
+    <span class='id project'>project</span><span class='lparen'>(</span><span class='op'>*</span><span class='lparen'>(</span><span class='id operands'>operands</span><span class='period'>.</span><span class='id first'>first</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -456,12 +453,11 @@ Reduces the result set to the variables listed in the first operand</p>
 43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/project.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/project.rb', line 41</span>
 
-<span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
-  <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id optimize'>optimize</span>
+  <span class='id operands'>operands</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optimize</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -472,9 +468,9 @@ Reduces the result set to the variables listed in the first operand</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 11 10:19:35 2011 by 
+  Generated on Mon Aug 22 16:50:00 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.8.7).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>

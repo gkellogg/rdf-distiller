@@ -90,7 +90,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.9.1/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb</span>
+  vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.3/lib/rdf/microdata/reader.rb,<br /> vendor/bundler/ruby/1.9.1/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb,<br /> vendor/bundler/ruby/1.9.1/gems/rdf-microdata-0.2.1/lib/rdf/microdata/reader.rb</span>
 </dd>
   
 </dl>
@@ -100,7 +100,10 @@
   <div class="discussion">
     <p>An Microdata parser in Ruby</p>
 
-<p>Based on processing rules described here:</p>
+<p>Based on processing rules, amended with the following:
+* property generation from tokens now uses the associated @itemtype as the basis for generation
+* implicit triples are not generated, only those with @item*
+* @datetime values are scanned lexically to find appropriate datatype</p>
 
   </div>
 </div>
@@ -145,14 +148,28 @@
         <dt id="XHTML-constant" class="">XHTML =
           
         </dt>
-        <dd><pre class="code"><span class='string val'>&quot;http://www.w3.org/1999/xhtml&quot;</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.w3.org/1999/xhtml</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="URL_PROPERTY_ELEMENTS-constant" class="">URL_PROPERTY_ELEMENTS =
           
         </dt>
-        <dd><pre class="code"><span class='dstring node'>%w(a area audio embed iframe img link object source track video)</span>
-</pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>  # FIXME: Implement using different modules as in RDF::TriX
+
+module RDF::Microdata
+  ##
+  # An Microdata parser in Ruby
+  #
+  # Based on processing rules, amended with the following:
+  # * property generation from tokens now uses the associated @itemtype as the basis for generation
+  # * implicit triples are not generated, only those with @item*
+  # * @datetime values are scanned lexically to find appropriate datatype
+  #
+  # @see http://dev.w3.org/html5/md/
+  # @author [Gregg Kellogg](http://kellogg-assoc.com/)
+  class Reader &lt; RDF::Reader
+format Format
+XHTML = &quot;http://www.w3.org/1999/xhtml&quot;
+</span></span></pre></dd>
       
     </dl>
   
@@ -184,12 +201,41 @@
   
   
   
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#base_uri-instance_method" title="#base_uri (instance method)">- (Hash{Symbol =&gt; RDF::URI}) <strong>base_uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title readonly">readonly</span>
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the base URI determined by this reader.</p></div></span>
+  
+</li>
+
+    
+  </ul>
 
 
+
   
   
   
-  <h2>Instance Attribute Summary</h2>
+  
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Reader.html#options-instance_method" title="RDF::Reader#options (method)">options</a></span></p>
@@ -297,7 +343,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Reader.html#base_uri-instance_method" title="RDF::Reader#base_uri (method)">#base_uri</a></span>, <span class='object_link'><a href="../Reader.html#canonicalize%3F-instance_method" title="RDF::Reader#canonicalize? (method)">#canonicalize?</a></span>, <span class='object_link'><a href="../Reader.html#close-instance_method" title="RDF::Reader#close (method)">#close</a></span>, <span class='object_link'><a href="../Reader.html#each-class_method" title="RDF::Reader.each (method)">each</a></span>, <span class='object_link'><a href="../Reader.html#encoding-instance_method" title="RDF::Reader#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Reader.html#fail_object-instance_method" title="RDF::Reader#fail_object (method)">#fail_object</a></span>, <span class='object_link'><a href="../Reader.html#fail_predicate-instance_method" title="RDF::Reader#fail_predicate (method)">#fail_predicate</a></span>, <span class='object_link'><a href="../Reader.html#fail_subject-instance_method" title="RDF::Reader#fail_subject (method)">#fail_subject</a></span>, <span class='object_link'><a href="../Reader.html#for-class_method" title="RDF::Reader.for (method)">for</a></span>, <span class='object_link'><a href="../Reader.html#format-class_method" title="RDF::Reader.format (method)">format</a></span>, <span class='object_link'><a href="../Reader.html#intern%3F-instance_method" title="RDF::Reader#intern? (method)">#intern?</a></span>, <span class='object_link'><a href="../Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span>, <span class='object_link'><a href="../Reader.html#prefix-instance_method" title="RDF::Reader#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Reader.html#prefixes-instance_method" title="RDF::Reader#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Reader.html#prefixes%3D-instance_method" title="RDF::Reader#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Reader.html#read_statement-instance_method" title="RDF::Reader#read_statement (method)">#read_statement</a></span>, <span class='object_link'><a href="../Reader.html#read_triple-instance_method" title="RDF::Reader#read_triple (method)">#read_triple</a></span>, <span class='object_link'><a href="../Reader.html#rewind-instance_method" title="RDF::Reader#rewind (method)">#rewind</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-class_method" title="RDF::Reader.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-instance_method" title="RDF::Reader#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Reader.html#validate%3F-instance_method" title="RDF::Reader#validate? (method)">#validate?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Reader.html#canonicalize%3F-instance_method" title="RDF::Reader#canonicalize? (method)">#canonicalize?</a></span>, <span class='object_link'><a href="../Reader.html#close-instance_method" title="RDF::Reader#close (method)">#close</a></span>, <span class='object_link'><a href="../Reader.html#each-class_method" title="RDF::Reader.each (method)">each</a></span>, <span class='object_link'><a href="../Reader.html#encoding-instance_method" title="RDF::Reader#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Reader.html#fail_object-instance_method" title="RDF::Reader#fail_object (method)">#fail_object</a></span>, <span class='object_link'><a href="../Reader.html#fail_predicate-instance_method" title="RDF::Reader#fail_predicate (method)">#fail_predicate</a></span>, <span class='object_link'><a href="../Reader.html#fail_subject-instance_method" title="RDF::Reader#fail_subject (method)">#fail_subject</a></span>, <span class='object_link'><a href="../Reader.html#for-class_method" title="RDF::Reader.for (method)">for</a></span>, <span class='object_link'><a href="../Reader.html#format-class_method" title="RDF::Reader.format (method)">format</a></span>, <span class='object_link'><a href="../Reader.html#intern%3F-instance_method" title="RDF::Reader#intern? (method)">#intern?</a></span>, <span class='object_link'><a href="../Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span>, <span class='object_link'><a href="../Reader.html#prefix-instance_method" title="RDF::Reader#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Reader.html#prefixes-instance_method" title="RDF::Reader#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Reader.html#prefixes%3D-instance_method" title="RDF::Reader#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Reader.html#read_statement-instance_method" title="RDF::Reader#read_statement (method)">#read_statement</a></span>, <span class='object_link'><a href="../Reader.html#read_triple-instance_method" title="RDF::Reader#read_triple (method)">#read_triple</a></span>, <span class='object_link'><a href="../Reader.html#rewind-instance_method" title="RDF::Reader#rewind (method)">#rewind</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-instance_method" title="RDF::Reader#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-class_method" title="RDF::Reader.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Reader.html#validate%3F-instance_method" title="RDF::Reader#validate? (method)">#validate?</a></span></p>
 
   
   
@@ -579,45 +625,125 @@
 66
 67
 68
-69</pre>
+69
+70</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb', line 43</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span> <span class='assign token'>=</span> <span class='$stdin gvar id'>$stdin</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span> <span class='do do kw'>do</span>
-    <span class='@debug ivar id'>@debug</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span>
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>super</span> <span class='kw'>do</span>
+    <span class='ivar'>@debug</span> <span class='op'>=</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:debug</span><span class='rbracket'>]</span>
 
-    <span class='@doc ivar id'>@doc</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='input identifier id'>input</span>
-    <span class='when when kw'>when</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='HTML constant id'>HTML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span><span class='comma token'>,</span> <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='XML constant id'>XML</span><span class='colon2 op'>::</span><span class='Document constant id'>Document</span>
-      <span class='input identifier id'>input</span>
-    <span class='else else kw'>else</span>
-      <span class='comment val'># Try to detect charset from input</span>
-      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:encoding</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='charset identifier id'>charset</span> <span class='if if_mod kw'>if</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:charset</span><span class='rparen token'>)</span>
+    <span class='ivar'>@doc</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id input'>input</span>
+    <span class='kw'>when</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>HTML</span><span class='op'>::</span><span class='const'>Document</span><span class='comma'>,</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='op'>::</span><span class='const'>Document</span>
+      <span class='id input'>input</span>
+    <span class='kw'>else</span>
+      <span class='comment'># Try to detect charset from input
+</span>      <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id input'>input</span><span class='period'>.</span><span class='id charset'>charset</span> <span class='kw'>if</span> <span class='id input'>input</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:charset</span><span class='rparen'>)</span>
       
-      <span class='comment val'># Otherwise, default is utf-8</span>
-      <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:encoding</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='string val'>'utf-8'</span>
+      <span class='comment'># Otherwise, default is utf-8
+</span>      <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>'</span></span>
 
-      <span class='Nokogiri constant id'>Nokogiri</span><span class='colon2 op'>::</span><span class='HTML constant id'>HTML</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='comma token'>,</span> <span class='@base_uri ivar id'>@base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:encoding</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
+      <span class='id add_debug'>add_debug</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>base_uri: </span><span class='embexpr_beg'>#{</span><span class='id base_uri'>base_uri</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>HTML</span><span class='period'>.</span><span class='id parse'>parse</span><span class='lparen'>(</span><span class='id input'>input</span><span class='comma'>,</span> <span class='id base_uri'>base_uri</span><span class='period'>.</span><span class='id to_s'>to_s</span><span class='comma'>,</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
     
-    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='root identifier id'>root</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span><span class='rparen token'>)</span>
-      <span class='add_error identifier id'>add_error</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='string val'>&quot;Empty document&quot;</span><span class='rparen token'>)</span>
-      <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='ReaderError constant id'>ReaderError</span><span class='comma token'>,</span> <span class='string val'>&quot;Empty Document&quot;</span>
-    <span class='end end kw'>end</span>
-    <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='reject identifier id'>reject</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='e identifier id'>e</span><span class='bitor op'>|</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='match op'>=~</span> <span class='regexp val'>/Tag (audio|source|track|video|time) invalid/</span><span class='rbrace token'>}</span>
-    <span class='add_error identifier id'>add_error</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Synax errors:\n#{@doc.errors}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='errors identifier id'>errors</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='andop op'>&amp;&amp;</span> <span class='validate? fid id'>validate?</span>
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='ivar'>@doc</span><span class='period'>.</span><span class='id nil?'>nil?</span> <span class='op'>||</span> <span class='ivar'>@doc</span><span class='period'>.</span><span class='id root'>root</span><span class='period'>.</span><span class='id nil?'>nil?</span><span class='rparen'>)</span>
+      <span class='id add_error'>add_error</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Empty document</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>ReaderError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Empty Document</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='id errors'>errors</span> <span class='op'>=</span> <span class='ivar'>@doc</span><span class='period'>.</span><span class='id errors'>errors</span><span class='period'>.</span><span class='id reject'>reject</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id e'>e</span><span class='op'>|</span> <span class='id e'>e</span><span class='period'>.</span><span class='id to_s'>to_s</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Tag (audio|source|track|video|time) invalid</span><span class='regexp_end'>/</span></span><span class='rbrace'>}</span>
+    <span class='id add_error'>add_error</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Synax errors:\n</span><span class='embexpr_beg'>#{</span><span class='ivar'>@doc</span><span class='period'>.</span><span class='id errors'>errors</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id errors'>errors</span><span class='period'>.</span><span class='id empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id validate?'>validate?</span>
 
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+    <span class='id block'>block</span><span class='period'>.</span><span class='id call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id block_given?'>block_given?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
 </div>
   
 </div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <span id="base_uri-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="base_uri-instance_method">
+  
+    - (<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>base_uri</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the base URI determined by this reader.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code"><span class='id reader'>reader</span><span class='period'>.</span><span class='id prefixes'>prefixes</span><span class='lbracket'>[</span><span class='symbol'>:dc</span><span class='rbracket'>]</span>  <span class='comment'>#=&gt; RDF::URI('http://purl.org/dc/terms/')</span></pre>
+    
+  </div>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.3/lib/rdf/microdata/reader.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id base_uri'>base_uri</span>
+  <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -683,13 +809,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb', line 77</span>
 
-<span class='def def kw'>def</span> <span class='each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
+<span class='kw'>def</span> <span class='id each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@callback</span> <span class='op'>=</span> <span class='id block'>block</span>
 
-  <span class='comment val'># parse</span>
-  <span class='parse_whole_document identifier id'>parse_whole_document</span><span class='lparen token'>(</span><span class='@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='@base_uri ivar id'>@base_uri</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
+  <span class='comment'># parse
+</span>  <span class='id parse_whole_document'>parse_whole_document</span><span class='lparen'>(</span><span class='ivar'>@doc</span><span class='comma'>,</span> <span class='id base_uri'>base_uri</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -775,12 +900,11 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-microdata-0.1.0/lib/rdf/microdata/reader.rb', line 92</span>
 
-<span class='def def kw'>def</span> <span class='each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id block'>block</span><span class='rparen'>)</span>
+  <span class='id each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id statement'>statement</span><span class='op'>|</span>
+    <span class='id block'>block</span><span class='period'>.</span><span class='id call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id statement'>statement</span><span class='period'>.</span><span class='id to_triple'>to_triple</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -791,9 +915,9 @@
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 11 10:19:40 2011 by 
+  Generated on Mon Aug 22 16:49:37 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.8.7).
+  0.7.2 (ruby-1.9.2).
 </div>
 
   </body>
