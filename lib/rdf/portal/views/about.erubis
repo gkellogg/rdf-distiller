@@ -31,7 +31,7 @@
       literals, such as strings or typed scalar data types such as dates and durations.
     </p>
   </section>
-  
+
   <section>
     <h2>About the RDF.rb service</h2>
     <p>
@@ -42,8 +42,14 @@
       <dl>
         <% RDF::Format.each do |format|
           next if format.content_type.empty?
+          version = case format.to_s
+          when 'RDF::NTriples::Format', 'RDF::NQuads::Format'
+            RDF::VERSION
+          else
+            format.to_s.split('::')[0..-2].inject(Kernel) {|mod, name| mod.const_get(name)}.const_get('VERSION')
+          end
         %>
-          <dt><%= format.to_s.sub(/^RDF::/, '').sub(/::Format$/, '') %></dt>
+          <dt><%= format.to_s.sub(/::Format$/, '') %> (<%= version %>)</dt>
           <dd>
             This format has a 
             <% if format.reader && format.writer %>
