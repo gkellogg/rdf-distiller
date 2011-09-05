@@ -1,0 +1,1662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RDF::Turtle::Reader
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (R)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span>
+     &raquo; 
+    <span class="title">Reader</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: RDF::Turtle::Reader
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></li>
+          
+            <li class="next">RDF::Turtle::Reader</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../LL1/Parser.html" title="RDF::LL1::Parser (module)">LL1::Parser</a></span>, <span class='object_link'><a href="Meta.html" title="RDF::Turtle::Meta (module)">Meta</a></span>, <span class='object_link'><a href="Terminals.html" title="RDF::Turtle::Terminals (module)">Terminals</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A parser for the Turtle 2</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div>
+  <h2>Constant Summary</h2>
+  
+
+
+  
+  
+  
+  
+  <h3 class="inherited">Constants included from <span class='object_link'><a href="Terminals.html" title="RDF::Turtle::Terminals (module)">Terminals</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Terminals.html#ANON-constant" title="RDF::Turtle::Terminals::ANON (constant)">ANON</a></span>, <span class='object_link'><a href="Terminals.html#BLANK_NODE_LABEL-constant" title="RDF::Turtle::Terminals::BLANK_NODE_LABEL (constant)">BLANK_NODE_LABEL</a></span>, <span class='object_link'><a href="Terminals.html#DECIMAL-constant" title="RDF::Turtle::Terminals::DECIMAL (constant)">DECIMAL</a></span>, <span class='object_link'><a href="Terminals.html#DECIMAL_NEGATIVE-constant" title="RDF::Turtle::Terminals::DECIMAL_NEGATIVE (constant)">DECIMAL_NEGATIVE</a></span>, <span class='object_link'><a href="Terminals.html#DECIMAL_POSITIVE-constant" title="RDF::Turtle::Terminals::DECIMAL_POSITIVE (constant)">DECIMAL_POSITIVE</a></span>, <span class='object_link'><a href="Terminals.html#DOUBLE-constant" title="RDF::Turtle::Terminals::DOUBLE (constant)">DOUBLE</a></span>, <span class='object_link'><a href="Terminals.html#DOUBLE_NEGATIVE-constant" title="RDF::Turtle::Terminals::DOUBLE_NEGATIVE (constant)">DOUBLE_NEGATIVE</a></span>, <span class='object_link'><a href="Terminals.html#DOUBLE_POSITIVE-constant" title="RDF::Turtle::Terminals::DOUBLE_POSITIVE (constant)">DOUBLE_POSITIVE</a></span>, <span class='object_link'><a href="Terminals.html#ECHAR-constant" title="RDF::Turtle::Terminals::ECHAR (constant)">ECHAR</a></span>, <span class='object_link'><a href="Terminals.html#EXPONENT-constant" title="RDF::Turtle::Terminals::EXPONENT (constant)">EXPONENT</a></span>, <span class='object_link'><a href="Terminals.html#INTEGER-constant" title="RDF::Turtle::Terminals::INTEGER (constant)">INTEGER</a></span>, <span class='object_link'><a href="Terminals.html#INTEGER_NEGATIVE-constant" title="RDF::Turtle::Terminals::INTEGER_NEGATIVE (constant)">INTEGER_NEGATIVE</a></span>, <span class='object_link'><a href="Terminals.html#INTEGER_POSITIVE-constant" title="RDF::Turtle::Terminals::INTEGER_POSITIVE (constant)">INTEGER_POSITIVE</a></span>, <span class='object_link'><a href="Terminals.html#IRI_REF-constant" title="RDF::Turtle::Terminals::IRI_REF (constant)">IRI_REF</a></span>, <span class='object_link'><a href="Terminals.html#LANGTAG-constant" title="RDF::Turtle::Terminals::LANGTAG (constant)">LANGTAG</a></span>, <span class='object_link'><a href="Terminals.html#PNAME_LN-constant" title="RDF::Turtle::Terminals::PNAME_LN (constant)">PNAME_LN</a></span>, <span class='object_link'><a href="Terminals.html#PNAME_NS-constant" title="RDF::Turtle::Terminals::PNAME_NS (constant)">PNAME_NS</a></span>, <span class='object_link'><a href="Terminals.html#PN_CHARS-constant" title="RDF::Turtle::Terminals::PN_CHARS (constant)">PN_CHARS</a></span>, <span class='object_link'><a href="Terminals.html#PN_CHARS_BASE-constant" title="RDF::Turtle::Terminals::PN_CHARS_BASE (constant)">PN_CHARS_BASE</a></span>, <span class='object_link'><a href="Terminals.html#PN_CHARS_BODY-constant" title="RDF::Turtle::Terminals::PN_CHARS_BODY (constant)">PN_CHARS_BODY</a></span>, <span class='object_link'><a href="Terminals.html#PN_CHARS_U-constant" title="RDF::Turtle::Terminals::PN_CHARS_U (constant)">PN_CHARS_U</a></span>, <span class='object_link'><a href="Terminals.html#PN_LOCAL-constant" title="RDF::Turtle::Terminals::PN_LOCAL (constant)">PN_LOCAL</a></span>, <span class='object_link'><a href="Terminals.html#PN_PREFIX-constant" title="RDF::Turtle::Terminals::PN_PREFIX (constant)">PN_PREFIX</a></span>, <span class='object_link'><a href="Terminals.html#STRING_LITERAL1-constant" title="RDF::Turtle::Terminals::STRING_LITERAL1 (constant)">STRING_LITERAL1</a></span>, <span class='object_link'><a href="Terminals.html#STRING_LITERAL2-constant" title="RDF::Turtle::Terminals::STRING_LITERAL2 (constant)">STRING_LITERAL2</a></span>, <span class='object_link'><a href="Terminals.html#STRING_LITERAL_LONG1-constant" title="RDF::Turtle::Terminals::STRING_LITERAL_LONG1 (constant)">STRING_LITERAL_LONG1</a></span>, <span class='object_link'><a href="Terminals.html#STRING_LITERAL_LONG2-constant" title="RDF::Turtle::Terminals::STRING_LITERAL_LONG2 (constant)">STRING_LITERAL_LONG2</a></span>, <span class='object_link'><a href="Terminals.html#UCHAR-constant" title="RDF::Turtle::Terminals::UCHAR (constant)">UCHAR</a></span>, <span class='object_link'><a href="Terminals.html#U_CHARS1-constant" title="RDF::Turtle::Terminals::U_CHARS1 (constant)">U_CHARS1</a></span>, <span class='object_link'><a href="Terminals.html#U_CHARS2-constant" title="RDF::Turtle::Terminals::U_CHARS2 (constant)">U_CHARS2</a></span>, <span class='object_link'><a href="Terminals.html#WS-constant" title="RDF::Turtle::Terminals::WS (constant)">WS</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Constants included from <span class='object_link'><a href="Meta.html" title="RDF::Turtle::Meta (module)">Meta</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Meta.html#BRANCH-constant" title="RDF::Turtle::Meta::BRANCH (constant)">BRANCH</a></span>, <span class='object_link'><a href="Meta.html#FOLLOW-constant" title="RDF::Turtle::Meta::FOLLOW (constant)">FOLLOW</a></span>, <span class='object_link'><a href="Meta.html#START-constant" title="RDF::Turtle::Meta::START (constant)">START</a></span>, <span class='object_link'><a href="Meta.html#TERMINALS-constant" title="RDF::Turtle::Meta::TERMINALS (constant)">TERMINALS</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="../LL1/Parser.html" title="RDF::LL1::Parser (module)">LL1::Parser</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../LL1/Parser.html#lineno-instance_method" title="RDF::LL1::Parser#lineno (method)">lineno</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Reader.html#options-instance_method" title="RDF::Reader#options (method)">options</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_triple-instance_method" title="#add_triple (instance method)">- (Statement) <strong>add_triple</strong>(node, subject, predicate, object) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>add a statement, object can be literal or URI or bnode.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#base_uri-instance_method" title="#base_uri (instance method)">- (Object) <strong>base_uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Missing in 0.3.2.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bnode-instance_method" title="#bnode (instance method)">- (Object) <strong>bnode</strong>(value = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Keep track of allocated BNodes.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#debug-instance_method" title="#debug (instance method)">- (Object) <strong>debug</strong>(node, message = &quot;&quot;, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Progress output when debugging.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_statement-instance_method" title="#each_statement (instance method)">- <strong>each_statement</strong> {|statement| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF statement in the input.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_triple-instance_method" title="#each_triple (instance method)">- <strong>each_triple</strong> {|subject, predicate, object| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF triple in the input.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#error-instance_method" title="#error (instance method)">- (Object) <strong>error</strong>(node, message, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (RDF::Turtle::Reader) <strong>initialize</strong>(input = nil, options = {}, &amp;block) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initializes a new reader instance.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#iri-instance_method" title="#iri (instance method)">- (Object) <strong>iri</strong>(value, append = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create IRIs.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#literal-instance_method" title="#literal (instance method)">- (Object) <strong>literal</strong>(value, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a literal.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pname-instance_method" title="#pname (instance method)">- (Object) <strong>pname</strong>(prefix, suffix) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Expand a PNAME using string concatenation.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prefix-instance_method" title="#prefix (instance method)">- (Object) <strong>prefix</strong>(prefix, iri = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Override #prefix to take a relative IRI.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process_iri-instance_method" title="#process_iri (instance method)">- (Object) <strong>process_iri</strong>(iri) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../LL1/Parser.html" title="RDF::LL1::Parser (module)">LL1::Parser</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../LL1/Parser.html#depth-instance_method" title="RDF::LL1::Parser#depth (method)">#depth</a></span>, <span class='object_link'><a href="../LL1/Parser.html#parse-instance_method" title="RDF::LL1::Parser#parse (method)">#parse</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Reader.html#canonicalize%3F-instance_method" title="RDF::Reader#canonicalize? (method)">#canonicalize?</a></span>, <span class='object_link'><a href="../Reader.html#close-instance_method" title="RDF::Reader#close (method)">#close</a></span>, <span class='object_link'><a href="../Reader.html#each-class_method" title="RDF::Reader.each (method)">each</a></span>, <span class='object_link'><a href="../Reader.html#encoding-instance_method" title="RDF::Reader#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Reader.html#fail_object-instance_method" title="RDF::Reader#fail_object (method)">#fail_object</a></span>, <span class='object_link'><a href="../Reader.html#fail_predicate-instance_method" title="RDF::Reader#fail_predicate (method)">#fail_predicate</a></span>, <span class='object_link'><a href="../Reader.html#fail_subject-instance_method" title="RDF::Reader#fail_subject (method)">#fail_subject</a></span>, <span class='object_link'><a href="../Reader.html#for-class_method" title="RDF::Reader.for (method)">for</a></span>, <span class='object_link'><a href="../Reader.html#format-class_method" title="RDF::Reader.format (method)">format</a></span>, <span class='object_link'><a href="../Reader.html#intern%3F-instance_method" title="RDF::Reader#intern? (method)">#intern?</a></span>, <span class='object_link'><a href="../Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span>, <span class='object_link'><a href="../Reader.html#prefixes-instance_method" title="RDF::Reader#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Reader.html#prefixes%3D-instance_method" title="RDF::Reader#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Reader.html#read_statement-instance_method" title="RDF::Reader#read_statement (method)">#read_statement</a></span>, <span class='object_link'><a href="../Reader.html#read_triple-instance_method" title="RDF::Reader#read_triple (method)">#read_triple</a></span>, <span class='object_link'><a href="../Reader.html#rewind-instance_method" title="RDF::Reader#rewind (method)">#rewind</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-class_method" title="RDF::Reader.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Reader.html#to_sym-instance_method" title="RDF::Reader#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Reader.html#validate%3F-instance_method" title="RDF::Reader#validate? (method)">#validate?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">#alias_method</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Enumerable.html#contexts-instance_method" title="RDF::Enumerable#contexts (method)">#contexts</a></span>, <span class='object_link'><a href="../Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="../Enumerable.html#each_context-instance_method" title="RDF::Enumerable#each_context (method)">#each_context</a></span>, <span class='object_link'><a href="../Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="../Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_context-instance_method" title="RDF::Enumerable#enum_context (method)">#enum_context</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="../Enumerable.html#has_context%3F-instance_method" title="RDF::Enumerable#has_context? (method)">#has_context?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_statement%3F-instance_method" title="RDF::Enumerable#has_statement? (method)">#has_statement?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="../Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="../Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="../Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="../Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="../Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="../Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="../Enumerable.html#to_hash-instance_method" title="RDF::Enumerable#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="../Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="../Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Countable.html" title="RDF::Countable (module)">Countable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Countable.html#count-instance_method" title="RDF::Countable#count (method)">#count</a></span>, <span class='object_link'><a href="../Countable.html#empty%3F-instance_method" title="RDF::Countable#empty? (method)">#empty?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Isomorphic.html#bijection_to-instance_method" title="RDF::Isomorphic#bijection_to (method)">#bijection_to</a></span>, <span class='object_link'><a href="../Isomorphic.html#isomorphic_with%3F-instance_method" title="RDF::Isomorphic#isomorphic_with? (method)">#isomorphic_with?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Readable.html" title="RDF::Readable (module)">Readable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Readable.html#readable%3F-instance_method" title="RDF::Readable#readable? (method)">#readable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::Turtle::Reader (class)">RDF::Turtle::Reader</a></span></tt>) <strong>initialize</strong>(input = nil, options = {}, &amp;block) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Initializes a new reader instance.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>input</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:prefixes</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>Hash.new</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>the prefix mappings to use (for acessing intermediate parser productions)</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:base_uri</span>
+          <span class="type">(<tt>#to_s</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>the base URI to use when resolving relative URIs (for acessing intermediate parser productions)</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:anon_base</span>
+          <span class="type">(<tt>#to_s</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>&quot;b0&quot;</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>Basis for generating anonymous Nodes</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:resolve_uris</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>Resolve prefix and relative IRIs, otherwise, when serializing the parsed SSE
+as S-Expressions, use the original prefixed and relative URIs along with <code>base</code> and <code>prefix</code>
+definitions.</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:validate</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>whether to validate the parsed statements and values. If not validating,
+the parser will attempt to recover from errors.</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:progress</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          &mdash; <div class='inline'><p>Show progress of parser productions</p></div>
+        </tr>
+      
+        <li>
+          <span class="name">:debug</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          &mdash; <div class='inline'><p>Detailed debug output</p></div>
+        </tr>
+      
+    </ul>
+  
+    
+    
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 205</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='super super kw'>super</span> <span class='do do kw'>do</span>
+    <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:anon_base</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;b0&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='false false kw'>false</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;def prefix&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;validate&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='validate? fid id'>validate?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;canonicalize&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='canonicalize? fid id'>canonicalize?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;intern&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='intern? fid id'>intern?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+
+    <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+      <span class='case case kw'>case</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span>
+        <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+        <span class='else else kw'>else</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
+      <span class='end end kw'>end</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="add_triple-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Statement.html" title="RDF::Statement (class)">Statement</a></span></tt>) <strong>add_triple</strong>(node, subject, predicate, object) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>add a statement, object can be literal or URI or bnode</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node::</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Nokogiri/XML/Node.html" title="Nokogiri::XML::Node (class)">Nokogiri::XML::Node</a></span></tt>, <tt>any</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>XML Node or string for showing context</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>subject::</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>, <tt><span class='object_link'><a href="../Node.html" title="RDF::Node (class)">Node</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the subject of the statement</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>predicate::</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the predicate of the statement</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>object::</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>, <tt><span class='object_link'><a href="../Node.html" title="RDF::Node (class)">Node</a></span></tt>, <tt><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the object of the statement</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Statement.html" title="RDF::Statement (class)">Statement</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>:: Added statement</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../ReaderError.html" title="RDF::ReaderError (class)">RDF::ReaderError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>:: Checks parameter types and raises if they are incorrect if parsing mode is <em>validate</em>.</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+271
+272
+273
+274
+275
+276
+277
+278
+279</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 271</span>
+
+<span class='def def kw'>def</span> <span class='add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span>
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;generate statement: #{statement}&quot;</span><span class='rbrace token'>}</span>
+    <span class='@callback ivar id'>@callback</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Statement is invalid: #{statement.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="base_uri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>base_uri</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Missing in 0.3.2</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+178
+179
+180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 178</span>
+
+<span class='def def kw'>def</span> <span class='base_uri identifier id'>base_uri</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="bnode-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>bnode</strong>(value = nil) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Keep track of allocated BNodes</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+337
+338
+339
+340
+341</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 337</span>
+
+<span class='def def kw'>def</span> <span class='bnode identifier id'>bnode</span><span class='lparen token'>(</span><span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='unless unless_mod kw'>unless</span> <span class='value identifier id'>value</span>
+  <span class='@bnode_cache ivar id'>@bnode_cache</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@bnode_cache ivar id'>@bnode_cache</span><span class='lbrack token'>[</span><span class='value identifier id'>value</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="debug-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>debug</strong>(node, message = &quot;&quot;, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Progress output when debugging</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>relative location in input</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>("")</p></div>
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>added to message</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+360
+361
+362
+363
+364
+365
+366
+367</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 360</span>
+
+<span class='def def kw'>def</span> <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='message identifier id'>message</span> <span class='assign token'>=</span> <span class='string val'>&quot;&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='return return kw'>return</span> <span class='unless unless_mod kw'>unless</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Turtle constant id'>Turtle</span><span class='dot token'>.</span><span class='debug? fid id'>debug?</span>
+  <span class='depth identifier id'>depth</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='depth identifier id'>depth</span>
+  <span class='message identifier id'>message</span> <span class='opasgn op'>+=</span> <span class='yield yield kw'>yield</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='str identifier id'>str</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;[#{@lineno}]#{' ' * depth}#{node}: #{message}&quot;</span>
+  <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span> <span class='lshft op'>&lt;&lt;</span> <span class='str identifier id'>str</span> <span class='if if_mod kw'>if</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='Array constant id'>Array</span><span class='rparen token'>)</span>
+  <span class='$stderr gvar id'>$stderr</span><span class='dot token'>.</span><span class='puts identifier id'>puts</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Turtle constant id'>Turtle</span><span class='dot token'>.</span><span class='debug? fid id'>debug?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_statement-instance_method">
+  
+    - <strong>each_statement</strong> {|statement| ... }
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF statement in the input.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>statement</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>statement</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 234</span>
+
+<span class='def def kw'>def</span> <span class='each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
+
+  <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='@input ivar id'>@input</span><span class='comma token'>,</span> <span class='START constant id'>START</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:branch</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='BRANCH constant id'>BRANCH</span><span class='comma token'>,</span> <span class='symbol val'>:follow</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='FOLLOW constant id'>FOLLOW</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='context identifier id'>context</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='data identifier id'>data</span><span class='bitor op'>|</span>
+    <span class='case case kw'>case</span> <span class='context identifier id'>context</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:statement</span>
+      <span class='add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='when when kw'>when</span> <span class='symbol val'>:trace</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='rescue rescue kw'>rescue</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='LL1 constant id'>LL1</span><span class='colon2 op'>::</span><span class='Parser constant id'>Parser</span><span class='colon2 op'>::</span><span class='Error constant id'>Error</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+  <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;each_statement&quot;</span><span class='comma token'>,</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='symbol val'>:backtrace</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span><span class='dot token'>.</span><span class='backtrace identifier id'>backtrace</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="each_triple-instance_method">
+  
+    - <strong>each_triple</strong> {|subject, predicate, object| ... }
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Iterates the given block for each RDF triple in the input.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>subject</tt>, <tt>predicate</tt>, <tt>object</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>subject</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>predicate</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>object</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Value.html" title="RDF::Value (module)">RDF::Value</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+257
+258
+259
+260
+261</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 257</span>
+
+<span class='def def kw'>def</span> <span class='each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="error-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>error</strong>(node, message, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>str</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Error string</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:production</span>
+          <span class="type">(<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>, <tt>#to_s</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </tr>
+      
+        <li>
+          <span class="name">:token</span>
+          <span class="type">(<tt>Token</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </tr>
+      
+    </ul>
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+347
+348
+349
+350
+351
+352
+353</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 347</span>
+
+<span class='def def kw'>def</span> <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='validate? fid id'>validate?</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:fatal</span><span class='rbrack token'>]</span>
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='node identifier id'>node</span><span class='comma token'>,</span> <span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='ReaderError constant id'>ReaderError</span><span class='comma token'>,</span> <span class='message identifier id'>message</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:backtrace</span><span class='rbrack token'>]</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="inspect-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>inspect</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+224
+225
+226</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 224</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;#&lt;%s:%#0x(%s)&gt;&quot;</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='__id__ identifier id'>__id__</span><span class='comma token'>,</span> <span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="iri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>iri</strong>(value, append = nil) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Create IRIs</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+286
+287
+288
+289
+290
+291
+292
+293</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 286</span>
+
+<span class='def def kw'>def</span> <span class='iri identifier id'>iri</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='append identifier id'>append</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='append identifier id'>append</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='append identifier id'>append</span>
+  <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='validate! fid id'>validate!</span> <span class='if if_mod kw'>if</span> <span class='validate? fid id'>validate?</span> <span class='andop op'>&amp;&amp;</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:validate</span><span class='rparen token'>)</span>
+  <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='canonicalize! fid id'>canonicalize!</span> <span class='if if_mod kw'>if</span> <span class='canonicalize? fid id'>canonicalize?</span>
+  <span class='value identifier id'>value</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='intern identifier id'>intern</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='intern? fid id'>intern?</span>
+  <span class='value identifier id'>value</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="literal-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>literal</strong>(value, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Create a literal</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 296</span>
+
+<span class='def def kw'>def</span> <span class='literal identifier id'>literal</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
+  <span class='comment val'># Internal representation is to not use xsd:string, although it could arguably go the other way.</span>
+  <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:datatype</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:datatype</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='string identifier id'>string</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;literal&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+    <span class='dstring node'>&quot;value: #{value.inspect}, &quot;</span> <span class='plus op'>+</span>
+    <span class='dstring node'>&quot;options: #{options.inspect}, &quot;</span> <span class='plus op'>+</span>
+    <span class='dstring node'>&quot;validate: #{validate?.inspect}, &quot;</span> <span class='plus op'>+</span>
+    <span class='dstring node'>&quot;c14n?: #{canonicalize?.inspect}&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="pname-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>pname</strong>(prefix, suffix) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Expand a PNAME using string concatenation</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 323</span>
+
+<span class='def def kw'>def</span> <span class='pname identifier id'>pname</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='suffix identifier id'>suffix</span><span class='rparen token'>)</span>
+  <span class='comment val'># Prefixes must be defined, except special case for empty prefix being alias for current @base</span>
+  <span class='if if kw'>if</span> <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+    <span class='base identifier id'>base</span> <span class='assign token'>=</span> <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+  <span class='elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span>
+    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;pname&quot;</span><span class='comma token'>,</span> <span class='dstring node'>&quot;undefined prefix #{prefix.inspect}&quot;</span><span class='rparen token'>)</span>
+    <span class='base identifier id'>base</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+  <span class='end end kw'>end</span>
+  <span class='suffix identifier id'>suffix</span> <span class='assign token'>=</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^\#/</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>&quot;#&quot;</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;pname&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;base: '#{base}', suffix: '#{suffix}'&quot;</span><span class='rbrace token'>}</span>
+  <span class='process_iri identifier id'>process_iri</span><span class='lparen token'>(</span><span class='base identifier id'>base</span> <span class='plus op'>+</span> <span class='suffix identifier id'>suffix</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="prefix-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>prefix</strong>(prefix, iri = nil) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Override #prefix to take a relative IRI</p>
+
+<p>prefix directives map a local name to an IRI, also resolved against the current In-Scope Base URI.
+Spec confusion, presume that an undefined empty prefix has an empty relative IRI, which uses
+string contatnation rules against the in-scope IRI at the time of use</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+315
+316
+317
+318
+319</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 315</span>
+
+<span class='def def kw'>def</span> <span class='prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='iri identifier id'>iri</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='comment val'># Relative IRIs are resolved against @base</span>
+  <span class='iri identifier id'>iri</span> <span class='assign token'>=</span> <span class='process_iri identifier id'>process_iri</span><span class='lparen token'>(</span><span class='iri identifier id'>iri</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='iri identifier id'>iri</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='iri identifier id'>iri</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="process_iri-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>process_iri</strong>(iri) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+281
+282
+283</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-e2d70ddad189/lib/rdf/turtle/reader.rb', line 281</span>
+
+<span class='def def kw'>def</span> <span class='process_iri identifier id'>process_iri</span><span class='lparen token'>(</span><span class='iri identifier id'>iri</span><span class='rparen token'>)</span>
+  <span class='iri identifier id'>iri</span><span class='lparen token'>(</span><span class='base_uri identifier id'>base_uri</span><span class='comma token'>,</span> <span class='iri identifier id'>iri</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Sep  5 16:00:14 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

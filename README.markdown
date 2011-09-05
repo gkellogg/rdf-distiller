@@ -42,6 +42,7 @@ Distills between formats supported in [Linked Data][linkeddata].
   * {file:rdf-rdfa-README RDF::RDFa}
   * {file:rdf-rdfxml-README RDF::RDFXML}
   * {file:rdf-trix-README RDF::TriX}
+  * {file:rdf-turtle-README RDF::Turtle}
   * {file:json-ld-README JSON::LD}
 
 ### Rollup libraries
@@ -65,7 +66,7 @@ Distills between formats supported in [Linked Data][linkeddata].
 * [Gregg Kellogg](http://github.com/gkellogg) - <http://kellogg-assoc.com/>
 
 ## Site5 Notes
-* public/.htaccess set up for installation on Site5 server.
+* public/.htaccess set up for installation on RailsPlayground server.
 * Bundle installed using:
 
     bundle install --path vendor/bundler

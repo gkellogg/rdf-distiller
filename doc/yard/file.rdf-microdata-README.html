@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: rdf-microdata-README
   
@@ -76,10 +76,56 @@
 
 <h2>Usage</h2>
 
-<h3>Reading RDF data in the RDFa format</h3>
+<h3>Reading RDF data in the Microdata format</h3>
 
-<pre class="code"><span class='id graph'>graph</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id load'>load</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:format</span> <span class='op'>=&gt;</span> <span class='symbol'>:microdata</span><span class='rparen'>)</span>
+<pre class="code"><span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/foaf.html&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:microdata</span><span class='rparen token'>)</span>
 </pre>
+
+<h2>Note</h2>
+
+<p>The Microdata editor has recently <a href="http://html5.org/tools/web-apps-tracker?from=6426&amp;to=6427">dropped support for RDF
+conversion</a>, as a result, this gem is being used to
+investigate ways in which Microdata might have more satisfactory RDF generation.</p>
+
+<h3>Generating RDF friendly URIs from terms</h3>
+
+<p>If the <code>@itemprop</code> is included within an item having an <code>@itemtype</code>,
+the URI of the <code>@itemtype</code> will be used for generating a term URI. The type URI will be trimmed following
+the last '#' or '/' character, and the term will be appended to the resulting URI. This is in keeping
+with standard convention for defining properties and classes within an RDFS or OWL vocabulary.</p>
+
+<p>For example:</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='itemscope identifier id'>itemscope</span> <span class='itemtype identifier id'>itemtype</span><span class='assign token'>=</span><span class='string val'>&quot;http://schema.org/Person&quot;</span><span class='gt op'>&gt;</span>
+  <span class='My constant id'>My</span> <span class='name identifier id'>name</span> <span class='is identifier id'>is</span> <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='itemprop identifier id'>itemprop</span><span class='assign token'>=</span><span class='string val'>&quot;name&quot;</span><span class='gt op'>&gt;</span><span class='Gregg constant id'>Gregg</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+&lt;/</span><span class='div identifier id'>div</span><span class='gt op'>&gt;</span>
+</pre>
+
+<p>Without the <code>:rdf\_terms</code> option, this would create the following statements:</p>
+
+<pre class="code"><span class='@prefix ivar id'>@prefix</span> <span class='md identifier id'>md</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>1999</span><span class='div op'>/</span><span class='xhtml identifier id'>xhtml</span><span class='div op'>/</span><span class='microdata identifier id'>microdata</span><span class='comment val'>#&gt; .</span>
+<span class='@prefix ivar id'>@prefix</span> <span class='schema identifier id'>schema</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/schema.org/</span><span class='gt op'>&gt;</span> <span class='dot token'>.</span>
+<span class='lt op'>&lt;</span><span class='gt op'>&gt;</span> <span class='md identifier id'>md</span><span class='symbol val'>:item</span> <span class='lbrack token'>[</span>
+  <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:Person</span><span class='semicolon token'>;</span>
+  <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>1999</span><span class='div op'>/</span><span class='xhtml identifier id'>xhtml</span><span class='div op'>/</span><span class='microdata identifier id'>microdata</span><span class='comment val'>#http://schema.org/Person%23:name&gt; &quot;Gregg&quot;</span>
+<span class='rbrack token'>]</span> <span class='dot token'>.</span>
+</pre>
+
+<p>With the <code>:rdf\_terms</code> option, this becomes:</p>
+
+<pre class="code"><span class='@prefix ivar id'>@prefix</span> <span class='md identifier id'>md</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>1999</span><span class='div op'>/</span><span class='xhtml identifier id'>xhtml</span><span class='div op'>/</span><span class='microdata identifier id'>microdata</span><span class='comment val'>#&gt; .</span>
+<span class='@prefix ivar id'>@prefix</span> <span class='schema identifier id'>schema</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/schema.org/</span><span class='gt op'>&gt;</span> <span class='dot token'>.</span>
+<span class='lt op'>&lt;</span><span class='gt op'>&gt;</span> <span class='md identifier id'>md</span><span class='symbol val'>:item</span> <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:Person</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Gregg&quot;</span> <span class='rbrack token'>]</span> <span class='dot token'>.</span>
+</pre>
+
+<h3>Improve xsd:date, xsd:time, xsd:dateTime and xsd:duration generation from <em>time</em> element</h3>
+
+<p>Use the lexical form of the @datetime attribute of the <em>time</em> element to determine the specific type
+of the generated literal.</p>
+
+<h3>Remove implicit RDF triple generation</h3>
+
+<p>html>head>title and anchor (<em>a</em>) elements no longer generate triples without @item* properties</p>
 
 <h2>Dependencies</h2>
 
@@ -97,13 +143,8 @@
 
 <ul>
 <li><span class='object_link'><a href="RDF/Microdata/Format.html" title="RDF::Microdata::Format (class)">RDF::Microdata::Format</a></span>
-
-<ul>
-<li>RDF::Microdata::HTML
 Asserts :html format, text/html mime-type and .html file extension.</li>
-</ul>
-</li>
-<li>RDF::RDFa::Reader</li>
+<li><span class='object_link'><a href="RDF/Microdata/Reader.html" title="RDF::Microdata::Reader (class)">RDF::Microdata::Reader</a></span></li>
 </ul>
 
 
@@ -167,9 +208,9 @@ see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanyin
 </div></div>
     
     <div id="footer">
-  Generated on Mon Aug 22 16:49:23 2011 by 
+  Generated on Mon Sep  5 15:59:43 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>

@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
   File: rdf-rdfa-README
   
@@ -56,7 +56,7 @@
     
     <div id="content"><div id='filecontents'><h1>RDF::RDFa reader/writer</h1>
 
-<p><a href="http://www.w3.org/TR/2010/WD-rdfa-core-20100422/" title="RDFa 1.1 Core">RDFa</a> parser for RDF.rb.</p>
+<p><a href="http://www.w3.org/TR/2011/WD-rdfa-core-20110331/" title="RDFa 1.1 Core">RDFa</a> parser for RDF.rb.</p>
 
 <h2>DESCRIPTION</h2>
 
@@ -64,7 +64,7 @@
 
 <h2>FEATURES</h2>
 
-<p>RDF::RDFa parses <a href="http://www.w3.org/TR/2010/WD-rdfa-core-20100422/" title="RDFa 1.1 Core">RDFa</a> into statements or triples.</p>
+<p>RDF::RDFa parses <a href="http://www.w3.org/TR/2011/WD-rdfa-core-20110331/" title="RDFa 1.1 Core">RDFa</a> into statements or triples.</p>
 
 <ul>
 <li>Fully compliant RDFa 1.1 parser.</li>
@@ -81,48 +81,124 @@
 
 <p>Install with 'gem install rdf-rdfa'</p>
 
+<h3>Important changes from previous versions</h3>
+
+<p>RDFa is an evolving standard, undergoing some substantial recent changes partly due to perceived competition
+with Microdata. As a result, the RDF Webapps working group is currently looking at changes in the processing model for RDFa. These changes are now being tracked in <span class='object_link'><a href="RDF/RDFa/Reader.html" title="RDF::RDFa::Reader (class)">RDF::RDFa::Reader</a></span>:</p>
+
+<h4>Remove RDFa Profiles</h4>
+
+<p>RDFa Profiles were a mechanism added to allow groups of terms and prefixes to be defined in an external resource and loaded to affect the processing of an RDFa document. This introduced a problem for some implementations needing to perform a cross-origin GET in order to retrieve the profiles. The working group elected to drop support for user-defined RDFa Profiles (the default profiles defined by RDFa Core and host languages still apply) and replace it with an inference regime using vocabularies. Parsing of @profile has been removed from this version.</p>
+
+<h4>Vocabulary Expansion</h4>
+
+<p>One of the issues with vocabularies was that they discourage re-use of existing vocabularies when terms from several vocabularies are used at the same time. As it is common (encouraged) for RDF vocabularies to form sub-class and/or sub-property relationships with well defined vocabularies, the RDFa vocabulary expansion mechanism takes advantage of this.</p>
+
+<p>As an optional part of RDFa processing, an RDFa processor will perform limited <a href="http://www.w3.org/TR/rdf-mt/#rules">RDFS entailment</a>, specifically rules rdfs5, 7, 9 and 11. This causes sub-classes and sub-properties of type and property IRIs to be added to the output graph.</p>
+
+<p><span class='object_link'><a href="RDF/RDFa/Reader.html" title="RDF::RDFa::Reader (class)">RDF::RDFa::Reader</a></span> implements this using the <code>#expand</code> method, which looks for <code>rdfa:hasVocabulary</code> properties within the output graph and performs such expansion. See an example in the usage section.</p>
+
+<h4>RDF Collections (lists)</h4>
+
+<p>One significant RDF feature missing from RDFa was support for ordered collections, or lists. RDF supports this with special properties <code>rdf:first</code>, <code>rdf:rest</code>, and <code>rdf:nil</code>, but other RDF languages have first-class support for this concept. For example, in <a href="http://www.w3.org/TR/2011/WD-turtle-20110809/">Turtle</a>, a list can be defined as follows:</p>
+
+<pre class="code"><span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicPlayList</span><span class='semicolon token'>;</span>
+  <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Classic Rock Playlist&quot;</span><span class='semicolon token'>;</span>
+  <span class='schema identifier id'>schema</span><span class='symbol val'>:numTracks</span> <span class='integer val'>5</span><span class='semicolon token'>;</span>
+  <span class='schema identifier id'>schema</span><span class='symbol val'>:tracks</span> <span class='lparen token'>(</span>
+    <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicRecording</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Sweet Home Alabama&quot;</span><span class='semicolon token'>;</span>       <span class='schema identifier id'>schema</span><span class='symbol val'>:byArtist</span> <span class='string val'>&quot;Lynard Skynard&quot;</span><span class='rbrack token'>]</span>
+    <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicRecording</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Shook you all Night Long&quot;</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:byArtist</span> <span class='string val'>&quot;AC/DC&quot;</span><span class='rbrack token'>]</span>
+    <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicRecording</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Sharp Dressed Man&quot;</span><span class='semicolon token'>;</span>        <span class='schema identifier id'>schema</span><span class='symbol val'>:byArtist</span> <span class='string val'>&quot;ZZ Top&quot;</span><span class='rbrack token'>]</span>
+    <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicRecording</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Old Time Rock and Roll&quot;</span><span class='semicolon token'>;</span>   <span class='schema identifier id'>schema</span><span class='symbol val'>:byArtist</span> <span class='string val'>&quot;Bob Seger&quot;</span><span class='rbrack token'>]</span>
+    <span class='lbrack token'>[</span> <span class='a identifier id'>a</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:MusicRecording</span><span class='semicolon token'>;</span> <span class='schema identifier id'>schema</span><span class='symbol val'>:name</span> <span class='string val'>&quot;Hurt So Good&quot;</span><span class='semicolon token'>;</span>             <span class='schema identifier id'>schema</span><span class='symbol val'>:byArtist</span> <span class='string val'>&quot;John Cougar&quot;</span><span class='rbrack token'>]</span>
+  <span class='rparen token'>)</span>
+<span class='rbrack token'>]</span>
+</pre>
+
+<p>defines a playlist with an ordered set of tracks. RDFa adds the @member attribute, which is used to identify values (object or literal) that are to be placed in a list. The same playlist might be defined in RDFa as follows:</p>
+
+<pre class="code"><span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='vocab identifier id'>vocab</span><span class='assign token'>=</span><span class='string val'>&quot;http://schema.org/&quot;</span> <span class='typeof identifier id'>typeof</span><span class='assign token'>=</span><span class='string val'>&quot;MusicPlaylist&quot;</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;name&quot;</span><span class='gt op'>&gt;</span><span class='Classic constant id'>Classic</span> <span class='Rock constant id'>Rock</span> <span class='Playlist constant id'>Playlist</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+  &lt;meta property=&quot;numTracks&quot; content=&quot;5&quot;/</span><span class='gt op'>&gt;</span>
+
+  <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='rel identifier id'>rel</span><span class='assign token'>=</span><span class='string val'>&quot;tracks&quot;</span> <span class='member identifier id'>member</span><span class='assign token'>=</span><span class='string val'>&quot;&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='typeof identifier id'>typeof</span><span class='assign token'>=</span><span class='string val'>&quot;MusicRecording&quot;</span><span class='gt op'>&gt;</span>
+      <span class='float val'>1</span><span class='dot token'>.</span><span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;name&quot;</span><span class='gt op'>&gt;</span><span class='Sweet constant id'>Sweet</span> <span class='Home constant id'>Home</span> <span class='Alabama constant id'>Alabama</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt; -
+      &lt;span property=&quot;byArtist&quot;&gt;Lynard Skynard&lt;/s</span><span class='pan identifier id'>pan</span><span class='gt op'>&gt;</span>
+     <span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+
+    &lt;div typeof=&quot;MusicRecording&quot;&gt;
+      2.&lt;span property=&quot;name&quot;&gt;Shook you all Night Long&lt;/s</span><span class='pan identifier id'>pan</span><span class='gt op'>&gt;</span> <span class='minus op'>-</span>
+      <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;byArtist&quot;</span><span class='gt op'>&gt;</span><span class='AC constant id'>AC</span><span class='div op'>/</span><span class='DC constant id'>DC</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+    &lt;/</span><span class='div identifier id'>div</span><span class='gt op'>&gt;</span>
+
+    <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='typeof identifier id'>typeof</span><span class='assign token'>=</span><span class='string val'>&quot;MusicRecording&quot;</span><span class='gt op'>&gt;</span>
+      <span class='float val'>3</span><span class='dot token'>.</span><span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;name&quot;</span><span class='gt op'>&gt;</span><span class='Sharp constant id'>Sharp</span> <span class='Dressed constant id'>Dressed</span> <span class='Man constant id'>Man</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt; -
+      &lt;span property=&quot;byArtist&quot;&gt;ZZ Top&lt;/s</span><span class='pan identifier id'>pan</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+
+    &lt;div typeof=&quot;MusicRecording&quot;&gt;
+      4.&lt;span property=&quot;name&quot;&gt;Old Time Rock and Roll&lt;/s</span><span class='pan identifier id'>pan</span><span class='gt op'>&gt;</span>
+      <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;byArtist&quot;</span><span class='gt op'>&gt;</span><span class='Bob constant id'>Bob</span> <span class='Seger constant id'>Seger</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+    &lt;/</span><span class='div identifier id'>div</span><span class='gt op'>&gt;</span>
+
+    <span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='typeof identifier id'>typeof</span><span class='assign token'>=</span><span class='string val'>&quot;MusicRecording&quot;</span><span class='gt op'>&gt;</span>
+      <span class='float val'>5</span><span class='dot token'>.</span><span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='property identifier id'>property</span><span class='assign token'>=</span><span class='string val'>&quot;name&quot;</span><span class='gt op'>&gt;</span><span class='Hurt constant id'>Hurt</span> <span class='So constant id'>So</span> <span class='Good constant id'>Good</span><span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+      &lt;span property=&quot;byArtist&quot;&gt;John Cougar&lt;/s</span><span class='pan identifier id'>pan</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+  &lt;/</span><span class='div identifier id'>div</span><span class='gt op'>&gt;</span>
+<span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+</span></pre>
+
+<p>This basically does the same thing, but places each track in an rdf:List in the defined order.</p>
+
 <h2>Usage</h2>
 
 <h3>Reading RDF data in the RDFa format</h3>
 
-<pre class="code"><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.html</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id reader'>reader</span><span class='op'>|</span>
-  <span class='id reader'>reader</span><span class='period'>.</span><span class='id each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id statement'>statement</span><span class='op'>|</span>
-    <span class='id puts'>puts</span> <span class='id statement'>statement</span><span class='period'>.</span><span class='id inspect'>inspect</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+<pre class="code"><span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.html&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:rdfa</span><span class='rparen token'>)</span>
+</pre>
+
+<h3>Reading RDF data with vocabulary expansion</h3>
+
+<pre class="code"><span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.html&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:rdfa</span><span class='comma token'>,</span> <span class='symbol val'>:expand</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+</pre>
+
+<p>or</p>
+
+<pre class="code"><span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='RDFa constant id'>RDFa</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.html&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='expand identifier id'>expand</span>
 </pre>
 
 <h3>Writing RDF data using the XHTML+RDFa format</h3>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/rdfa</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/rdfa'</span>
 
-<span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello.html</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id writer'>writer</span><span class='op'>|</span>
-  <span class='id writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id graph'>graph</span><span class='op'>|</span>
-    <span class='id graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:hello</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='RDFa constant id'>RDFa</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.html&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='graph identifier id'>graph</span>
+<span class='end end kw'>end</span>
 </pre>
 
 <p>Note that prefixes may be chained between Reader and Writer, so that the Writer will
 use the same prefix definitions found during parsing:</p>
 
-<pre class="code"><span class='id prefixes'>prefixes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-<span class='id graph'>graph</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id load'>load</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:prefixes</span> <span class='op'>=&gt;</span> <span class='id prefixes'>prefixes</span><span class='rparen'>)</span>
-<span class='id puts'>puts</span> <span class='id graph'>graph</span><span class='period'>.</span><span class='id dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:rdfa</span><span class='comma'>,</span> <span class='symbol'>:prefixes</span> <span class='op'>=&gt;</span> <span class='id prefixes'>prefixes</span><span class='rparen'>)</span>
+<pre class="code"><span class='prefixes identifier id'>prefixes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/foaf.html&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:prefixes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='prefixes identifier id'>prefixes</span><span class='rparen token'>)</span>
+<span class='puts identifier id'>puts</span> <span class='graph identifier id'>graph</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='symbol val'>:rdfa</span><span class='comma token'>,</span> <span class='symbol val'>:prefixes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='prefixes identifier id'>prefixes</span><span class='rparen token'>)</span>
 </pre>
 
 <h3>Template-based Writer</h3>
 
-<p>The RDFa writer uses <a href="http://haml-lang.com/">Haml</a> templates for code generation. This allows fully customizable
-RDFa output in a variety of host languages. The <a href="<span class='object_link'><a href="RDF/RDFa/Writer.html#DEFAULT_HAML-constant" title="RDF::RDFa::Writer::DEFAULT_HAML (constant)">RDF::RDFa::Writer::DEFAULT_HAML</a></span>">default template</a>
-generates human readable HTML5 output. A <a href="<span class='object_link'><a href="RDF/RDFa/Writer.html#MIN_HAML-constant" title="RDF::RDFa::Writer::MIN_HAML (constant)">RDF::RDFa::Writer::MIN_HAML</a></span>">minimal template</a>
-generates HTML, which is not intended for human consumption.</p>
+<p>The RDFa writer uses <a href="http://haml-lang.com/">Haml</a> templates for code generation. This allows fully
+customizable RDFa output in a variety of host languages.
+The <a href="<span class='object_link'><a href="RDF/RDFa/Writer.html#DEFAULT_HAML-constant" title="RDF::RDFa::Writer::DEFAULT_HAML (constant)">RDF::RDFa::Writer::DEFAULT_HAML</a></span>">default template</a> generates human readable HTML5
+output. A <a href="<span class='object_link'><a href="RDF/RDFa/Writer.html#MIN_HAML-constant" title="RDF::RDFa::Writer::MIN_HAML (constant)">RDF::RDFa::Writer::MIN_HAML</a></span>">minimal template</a> generates HTML, which is not
+intended for human consumption.</p>
 
 <p>To specify an alternative Haml template, consider the following:</p>
 
-<pre class="code"><span class='id require'>require</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rdf/rdfa</span><span class='tstring_end'>'</span></span>
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/rdfa'</span>
 
-<span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id buffer'>buffer</span><span class='lparen'>(</span><span class='symbol'>:haml</span> <span class='op'>=&gt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Writer</span><span class='op'>::</span><span class='const'>MIN_HAML</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='id graph'>graph</span>
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='RDFa constant id'>RDFa</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='buffer identifier id'>buffer</span><span class='lparen token'>(</span><span class='symbol val'>:haml</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='RDFa constant id'>RDFa</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='colon2 op'>::</span><span class='MIN_HAML constant id'>MIN_HAML</span><span class='rparen token'>)</span> <span class='lshft op'>&lt;&lt;</span> <span class='graph identifier id'>graph</span>
 </pre>
 
 <p>The template hash defines four Haml templates:</p>
@@ -131,95 +207,95 @@ generates HTML, which is not intended for human consumption.</p>
 <li><p><em>doc</em>: Document Template, takes an ordered list of <em>subject</em>s and yields each one to be rendered.
 Described further in <span class='object_link'><a href="RDF/RDFa/Writer.html#render_document-instance_method" title="RDF::RDFa::Writer#render_document (method)">RDF::RDFa::Writer#render_document</a></span>.</p>
 
-<pre class="code">!!! XML
-!!! 5
-%html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :profile =&gt; profile, :prefix =&gt; prefix}
-  - if base || title
-    %head
-      - if base
-        %base{:href =&gt; base}
-      - if title
-        %title= title
-  %body
-    - subjects.each do |subject|
-      != yield(subject)
+<pre class="code"><span class='notop op'>!</span><span class='notop op'>!</span><span class='notop op'>!</span> <span class='XML constant id'>XML</span>
+<span class='notop op'>!</span><span class='notop op'>!</span><span class='notop op'>!</span> <span class='integer val'>5</span>
+<span class='html identifier id'>html</span><span class='lbrace token'>{</span><span class='symbol val'>:xmlns</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.w3.org/1999/xhtml&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lang identifier id'>lang</span><span class='comma token'>,</span> <span class='symbol val'>:prefix</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='prefix identifier id'>prefix</span><span class='rbrace token'>}</span>
+  <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='base identifier id'>base</span> <span class='orop op'>||</span> <span class='title identifier id'>title</span>
+    <span class='head identifier id'>head</span>
+      <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='base identifier id'>base</span>
+        <span class='base identifier id'>base</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='base identifier id'>base</span><span class='rbrace token'>}</span>
+      <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='title identifier id'>title</span>
+        <span class='title identifier id'>title</span><span class='assign token'>=</span> <span class='title identifier id'>title</span>
+  <span class='body identifier id'>body</span>
+    <span class='minus op'>-</span> <span class='subjects identifier id'>subjects</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='subject identifier id'>subject</span><span class='bitor op'>|</span>
+      <span class='neq op'>!=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span>
 </pre>
 
-<p>This template takes locals <em>lang</em>, <em>profile</em>, <em>prefix</em>, <em>base</em>, <em>title</em> in addition to <em>subjects</em>
+<p>This template takes locals <em>lang</em>, <em>prefix</em>, <em>base</em>, <em>title</em> in addition to <em>subjects</em>
 to create output similar to the following:</p>
 
-<pre class="code">&lt;!DOCTYPE html&gt;
-&lt;html prefix='xhv: http://www.w3.org/1999/xhtml/vocab#' xmlns='http://www.w3.org/1999/xhtml'&gt;
-  &lt;head&gt;
-    &lt;base href=&quot;http://example/&quot;&gt;
-    &lt;title&gt;Document Title&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    ...
-  &lt;/body&gt;
-&lt;/html&gt;
+<pre class="code"><span class='lt op'>&lt;</span><span class='notop op'>!</span><span class='DOCTYPE constant id'>DOCTYPE</span> <span class='html identifier id'>html</span><span class='gt op'>&gt;</span>
+<span class='lt op'>&lt;</span><span class='html identifier id'>html</span> <span class='prefix identifier id'>prefix</span><span class='assign token'>=</span><span class='string val'>'xhv: http://www.w3.org/1999/xhtml/vocab#'</span> <span class='xmlns identifier id'>xmlns</span><span class='assign token'>=</span><span class='string val'>'http://www.w3.org/1999/xhtml'</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='head identifier id'>head</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='base identifier id'>base</span> <span class='href identifier id'>href</span><span class='assign token'>=</span><span class='string val'>&quot;http://example/&quot;</span><span class='gt op'>&gt;</span>
+    <span class='lt op'>&lt;</span><span class='title identifier id'>title</span><span class='gt op'>&gt;</span><span class='Document constant id'>Document</span> <span class='Title constant id'>Title</span><span class='lt op'>&lt;</span><span class='regexp val'>/title&gt;
+  &lt;/</span><span class='head identifier id'>head</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='body identifier id'>body</span><span class='gt op'>&gt;</span>
+    <span class='dot3 op'>...</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/body&gt;
+&lt;/</span><span class='html identifier id'>html</span><span class='gt op'>&gt;</span>
 </pre>
 
-<p>Options passed to the Writer are used to supply <em>lang</em>, <em>profile</em> and <em>base</em> locals.
-<em>prefix</em> is generated based upon prefixes found from default or supplied profiles, as well
+<p>Options passed to the Writer are used to supply <em>lang</em> and <em>base</em> locals.
+<em>prefix</em> is generated based upon prefixes found from the default profiles, as well
 as those provided by a previous Reader. <em>title</em> is taken from the first top-level subject
 having an appropriate title property (as defined by the <em>heading</em>predicates_ option).</p></li>
 <li><p><em>subject</em>: Subject Template, take a <em>subject</em> and an order list of <em>predicate</em>s and yields
 each <em>predicate</em> to be rendered. Described further in <span class='object_link'><a href="RDF/RDFa/Writer.html#render_subject-instance_method" title="RDF::RDFa::Writer#render_subject (method)">RDF::RDFa::Writer#render_subject</a></span>.</p>
 
-<pre class="code">- if element == :li
-  %li{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
-    - if typeof
-      %span.type!= typeof
-    - predicates.each do |predicate|
-      != yield(predicate)
-- elsif rel &amp;&amp; typeof
-  %div{:rel =&gt; get_curie(rel)}
-    %div{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
-      %span.type!= typeof
-      - predicates.each do |predicate|
-        != yield(predicate)
-- elsif rel
-  %div{:rel =&gt; get_curie(rel), :resource =&gt; get_curie(subject)}
-    - predicates.each do |predicate|
-      != yield(predicate)
-- else
-  %div{:about =&gt; get_curie(subject), :typeof =&gt; typeof}
-    - if typeof
-      %span.type!= typeof
-    - predicates.each do |predicate|
-      != yield(predicate)
+<pre class="code"><span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='element identifier id'>element</span> <span class='eq op'>==</span> <span class='symbol val'>:li</span>
+  <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:about</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:typeof</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='typeof identifier id'>typeof</span><span class='rbrace token'>}</span>
+    <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='typeof identifier id'>typeof</span>
+      <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='type! fid id'>type!</span><span class='assign token'>=</span> <span class='typeof identifier id'>typeof</span>
+    <span class='minus op'>-</span> <span class='predicates identifier id'>predicates</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='predicate identifier id'>predicate</span><span class='bitor op'>|</span>
+      <span class='neq op'>!=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+<span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='rel identifier id'>rel</span> <span class='andop op'>&amp;&amp;</span> <span class='typeof identifier id'>typeof</span>
+  <span class='div identifier id'>div</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='rel identifier id'>rel</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='div identifier id'>div</span><span class='lbrace token'>{</span><span class='symbol val'>:about</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:typeof</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='typeof identifier id'>typeof</span><span class='rbrace token'>}</span>
+      <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='type! fid id'>type!</span><span class='assign token'>=</span> <span class='typeof identifier id'>typeof</span>
+      <span class='minus op'>-</span> <span class='predicates identifier id'>predicates</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='predicate identifier id'>predicate</span><span class='bitor op'>|</span>
+        <span class='neq op'>!=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+<span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='rel identifier id'>rel</span>
+  <span class='div identifier id'>div</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='rel identifier id'>rel</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='minus op'>-</span> <span class='predicates identifier id'>predicates</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='predicate identifier id'>predicate</span><span class='bitor op'>|</span>
+      <span class='neq op'>!=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+<span class='minus op'>-</span> <span class='else else kw'>else</span>
+  <span class='div identifier id'>div</span><span class='lbrace token'>{</span><span class='symbol val'>:about</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:typeof</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='typeof identifier id'>typeof</span><span class='rbrace token'>}</span>
+    <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='typeof identifier id'>typeof</span>
+      <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='type! fid id'>type!</span><span class='assign token'>=</span> <span class='typeof identifier id'>typeof</span>
+    <span class='minus op'>-</span> <span class='predicates identifier id'>predicates</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='predicate identifier id'>predicate</span><span class='bitor op'>|</span>
+      <span class='neq op'>!=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The template takes locals <em>rel</em> and <em>typeof</em> in addition to <em>predicates</em> and <em>subject</em> to
 create output similar to the following:</p>
 
-<pre class="code">&lt;div about=&quot;http://example/&quot;&gt;
-  ...
-&lt;/div&gt;
-</pre>
+<pre class="code"><span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='about identifier id'>about</span><span class='assign token'>=</span><span class='string val'>&quot;http://example/&quot;</span><span class='gt op'>&gt;</span>
+  <span class='dot3 op'>...</span>
+<span class='lt op'>&lt;</span><span class='regexp val'>/div&gt;
+</span></pre>
 
 <p>Note that if <em>typeof</em> is defined, in this template, it will generate a textual description.</p></li>
 <li><p><em>property_value</em>: Property Value Template, used for predicates having a single value; takes
 a <em>predicate</em>, and a single-valued Array of <em>objects</em>. Described further in <span class='object_link'><a href="RDF/RDFa/Writer.html#render_property-instance_method" title="RDF::RDFa::Writer#render_property (method)">RDF::RDFa::Writer#render_property</a></span>.</p>
 
-<pre class="code">- object = objects.first
-- if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-  %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&amp;= get_value(object)
-- else
-  %div.property
-    %span.label
-      = get_predicate_name(predicate)
-    - if res = yield(object)
-      != res
-    - elsif object.node?
-      %span{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate)}= get_curie(object)
-    - elsif object.uri?
-      %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate)}= object.to_s
-    - elsif object.datatype == RDF.XMLLiteral
-      %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
-    - else
-      %span{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&amp;= get_value(object)
+<pre class="code"><span class='minus op'>-</span> <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='heading_predicates identifier id'>heading_predicates</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='literal? fid id'>literal?</span>
+  <span class='h1 identifier id'>h1</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='opasgn op'>&amp;=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+<span class='minus op'>-</span> <span class='else else kw'>else</span>
+  <span class='div identifier id'>div</span><span class='dot token'>.</span><span class='property identifier id'>property</span>
+    <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='label identifier id'>label</span>
+      <span class='assign token'>=</span> <span class='get_predicate_name identifier id'>get_predicate_name</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+    <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='neq op'>!=</span> <span class='res identifier id'>res</span>
+    <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='node? fid id'>node?</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+    <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='uri? fid id'>uri?</span>
+      <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+    <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='XMLLiteral constant id'>XMLLiteral</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+    <span class='minus op'>-</span> <span class='else else kw'>else</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='opasgn op'>&amp;=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
 </pre>
 
 <p>In addition to <em>predicate</em> and <em>objects</em>, the template takes locals <em>property</em> and/or <em>rel</em>, which are
@@ -235,55 +311,75 @@ descriptions.</p>
 
 <p>Creates output similar to the following:</p>
 
-<pre class="code">&lt;div class='property'&gt;
-  &lt;span class='label'&gt;
-    xhv:alternate
-  &lt;/span&gt;
-  &lt;a href='http://rdfa.info/feed/' rel='xhv:alternate'&gt;http://rdfa.info/feed/&lt;/a&gt;
+<pre class="code"><span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>'property'</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>'label'</span><span class='gt op'>&gt;</span>
+    <span class='xhv identifier id'>xhv</span><span class='symbol val'>:alternate</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
+  &lt;a href='http:/</span><span class='div op'>/</span><span class='rdfa identifier id'>rdfa</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='div op'>/</span><span class='feed identifier id'>feed</span><span class='div op'>/</span><span class='string val'>' rel='</span><span class='xhv identifier id'>xhv</span><span class='symbol val'>:alternate</span><span class='string val'>'&gt;http://rdfa.info/feed/&lt;/a&gt;
 &lt;/div&gt;
-</pre>
+</span></pre>
 
 <p>Note the use of methods defined in <span class='object_link'><a href="RDF/RDFa/Writer.html" title="RDF::RDFa::Writer (class)">RDF::RDFa::Writer</a></span> useful in rendering the output.</p></li>
 <li><p><em>property_values</em>: Similar to <em>property_value</em>, but for predicates having more than one value.
 Locals are identical to <em>property_values</em>, but <em>objects</em> is expected to have more than one value.</p>
 
-<pre class="code">%div.property
-  %span.label
-    = get_predicate_name(predicate)
-  %ul{:rel =&gt; (get_curie(rel) if rel), :property =&gt; (get_curie(property) if property)}
-    - objects.each do |object|
-      - if res = yield(object)
-        != res
-      - elsif object.node?
-        %li{:resource =&gt; get_curie(object)}= get_curie(object)
-      - elsif object.uri?
-        %li
-          %a{:href =&gt; object.to_s}= object.to_s
-      - elsif object.datatype == RDF.XMLLiteral
-        %li{:lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype)}&lt;!= get_value(object)
-      - else
-        %li{:content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&amp;= get_value(object)
+<pre class="code"><span class='div identifier id'>div</span><span class='dot token'>.</span><span class='property identifier id'>property</span>
+  <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='label identifier id'>label</span>
+    <span class='assign token'>=</span> <span class='get_predicate_name identifier id'>get_predicate_name</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
+  <span class='ul identifier id'>ul</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='rel identifier id'>rel</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='rel identifier id'>rel</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='property identifier id'>property</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='minus op'>-</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
+      <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+        <span class='neq op'>!=</span> <span class='res identifier id'>res</span>
+      <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='node? fid id'>node?</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='uri? fid id'>uri?</span>
+        <span class='li identifier id'>li</span>
+          <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='XMLLiteral constant id'>XMLLiteral</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='minus op'>-</span> <span class='else else kw'>else</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='opasgn op'>&amp;=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
 </pre>
 
 <p>In this case, and unordered list is used for output. Creates output similar to the following:</p>
 
-<pre class="code">&lt;div class='property'&gt;
-  &lt;span class='label'&gt;
-    xhv:bookmark
-  &lt;/span&gt;
+<pre class="code"><span class='lt op'>&lt;</span><span class='div identifier id'>div</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>'property'</span><span class='gt op'>&gt;</span>
+  <span class='lt op'>&lt;</span><span class='span identifier id'>span</span> <span class='class class kw'>class</span><span class='assign token'>=</span><span class='string val'>'label'</span><span class='gt op'>&gt;</span>
+    <span class='xhv identifier id'>xhv</span><span class='symbol val'>:bookmark</span>
+  <span class='lt op'>&lt;</span><span class='regexp val'>/span&gt;
   &lt;ul rel='xhv:bookmark'&gt;
     &lt;li&gt;
-      &lt;a href='http://rdfa.info/2009/12/12/oreilly-catalog-uses-rdfa/'&gt;
+      &lt;a href='http:/</span><span class='div op'>/</span><span class='rdfa identifier id'>rdfa</span><span class='dot token'>.</span><span class='info identifier id'>info</span><span class='div op'>/</span><span class='integer val'>2009</span><span class='div op'>/</span><span class='integer val'>12</span><span class='div op'>/</span><span class='integer val'>12</span><span class='div op'>/</span><span class='oreilly identifier id'>oreilly</span><span class='minus op'>-</span><span class='catalog identifier id'>catalog</span><span class='minus op'>-</span><span class='uses identifier id'>uses</span><span class='minus op'>-</span><span class='rdfa identifier id'>rdfa</span><span class='div op'>/</span><span class='string val'>'&gt;
         http://rdfa.info/2009/12/12/oreilly-catalog-uses-rdfa/
       &lt;/a&gt;
     &lt;/li&gt;
-      &lt;a href='http://rdfa.info/2010/05/31/new-rdfa-checker/'&gt;
+      &lt;a href='</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/rdfa.info/</span><span class='integer val'>2010</span><span class='div op'>/</span><span class='integer val'>05</span><span class='div op'>/</span><span class='integer val'>31</span><span class='div op'>/</span><span class='new identifier id'>new</span><span class='minus op'>-</span><span class='rdfa identifier id'>rdfa</span><span class='minus op'>-</span><span class='checker identifier id'>checker</span><span class='div op'>/</span><span class='string val'>'&gt;
         http://rdfa.info/2010/05/31/new-rdfa-checker/
       &lt;/a&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
-</pre></li>
+</span></pre>
+
+<p>If <em>property_values</em> does not exist, repeated values will be replecated
+using <em>property_value</em>.</p></li>
+<li><p>Type-specific templates.
+To simplify generation of different output types, the
+template may contain a elements indexed by a URI. When a subject with an rdf:type
+matching that URI is found, subsequent Haml definitions will be taken from
+the associated Hash. For example:</p>
+
+<p>  {
+    :document => "...",
+    :subject => "...",
+    :property_value => "...",
+    :property_values => "...",
+    RDF::URI("http://schema.org/Person") => {
+      :subject => "...",
+      :property_value => "...",
+      :property_values => "...",
+    }
+  }</p></li>
 </ul>
 
 
@@ -298,7 +394,7 @@ Locals are identical to <em>property_values</em>, but <em>objects</em> is expect
 
 <h2>Documentation</h2>
 
-<p>Full documentation available on <a href="http://rdf.rubyforge.org/rdfa">RubyForge</a></p>
+<p>Full documentation available on <a href="http://rubydoc.info/github/gkellogg/rdf-rdfa/master/file/README.markdown">Rubydoc.info</a></p>
 
 <h3>Principle Classes</h3>
 
@@ -314,7 +410,7 @@ Asserts :html format, application/xhtml+xml mime-type and .xhtml file extension.
 Asserts :svg format, image/svg+xml mime-type and .svg file extension.</li>
 </ul>
 </li>
-<li>RDF::RDFa::Reader</li>
+<li><span class='object_link'><a href="RDF/RDFa/Reader.html" title="RDF::RDFa::Reader (class)">RDF::RDFa::Reader</a></span></li>
 <li><span class='object_link'><a href="RDF/RDFa/Profile.html" title="RDF::RDFa::Profile (class)">RDF::RDFa::Profile</a></span></li>
 <li><span class='object_link'><a href="RDF/RDFa/Writer.html" title="RDF::RDFa::Writer (class)">RDF::RDFa::Writer</a></span></li>
 </ul>
@@ -343,26 +439,43 @@ Asserts :svg format, image/svg+xml mime-type and .svg file extension.</li>
 
 <ul>
 <li><a href="http://rdf.rubyforge.org/">RDF.rb</a></li>
-<li><a href="http://distiller.kellogg-assoc">Distiller</a></li>
+<li><a href="http://rdf.greggkellogg.net/distiller">Distiller</a></li>
 <li><a href="http://rdf.rubyforge.org/rdfa">Documentation</a></li>
 <li><a href="file:file.History.html">History</a></li>
-<li><a href="http://www.w3.org/TR/2010/WD-rdfa-core-20100422/" title="RDFa 1.1 Core">RDFa 1.1 Core</a></li>
-<li><a href="http://www.w3.org/TR/2010/WD-xhtml-rdfa-20100422/" title="XHTML+RDFa 1.1">XHTML+RDFa 1.1</a></li>
+<li><a href="http://www.w3.org/TR/2011/WD-rdfa-core-20110331/" title="RDFa 1.1 Core">RDFa 1.1 Core</a></li>
+<li><a href="http://www.w3.org/TR/2011/WD-xhtml-rdfa-20110331/" title="XHTML+RDFa 1.1">XHTML+RDFa 1.1</a></li>
 <li><a href="http://rdfa.digitalbazaar.com/test-suite/" title="RDFa test suite">RDFa-test-suite</a></li>
 </ul>
 
 
-<h2>AUTHOR</h2>
+<h2>Author</h2>
 
 <ul>
 <li><a href="http://github.com/gkellogg">Gregg Kellogg</a> - <a href="http://kellogg-assoc.com/">http://kellogg-assoc.com/</a></li>
 </ul>
 
 
-<h2>CONTRIBUTORS</h2>
+<h2>Contributors</h2>
 
 <ul>
 <li><a href="http://github.com/njh">Nicholas Humfrey</a></li>
+</ul>
+
+
+<h2>Contributing</h2>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don't use hard tabs, and don't leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="http://yardoc.org/">YARD</a> annotations. Read the
+<a href="http://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don't touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
 </ul>
 
 
@@ -382,9 +495,9 @@ see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanyin
 </div></div>
     
     <div id="footer">
-  Generated on Mon Aug 22 16:49:23 2011 by 
+  Generated on Mon Sep  5 15:59:43 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>

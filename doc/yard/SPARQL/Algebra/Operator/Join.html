@@ -95,9 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/join.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/join.rb,<br /> vendor/bundler/ruby/1.9.1/bundler/gems/sparql-algebra-058b98a0b601/lib/sparql/algebra/operator/join.rb</span>
-</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -114,11 +112,12 @@
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code">(prefix ((: &lt;http://example/&gt;))
-  (join
-    (bgp (triple ?s ?p ?o))
-    (graph ?g
-      (bgp (triple ?s ?q ?v)))))</pre>
+      <pre class="example code"><span class='lparen token'>(</span><span class='prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example/</span><span class='gt op'>&gt;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='lparen token'>(</span><span class='join identifier id'>join</span>
+    <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='p identifier id'>p</span> <span class='question op'>?</span><span class='o identifier id'>o</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='graph identifier id'>graph</span> <span class='question op'>?</span><span class='g identifier id'>g</span>
+      <span class='lparen token'>(</span><span class='bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='triple identifier id'>triple</span> <span class='question op'>?</span><span class='s identifier id'>s</span> <span class='question op'>?</span><span class='q identifier id'>q</span> <span class='question op'>?</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
     
   </div>
 
@@ -137,7 +136,8 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:join</span><span class='rbracket'>]</span></pre></dd>
+        <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:join</span><span class='rbrack token'>]</span>
+</pre></dd>
       
     </dl>
   
@@ -417,25 +417,26 @@ from each set that are <code>compatible</code> with each other.</p>
 49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/join.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb', line 33</span>
 
-<span class='kw'>def</span> <span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='comment'># Join(Ω1, Ω2) = { merge(μ1, μ2) | μ1 in Ω1 and μ2 in Ω2, and μ1 and μ2 are compatible }
-</span>  <span class='comment'># eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))
-</span>  <span class='comment'>#
-</span>  <span class='comment'># Generate solutions independently, merge based on solution compatibility
-</span>  <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Join</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-  <span class='id solutions1'>solutions1</span> <span class='op'>=</span> <span class='id operand'>operand</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span><span class='period'>.</span><span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt;(left) </span><span class='embexpr_beg'>#{</span><span class='id solutions1'>solutions1</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-  <span class='id solutions2'>solutions2</span> <span class='op'>=</span> <span class='id operand'>operand</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id execute'>execute</span><span class='lparen'>(</span><span class='id queryable'>queryable</span><span class='comma'>,</span> <span class='id options'>options</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt;(right) </span><span class='embexpr_beg'>#{</span><span class='id solutions2'>solutions2</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id solutions1'>solutions1</span><span class='period'>.</span><span class='id map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id s1'>s1</span><span class='op'>|</span>
-    <span class='id solutions2'>solutions2</span><span class='period'>.</span><span class='id map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id s2'>s2</span><span class='op'>|</span> <span class='id s2'>s2</span><span class='period'>.</span><span class='id merge'>merge</span><span class='lparen'>(</span><span class='id s1'>s1</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id s2'>s2</span><span class='period'>.</span><span class='id compatible?'>compatible?</span><span class='lparen'>(</span><span class='id s1'>s1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id flatten'>flatten</span><span class='period'>.</span><span class='id compact'>compact</span>
-  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='ivar'>@solutions</span><span class='rparen'>)</span>
-  <span class='id debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt; </span><span class='embexpr_beg'>#{</span><span class='ivar'>@solutions</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@solutions</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='comment val'># Join(Ω1, Ω2) = { merge(μ1, μ2) | μ1 in Ω1 and μ2 in Ω2, and μ1 and μ2 are compatible }</span>
+  <span class='comment val'># eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</span>
+  <span class='comment val'>#</span>
+  <span class='comment val'># Generate solutions independently, merge based on solution compatibility</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;Join&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='solutions1 identifier id'>solutions1</span> <span class='assign token'>=</span> <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(left) #{solutions1.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='solutions2 identifier id'>solutions2</span> <span class='assign token'>=</span> <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(right) #{solutions2.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='solutions1 identifier id'>solutions1</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s1 identifier id'>s1</span><span class='bitor op'>|</span>
+    <span class='solutions2 identifier id'>solutions2</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s2 identifier id'>s2</span><span class='bitor op'>|</span> <span class='s2 identifier id'>s2</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='s1 identifier id'>s1</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='s2 identifier id'>s2</span><span class='dot token'>.</span><span class='compatible? fid id'>compatible?</span><span class='lparen token'>(</span><span class='s1 identifier id'>s1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='end end kw'>end</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
+  <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Solutions constant id'>Solutions</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@solutions ivar id'>@solutions</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; #{@solutions.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='@solutions ivar id'>@solutions</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -490,13 +491,14 @@ The empty graph pattern Z is the identity for join:
 64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-9862df5abf3b/lib/sparql/algebra/operator/join.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb', line 60</span>
 
-<span class='kw'>def</span> <span class='id optimize'>optimize</span>
-  <span class='id ops'>ops</span> <span class='op'>=</span> <span class='id operands'>operands</span><span class='period'>.</span><span class='id map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id o'>o</span><span class='op'>|</span> <span class='id o'>o</span><span class='period'>.</span><span class='id optimize'>optimize</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id o'>o</span><span class='op'>|</span> <span class='id o'>o</span><span class='period'>.</span><span class='id respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id o'>o</span><span class='period'>.</span><span class='id empty?'>empty?</span><span class='rbrace'>}</span>
-  <span class='ivar'>@operands</span> <span class='op'>=</span> <span class='id ops'>ops</span>
-  <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+<span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
+  <span class='ops identifier id'>ops</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:empty?</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='o identifier id'>o</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span><span class='rbrace token'>}</span>
+  <span class='@operands ivar id'>@operands</span> <span class='assign token'>=</span> <span class='ops identifier id'>ops</span>
+  <span class='self self kw'>self</span>
+<span class='end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -507,9 +509,9 @@ The empty graph pattern Z is the identity for join:
 </div>
     
     <div id="footer">
-  Generated on Mon Aug 22 16:49:58 2011 by 
+  Generated on Mon Sep  5 16:00:11 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.9.2).
+  0.7.2 (ruby-1.8.7).
 </div>
 
   </body>
