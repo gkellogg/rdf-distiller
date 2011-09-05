@@ -3,6 +3,7 @@ require 'sinatra/linkeddata'   # Can't use this, as we may need to set by hand, 
 require 'sinatra/partials'
 require 'erubis'
 require 'rdf/microdata'
+require 'rdf/turtle'
 require 'json/ld'
 
 module RDF
@@ -98,7 +99,8 @@ module RDF
         reader_opts = {
           :prefixes => {},
           :base_uri => params["uri"],
-          :validate => params["validate"]
+          :validate => params["validate"],
+          :expand => params["expand"],
         }
         reader_opts[:format] = params["in_fmt"].to_sym unless params["in_fmt"].nil? || params["in_fmt"] == 'content'
         reader_opts[:debug] = @debug = [] if params["debug"]
@@ -110,7 +112,7 @@ module RDF
         when !params["datafile"].to_s.empty?
           raise RDF::ReaderError, "Specify input format" if format.nil? || format == :content
           puts "Open datafile with format #{format}"
-          tempfile = 
+          tempfile = params["datafile"][:tempfile]
           reader = RDF::Reader.for(format).new(tempfile, reader_opts) {|r| graph << r}
         when !params["content"].to_s.empty?
           raise RDF::ReaderError, "Specify input format" if format.nil? || format == :content
