@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Include non-released gems first
-gem 'rdf',              '>= 0.3.4'
+gem 'rdf',              :git => "git://github.com/gkellogg/rdf.git", :branch => "0.3.x" #'>= 0.3.4'
 gem 'linkeddata',       :git => "git://github.com/gkellogg/linkeddata.git", :branch => "0.3.x"
 gem 'rdf-json',         ">= 0.3.0", :require => 'rdf/json'
 gem 'rdf-trix',         ">= 0.3.0", :require => 'rdf/trix'
