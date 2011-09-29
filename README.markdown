@@ -9,6 +9,8 @@ RDF::Portal is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
 Distills between formats supported in [Linked Data][linkeddata].
 
 * Includes [N-Triples][] support using [RDF.rb][].
+* Includes [N-Quads][] support using [RDF.rb][].
+* Includes [Microdata][] support using the [RDF::Microdata][] gem.
 * Includes [Notation3][] support using the [RDF::N3][] gem.
 * Includes [RDFa][] support using the [RDF::RDFa][] gem.
 * Includes [RDF/JSON][] support using the [RDF::JSON][] gem.
@@ -17,6 +19,7 @@ Distills between formats supported in [Linked Data][linkeddata].
 * Includes [Turtle][] support using the [RDF::Turtle][] gem.
 * Includes [Microdata][] support using the [RDF::Microdata][] gem.
 * Includes [JSON-LD][] support using the [JSON::LD][] gem.
+* Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 
 ## Dependencies
 * [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.3)
@@ -25,13 +28,14 @@ Distills between formats supported in [Linked Data][linkeddata].
 * [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
 * [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.4.4)
 * [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.1)
-* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.1.0)
-* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.5)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.6)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.4)
-* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.1)
-* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.0.5)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.0.7)
+* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.2.2)
+* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.6)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.7)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.5)
+* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.0)
+* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.1.0)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.0.8)
+* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.0.2)
 
 ## Documentation
 ### Core libraries
@@ -51,9 +55,8 @@ Distills between formats supported in [Linked Data][linkeddata].
   * {file:sinatra-linkeddata-README Linked Data for Sinatrra}
 
 ### Query/Access
-* {file:sparql-algebra-README SPARQL Algebra}
+* {file:sparql-README SPARQL}
 * {file:sparql-client-README SPARQL Client}
-* {file:sparql-grammar-README SPARQL Grammar}
 * {file:spira-README Spira}
 
 ### Storage
@@ -83,7 +86,17 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <http://github.com/gkellogg/rdf-portal>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
-[JSON-LD]:        http://json-ld.org/spec/latest/
+[RDF.rb]:         http://rdf.rubyforge.org/
+[RDF::JSON]:      http://rdf.rubyforge.org/json/
+[RDF::Microdata]: http://rdoc.info/github/gkellogg/rdf-microdata/master/frames
+[RDF::N3]:        http://rdoc.info/github/gkellogg/rdf-n3/master/frames
+[RDF::RDFa]:      http://rdoc.info/github/gkellogg/rdf-rdfa/master/frames
+[RDF::RDFXML]:    http://rdoc.info/github/gkellogg/rdf-rdfxml/master/frames
+[RDF::TriX]:      http://rdf.rubyforge.org/trix/
+[RDF::Turtle]:    http://rdoc.info/github/gkellogg/rdf-turtle/master/frames
+[JSON::LD]:       http://rdoc.info/github/gkellogg/json-ld/master/frames
+[SPARQL gem]:     http://rdoc.info/github/gkellogg/sparql/master/frames
+[JSON-LD]:        http://json-ld.org/
 [linkeddata]:     {file:linkeddata-README}
 [Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
@@ -91,5 +104,6 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification
 [RDF/XML]:        http://www.w3.org/TR/rdf-syntax-grammar/
 [RDFa]:           http://en.wikipedia.org/wiki/RDFa
+[SPARQL]:         http://en.wikipedia.org/wiki/Sparql
 [TriX]:           http://en.wikipedia.org/wiki/TriX_(syntax)
 [Turtle]:         http://en.wikipedia.org/wiki/Turtle_(syntax)

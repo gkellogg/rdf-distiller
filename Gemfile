@@ -1,12 +1,10 @@
 source 'http://rubygems.org'
 
 # Include non-released gems first
-gem 'addressable',      '2.2.4'
-gem 'rdf',              :git => "git://github.com/gkellogg/rdf.git", :branch => "type-check-mixin"
-gem 'linkeddata',       :git => "git://github.com/gkellogg/linkeddata.git", :branch => "0.4.x", :require => "rdf/rdfxml"
-gem 'rack-linkeddata',  :git => "git://github.com/gkellogg/rack-linkeddata.git", :branch => "0.4.x", :require => "rack/linkeddata"
-gem 'rdf-json',         :git => "git://github.com/gkellogg/rdf-json.git", :branch => "0.4.x", :require => 'rdf/json'
-gem 'rdf-trix',         :git => "git://github.com/gkellogg/rdf-trix.git", :branch => "0.4.x", :require => 'rdf/trix'
+gem 'rdf',              '>= 0.3.4'
+gem 'linkeddata',       :git => "git://github.com/gkellogg/linkeddata.git", :branch => "0.3.x"
+gem 'rdf-json',         ">= 0.3.0", :require => 'rdf/json'
+gem 'rdf-trix',         ">= 0.3.0", :require => 'rdf/trix'
 gem 'rdf-microdata',    :git => "git://github.com/gkellogg/rdf-microdata.git", :require => "rdf/microdata"
 gem 'rdf-n3',           :git => "git://github.com/gkellogg/rdf-n3.git", :require => "rdf/n3"
 gem 'rdf-rdfa',         :git => "git://github.com/gkellogg/rdf-rdfa.git", :require => "rdf/rdfa"
@@ -16,13 +14,12 @@ gem 'json-ld',          :git => "git://github.com/gkellogg/json-ld.git", :requir
 gem 'rdf-isomorphic',   '>= 0.3.4', :require => 'rdf/isomorphic'
 gem 'rdf-do'
 gem 'spira',            '>= 0.0.12'
-gem 'sxp',              '>= 0.0.5'
-gem 'sparql-client',    :git => "git://github.com/gkellogg/sparql-client.git", :branch => "0.4.x", :require => 'sparql/client'
-gem 'sparql-algebra',   :git => "git://github.com/gkellogg/sparql-algebra.git", :require => 'sparql/algebra'
-gem 'sparql-grammar',   :git => "git://github.com/gkellogg/sparql-grammar.git", :require => 'sparql/grammar'
+gem 'sxp',              '>= 0.0.14'
+gem 'sparql',           :git => "git://github.com/gkellogg/sparql.git"
 
 gem 'sinatra',            '>= 1.2.1'
-gem 'sinatra-linkeddata', :git => "git://github.com/gkellogg/sinatra-linkeddata.git", :branch => "0.4.x", :require => "sinatra/linkeddata"
+gem 'rack-linkeddata',    ">= 0.3.0", :require => "rack/linkeddata"
+gem 'sinatra-linkeddata', ">= 0.3.0", :require => "sinatra/linkeddata"
 gem 'erubis',             '>= 2.6.6'
 gem 'haml',               '>= 3.0.0'
 

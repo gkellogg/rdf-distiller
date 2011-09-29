@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  File: sparql-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: sparql-README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>SPARQL for RDF.rb</h1>
+
+<p>This is a <a href="http://ruby-lang.org/">Ruby</a> implementation of the <a href="http://en.wikipedia.org/wiki/SPARQL">SPARQL</a> algebra for <a href="http://rdf.rubyforge.org/">RDF.rb</a>.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>100% free and unencumbered <a href="http://unlicense.org/">public domain</a> software.</li>
+<li><a href="http://www.w3.org/TR/rdf-sparql-query/">SPARQL 1.0</a> query parsing and execution</li>
+<li>SPARQL results as <a href="http://www.w3.org/TR/rdf-sparql-XMLres/">XML</a> or <a href="http://www.w3.org/TR/rdf-sparql-json-res/">JSON</a>.</li>
+<li>SPARQL CONSTRUCT or DESCRIBE serialized based on Format, Extension of Mime Type
+using available RDF Writers (see <a href="http://rubygems.org/gems/linkeddata">Linked Data</a>)</li>
+<li>SPARQL Client for accessing remote SPARQL endpoints.</li>
+<li>Helper method for describing [SPARQL Service Description][]</li>
+<li>Compatible with Ruby Ruby 1.9.x.</li>
+<li>Compatible with older Ruby versions with the help of the <a href="http://rubygems.org/gems/backports">Backports</a> gem.</li>
+<li>Supports Unicode query strings both on Ruby 1.8.x and 1.9.x.</li>
+</ul>
+
+
+<h2>Examples</h2>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rubygems'</span>
+<span class='require identifier id'>require</span> <span class='string val'>'sparql'</span>
+</pre>
+
+<h3>Executing a SPARQL query against a repository</h3>
+
+<pre class="code"><span class='queryable identifier id'>queryable</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://usefulinc.com/ns/doap&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='rparen token'>)</span>
+</pre>
+
+<h3>Parsing a SPARQL query string to SSE</h3>
+
+<pre class="code"><span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='to_sxp identifier id'>to_sxp</span>
+</pre>
+
+<h3>Command line processing</h3>
+
+<pre class="code"><span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/usefulinc.com/n</span><span class='s identifier id'>s</span><span class='div op'>/</span><span class='doap identifier id'>doap</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * FROM &lt;http://usefulinc.com/ns/doap&gt; WHERE { ?s ?p ?o }&quot;</span>
+
+<span class='comment val'># Generate SPARQL Algebra Expression (SSE) format</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='to identifier id'>to</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='to identifier id'>to</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span>
+
+<span class='comment val'># Run query using SSE input</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/usefulinc.com/n</span><span class='s identifier id'>s</span><span class='div op'>/</span><span class='doap identifier id'>doap</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;(dataset (&lt;http://usefulinc.com/ns/doap&gt;) (bgp (triple ?s ?p ?o))))&quot;</span>
+</pre>
+
+<h2>Documentation</h2>
+
+<p>Full documentation available on <a href="http://rubydoc.info/github/gkellogg/sparql/frames">Rubydoc.info</a></p>
+
+<h3>Principle Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL/Algebra.html" title="SPARQL::Algebra (module)">SPARQL::Algebra</a></span>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL/Algebra/Expression.html" title="SPARQL::Algebra::Expression (module)">SPARQL::Algebra::Expression</a></span></li>
+<li><span class='object_link'><a href="SPARQL/Algebra/Query.html" title="SPARQL::Algebra::Query (module)">SPARQL::Algebra::Query</a></span></li>
+<li><span class='object_link'><a href="SPARQL/Algebra/Operator.html" title="SPARQL::Algebra::Operator (class)">SPARQL::Algebra::Operator</a></span></li>
+</ul>
+</li>
+<li><span class='object_link'><a href="SPARQL/Grammar.html" title="SPARQL::Grammar (module)">SPARQL::Grammar</a></span>
+
+<ul>
+<li><span class='object_link'><a href="SPARQL/Grammar/Parser.html" title="SPARQL::Grammar::Parser (class)">SPARQL::Grammar::Parser</a></span></li>
+<li><span class='object_link'><a href="SPARQL/Grammar/Lexer.html" title="SPARQL::Grammar::Lexer (class)">SPARQL::Grammar::Lexer</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Dependencies</h2>
+
+<ul>
+<li><a href="http://ruby-lang.org/">Ruby</a> (>= 1.9) or (>= 1.8.1 with <a href="http://rubygems.org/gems/backports">Backports</a>)</li>
+<li><a href="http://rubygems.org/gems/rdf">RDF.rb</a> (>= 0.3.4)</li>
+<li><a href="https://rubygems.org/gems/sparql-client">SPARQL::Client</a> (>= 0.0.11)</li>
+<li><a href="https://rubygems.org/gems/sxp">SXP</a> (>= 0.0.15)</li>
+<li><a href="https://rubygems.org/gems/builder">Builder</a> (>= 3.0.0)</li>
+<li><a href="https://rubygems.org/gems/json">JSON</a> (>= 1.5.1)</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<p>The recommended installation method is via <a href="http://rubygems.org/">RubyGems</a>.
+To install the latest official release of the <code>SPARQL</code> gem, do:</p>
+
+<pre class="code"><span class='string val'>% [sudo] </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sparql identifier id'>sparql</span>
+</pre>
+
+<h2>Download</h2>
+
+<p>To get a local working copy of the development repository, do:</p>
+
+<pre class="code"><span class='string val'>% git </span><span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='gkellogg identifier id'>gkellogg</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+</pre>
+
+<h2>Mailing List</h2>
+
+<ul>
+<li><a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/">http://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+
+
+<h2>Authors</h2>
+
+<ul>
+<li><a href="http://github.com/bendiken">Arto Bendiken</a> - <a href="http://ar.to/">http://ar.to/</a></li>
+<li><a href="http://github.com/bhuga">Ben Lavender</a> - <a href="http://bhuga.net/">http://bhuga.net/</a></li>
+<li><a href="http://github.com/gkellogg">Gregg Kellogg</a> - <a href="http://kellogg-assoc.com/">http://kellogg-assoc.com/</a></li>
+<li><a href="http://github.com/pius">Pius Uzamere</a> - <a href="http://pius.me/">http://pius.me/</a></li>
+</ul>
+
+
+<h2>Contributing</h2>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don't use hard tabs, and don't leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="http://yardoc.org/">YARD</a> annotations. Read the
+<a href="http://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don't touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+
+<h2>License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p></div></div>
+    
+    <div id="footer">
+  Generated on Wed Sep 28 18:34:41 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

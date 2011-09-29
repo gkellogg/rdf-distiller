@@ -95,7 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/join.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -417,23 +417,23 @@ from each set that are <code>compatible</code> with each other.</p>
 49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/join.rb', line 33</span>
 
 <span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='comment val'># Join(Ω1, Ω2) = { merge(μ1, μ2) | μ1 in Ω1 and μ2 in Ω2, and μ1 and μ2 are compatible }</span>
   <span class='comment val'># eval(D(G), Join(P1, P2)) = Join(eval(D(G), P1), eval(D(G), P2))</span>
   <span class='comment val'>#</span>
   <span class='comment val'># Generate solutions independently, merge based on solution compatibility</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;Join&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Join&quot;</span><span class='rbrace token'>}</span>
   <span class='solutions1 identifier id'>solutions1</span> <span class='assign token'>=</span> <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(left) #{solutions1.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt;(left) #{solutions1.inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='solutions2 identifier id'>solutions2</span> <span class='assign token'>=</span> <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(right) #{solutions2.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt;(right) #{solutions2.inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='solutions1 identifier id'>solutions1</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s1 identifier id'>s1</span><span class='bitor op'>|</span>
     <span class='solutions2 identifier id'>solutions2</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='s2 identifier id'>s2</span><span class='bitor op'>|</span> <span class='s2 identifier id'>s2</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='s1 identifier id'>s1</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='s2 identifier id'>s2</span><span class='dot token'>.</span><span class='compatible? fid id'>compatible?</span><span class='lparen token'>(</span><span class='s1 identifier id'>s1</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
   <span class='end end kw'>end</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
   <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Solutions constant id'>Solutions</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@solutions ivar id'>@solutions</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; #{@solutions.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; #{@solutions.inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='@solutions ivar id'>@solutions</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -491,7 +491,7 @@ The empty graph pattern Z is the identity for join:
 64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/join.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/join.rb', line 60</span>
 
 <span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
   <span class='ops identifier id'>ops</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:empty?</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='o identifier id'>o</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span><span class='rbrace token'>}</span>
@@ -509,7 +509,7 @@ The empty graph pattern Z is the identity for join:
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:11 2011 by 
+  Generated on Wed Sep 28 18:35:45 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

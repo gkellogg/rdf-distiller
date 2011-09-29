@@ -95,7 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/filter.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/filter.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -423,30 +423,30 @@ or exprlist.</p>
 58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/filter.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/filter.rb', line 35</span>
 
 <span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Filter #{operands.first}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;Filter #{operands.first}&quot;</span><span class='rbrace token'>}</span>
   <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(before) #{@solutions.map(&amp;:to_hash).inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt;(before) #{@solutions.map(&amp;:to_hash).inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='@solutions ivar id'>@solutions</span><span class='dot token'>.</span><span class='filter identifier id'>filter</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='solution identifier id'>solution</span><span class='bitor op'>|</span>
     <span class='comment val'># Evaluate the solution, which will return true or false</span>
-    <span class='comment val'>#debug(&quot;===&gt;(evaluate) #{operands.first.inspect} against #{solution.to_hash.inspect}&quot;, options)</span>
+    <span class='comment val'>#debug(options) {&quot;===&gt;(evaluate) #{operands.first.inspect} against #{solution.to_hash.inspect}&quot;}</span>
     
     <span class='comment val'># From http://www.w3.org/TR/rdf-sparql-query/#tests</span>
     <span class='comment val'># FILTERs eliminate any solutions that, when substituted into the expression, either</span>
     <span class='comment val'># result in an effective boolean value of false or produce an error.</span>
     <span class='begin begin kw'>begin</span>
       <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='boolean identifier id'>boolean</span><span class='lparen token'>(</span><span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='evaluate identifier id'>evaluate</span><span class='lparen token'>(</span><span class='solution identifier id'>solution</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='true? fid id'>true?</span>
-      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;===&gt;#{res} #{solution.to_hash.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;===&gt;#{res} #{solution.to_hash.inspect}&quot;</span><span class='rbrace token'>}</span>
       <span class='res identifier id'>res</span>
     <span class='rescue rescue kw'>rescue</span>
-      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;rescue(#{$!}): #{solution.to_hash.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;rescue(#{$!}): #{solution.to_hash.inspect}&quot;</span><span class='rbrace token'>}</span>
       <span class='false false kw'>false</span>
     <span class='end end kw'>end</span>
   <span class='end end kw'>end</span>
   <span class='@solutions ivar id'>@solutions</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Query constant id'>Query</span><span class='colon2 op'>::</span><span class='Solutions constant id'>Solutions</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@solutions ivar id'>@solutions</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt;(after) #{@solutions.map(&amp;:to_hash).inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt;(after) #{@solutions.map(&amp;:to_hash).inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='@solutions ivar id'>@solutions</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -499,7 +499,7 @@ or exprlist.</p>
 68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/filter.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/filter.rb', line 66</span>
 
 <span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
   <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
@@ -515,7 +515,7 @@ or exprlist.</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:01:19 2011 by 
+  Generated on Wed Sep 28 18:35:09 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

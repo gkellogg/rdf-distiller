@@ -95,7 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/construct.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/construct.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -436,16 +436,16 @@ and these also appear in the output RDF graph returned by the CONSTRUCT query fo
 72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/construct.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/construct.rb', line 35</span>
 
 <span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Construct #{operands.first}, #{options.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;Construct #{operands.first}, #{options.inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
   <span class='patterns identifier id'>patterns</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
   <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
 
   <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:depth</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span> <span class='plus op'>+</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='solution identifier id'>solution</span><span class='bitor op'>|</span>
-    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; Apply #{solution.inspect} to BGP&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+    <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; Apply #{solution.inspect} to BGP&quot;</span><span class='rbrace token'>}</span>
     
     <span class='comment val'># Create a mapping from BNodes within the pattern list to newly constructed BNodes</span>
     <span class='nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -464,16 +464,16 @@ and these also appear in the output RDF graph returned by the CONSTRUCT query fo
       <span class='comment val'># Sanity checking on statement</span>
       <span class='if if kw'>if</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='orop op'>||</span>
          <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='dot token'>.</span><span class='literal? fid id'>literal?</span> <span class='orop op'>||</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='dot token'>.</span><span class='literal? fid id'>literal?</span>
-        <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;==&gt; skip #{statement.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+        <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;==&gt; skip #{statement.inspect}&quot;</span><span class='rbrace token'>}</span>
         <span class='next next kw'>next</span>
       <span class='end end kw'>end</span>
 
-      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;==&gt; add #{statement.inspect}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;==&gt; add #{statement.inspect}&quot;</span><span class='rbrace token'>}</span>
       <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='statement identifier id'>statement</span>
     <span class='end end kw'>end</span>
   <span class='end end kw'>end</span>
   
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; #{graph.dump(:n3)}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt;\n#{graph.dump(:ttl, :standard_prefixes =&gt; true)}&quot;</span><span class='rbrace token'>}</span>
   <span class='graph identifier id'>graph</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -526,7 +526,7 @@ and these also appear in the output RDF graph returned by the CONSTRUCT query fo
 82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/construct.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/construct.rb', line 80</span>
 
 <span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
   <span class='operands identifier id'>operands</span> <span class='assign token'>=</span> <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:optimize</span><span class='rparen token'>)</span>
@@ -542,7 +542,7 @@ and these also appear in the output RDF graph returned by the CONSTRUCT query fo
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:29 2011 by 
+  Generated on Wed Sep 28 18:34:44 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

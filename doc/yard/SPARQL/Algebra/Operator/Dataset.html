@@ -95,7 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/dataset.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/dataset.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -421,17 +421,21 @@ are added using a <em>context</em> of the data source URI.</p>
 57
 58
 59
-60</pre>
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/dataset.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/dataset.rb', line 35</span>
 
 <span class='def def kw'>def</span> <span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;Dataset&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Dataset&quot;</span><span class='rbrace token'>}</span>
   <span class='operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ds identifier id'>ds</span><span class='bitor op'>|</span>
     <span class='load_opts identifier id'>load_opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
     <span class='case case kw'>case</span> <span class='ds identifier id'>ds</span>
     <span class='when when kw'>when</span> <span class='Array constant id'>Array</span>
+      <span class='comment val'># Format is (named &lt;uri&gt;), only need the URI part</span>
       <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span>
         <span class='u identifier id'>u</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rparen token'>)</span>
         <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='lexical identifier id'>lexical</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;&lt;#{ds.last}&gt;&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='u identifier id'>u</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='eq op'>==</span> <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
@@ -442,11 +446,13 @@ are added using a <em>context</em> of the data source URI.</p>
       <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span> <span class='integer val'>? </span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
       <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='lexical identifier id'>lexical</span> <span class='assign token'>=</span> <span class='ds identifier id'>ds</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
       <span class='load_opts identifier id'>load_opts</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='uri identifier id'>uri</span>
-      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; read named data source #{uri}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; read named data source #{uri}&quot;</span><span class='rbrace token'>}</span>
     <span class='else else kw'>else</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; array: join #{self.base_uri.inspect} to #{ds.inspect}&quot;</span><span class='rbrace token'>}</span>
       <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span> <span class='integer val'>? </span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='ds identifier id'>ds</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='ds identifier id'>ds</span>
-      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;=&gt; read default data source #{uri}&quot;</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='debug identifier id'>debug</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; read default data source #{uri}&quot;</span><span class='rbrace token'>}</span>
     <span class='end end kw'>end</span>
+    <span class='load_opts identifier id'>load_opts</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='uri identifier id'>uri</span>
     <span class='queryable identifier id'>queryable</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='load_opts identifier id'>load_opts</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
 
@@ -498,12 +504,12 @@ with the unique sum of the query elements</p>
       <pre class="lines">
 
 
-69
-70
-71</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-algebra-ae5c1a86f3a0/lib/sparql/algebra/operator/dataset.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0edd20b778f2/lib/sparql/algebra/operator/dataset.rb', line 72</span>
 
 <span class='def def kw'>def</span> <span class='optimize identifier id'>optimize</span>
   <span class='operands identifier id'>operands</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='optimize identifier id'>optimize</span>
@@ -519,7 +525,7 @@ with the unique sum of the query elements</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:33 2011 by 
+  Generated on Wed Sep 28 18:36:05 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

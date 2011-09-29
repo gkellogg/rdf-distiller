@@ -1,6 +1,7 @@
 # Default HAML templates used for generating output from the writer
 module RDF::Portal
   DISTILLER_HAML = {
+    :identifier => "distiller", 
     # Document
     # Locals: language, title, profile, prefix, base, subjects
     # Yield: subjects.each
@@ -34,25 +35,25 @@ module RDF::Portal
     # Note that @rel and @resource can be used together, or @about and @typeof, but
     # not both.
     #
-    # Locals: subject, typeof, predicates, rel, element
+    # Locals: subject, typeof, predicates, rel, element, inlist
     # Yield: predicates.each
     :subject => %q(
       - if element == :li
-        %li{:about => resource, :typeof => typeof}
+        %li{:rel => rel, :resource => resource, :inlist => inlist}
           - if typeof
-            %span.type!= typeof
+            %span{:rel => 'rdf:type', :resource => typeof}.type!= typeof
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
       - elsif rel && typeof
-        %td{:rel => rel}
+        %td{:rel => rel, :inlist => inlist}
           %div{:about => resource, :typeof => typeof}
             %span.type!= typeof
             %table.properties
               - predicates.each do |predicate|
                 != yield(predicate)
       - elsif rel
-        %td{:rel => rel, :resource => resource}
+        %td{:rel => rel, :resource => resource, :inlist => inlist}
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
@@ -66,51 +67,53 @@ module RDF::Portal
     ),
 
     # Output for single-valued properties
-    # Locals: property, rel, object
+    # Locals: predicate, object, inlist
     # Yields: object
     # If nil is returned, render as a leaf
     # Otherwise, render result
     :property_value => %q(
       - if heading_predicates.include?(predicate) && object.literal?
-        %h1{:property => property, :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
+        %h1{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object), :inlist => inlist}= escape_entities(get_value(object))
       - else
         %tr.property
           %td.label
             = get_predicate_name(predicate)
           - if res = yield(object)
             != res
+          - elsif get_curie(object) == 'rdf:nil'
+            %td{:rel => get_curie(predicate), :inlist => ''}= "Empty"
           - elsif object.node?
-            %td{:resource => get_curie(object), :rel => rel}= get_curie(object)
+            %td{:resource => get_curie(object), :rel => get_curie(predicate), :inlist => inlist}= get_curie(object)
           - elsif object.uri?
             %td
-              %a{:href => object.to_s, :rel => rel}= object.to_s
+              %a{:href => object.to_s, :rel => get_curie(predicate), :inlist => inlist}= object.to_s
           - elsif object.datatype == RDF.XMLLiteral
-            %td{:property => property, :lang => get_lang(object), :datatype => get_dt_curie(object)}<!= get_value(object)
+            %td{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_dt_curie(object), :inlist => inlist}<!= get_value(object)
           - else
-            %td{:property => property, :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
+            %td{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object), :inlist => inlist}= escape_entities(get_value(object))
     ),
 
     # Output for multi-valued properties
-    # Locals: property, rel, :objects
+    # Locals: predicate, objects, inliste
     # Yields: object for leaf resource rendering
     :property_values =>  %q(
       %tr.property
         %td.label
           = get_predicate_name(predicate)
-        %td{:rel => rel, :property => property}
+        %td
           %ul
             - objects.each do |object|
               - if res = yield(object)
                 != res
               - elsif object.node?
-                %li{:resource => get_curie(object)}= get_curie(object)
+                %li{:rel => get_curie(predicate), :resource => get_curie(object), :inlist => inlist}= get_curie(object)
               - elsif object.uri?
                 %li
-                  %a{:href => object.to_s}= object.to_s
+                  %a{:rel => get_curie(predicate), :href => object.to_s, :inlist => inlist}= object.to_s
               - elsif object.datatype == RDF.XMLLiteral
-                %li{:lang => get_lang(object), :datatype => get_curie(object.datatype)}<!= get_value(object)
+                %li{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_curie(object.datatype), :inlist => inlist}<!= get_value(object)
               - else
-                %li{:content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object)}= escape_entities(get_value(object))
+                %li{:property => get_curie(predicate), :content => get_content(object), :lang => get_lang(object), :datatype => get_dt_curie(object), :inlist => inlist}= escape_entities(get_value(object))
     ),
   }
 end

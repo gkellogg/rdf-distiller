@@ -89,8 +89,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer/haml_templates.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer/haml_templates.rb</span>
 </dd>
   
 </dl>
@@ -226,13 +226,13 @@ and then serialize the graph.</p>
   <span class='comment val'># Note that @rel and @resource can be used together, or @about and @typeof, but</span>
   <span class='comment val'># not both.</span>
   <span class='comment val'>#</span>
-  <span class='comment val'># Locals: subject, typeof, predicates, rel, element</span>
+  <span class='comment val'># Locals: subject, typeof, predicates, rel, element, inlist</span>
   <span class='comment val'># Yield: predicates.each</span>
   <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if element == :li
-      %li{:about =&gt; resource, :typeof =&gt; typeof}
+      %li{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         - if typeof
-          %span.type!= typeof
+          %span{:rel =&gt; 'rdf:type', :resource =&gt; typeof}.type!= typeof
         - predicates.each do |predicate|
           != yield(predicate)
     - elsif rel &amp;&amp; typeof
@@ -254,49 +254,51 @@ and then serialize the graph.</p>
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for single-valued properties</span>
-  <span class='comment val'># Locals: property, rel, object</span>
+  <span class='comment val'># Locals: predicate, object, inlist</span>
   <span class='comment val'># Yields: object</span>
   <span class='comment val'># If nil is returned, render as a leaf</span>
   <span class='comment val'># Otherwise, render result</span>
   <span class='symbol val'>:property_value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-      %h1{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
     - else
       %div.property
         %span.label
           = get_predicate_name(predicate)
         - if res = yield(object)
           != res
+        - elsif get_curie(object) == 'rdf:nil'
+          %span{:rel =&gt; get_curie(predicate), :inlist =&gt; ''}
         - elsif object.node?
-          %span{:resource =&gt; get_curie(object), :rel =&gt; rel}= get_curie(object)
+          %span{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= get_curie(object)
         - elsif object.uri?
-          %a{:href =&gt; object.to_s, :rel =&gt; rel}= object.to_s
+          %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
-          %span{:property =&gt; property, :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
+          %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
         - else
-          %span{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+          %span{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for multi-valued properties</span>
-  <span class='comment val'># Locals: property, rel, :objects</span>
+  <span class='comment val'># Locals: predicate, :objects, :inlist</span>
   <span class='comment val'># Yields: object for leaf resource rendering</span>
   <span class='symbol val'>:property_values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span>  <span class='string val'>%q(
     %div.property
       %span.label
         = get_predicate_name(predicate)
-      %ul{:rel =&gt; rel, :property =&gt; property}
+      %ul
         - objects.each do |object|
           - if res = yield(object)
             != res
           - elsif object.node?
-            %li{:resource =&gt; get_curie(object)}= get_curie(object)
+            %li{:rel =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
           - elsif object.uri?
             %li
-              %a{:href =&gt; object.to_s}= object.to_s
+              %a{:rel =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
           - elsif object.datatype == RDF.XMLLiteral
-            %li{:lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype)}&lt;!= get_value(object)
+            %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
           - else
-            %li{:content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+            %li{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 <span class='rbrace token'>}</span>
 </pre></dd>
@@ -334,20 +336,25 @@ to create human readable output.</p>
   <span class='comment val'># Output for non-leaf resources</span>
   <span class='comment val'># Note that @about may be omitted for Nodes that are not referenced</span>
   <span class='comment val'>#</span>
-  <span class='comment val'># Locals: about, typeof, predicates</span>
+  <span class='comment val'># Locals: about, typeof, predicates, :inlist</span>
   <span class='comment val'># Yield: predicates.each</span>
   <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if element == :li
+      %li{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
+        - if typeof
+          %span{:rel =&gt; 'rdf:type', :resource =&gt; typeof}.type!= typeof
+        - predicates.each do |predicate|
+          != yield(predicate)
       %li{:about =&gt; resource, :typeof =&gt; typeof}
         - predicates.each do |predicate|
           != yield(predicate)
     - elsif rel &amp;&amp; typeof
-      %div{:rel =&gt; rel}
+      %div{:rel =&gt; rel, :inlist =&gt; inlist}
         %div{:about =&gt; resource, :typeof =&gt; typeof}
           - predicates.each do |predicate|
             != yield(predicate)
     - elsif rel
-      %div{:rel =&gt; rel, :resource =&gt; resource}
+      %div{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         - predicates.each do |predicate|
           != yield(predicate)
     - else
@@ -358,18 +365,20 @@ to create human readable output.</p>
 
   <span class='comment val'># Output for single-valued properties.</span>
   <span class='comment val'># This version does not perform a recursive call, and renders all objects as leafs.</span>
-  <span class='comment val'># Locals: property, rel, object</span>
+  <span class='comment val'># Locals: predicate, object, inlist</span>
   <span class='comment val'># Yields: object</span>
   <span class='comment val'># If nil is returned, render as a leaf</span>
   <span class='comment val'># Otherwise, render result</span>
   <span class='symbol val'>:property_value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     %div.property
-      - if object.resource?
-        %span{:resource =&gt; get_curie(object), :rel =&gt; rel}
+      - if get_curie(object) == 'rdf:nil'
+        %span{:rel =&gt; get_curie(predicate), :inlist =&gt; ''}
+      - elsif object.resource?
+        %span{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}
       - elsif object.datatype == RDF.XMLLiteral
-        %span{:property =&gt; property, :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
+        %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
       - else
-        %span{:property =&gt; property, :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(object.to_s)
+        %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(object.to_s)
   )</span>
 <span class='rbrace token'>}</span>
 </pre></dd>
@@ -414,25 +423,25 @@ to create human readable output.</p>
   <span class='comment val'># Note that @rel and @resource can be used together, or @about and @typeof, but</span>
   <span class='comment val'># not both.</span>
   <span class='comment val'>#</span>
-  <span class='comment val'># Locals: subject, typeof, predicates, rel, element</span>
+  <span class='comment val'># Locals: subject, typeof, predicates, rel, element, inlist</span>
   <span class='comment val'># Yield: predicates.each</span>
   <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if element == :li
-      %li{:about =&gt; resource, :typeof =&gt; typeof}
+      %li{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         - if typeof
-          %span.type!= typeof
+          %span{:rel =&gt; 'rdf:type', :resource =&gt; typeof}.type!= typeof
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
     - elsif rel &amp;&amp; typeof
-      %td{:rel =&gt; rel}
+      %td{:rel =&gt; rel, :inlist =&gt; inlist}
         %div{:about =&gt; resource, :typeof =&gt; typeof}
           %span.type!= typeof
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
     - elsif rel
-      %td{:rel =&gt; rel, :resource =&gt; resource}
+      %td{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
@@ -446,51 +455,53 @@ to create human readable output.</p>
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for single-valued properties</span>
-  <span class='comment val'># Locals: property, rel, object</span>
+  <span class='comment val'># Locals: predicate, object, inlist</span>
   <span class='comment val'># Yields: object</span>
   <span class='comment val'># If nil is returned, render as a leaf</span>
   <span class='comment val'># Otherwise, render result</span>
   <span class='symbol val'>:property_value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-      %h1{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
     - else
       %tr.property
         %td.label
           = get_predicate_name(predicate)
         - if res = yield(object)
           != res
+        - elsif get_curie(object) == 'rdf:nil'
+          %td{:rel =&gt; get_curie(predicate), :inlist =&gt; ''}= &quot;Empty&quot;
         - elsif object.node?
-          %td{:resource =&gt; get_curie(object), :rel =&gt; rel}= get_curie(object)
+          %td{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= get_curie(object)
         - elsif object.uri?
           %td
-            %a{:href =&gt; object.to_s, :rel =&gt; rel}= object.to_s
+            %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
-          %td{:property =&gt; property, :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
+          %td{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
         - else
-          %td{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+          %td{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for multi-valued properties</span>
-  <span class='comment val'># Locals: property, rel, :objects</span>
+  <span class='comment val'># Locals: predicate, objects, inliste</span>
   <span class='comment val'># Yields: object for leaf resource rendering</span>
   <span class='symbol val'>:property_values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span>  <span class='string val'>%q(
     %tr.property
       %td.label
         = get_predicate_name(predicate)
-      %td{:rel =&gt; rel, :property =&gt; property}
+      %td
         %ul
           - objects.each do |object|
             - if res = yield(object)
               != res
             - elsif object.node?
-              %li{:resource =&gt; get_curie(object)}= get_curie(object)
+              %li{:rel =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
             - elsif object.uri?
               %li
-                %a{:href =&gt; object.to_s}= object.to_s
+                %a{:rel =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
             - elsif object.datatype == RDF.XMLLiteral
-              %li{:lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype)}&lt;!= get_value(object)
+              %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
             - else
-              %li{:content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+              %li{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 <span class='rbrace token'>}</span>
 </pre></dd>
@@ -974,7 +985,7 @@ to create human readable output.</p>
         <li class="protected ">
   <span class="summary_signature">
     
-      <a href="#render_property-instance_method" title="#render_property (instance method)">- (Object) <strong>render_property</strong>(predicate, objects, property, rel, options = {}) {|object| ... }</a>
+      <a href="#render_property-instance_method" title="#render_property (instance method)">- (Object) <strong>render_property</strong>(predicate, objects, options = {}) {|object| ... }</a>
     
 
     
@@ -1407,7 +1418,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 109</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='output identifier id'>output</span> <span class='assign token'>=</span> <span class='$stdout gvar id'>$stdout</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='super super kw'>super</span> <span class='do do kw'>do</span>
@@ -1477,7 +1488,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 77</span>
 
 <span class='def def kw'>def</span> <span class='base_uri identifier id'>base_uri</span>
   <span class='@base_uri ivar id'>@base_uri</span>
@@ -1533,7 +1544,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 74</span>
 
 <span class='def def kw'>def</span> <span class='graph identifier id'>graph</span>
   <span class='@graph ivar id'>@graph</span>
@@ -1586,7 +1597,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 67</span>
 
 <span class='def def kw'>def</span> <span class='heading_predicates identifier id'>heading_predicates</span>
   <span class='@heading_predicates ivar id'>@heading_predicates</span>
@@ -1640,7 +1651,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 63</span>
 
 <span class='def def kw'>def</span> <span class='predicate_order identifier id'>predicate_order</span>
   <span class='@predicate_order ivar id'>@predicate_order</span>
@@ -1693,7 +1704,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 58</span>
 
 <span class='def def kw'>def</span> <span class='top_classes identifier id'>top_classes</span>
   <span class='@top_classes ivar id'>@top_classes</span>
@@ -1773,16 +1784,16 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-659
-660
-661
-662
-663
-664
-665</pre>
+677
+678
+679
+680
+681
+682
+683</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 659</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 677</span>
 
 <span class='def def kw'>def</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='literal identifier id'>literal</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting content for #{literal.inspect}, which must be a literal&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='literal identifier id'>literal</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='rparen token'>)</span>
@@ -1862,24 +1873,6 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716
-717
-718
-719
-720
 721
 722
 723
@@ -1899,10 +1892,28 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 737
 738
 739
-740</pre>
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 703</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 721</span>
 
 <span class='def def kw'>def</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting CURIE for #{resource.inspect}, which must be an RDF value&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Value constant id'>Value</span><span class='rparen token'>)</span>
@@ -1914,9 +1925,9 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
   <span class='when when kw'>when</span> <span class='@uri_to_term_or_curie ivar id'>@uri_to_term_or_curie</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
     <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;get_curie(#{uri}): uri_to_term_or_curie #{@uri_to_term_or_curie[uri].inspect}&quot;</span><span class='rbrace token'>}</span>
     <span class='return return kw'>return</span> <span class='@uri_to_term_or_curie ivar id'>@uri_to_term_or_curie</span><span class='lbrack token'>[</span><span class='uri identifier id'>uri</span><span class='rbrack token'>]</span>
-  <span class='when when kw'>when</span> <span class='@base_uri ivar id'>@base_uri</span> <span class='andop op'>&amp;&amp;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='@base_uri ivar id'>@base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
-    <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;get_curie(#{uri}): base_uri (#{uri.sub(@base_uri.to_s, &quot;&quot;)})&quot;</span><span class='rbrace token'>}</span>
-    <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='@base_uri ivar id'>@base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
+  <span class='when when kw'>when</span> <span class='base_uri identifier id'>base_uri</span> <span class='andop op'>&amp;&amp;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+    <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;get_curie(#{uri}): base_uri (#{uri.sub(base_uri.to_s, &quot;&quot;)})&quot;</span><span class='rbrace token'>}</span>
+    <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
   <span class='when when kw'>when</span> <span class='@vocabulary ivar id'>@vocabulary</span> <span class='andop op'>&amp;&amp;</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='@vocabulary ivar id'>@vocabulary</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
     <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;get_curie(#{uri}): vocabulary&quot;</span><span class='rbrace token'>}</span>
     <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='@vocabulary ivar id'>@vocabulary</span><span class='comma token'>,</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span>
@@ -2010,13 +2021,13 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-639
-640
-641
-642</pre>
+657
+658
+659
+660</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 639</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 657</span>
 
 <span class='def def kw'>def</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='literal identifier id'>literal</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting datatype CURIE for #{literal.inspect}, which must be a literal&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='literal identifier id'>literal</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='rparen token'>)</span>
@@ -2090,13 +2101,13 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-649
-650
-651
-652</pre>
+667
+668
+669
+670</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 649</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 667</span>
 
 <span class='def def kw'>def</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='literal identifier id'>literal</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting datatype CURIE for #{literal.inspect}, which must be a literal&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='literal identifier id'>literal</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='rparen token'>)</span>
@@ -2170,13 +2181,13 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-693
-694
-695
-696</pre>
+711
+712
+713
+714</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 693</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 711</span>
 
 <span class='def def kw'>def</span> <span class='get_predicate_name identifier id'>get_predicate_name</span><span class='lparen token'>(</span><span class='resource identifier id'>resource</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting predicate name for #{resource.inspect}, which must be a resource&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='resource identifier id'>resource</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Resource constant id'>Resource</span><span class='rparen token'>)</span>
@@ -2250,24 +2261,24 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
       <pre class="lines">
 
 
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686</pre>
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 672</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 690</span>
 
 <span class='def def kw'>def</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='literal identifier id'>literal</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Getting value for #{literal.inspect}, which must be a literal&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='literal identifier id'>literal</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='rparen token'>)</span>
@@ -2334,7 +2345,7 @@ to ensure that whitespace in literals with newlines is properly preserved.</p></
 130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 123</span>
 
 <span class='def def kw'>def</span> <span class='haml_template identifier id'>haml_template</span>
   <span class='return return kw'>return</span> <span class='@haml_template ivar id'>@haml_template</span> <span class='if if_mod kw'>if</span> <span class='@haml_template ivar id'>@haml_template</span>
@@ -2406,26 +2417,26 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513</pre>
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 517</span>
 
 <span class='def def kw'>def</span> <span class='order_properties identifier id'>order_properties</span><span class='lparen token'>(</span><span class='properties identifier id'>properties</span><span class='rparen token'>)</span>
   <span class='comment val'># Make sorted list of properties</span>
@@ -2489,26 +2500,6 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
 480
 481
 482
@@ -2519,10 +2510,30 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 487
 488
 489
-490</pre>
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 480</span>
 
 <span class='def def kw'>def</span> <span class='order_subjects identifier id'>order_subjects</span>
   <span class='seen identifier id'>seen</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -2629,23 +2640,21 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629
-630
-631
-632</pre>
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 619</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 639</span>
 
 <span class='def def kw'>def</span> <span class='predicate identifier id'>predicate</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span><span class='rparen token'>)</span>
   <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;predicate: #{predicate.inspect}, objects: #{objects}&quot;</span><span class='rbrace token'>}</span>
@@ -2653,12 +2662,10 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
   
   <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;predicate: #{get_curie(predicate)}&quot;</span><span class='rbrace token'>}</span>
-  <span class='property identifier id'>property</span> <span class='assign token'>=</span> <span class='predicate identifier id'>predicate</span> <span class='if if_mod kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='any? fid id'>any?</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:literal?</span><span class='rparen token'>)</span>
-  <span class='rel identifier id'>rel</span>      <span class='assign token'>=</span> <span class='predicate identifier id'>predicate</span> <span class='if if_mod kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='any? fid id'>any?</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:uri?</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='any? fid id'>any?</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:node?</span><span class='rparen token'>)</span>
-  <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='rel identifier id'>rel</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span>
+  <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span>
     <span class='comment val'># Yields each object, for potential recursive definition.</span>
     <span class='comment val'># If nil is returned, a leaf is produced</span>
-    <span class='depth identifier id'>depth</span> <span class='lbrace token'>{</span><span class='subject identifier id'>subject</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='rel identifier id'>rel</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:element</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='symbol val'>:li</span> <span class='if if_mod kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='is_done? fid id'>is_done?</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='@subjects ivar id'>@subjects</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span>
+    <span class='depth identifier id'>depth</span> <span class='lbrace token'>{</span><span class='subject identifier id'>subject</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:element</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='symbol val'>:li</span> <span class='if if_mod kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='is_done? fid id'>is_done?</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='@subjects ivar id'>@subjects</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -2701,35 +2708,35 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
 449
 450
 451
 452
 453
-454</pre>
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 429</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 449</span>
 
 <span class='def def kw'>def</span> <span class='preprocess identifier id'>preprocess</span>
   <span class='comment val'># Load default profiles</span>
@@ -2813,19 +2820,19 @@ prefixes.</p>
       <pre class="lines">
 
 
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528</pre>
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 519</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 539</span>
 
 <span class='def def kw'>def</span> <span class='preprocess_statement identifier id'>preprocess_statement</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
   <span class='comment val'>#add_debug {&quot;preprocess: #{statement.inspect}&quot;}</span>
@@ -3062,7 +3069,7 @@ The rendered document is returned as a string</p></div>
 253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 243</span>
 
 <span class='def def kw'>def</span> <span class='render_document identifier id'>render_document</span><span class='lparen token'>(</span><span class='subjects identifier id'>subjects</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:haml</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='symbol val'>:doc</span>
@@ -3084,7 +3091,7 @@ The rendered document is returned as a string</p></div>
       <div class="method_details ">
   <p class="signature " id="render_property-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>render_property</strong>(predicate, objects, property, rel, options = {}) {|object| ... } <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>render_property</strong>(predicate, objects, options = {}) {|object| ... } <span class="extras">(protected)</span>
   
 
   
@@ -3098,21 +3105,23 @@ is also a subject and is rendered underneath the first referencing subject).</p>
 <p>The default Haml template for a single-valued property is:</p>
 
 <pre class="code"><span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='heading_predicates identifier id'>heading_predicates</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='literal? fid id'>literal?</span>
-  <span class='h1 identifier id'>h1</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='h1 identifier id'>h1</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 <span class='minus op'>-</span> <span class='else else kw'>else</span>
   <span class='div identifier id'>div</span><span class='dot token'>.</span><span class='property identifier id'>property</span>
     <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='label identifier id'>label</span>
       <span class='assign token'>=</span> <span class='get_predicate_name identifier id'>get_predicate_name</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
     <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
       <span class='neq op'>!=</span> <span class='res identifier id'>res</span>
+    <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'rdf:nil'</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>''</span><span class='rbrace token'>}</span>
     <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='node? fid id'>node?</span>
-      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rel identifier id'>rel</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
     <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='uri? fid id'>uri?</span>
-      <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rel identifier id'>rel</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+      <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
     <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='XMLLiteral constant id'>XMLLiteral</span>
-      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
     <span class='minus op'>-</span> <span class='else else kw'>else</span>
-      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+      <span class='span identifier id'>span</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <p>The default Haml template for a multi-valued property is:</p>
@@ -3120,19 +3129,19 @@ is also a subject and is rendered underneath the first referencing subject).</p>
 <pre class="code"><span class='div identifier id'>div</span><span class='dot token'>.</span><span class='property identifier id'>property</span>
   <span class='span identifier id'>span</span><span class='dot token'>.</span><span class='label identifier id'>label</span>
     <span class='assign token'>=</span> <span class='get_predicate_name identifier id'>get_predicate_name</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span>
-  <span class='ul identifier id'>ul</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rel identifier id'>rel</span><span class='comma token'>,</span> <span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='property identifier id'>property</span><span class='rbrace token'>}</span>
+  <span class='ul identifier id'>ul</span>
     <span class='minus op'>-</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
       <span class='minus op'>-</span> <span class='if if kw'>if</span> <span class='res identifier id'>res</span> <span class='assign token'>=</span> <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
         <span class='neq op'>!=</span> <span class='res identifier id'>res</span>
       <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='node? fid id'>node?</span>
-        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:resource</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
       <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='uri? fid id'>uri?</span>
         <span class='li identifier id'>li</span>
-          <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
+          <span class='a identifier id'>a</span><span class='lbrace token'>{</span><span class='symbol val'>:rel</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:href</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
       <span class='minus op'>-</span> <span class='elsif elsif kw'>elsif</span> <span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span> <span class='eq op'>==</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='XMLLiteral constant id'>XMLLiteral</span>
-        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='dot token'>.</span><span class='datatype identifier id'>datatype</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='lt op'>&lt;</span><span class='neq op'>!=</span> <span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span>
       <span class='minus op'>-</span> <span class='else else kw'>else</span>
-        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+        <span class='li identifier id'>li</span><span class='lbrace token'>{</span><span class='symbol val'>:property</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:content</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_content identifier id'>get_content</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:lang</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_lang identifier id'>get_lang</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_dt_curie identifier id'>get_dt_curie</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='inlist identifier id'>inlist</span><span class='rbrace token'>}</span><span class='assign token'>=</span> <span class='escape_entities identifier id'>escape_entities</span><span class='lparen token'>(</span><span class='get_value identifier id'>get_value</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre>
 
 <p>If a multi-valued property definition is not found within the template,
@@ -3176,34 +3185,6 @@ Otherwise, the :property</em>values template is used.</p></div>
   
     <li>
       
-        <span class='name'>property</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Value of @property, which should only be defined for literal objects</p></div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>rel</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Value of @rel, which should only be defined for Node or URI objects.</p></div>
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>options</span>
       
       
@@ -3221,10 +3202,6 @@ Otherwise, the :property</em>values template is used.</p></div>
 </ul>
 
   
-    
-    
-    
-    
     
     
     
@@ -3349,20 +3326,59 @@ The rendered document is returned as a string</p></div>
 422
 423
 424
-425</pre>
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 396</span>
 
-<span class='def def kw'>def</span> <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='rel identifier id'>rel</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='comment val'># If there are multiple objects, and no :properti_values is defined, call recursively with</span>
+<span class='def def kw'>def</span> <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;render_property(#{predicate}): #{objects.inspect}&quot;</span><span class='rbrace token'>}</span>
+  <span class='comment val'># If there are multiple objects, and no :property_values is defined, call recursively with</span>
   <span class='comment val'># each object</span>
   
   <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:haml</span><span class='rbrack token'>]</span>
   <span class='template identifier id'>template</span> <span class='opasgn op'>||=</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span> <span class='question op'>?</span> <span class='haml_template identifier id'>haml_template</span><span class='lbrack token'>[</span><span class='symbol val'>:property_values</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='haml_template identifier id'>haml_template</span><span class='lbrack token'>[</span><span class='symbol val'>:property_value</span><span class='rbrack token'>]</span>
+
+  <span class='comment val'># Separate out the objects which are lists and render separately</span>
+  <span class='list_objects identifier id'>list_objects</span> <span class='assign token'>=</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='o identifier id'>o</span> <span class='neq op'>!=</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='nil identifier id'>nil</span> <span class='andop op'>&amp;&amp;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='List constant id'>List</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='o identifier id'>o</span><span class='comma token'>,</span> <span class='@graph ivar id'>@graph</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='valid? fid id'>valid?</span><span class='rbrace token'>}</span>
+  <span class='unless unless kw'>unless</span> <span class='list_objects identifier id'>list_objects</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+    <span class='comment val'># Render non-list objects</span>
+    <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;properties with lists: non-lists: #{objects - list_objects} lists: #{list_objects}&quot;</span><span class='rbrace token'>}</span>
+    <span class='nl identifier id'>nl</span> <span class='assign token'>=</span> <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='objects identifier id'>objects</span> <span class='minus op'>-</span> <span class='list_objects identifier id'>list_objects</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='objects identifier id'>objects</span> <span class='eq op'>==</span> <span class='list_objects identifier id'>list_objects</span>
+    <span class='return return kw'>return</span> <span class='nl identifier id'>nl</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='plus op'>+</span> <span class='list_objects identifier id'>list_objects</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
+      <span class='comment val'># Render each list as multiple properties and set :inlist to true</span>
+      <span class='list identifier id'>list</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='List constant id'>List</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='@graph ivar id'>@graph</span><span class='rparen token'>)</span>
+      <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='st identifier id'>st</span><span class='bitor op'>|</span> <span class='subject_done identifier id'>subject_done</span><span class='lparen token'>(</span><span class='st identifier id'>st</span><span class='dot token'>.</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+      
+      <span class='add_debug identifier id'>add_debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;list: #{list.inspect} #{list.to_a}&quot;</span><span class='rbrace token'>}</span>
+      <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='list identifier id'>list</span><span class='dot token'>.</span><span class='to_a identifier id'>to_a</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:inlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
   <span class='if if kw'>if</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span> <span class='andop op'>&amp;&amp;</span> <span class='template identifier id'>template</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='comment val'># Uf there is no property_values template, render each property using property_value template</span>
     <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
-      <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='object identifier id'>object</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='property identifier id'>property</span><span class='comma token'>,</span> <span class='rel identifier id'>rel</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+      <span class='render_property identifier id'>render_property</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='lbrack token'>[</span><span class='object identifier id'>object</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
     <span class='end end kw'>end</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
   <span class='else else kw'>else</span>
     <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='WriterError constant id'>WriterError</span><span class='comma token'>,</span> <span class='string val'>&quot;Missing property template&quot;</span> <span class='if if_mod kw'>if</span> <span class='template identifier id'>template</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
@@ -3376,8 +3392,9 @@ The rendered document is returned as a string</p></div>
       <span class='symbol val'>:objects</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='objects identifier id'>objects</span><span class='comma token'>,</span>
       <span class='symbol val'>:object</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='comma token'>,</span>
       <span class='symbol val'>:predicate</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span>
-      <span class='symbol val'>:property</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='property identifier id'>property</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='property identifier id'>property</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-      <span class='symbol val'>:rel</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='rel identifier id'>rel</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='rel identifier id'>rel</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+      <span class='symbol val'>:property</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+      <span class='symbol val'>:rel</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+      <span class='symbol val'>:inlist</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
     <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
     <span class='hamlify identifier id'>hamlify</span><span class='lparen token'>(</span><span class='template identifier id'>template</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
       <span class='yield yield kw'>yield</span><span class='lparen token'>(</span><span class='object identifier id'>object</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='block_given? fid id'>block_given?</span>
@@ -3657,19 +3674,21 @@ The rendered document is returned as a string</p></div>
 326
 327
 328
-329</pre>
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 314</span>
 
 <span class='def def kw'>def</span> <span class='render_subject identifier id'>render_subject</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicates identifier id'>predicates</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='template identifier id'>template</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:haml</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='symbol val'>:subject</span>
   <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
     <span class='symbol val'>:about</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-    <span class='symbol val'>:base</span>       <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@base_uri ivar id'>@base_uri</span><span class='comma token'>,</span>
+    <span class='symbol val'>:base</span>       <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='base_uri identifier id'>base_uri</span><span class='comma token'>,</span>
     <span class='symbol val'>:element</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
     <span class='symbol val'>:predicates</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='predicates identifier id'>predicates</span><span class='comma token'>,</span>
     <span class='symbol val'>:rel</span>        <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
+    <span class='symbol val'>:inlist</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
     <span class='symbol val'>:resource</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='get_curie identifier id'>get_curie</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
     <span class='symbol val'>:subject</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='subject identifier id'>subject</span><span class='comma token'>,</span>
     <span class='symbol val'>:typeof</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span>
@@ -3705,16 +3724,16 @@ The rendered document is returned as a string</p></div>
       <pre class="lines">
 
 
-531
-532
-533
-534
-535
-536
-537</pre>
+551
+552
+553
+554
+555
+556
+557</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 531</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 551</span>
 
 <span class='def def kw'>def</span> <span class='reset identifier id'>reset</span>
   <span class='@depth ivar id'>@depth</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
@@ -3840,26 +3859,6 @@ that entry will be used as the template for this subject and it's properties.</p
       <pre class="lines">
 
 
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580
 581
 582
 583
@@ -3888,10 +3887,30 @@ that entry will be used as the template for this subject and it's properties.</p
 606
 607
 608
-609</pre>
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 561</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 581</span>
 
 <span class='def def kw'>def</span> <span class='subject identifier id'>subject</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='return return kw'>return</span> <span class='if if_mod kw'>if</span> <span class='is_done? fid id'>is_done?</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='rparen token'>)</span>
@@ -4008,7 +4027,7 @@ that entry will be used as the template for this subject and it's properties.</p
 201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 165</span>
 
 <span class='def def kw'>def</span> <span class='write_epilogue identifier id'>write_epilogue</span>
   <span class='@base_uri ivar id'>@base_uri</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
@@ -4040,7 +4059,7 @@ that entry will be used as the template for this subject and it's properties.</p
   <span class='comment val'># Generate document</span>
   <span class='doc identifier id'>doc</span> <span class='assign token'>=</span> <span class='render_document identifier id'>render_document</span><span class='lparen token'>(</span><span class='subjects identifier id'>subjects</span><span class='comma token'>,</span>
     <span class='symbol val'>:lang</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@lang ivar id'>@lang</span><span class='comma token'>,</span>
-    <span class='symbol val'>:base</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@base_uri ivar id'>@base_uri</span><span class='comma token'>,</span>
+    <span class='symbol val'>:base</span>     <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='base_uri identifier id'>base_uri</span><span class='comma token'>,</span>
     <span class='symbol val'>:title</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='doc_title identifier id'>doc_title</span><span class='comma token'>,</span>
     <span class='symbol val'>:prefix</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='prefix identifier id'>prefix</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
     <span class='subject identifier id'>subject</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='rparen token'>)</span>
@@ -4094,7 +4113,7 @@ that entry will be used as the template for this subject and it's properties.</p
 139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 137</span>
 
 <span class='def def kw'>def</span> <span class='write_graph identifier id'>write_graph</span><span class='lparen token'>(</span><span class='graph identifier id'>graph</span><span class='rparen token'>)</span>
   <span class='@graph ivar id'>@graph</span> <span class='assign token'>=</span> <span class='graph identifier id'>graph</span>
@@ -4146,7 +4165,7 @@ that entry will be used as the template for this subject and it's properties.</p
 147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 145</span>
 
 <span class='def def kw'>def</span> <span class='write_statement identifier id'>write_statement</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
   <span class='@graph ivar id'>@graph</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
@@ -4240,7 +4259,7 @@ that entry will be used as the template for this subject and it's properties.</p
 159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-bc13c249fdb5/lib/rdf/rdfa/writer.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-9450c7621b93/lib/rdf/rdfa/writer.rb', line 157</span>
 
 <span class='def def kw'>def</span> <span class='write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span>
   <span class='@graph ivar id'>@graph</span><span class='dot token'>.</span><span class='insert identifier id'>insert</span><span class='lparen token'>(</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -4256,7 +4275,7 @@ that entry will be used as the template for this subject and it's properties.</p
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:58 2011 by 
+  Generated on Wed Sep 28 18:35:27 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

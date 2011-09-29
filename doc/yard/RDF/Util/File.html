@@ -72,7 +72,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-f7bf3fbb7bf9/lib/rdf/util/file.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/gems/rdf-0.3.4/lib/rdf/util/file.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -80,7 +80,9 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>Wrapper for Kernel.open. Allows implementations to override to get
-more suffisticated behavior for HTTP resources</p>
+more suffisticated behavior for HTTP resources (e.g., Accept header).</p>
+
+<p>Also supports the file: scheme for access to local files.</p>
 
 <p>Classes include this module when they represent some form of a file
 as a base resource, for instance an HTTP resource representing the
@@ -228,12 +230,12 @@ and interfaces.</p>
       <pre class="lines">
 
 
-17
-18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-f7bf3fbb7bf9/lib/rdf/util/file.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-0.3.4/lib/rdf/util/file.rb', line 19</span>
 
 <span class='def def kw'>def</span> <span class='content_type identifier id'>content_type</span>
   <span class='@content_type ivar id'>@content_type</span>
@@ -352,15 +354,17 @@ and interfaces.</p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-f7bf3fbb7bf9/lib/rdf/util/file.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-0.3.4/lib/rdf/util/file.rb', line 29</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='filename_or_url identifier id'>filename_or_url</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='Kernel constant id'>Kernel</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='filename_or_url identifier id'>filename_or_url</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='filename_or_url identifier id'>filename_or_url</span> <span class='assign token'>=</span> <span class='$1 nth_ref id'>$1</span> <span class='if if_mod kw'>if</span> <span class='filename_or_url identifier id'>filename_or_url</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/^file:(.*)$/</span><span class='rparen token'>)</span>
+  <span class='f identifier id'>f</span> <span class='assign token'>=</span> <span class='Kernel constant id'>Kernel</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='filename_or_url identifier id'>filename_or_url</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -373,7 +377,7 @@ and interfaces.</p>
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:46 2011 by 
+  Generated on Wed Sep 28 18:35:55 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

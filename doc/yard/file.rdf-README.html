@@ -85,48 +85,112 @@ not modify any of Ruby's core classes or standard library.</li>
 use of any one part of the library without needing to load up the rest.</li>
 <li>Compatible with Ruby 1.8.7+, Ruby 1.9.x, and JRuby 1.4/1.5.</li>
 <li>Compatible with older Ruby versions with the help of the <a href="http://rubygems.org/gems/backports">Backports</a> gem.</li>
+<li>Performs auto-detection of input to select appropriate Reader class if one
+cannot be determined from file characteristics.</li>
 </ul>
 
 
 <h2>Tutorials</h2>
 
 <ul>
-<li>[Getting data from the Semantic Web using Ruby and RDF.rb]
-(http://semanticweb.org/wiki/Getting<em>data</em>from<em>the</em>Semantic<em>Web</em>%28Ruby%29)</li>
-<li>[Using RDF.rb and Spira to process RDF data from the British Ordnance Survey]
-(http://ultramagnus.org/?p=85)</li>
-<li>[Getting started with RDF and SPARQL using 4store and RDF.rb]
-(http://www.jenitennison.com/blog/node/152)</li>
+<li><a href="http://semanticweb.org/wiki/Getting_data_from_the_Semantic_Web_%28Ruby%29">Getting data from the Semantic Web using Ruby and RDF.rb</a></li>
+<li><a href="http://stephenpope.co.uk/?p=85">Using RDF.rb and Spira to process RDF data from the British Ordnance Survey</a></li>
+<li><a href="http://www.jenitennison.com/blog/node/152">Getting started with RDF and SPARQL using 4store and RDF.rb</a></li>
+</ul>
+
+
+<h2>Command Line</h2>
+
+<p>When installed, RDF.rb includes a <code>rdf</code> shell script which acts as a wrapper to perform a number of different
+operations on RDF files using available readers and writers.</p>
+
+<ul>
+<li><code>serialize</code>: Parse an RDF input and re-serializing to N-Triples or another available format using <code>--output-format</code> option.</li>
+<li><code>count</code>: Parse and RDF input and count the number of statements.</li>
+<li><code>subjects</code>: Returns unique subjects from parsed input.</li>
+<li><code>objects</code>: Returns unique objects from parsed input.</li>
+<li><code>predicates</code>: Returns unique objects from parsed input.</li>
 </ul>
 
 
 <h2>Examples</h2>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf'</span>
-
 <span class='include identifier id'>include</span> <span class='RDF constant id'>RDF</span>
 </pre>
 
 <h3>Writing RDF data using the N-Triples format</h3>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
-
-<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;hello.nt&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='writer identifier id'>writer</span><span class='bitor op'>|</span>
-  <span class='writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='graph identifier id'>graph</span><span class='bitor op'>|</span>
-    <span class='graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:hello</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello, world!&quot;</span><span class='rbrack token'>]</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:hello</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello, world!&quot;</span><span class='rbrack token'>]</span>
+<span class='graph identifier id'>graph</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span>
 </pre>
+
+<p>or</p>
+
+<p>  RDF::Writer.open("hello.nt") { |writer| writer &lt;&lt; graph }</p>
 
 <h3>Reading RDF data in the N-Triples format</h3>
 
 <pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
+<span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nt&quot;</span><span class='rparen token'>)</span>
+</pre>
 
-<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nt&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
+<p>or</p>
+
+<pre class="code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nt&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
   <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
+</pre>
+
+<h3>Reading RDF data in other formats</h3>
+
+<p><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">RDF::Reader.open</a></span> and <span class='object_link'><a href="RDF/Repository.html#load-class_method" title="RDF::Repository.load (method)">RDF::Repository.load</a></span> use a number of mechanisms to determine the appropriate reader
+to use when loading a file. The specific format to use can be forced using, e.g. <code>:format =&gt; :ntriples</code>
+option where the specific format symbol is determined by the available readers. Both also use
+MimeType or file extension, where available.</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'linkeddata'</span>
+
+<span class='graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.nq&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:nquads</span><span class='rparen token'>)</span>
+</pre>
+
+<p>A specific sub-type of Reader can also be invoked directly:</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/nquads'</span>
+
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='NQuads constant id'>NQuads</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nq&quot;</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='reader identifier id'>reader</span><span class='bitor op'>|</span>
+  <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>Reader/Writer implementations may override <span class='object_link'><a href="RDF/Format.html#detect-class_method" title="RDF::Format.detect (method)">RDF::Format.detect</a></span>, which takes a small sample if input
+and return a boolean indicating if it matches that specific format. In the case that a format cannot
+be detected from filename or other options, or that more than one format is identified,
+<span class='object_link'><a href="RDF/Format.html#for-class_method" title="RDF::Format.for (method)">RDF::Format.for</a></span> will query each loaded format by invoking it's <code>detect</code> method, and the first successful
+match will be used to read the input.</p>
+
+<h3>Writing RDF data using other formats</h3>
+
+<p><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">RDF::Writer.open</a></span>, <span class='object_link'><a href="RDF/Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">RDF::Enumerable#dump</a></span>, <span class='object_link'><a href="RDF/Writer.html#dump-class_method" title="RDF::Writer.dump (method)">RDF::Writer.dump</a></span> take similar options to <span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">RDF::Reader.open</a></span> to determine the
+appropriate writer to use.</p>
+
+<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'linkeddata'</span>
+
+<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;hello.nq&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:format</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:nquads</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='repo identifier id'>repo</span><span class='bitor op'>|</span>
+    <span class='repo identifier id'>repo</span> <span class='lshft op'>&lt;&lt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:hello</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DC constant id'>DC</span><span class='dot token'>.</span><span class='title identifier id'>title</span><span class='comma token'>,</span> <span class='string val'>&quot;Hello, world!&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;context&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+
+<p>A specific sub-type of Writer can also be invoked directly:</p>
+
+<pre class="code"><span class='graph identifier id'>graph</span><span class='dot token'>.</span><span class='dump identifier id'>dump</span><span class='lparen token'>(</span><span class='symbol val'>:nq</span><span class='rparen token'>)</span>
 </pre>
 
 <h3>Querying RDF data using basic graph patterns (BGPs)</h3>
@@ -146,6 +210,8 @@ use of any one part of the library without needing to load up the rest.</li>
   <span class='puts identifier id'>puts</span> <span class='dstring node'>&quot;name=#{solution.name} email=#{solution.email}&quot;</span>
 <span class='end end kw'>end</span>
 </pre>
+
+<p>A separate <a href="http://rubydoc.info/github/gkellogg/sparql/frames">SPARQL</a> gem builds on basic BGP support to provide full support for <a href="http://www.w3.org/TR/rdf-sparql-query/">SPARQL 1.0</a> queries.</p>
 
 <h3>Using pre-defined RDF vocabularies</h3>
 
@@ -181,10 +247,23 @@ use of any one part of the library without needing to load up the rest.</li>
 <li><span class='object_link'><a href="RDF/Term.html" title="RDF::Term (module)">RDF::Term</a></span>
 
 <ul>
-<li><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Literal/Boolean.html" title="RDF::Literal::Boolean (class)">RDF::Literal::Boolean</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Date.html" title="RDF::Literal::Date (class)">RDF::Literal::Date</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/DateTime.html" title="RDF::Literal::DateTime (class)">RDF::Literal::DateTime</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Decimal.html" title="RDF::Literal::Decimal (class)">RDF::Literal::Decimal</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Double.html" title="RDF::Literal::Double (class)">RDF::Literal::Double</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Integer.html" title="RDF::Literal::Integer (class)">RDF::Literal::Integer</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Time.html" title="RDF::Literal::Time (class)">RDF::Literal::Time</a></span></li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-xsd/master/frames">RDF::XSD</a> (plugin)</li>
+</ul>
+</li>
 <li><span class='object_link'><a href="RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>
 
 <ul>
+<li><span class='object_link'><a href="RDF/List.html" title="RDF::List (class)">RDF::List</a></span></li>
 <li><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">RDF::Node</a></span></li>
 <li><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></li>
 <li><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></li>
@@ -211,17 +290,26 @@ use of any one part of the library without needing to load up the rest.</li>
 
 <h3>RDF Serialization Formats</h3>
 
+<p>The following is a partial list of RDF formats implemented either natively, or through the inclusion of
+other gems:</p>
+
 <ul>
 <li><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">RDF::NTriples</a></span></li>
+<li><span class='object_link'><a href="RDF/NQuads.html" title="RDF::NQuads (module)">RDF::NQuads</a></span></li>
+<li><a href="http://rubydoc.info/github/gkellogg/json-ld/frames">JSON::LD</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/json/">RDF::JSON</a> (plugin)</li>
-<li><a href="http://rdf.rubyforge.org/n3/">RDF::N3</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-microdata/frames">RDF::Microdata</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-n3/master/frames">RDF::N3</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/raptor/">RDF::Raptor::RDFXML</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/raptor/">RDF::Raptor::Turtle</a> (plugin)</li>
-<li><a href="http://rdf.rubyforge.org/rdfa/">RDF::RDFa</a> (plugin)</li>
-<li><a href="http://rdf.rubyforge.org/rdfxml/">RDF::RDFXML</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-rdfa/master/frames">RDF::RDFa</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-rdfxml/master/frames">RDF::RDFXML</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/trix/">RDF::Trix</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/gkellogg/rdf-turtle/master/frames">RDF::Turtle</a> (plugin)</li>
 </ul>
 
+
+<p>The meta-gem <a href="http://rubydoc.info/github/datagraph/linkeddata/master/frames">LinkedData</a> includes many of these gems.</p>
 
 <h3>RDF Storage</h3>
 
@@ -241,6 +329,8 @@ use of any one part of the library without needing to load up the rest.</li>
 </ul>
 </li>
 <li><span class='object_link'><a href="RDF/Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></li>
+<li><a href="http://rubydoc.info/github/emk/rdf-agraph/master/frames">RDF::AllegroGraph</a> (plugin)</li>
+<li><a href="http://rubydoc.info/github/pius/rdf-mongo/master/frames">RDF::Mongo</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/do/">RDF::DataObjects</a> (plugin)</li>
 <li><a href="http://rdf.rubyforge.org/sesame/">RDF::Sesame</a> (plugin)</li>
 </ul>
@@ -258,6 +348,7 @@ use of any one part of the library without needing to load up the rest.</li>
 <li><span class='object_link'><a href="RDF/Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></li>
 </ul>
 </li>
+<li><a href="http://rubydoc.info/github/gkellogg/sparql/frames">SPARQL</a> (plugin)</li>
 </ul>
 
 
@@ -384,7 +475,7 @@ explicit <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/00
 see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p></div></div>
     
     <div id="footer">
-  Generated on Mon Sep  5 15:59:43 2011 by 
+  Generated on Wed Sep 28 18:34:41 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

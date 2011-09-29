@@ -108,6 +108,7 @@
           
         </dt>
         <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:identifier</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;distiller&quot;</span><span class='comma token'>,</span> 
   <span class='comment val'># Document</span>
   <span class='comment val'># Locals: language, title, profile, prefix, base, subjects</span>
   <span class='comment val'># Yield: subjects.each</span>
@@ -141,25 +142,25 @@
   <span class='comment val'># Note that @rel and @resource can be used together, or @about and @typeof, but</span>
   <span class='comment val'># not both.</span>
   <span class='comment val'>#</span>
-  <span class='comment val'># Locals: subject, typeof, predicates, rel, element</span>
+  <span class='comment val'># Locals: subject, typeof, predicates, rel, element, inlist</span>
   <span class='comment val'># Yield: predicates.each</span>
   <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if element == :li
-      %li{:about =&gt; resource, :typeof =&gt; typeof}
+      %li{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         - if typeof
-          %span.type!= typeof
+          %span{:rel =&gt; 'rdf:type', :resource =&gt; typeof}.type!= typeof
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
     - elsif rel &amp;&amp; typeof
-      %td{:rel =&gt; rel}
+      %td{:rel =&gt; rel, :inlist =&gt; inlist}
         %div{:about =&gt; resource, :typeof =&gt; typeof}
           %span.type!= typeof
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
     - elsif rel
-      %td{:rel =&gt; rel, :resource =&gt; resource}
+      %td{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
@@ -173,51 +174,53 @@
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for single-valued properties</span>
-  <span class='comment val'># Locals: property, rel, object</span>
+  <span class='comment val'># Locals: predicate, object, inlist</span>
   <span class='comment val'># Yields: object</span>
   <span class='comment val'># If nil is returned, render as a leaf</span>
   <span class='comment val'># Otherwise, render result</span>
   <span class='symbol val'>:property_value</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-      %h1{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
     - else
       %tr.property
         %td.label
           = get_predicate_name(predicate)
         - if res = yield(object)
           != res
+        - elsif get_curie(object) == 'rdf:nil'
+          %td{:rel =&gt; get_curie(predicate), :inlist =&gt; ''}= &quot;Empty&quot;
         - elsif object.node?
-          %td{:resource =&gt; get_curie(object), :rel =&gt; rel}= get_curie(object)
+          %td{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= get_curie(object)
         - elsif object.uri?
           %td
-            %a{:href =&gt; object.to_s, :rel =&gt; rel}= object.to_s
+            %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
-          %td{:property =&gt; property, :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}&lt;!= get_value(object)
+          %td{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
         - else
-          %td{:property =&gt; property, :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+          %td{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 
   <span class='comment val'># Output for multi-valued properties</span>
-  <span class='comment val'># Locals: property, rel, :objects</span>
+  <span class='comment val'># Locals: predicate, objects, inliste</span>
   <span class='comment val'># Yields: object for leaf resource rendering</span>
   <span class='symbol val'>:property_values</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span>  <span class='string val'>%q(
     %tr.property
       %td.label
         = get_predicate_name(predicate)
-      %td{:rel =&gt; rel, :property =&gt; property}
+      %td
         %ul
           - objects.each do |object|
             - if res = yield(object)
               != res
             - elsif object.node?
-              %li{:resource =&gt; get_curie(object)}= get_curie(object)
+              %li{:rel =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
             - elsif object.uri?
               %li
-                %a{:href =&gt; object.to_s}= object.to_s
+                %a{:rel =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
             - elsif object.datatype == RDF.XMLLiteral
-              %li{:lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype)}&lt;!= get_value(object)
+              %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
             - else
-              %li{:content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object)}= escape_entities(get_value(object))
+              %li{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
   )</span><span class='comma token'>,</span>
 <span class='rbrace token'>}</span>
 </pre></dd>
@@ -234,7 +237,7 @@
 </div>
     
     <div id="footer">
-  Generated on Mon Sep  5 16:00:58 2011 by 
+  Generated on Wed Sep 28 18:36:00 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
