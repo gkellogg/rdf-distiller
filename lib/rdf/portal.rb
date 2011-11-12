@@ -23,12 +23,12 @@ module RDF
 
       get '/' do
         cache_control :public, :must_revalidate, :max_age => 60
-        erubis :index, :locals => {:title => "Ruby Linked Data Service"}
+        erb :index, :locals => {:title => "Ruby Linked Data Service"}
       end
 
       get '/about' do
         cache_control :public, :must_revalidate, :max_age => 60
-        erubis :about, :locals => {:title => "About the Ruby Linked Data Service"}
+        erb :about, :locals => {:title => "About the Ruby Linked Data Service"}
       end
 
       get '/distiller' do
@@ -51,7 +51,7 @@ module RDF
           body content
         else
           @output = content unless content == @error
-          erubis :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
+          erb :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
         end
       end
       
