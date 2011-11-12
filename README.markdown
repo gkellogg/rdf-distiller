@@ -100,6 +100,7 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [linkeddata]:     {file:linkeddata-README}
 [Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
+[N-Quads]:        http://en.wikipedia.org/wiki/N-Quads
 [Notation3]:      http://en.wikipedia.org/wiki/Notation3
 [RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification
 [RDF/XML]:        http://www.w3.org/TR/rdf-syntax-grammar/

@@ -82,9 +82,16 @@ using available RDF Writers (see <a href="http://rubygems.org/gems/linkeddata">L
 
 <h3>Executing a SPARQL query against a repository</h3>
 
-<pre class="code"><span class='queryable identifier id'>queryable</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://usefulinc.com/ns/doap&quot;</span><span class='rparen token'>)</span>
+<pre class="code"><span class='queryable identifier id'>queryable</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.ttl&quot;</span><span class='rparen token'>)</span>
 <span class='sse identifier id'>sse</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
 <span class='sse identifier id'>sse</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='queryable identifier id'>queryable</span><span class='rparen token'>)</span>
+</pre>
+
+<h3>Rendering solutions as JSON, XML or HTML</h3>
+
+<pre class="code"><span class='queryable identifier id'>queryable</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.ttl&quot;</span><span class='rparen token'>)</span>
+<span class='solutions identifier id'>solutions</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='dot token'>.</span><span class='execute identifier id'>execute</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='comma token'>,</span> <span class='queryable identifier id'>queryable</span><span class='rparen token'>)</span>
+<span class='solutions identifier id'>solutions</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span> <span class='comment val'>#to_xml #to_html</span>
 </pre>
 
 <h3>Parsing a SPARQL query string to SSE</h3>
@@ -95,16 +102,16 @@ using available RDF Writers (see <a href="http://rubygems.org/gems/linkeddata">L
 
 <h3>Command line processing</h3>
 
-<pre class="code"><span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/usefulinc.com/n</span><span class='s identifier id'>s</span><span class='div op'>/</span><span class='doap identifier id'>doap</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
-<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * FROM &lt;http://usefulinc.com/ns/doap&gt; WHERE { ?s ?p ?o }&quot;</span>
+<pre class="code"><span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='doap identifier id'>doap</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='from_default identifier id'>from_default</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * FROM &lt;etc/doap.ttl&gt; WHERE { ?s ?p ?o }&quot;</span>
 
 <span class='comment val'># Generate SPARQL Algebra Expression (SSE) format</span>
-<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='to identifier id'>to</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='to identifier id'>to</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
 <span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='to identifier id'>to</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span>
 
 <span class='comment val'># Run query using SSE input</span>
-<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/usefulinc.com/n</span><span class='s identifier id'>s</span><span class='div op'>/</span><span class='doap identifier id'>doap</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rq identifier id'>rq</span>
-<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;(dataset (&lt;http://usefulinc.com/ns/doap&gt;) (bgp (triple ?s ?p ?o))))&quot;</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='default identifier id'>default</span><span class='minus op'>-</span><span class='graph identifier id'>graph</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='doap identifier id'>doap</span><span class='dot token'>.</span><span class='ttl identifier id'>ttl</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='etc identifier id'>etc</span><span class='div op'>/</span><span class='input identifier id'>input</span><span class='dot token'>.</span><span class='sse identifier id'>sse</span>
+<span class='sparql identifier id'>sparql</span> <span class='minus op'>-</span><span class='minus op'>-</span><span class='sse identifier id'>sse</span> <span class='minus op'>-</span><span class='e identifier id'>e</span> <span class='string val'>&quot;(dataset (&lt;etc/doap.ttl&gt;) (bgp (triple ?s ?p ?o))))&quot;</span>
 </pre>
 
 <h2>Documentation</h2>
@@ -174,9 +181,8 @@ To install the latest official release of the <code>SPARQL</code> gem, do:</p>
 <h2>Authors</h2>
 
 <ul>
-<li><a href="http://github.com/bendiken">Arto Bendiken</a> - <a href="http://ar.to/">http://ar.to/</a></li>
-<li><a href="http://github.com/bhuga">Ben Lavender</a> - <a href="http://bhuga.net/">http://bhuga.net/</a></li>
 <li><a href="http://github.com/gkellogg">Gregg Kellogg</a> - <a href="http://kellogg-assoc.com/">http://kellogg-assoc.com/</a></li>
+<li><a href="http://github.com/bendiken">Arto Bendiken</a> - <a href="http://ar.to/">http://ar.to/</a></li>
 <li><a href="http://github.com/pius">Pius Uzamere</a> - <a href="http://pius.me/">http://pius.me/</a></li>
 </ul>
 
@@ -204,9 +210,9 @@ explicit <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/00
 see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p></div></div>
     
     <div id="footer">
-  Generated on Wed Sep 28 18:34:41 2011 by 
+  Generated on Fri Nov 11 16:14:08 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.8.7).
+  0.7.3 (ruby-1.8.7).
 </div>
 
   </body>

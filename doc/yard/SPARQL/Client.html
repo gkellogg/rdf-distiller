@@ -87,8 +87,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client/version.rb,<br /> vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client/repository.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client/version.rb,<br /> vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client/repository.rb</span>
 </dd>
   
 </dl>
@@ -102,6 +102,7 @@
 </div>
 <div class="tags">
   
+
   <h3>See Also:</h3>
   <ul class="see">
     
@@ -137,6 +138,7 @@
 </div>
 <div class="tags">
   
+
 </div>
         </dt>
         <dd><pre class="code"><span class='string val'>'text/boolean'</span><span class='dot token'>.</span><span class='freeze identifier id'>freeze</span>
@@ -651,13 +653,35 @@
   
 </ul>
 
+  
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:headers</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+    
+    
+
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-32
 33
 34
 35
@@ -668,15 +692,22 @@
 40
 41
 42
-43</pre>
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 33</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='@url ivar id'>@url</span><span class='comma token'>,</span> <span class='@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='options identifier id'>options</span>
   <span class='comment val'>#@headers = {'Accept' =&gt; &quot;#{RESULT_JSON}, #{RESULT_XML}, text/plain&quot;}</span>
-  <span class='@headers ivar id'>@headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='RESULT_JSON constant id'>RESULT_JSON</span><span class='comma token'>,</span> <span class='RESULT_XML constant id'>RESULT_XML</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Format constant id'>Format</span><span class='dot token'>.</span><span class='content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='collect identifier id'>collect</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='k identifier id'>k</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span> <span class='rbrace token'>}</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='@headers ivar id'>@headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+    <span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='RESULT_JSON constant id'>RESULT_JSON</span><span class='comma token'>,</span> <span class='RESULT_XML constant id'>RESULT_XML</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Format constant id'>Format</span><span class='dot token'>.</span><span class='content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_s</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span> <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='@http ivar id'>@http</span> <span class='assign token'>=</span> <span class='http_klass identifier id'>http_klass</span><span class='lparen token'>(</span><span class='@url ivar id'>@url</span><span class='dot token'>.</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span>
 
   <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
     <span class='case case kw'>case</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span>
@@ -714,6 +745,7 @@
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -725,7 +757,7 @@
 29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 27</span>
 
 <span class='def def kw'>def</span> <span class='options identifier id'>options</span>
   <span class='@options ivar id'>@options</span>
@@ -754,6 +786,7 @@
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
@@ -765,7 +798,7 @@
 28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 26</span>
 
 <span class='def def kw'>def</span> <span class='url identifier id'>url</span>
   <span class='@url ivar id'>@url</span>
@@ -812,6 +845,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -839,12 +873,6 @@
       <pre class="lines">
 
 
-154
-155
-156
-157
-158
-159
 160
 161
 162
@@ -854,10 +882,16 @@
 166
 167
 168
-169</pre>
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 160</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='parse_json_bindings identifier id'>parse_json_bindings</span><span class='lparen token'>(</span><span class='json identifier id'>json</span><span class='comma token'>,</span> <span class='nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='require identifier id'>require</span> <span class='string val'>'json'</span> <span class='unless unless_mod kw'>unless</span> <span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='JSON constant id'>JSON</span><span class='rparen token'>)</span>
@@ -910,6 +944,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -937,22 +972,22 @@
       <pre class="lines">
 
 
-175
-176
-177
-178
-179
-180
 181
 182
 183
 184
 185
 186
-187</pre>
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 181</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='parse_json_value identifier id'>parse_json_value</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='case case kw'>case</span> <span class='value identifier id'>value</span><span class='lbrack token'>[</span><span class='string val'>'type'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
@@ -995,13 +1030,14 @@
         <span class='name'>xml</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>REXML::Element</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt><span class='object_link'><a href="../REXML/Element.html" title="REXML::Element (class)">REXML::Element</a></span></tt>)</span>
       
       
       
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1029,12 +1065,6 @@
       <pre class="lines">
 
 
-193
-194
-195
-196
-197
-198
 199
 200
 201
@@ -1048,10 +1078,16 @@
 209
 210
 211
-212</pre>
+212
+213
+214
+215
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 199</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='parse_xml_bindings identifier id'>parse_xml_bindings</span><span class='lparen token'>(</span><span class='xml identifier id'>xml</span><span class='comma token'>,</span> <span class='nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='force_encoding identifier id'>force_encoding</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='UTF_8 constant id'>UTF_8</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='xml identifier id'>xml</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:force_encoding</span><span class='rparen token'>)</span>
@@ -1101,13 +1137,14 @@
         <span class='name'>value</span>
       
       
-        <span class='type'>(<tt>REXML::Element</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../REXML/Element.html" title="REXML::Element (class)">REXML::Element</a></span></tt>)</span>
       
       
       
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1135,12 +1172,6 @@
       <pre class="lines">
 
 
-218
-219
-220
-221
-222
-223
 224
 225
 226
@@ -1148,10 +1179,16 @@
 228
 229
 230
-231</pre>
+231
+232
+233
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 224</span>
 
 <span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='parse_xml_value identifier id'>parse_xml_value</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='comma token'>,</span> <span class='nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='case case kw'>case</span> <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
@@ -1193,7 +1230,8 @@
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -1213,12 +1251,12 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 53</span>
 
 <span class='def def kw'>def</span> <span class='ask identifier id'>ask</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:ask</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -1258,6 +1296,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1278,12 +1317,12 @@
       <pre class="lines">
 
 
-76
-77
-78</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 80</span>
 
 <span class='def def kw'>def</span> <span class='construct identifier id'>construct</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:construct</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -1323,6 +1362,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1343,12 +1383,12 @@
       <pre class="lines">
 
 
-67
-68
-69</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 71</span>
 
 <span class='def def kw'>def</span> <span class='describe identifier id'>describe</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:describe</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -1401,6 +1441,7 @@
     </li>
   
 </ul>
+
 <h3>Yields:</h3>
 <ul class="yield">
   
@@ -1449,10 +1490,6 @@
       <pre class="lines">
 
 
-288
-289
-290
-291
 292
 293
 294
@@ -1461,22 +1498,26 @@
 297
 298
 299
-300</pre>
+300
+301
+302
+303
+304</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 292</span>
 
 <span class='def def kw'>def</span> <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='dup identifier id'>dup</span>
   <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='query_values identifier id'>query_values</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:query</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='query identifier id'>query</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span>
 
-  <span class='http_klass identifier id'>http_klass</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='start identifier id'>start</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='port identifier id'>port</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='http identifier id'>http</span><span class='bitor op'>|</span>
-    <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='http identifier id'>http</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='path identifier id'>path</span> <span class='plus op'>+</span> <span class='dstring node'>&quot;?#{url.query}&quot;</span><span class='comma token'>,</span> <span class='@headers ivar id'>@headers</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
-      <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span>
-      <span class='response identifier id'>response</span>
-    <span class='end end kw'>end</span>
+  <span class='request identifier id'>request</span> <span class='assign token'>=</span> <span class='Net constant id'>Net</span><span class='colon2 op'>::</span><span class='HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='Get constant id'>Get</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='request_uri identifier id'>request_uri</span><span class='comma token'>,</span> <span class='@headers ivar id'>@headers</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='headers identifier id'>headers</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='basic_auth identifier id'>basic_auth</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='comma token'>,</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='password identifier id'>password</span> <span class='if if_mod kw'>if</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='user identifier id'>user</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='url identifier id'>url</span><span class='dot token'>.</span><span class='user identifier id'>user</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
+  <span class='response identifier id'>response</span> <span class='assign token'>=</span> <span class='@http ivar id'>@http</span><span class='dot token'>.</span><span class='request identifier id'>request</span> <span class='url identifier id'>url</span><span class='comma token'>,</span> <span class='request identifier id'>request</span>
+  <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
+  <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+  <span class='response identifier id'>response</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -1499,7 +1540,8 @@
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -1519,12 +1561,6 @@
       <pre class="lines">
 
 
-265
-266
-267
-268
-269
-270
 271
 272
 273
@@ -1532,10 +1568,14 @@
 275
 276
 277
-278</pre>
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 271</span>
 
 <span class='def def kw'>def</span> <span class='http_klass identifier id'>http_klass</span><span class='lparen token'>(</span><span class='scheme identifier id'>scheme</span><span class='rparen token'>)</span>
   <span class='proxy_uri identifier id'>proxy_uri</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
@@ -1545,11 +1585,9 @@
     <span class='when when kw'>when</span> <span class='string val'>&quot;https&quot;</span>
       <span class='proxy_uri identifier id'>proxy_uri</span> <span class='assign token'>=</span> <span class='URI constant id'>URI</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'https_proxy'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'https_proxy'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
   <span class='end end kw'>end</span>
-  <span class='return return kw'>return</span> <span class='Net constant id'>Net</span><span class='colon2 op'>::</span><span class='HTTP constant id'>HTTP</span> <span class='if if_mod kw'>if</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> 
-
-  <span class='proxy_host identifier id'>proxy_host</span><span class='comma token'>,</span> <span class='proxy_port identifier id'>proxy_port</span> <span class='assign token'>=</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='dot token'>.</span><span class='host identifier id'>host</span><span class='comma token'>,</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='dot token'>.</span><span class='port identifier id'>port</span>
-  <span class='proxy_user identifier id'>proxy_user</span><span class='comma token'>,</span> <span class='proxy_pass identifier id'>proxy_pass</span> <span class='assign token'>=</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='dot token'>.</span><span class='userinfo identifier id'>userinfo</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/:/</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='dot token'>.</span><span class='userinfo identifier id'>userinfo</span>
-  <span class='Net constant id'>Net</span><span class='colon2 op'>::</span><span class='HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='Proxy constant id'>Proxy</span><span class='lparen token'>(</span><span class='proxy_host identifier id'>proxy_host</span><span class='comma token'>,</span> <span class='proxy_port identifier id'>proxy_port</span><span class='comma token'>,</span> <span class='proxy_user identifier id'>proxy_user</span><span class='comma token'>,</span> <span class='proxy_pass identifier id'>proxy_pass</span><span class='rparen token'>)</span>
+  <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='Net constant id'>Net</span><span class='colon2 op'>::</span><span class='HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='Persistent constant id'>Persistent</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='proxy_uri identifier id'>proxy_uri</span><span class='rparen token'>)</span>
+  <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='keep_alive identifier id'>keep_alive</span> <span class='assign token'>=</span> <span class='integer val'>120</span>  <span class='comment val'># increase to 2 minutes</span>
+  <span class='klass identifier id'>klass</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1571,7 +1609,8 @@
   </div>
 </div>
 <div class="tags">
-  <h3>Returns:</h3>
+  
+<h3>Returns:</h3>
 <ul class="return">
   
     <li>
@@ -1591,12 +1630,12 @@
       <pre class="lines">
 
 
-256
-257
-258</pre>
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 262</span>
 
 <span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
   <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;#&lt;%s:%#0x(%s)&gt;&quot;</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='__id__ identifier id'>__id__</span><span class='comma token'>,</span> <span class='url identifier id'>url</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
@@ -1622,18 +1661,19 @@
 </div>
 <div class="tags">
   
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-248
-249
-250</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 254</span>
 
 <span class='def def kw'>def</span> <span class='inspect! fid id'>inspect!</span>
   <span class='warn identifier id'>warn</span><span class='lparen token'>(</span><span class='inspect identifier id'>inspect</span><span class='rparen token'>)</span>
@@ -1686,6 +1726,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1706,15 +1747,15 @@
       <pre class="lines">
 
 
-237
-238
-239
-240
-241
-242</pre>
+243
+244
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 243</span>
 
 <span class='def def kw'>def</span> <span class='parse_rdf_serialization identifier id'>parse_rdf_serialization</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='content_type identifier id'>content_type</span><span class='rbrace token'>}</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
@@ -1770,6 +1811,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1790,21 +1832,21 @@
       <pre class="lines">
 
 
-137
-138
-139
-140
-141
-142
 143
 144
 145
 146
 147
-148</pre>
+148
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 143</span>
 
 <span class='def def kw'>def</span> <span class='parse_response identifier id'>parse_response</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='case case kw'>case</span> <span class='content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='content_type identifier id'>content_type</span>
@@ -1882,10 +1924,20 @@
             
           </span>
           
-        </tr>
+        </li>
+      
+        <li>
+          <span class="name">:headers</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
       
     </ul>
   
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -1906,12 +1958,12 @@
       <pre class="lines">
 
 
-105
-106
-107</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 110</span>
 
 <span class='def def kw'>def</span> <span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='parse_response identifier id'>parse_response</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
@@ -1980,10 +2032,20 @@
             
           </span>
           
-        </tr>
+        </li>
+      
+        <li>
+          <span class="name">:headers</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
       
     </ul>
   
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -2004,12 +2066,6 @@
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
 122
 123
 124
@@ -2019,14 +2075,20 @@
 128
 129
 130
-131</pre>
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 122</span>
 
 <span class='def def kw'>def</span> <span class='response identifier id'>response</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='@headers ivar id'>@headers</span><span class='lbrack token'>[</span><span class='string val'>'Accept'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span>
-  <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='response identifier id'>response</span><span class='bitor op'>|</span>
+  <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='response identifier id'>response</span><span class='bitor op'>|</span>
     <span class='case case kw'>case</span> <span class='response identifier id'>response</span>
       <span class='when when kw'>when</span> <span class='Net constant id'>Net</span><span class='colon2 op'>::</span><span class='HTTPBadRequest constant id'>HTTPBadRequest</span>  <span class='comment val'># 400 Bad Request</span>
         <span class='raise identifier id'>raise</span> <span class='MalformedQuery constant id'>MalformedQuery</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='rparen token'>)</span>
@@ -2075,6 +2137,7 @@
     </li>
   
 </ul>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -2095,12 +2158,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.9/lib/sparql/client.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sparql-client-0.0.11/lib/sparql/client.rb', line 62</span>
 
 <span class='def def kw'>def</span> <span class='select identifier id'>select</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:select</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
@@ -2116,9 +2179,9 @@
 </div>
     
     <div id="footer">
-  Generated on Wed Sep 28 18:35:48 2011 by 
+  Generated on Fri Nov 11 16:15:32 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.2 (ruby-1.8.7).
+  0.7.3 (ruby-1.8.7).
 </div>
 
   </body>

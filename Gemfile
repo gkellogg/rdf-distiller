@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 # Include non-released gems first
-gem 'rdf',              :git => "git://github.com/gkellogg/rdf.git", :branch => "0.3.x" #'>= 0.3.4'
-gem 'linkeddata',       :git => "git://github.com/gkellogg/linkeddata.git", :branch => "0.3.x"
+gem 'rdf',              :git => "git://github.com/gkellogg/rdf.git"
+gem 'linkeddata',       :git => "git://github.com/gkellogg/linkeddata.git"
 gem 'rdf-json',         ">= 0.3.0", :require => 'rdf/json'
 gem 'rdf-trix',         ">= 0.3.0", :require => 'rdf/trix'
 gem 'rdf-microdata',    :git => "git://github.com/gkellogg/rdf-microdata.git", :require => "rdf/microdata"
@@ -17,11 +17,12 @@ gem 'spira',            '>= 0.0.12'
 gem 'sxp',              '>= 0.0.14'
 gem 'sparql',           :git => "git://github.com/gkellogg/sparql.git"
 
-gem 'sinatra',            '>= 1.2.1'
+gem 'sinatra',            '>= 1.3.1'
 gem 'rack-linkeddata',    ">= 0.3.0", :require => "rack/linkeddata"
 gem 'sinatra-linkeddata', ">= 0.3.0", :require => "sinatra/linkeddata"
-gem 'erubis',             '>= 2.6.6'
-gem 'haml',               '>= 3.0.0'
+gem 'erubis',             '>= 2.7.0'
+gem 'haml',               '>= 3.1.3'
+gem 'equivalent-xml',     '>= 0.2.8'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
