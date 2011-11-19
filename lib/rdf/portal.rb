@@ -181,7 +181,9 @@ module RDF
     # @return [IO] File stream
     # @yield [IO] File stream
     def self.open_file(filename_or_url, options = {}, &block)
-      Kernel.open(filename_or_url, {"User-Agent" => "Ruby RDF Distiller"}, &block)
+      STDERR.puts "open file #{filename_or_url.inspect}"
+      filename_or_url = $1 if filename_or_url.to_s.match(/^file:(.*)$/)
+      Kernel.open(filename_or_url.to_s, &block)
     end
   end
 end

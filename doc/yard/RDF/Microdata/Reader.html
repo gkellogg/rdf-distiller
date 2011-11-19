@@ -89,8 +89,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader/rexml.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader/nokogiri.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader/rexml.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader/nokogiri.rb</span>
 </dd>
   
 </dl>
@@ -100,10 +100,7 @@
   <div class="discussion">
     <p>An Microdata parser in Ruby</p>
 
-<p>Based on processing rules, amended with the following:
-* property generation from tokens now uses the associated @itemtype as the basis for generation
-* implicit triples are not generated, only those with @item*
-* @datetime values are scanned lexically to find appropriate datatype</p>
+<p>Based on processing rules, amended with the following:</p>
 
   </div>
 </div>
@@ -113,7 +110,7 @@
   <h3>See Also:</h3>
   <ul class="see">
     
-      <li><a href="https://dvcs.w3.org/hg/htmldata/raw-file/24af1cde0da1/microdata-rdf/index.html" target="_parent" title="https://dvcs.w3.org/hg/htmldata/raw-file/24af1cde0da1/microdata-rdf/index.html">https://dvcs.w3.org/hg/htmldata/raw-file/24af1cde0da1/microdata-rdf/index.html</a></li>
+      <li><a href="https://dvcs.w3.org/hg/htmldata/raw-file/0d6b89f5befb/microdata-rdf/index.html" target="_parent" title="https://dvcs.w3.org/hg/htmldata/raw-file/0d6b89f5befb/microdata-rdf/index.html">https://dvcs.w3.org/hg/htmldata/raw-file/0d6b89f5befb/microdata-rdf/index.html</a></li>
     
   </ul>
 <h3>Author:</h3>
@@ -139,7 +136,7 @@
     
    
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Reader/CrawlFailure.html" title="RDF::Microdata::Reader::CrawlFailure (class)">CrawlFailure</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Reader/CrawlFailure.html" title="RDF::Microdata::Reader::CrawlFailure (class)">CrawlFailure</a></span>, <span class='object_link'><a href="Reader/Registry.html" title="RDF::Microdata::Reader::Registry (class)">Registry</a></span>
     
   
 </p>
@@ -148,16 +145,16 @@
   
     <dl class="constants">
       
-        <dt id="XHTML-constant" class="">XHTML =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>&quot;http://www.w3.org/1999/xhtml&quot;</span>
-</pre></dd>
-      
         <dt id="URL_PROPERTY_ELEMENTS-constant" class="">URL_PROPERTY_ELEMENTS =
           
         </dt>
         <dd><pre class="code"><span class='dstring node'>%w(a area audio embed iframe img link object source track video)</span>
+</pre></dd>
+      
+        <dt id="DEFAULT_REGISTRY-constant" class="">DEFAULT_REGISTRY =
+          
+        </dt>
+        <dd><pre class="code"><span class='File constant id'>File</span><span class='dot token'>.</span><span class='expand_path identifier id'>expand_path</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='dirname identifier id'>dirname</span><span class='lparen token'>(</span><span class='__FILE__ __file__ kw'>__FILE__</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='string val'>&quot;..&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;..&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;..&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;etc&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;registry.json&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 </pre></dd>
       
     </dl>
@@ -541,6 +538,18 @@
         </li>
       
         <li>
+          <span class="name">:registry_uri</span>
+          <span class="type">(<tt>#to_s</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>DEFAULT_REGISTRY</tt>
+            
+          </span>
+          &mdash; <div class='inline'></div>
+        </li>
+      
+        <li>
           <span class="name">:debug</span>
           <span class="type">(<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
           <span class="default">
@@ -622,47 +631,58 @@
       <pre class="lines">
 
 
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103</pre>
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb', line 187</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span> <span class='assign token'>=</span> <span class='$stdin gvar id'>$stdin</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='super super kw'>super</span> <span class='do do kw'>do</span>
@@ -670,7 +690,7 @@
 
     <span class='@library ivar id'>@library</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:library</span><span class='rbrack token'>]</span>
       <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span>
-        <span class='lparen token'>(</span><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Nokogiri constant id'>Nokogiri</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:nokogiri</span> <span class='colon op'>:</span> <span class='symbol val'>:rexml</span>
+        <span class='lparen token'>(</span><span class='defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Nokogiri constant id'>Nokogiri</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='RUBY_PLATFORM constant id'>RUBY_PLATFORM</span> <span class='neq op'>!=</span> <span class='string val'>'java'</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:nokogiri</span> <span class='colon op'>:</span> <span class='symbol val'>:rexml</span>
       <span class='when when kw'>when</span> <span class='symbol val'>:nokogiri</span><span class='comma token'>,</span> <span class='symbol val'>:rexml</span>
         <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:library</span><span class='rbrack token'>]</span>
       <span class='else else kw'>else</span>
@@ -694,6 +714,17 @@
 
     <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='dstring node'>&quot;library = #{@library}&quot;</span><span class='rparen token'>)</span>
 
+    <span class='comment val'># Load registry</span>
+    <span class='unless unless kw'>unless</span> <span class='Registry constant id'>Registry</span><span class='dot token'>.</span><span class='loaded? fid id'>loaded?</span>
+      <span class='registry identifier id'>registry</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:registry_uri</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='DEFAULT_REGISTRY constant id'>DEFAULT_REGISTRY</span>
+      <span class='begin begin kw'>begin</span>
+        <span class='json identifier id'>json</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='colon2 op'>::</span><span class='File constant id'>File</span><span class='dot token'>.</span><span class='open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='registry identifier id'>registry</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='JSON constant id'>JSON</span><span class='dot token'>.</span><span class='load identifier id'>load</span><span class='lparen token'>(</span><span class='f identifier id'>f</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+      <span class='rescue rescue kw'>rescue</span> <span class='JSON constant id'>JSON</span><span class='colon2 op'>::</span><span class='ParserError constant id'>ParserError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
+        <span class='raise identifier id'>raise</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='ReaderError constant id'>ReaderError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Failed to parse registry: #{e.message}&quot;</span>
+      <span class='end end kw'>end</span>
+      <span class='Registry constant id'>Registry</span><span class='dot token'>.</span><span class='load_registry identifier id'>load_registry</span><span class='lparen token'>(</span><span class='json identifier id'>json</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+    
     <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
       <span class='case case kw'>case</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span>
         <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
@@ -738,12 +769,12 @@
       <pre class="lines">
 
 
-26
-27
-28</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb', line 29</span>
 
 <span class='def def kw'>def</span> <span class='implementation identifier id'>implementation</span>
   <span class='@implementation ivar id'>@implementation</span>
@@ -819,12 +850,12 @@
       <pre class="lines">
 
 
-36
-37
-38</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb', line 39</span>
 
 <span class='def def kw'>def</span> <span class='base_uri identifier id'>base_uri</span>
   <span class='@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
@@ -885,15 +916,15 @@
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116</pre>
+243
+244
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb', line 243</span>
 
 <span class='def def kw'>def</span> <span class='each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
@@ -979,14 +1010,14 @@
       <pre class="lines">
 
 
-126
-127
-128
-129
-130</pre>
+258
+259
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-f70efedaedaa/lib/rdf/microdata/reader.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-3d38f6b655a5/lib/rdf/microdata/reader.rb', line 258</span>
 
 <span class='def def kw'>def</span> <span class='each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
@@ -1004,7 +1035,7 @@
 </div>
     
     <div id="footer">
-  Generated on Fri Nov 11 16:33:12 2011 by 
+  Generated on Fri Nov 18 17:42:29 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.3 (ruby-1.8.7).
 </div>
