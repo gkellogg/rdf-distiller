@@ -726,8 +726,8 @@ scheme of the created connection.</p>
     <h3>Examples:</h3>
     
       <h4><div class='inline'></div></h4>
-      <pre class="example code"><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='new identifier id'>new</span>  <span class='comment val'># =&gt; new Repository based on sqlite3://:memory:</span>
-<span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='new identifier id'>new</span> <span class='string val'>'postgres://localhost/database'</span>  <span class='comment val'># =&gt; New repository based on postgres adapter</span>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>  <span class='comment val'># =&gt; new Repository based on sqlite3://:memory:</span>
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='string val'>'postgres://localhost/database'</span>  <span class='comment val'># =&gt; New repository based on postgres adapter</span>
 </pre>
     
   </div>
@@ -779,25 +779,25 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 37</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='begin begin kw'>begin</span>
-    <span class='case case kw'>case</span> <span class='options identifier id'>options</span>
-      <span class='when when kw'>when</span> <span class='String constant id'>String</span>
-        <span class='@db ivar id'>@db</span>     <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
-      <span class='when when kw'>when</span> <span class='Hash constant id'>Hash</span>
-        <span class='@db ivar id'>@db</span>     <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:db</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-        <span class='adapter identifier id'>adapter</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:adapter</span><span class='rbrack token'>]</span>
-      <span class='when when kw'>when</span> <span class='nil nil kw'>nil</span>
-        <span class='@db ivar id'>@db</span>    <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Connection constant id'>Connection</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'sqlite3://:memory:'</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='adapter identifier id'>adapter</span> <span class='assign token'>=</span> <span class='@db ivar id'>@db</span><span class='dot token'>.</span><span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='string val'>&quot;@uri&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='scheme identifier id'>scheme</span>
-    <span class='require identifier id'>require</span> <span class='string val'>'rdf/do/adapters/'</span> <span class='plus op'>+</span> <span class='adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span>
-  <span class='rescue rescue kw'>rescue</span> <span class='Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='e identifier id'>e</span>
-    <span class='raise identifier id'>raise</span> <span class='LoadError constant id'>LoadError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Could not load a DataObjects adapter for #{options}.  You may need to add a 'require do_adapter', or you may be trying to use an unsupported adapter (Currently supporting postgres, sqlite3).  The error message was: #{e.message}&quot;</span>
-  <span class='end end kw'>end</span>
-  <span class='@adapter ivar id'>@adapter</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='Adapters constant id'>Adapters</span><span class='colon2 op'>::</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='capitalize identifier id'>capitalize</span><span class='rparen token'>)</span>
-  <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='migrate? fid id'>migrate?</span> <span class='self self kw'>self</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_begin begin kw'>begin</span>
+    <span class='rubyid_case case kw'>case</span> <span class='rubyid_options identifier id'>options</span>
+      <span class='rubyid_when when kw'>when</span> <span class='rubyid_String constant id'>String</span>
+        <span class='rubyid_@db ivar id'>@db</span>     <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
+      <span class='rubyid_when when kw'>when</span> <span class='rubyid_Hash constant id'>Hash</span>
+        <span class='rubyid_@db ivar id'>@db</span>     <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:db</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+        <span class='rubyid_adapter identifier id'>adapter</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:adapter</span><span class='rbrack token'>]</span>
+      <span class='rubyid_when when kw'>when</span> <span class='rubyid_nil nil kw'>nil</span>
+        <span class='rubyid_@db ivar id'>@db</span>    <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Connection constant id'>Connection</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'sqlite3://:memory:'</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_adapter identifier id'>adapter</span> <span class='assign token'>=</span> <span class='rubyid_@db ivar id'>@db</span><span class='dot token'>.</span><span class='rubyid_instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='string val'>&quot;@uri&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_scheme identifier id'>scheme</span>
+    <span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/do/adapters/'</span> <span class='plus op'>+</span> <span class='rubyid_adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+  <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_Exception constant id'>Exception</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
+    <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_LoadError constant id'>LoadError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Could not load a DataObjects adapter for #{options}.  You may need to add a 'require do_adapter', or you may be trying to use an unsupported adapter (Currently supporting postgres, sqlite3).  The error message was: #{e.message}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_@adapter ivar id'>@adapter</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_DataObjects constant id'>DataObjects</span><span class='colon2 op'>::</span><span class='rubyid_Adapters constant id'>Adapters</span><span class='colon2 op'>::</span><span class='rubyid_const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='rubyid_adapter identifier id'>adapter</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_capitalize identifier id'>capitalize</span><span class='rparen token'>)</span>
+  <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_migrate? fid id'>migrate?</span> <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -841,10 +841,10 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 70</span>
 
-<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
-  <span class='@db ivar id'>@db</span><span class='dot token'>.</span><span class='close identifier id'>close</span>
-  <span class='@adapter ivar id'>@adapter</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_@db ivar id'>@db</span><span class='dot token'>.</span><span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_@adapter ivar id'>@adapter</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -902,11 +902,11 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 293</span>
 
-<span class='def def kw'>def</span> <span class='count identifier id'>count</span>
-  <span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='count_sql identifier id'>count_sql</span><span class='rparen token'>)</span>
-  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-  <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_count identifier id'>count</span>
+  <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_count_sql identifier id'>count_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_result identifier id'>result</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+  <span class='rubyid_result identifier id'>result</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -964,9 +964,9 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 100</span>
 
-<span class='def def kw'>def</span> <span class='delete_statement identifier id'>delete_statement</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
-  <span class='delete_statements identifier id'>delete_statements</span> <span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_delete_statement identifier id'>delete_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='rubyid_delete_statements identifier id'>delete_statements</span> <span class='lbrack token'>[</span><span class='rubyid_statement identifier id'>statement</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1027,12 +1027,12 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 135</span>
 
-<span class='def def kw'>def</span> <span class='delete_statements identifier id'>delete_statements</span><span class='lparen token'>(</span><span class='statements identifier id'>statements</span><span class='rparen token'>)</span>
-  <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='delete_sql identifier id'>delete_sql</span>
-  <span class='statements identifier id'>statements</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
-    <span class='exec identifier id'>exec</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span> <span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='context identifier id'>context</span><span class='rparen token'>)</span><span class='rparen token'>)</span> 
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_delete_statements identifier id'>delete_statements</span><span class='lparen token'>(</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span>
+  <span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_delete_sql identifier id'>delete_sql</span>
+  <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span>
+    <span class='rubyid_exec identifier id'>exec</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span> <span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span><span class='rparen token'>)</span> 
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1069,10 +1069,10 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 61</span>
 
-<span class='def def kw'>def</span> <span class='dispose identifier id'>dispose</span>
-  <span class='close identifier id'>close</span>
-  <span class='@db ivar id'>@db</span><span class='dot token'>.</span><span class='dispose identifier id'>dispose</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_dispose identifier id'>dispose</span>
+  <span class='rubyid_close identifier id'>close</span>
+  <span class='rubyid_@db ivar id'>@db</span><span class='dot token'>.</span><span class='rubyid_dispose identifier id'>dispose</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1151,17 +1151,17 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 197</span>
 
-<span class='def def kw'>def</span> <span class='each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='return return kw'>return</span> <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='each_sql identifier id'>each_sql</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
-               <span class='symbol val'>:subject</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-               <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-               <span class='symbol val'>:object</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-               <span class='symbol val'>:context</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_each_sql identifier id'>each_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span>
+               <span class='symbol val'>:subject</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+               <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+               <span class='symbol val'>:object</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+               <span class='symbol val'>:context</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1237,14 +1237,14 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 257</span>
 
-<span class='def def kw'>def</span> <span class='each_context identifier id'>each_context</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='return return kw'>return</span> <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_context</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='each_context_sql identifier id'>each_context_sql</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='context identifier id'>context</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='context identifier id'>context</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_context identifier id'>each_context</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_context</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_each_context_sql identifier id'>each_context_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_context identifier id'>context</span> <span class='assign token'>=</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1319,13 +1319,13 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 243</span>
 
-<span class='def def kw'>def</span> <span class='each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='return return kw'>return</span> <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_object</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='each_object_sql identifier id'>each_object_sql</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_object identifier id'>each_object</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_object</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_each_object_sql identifier id'>each_object_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1400,13 +1400,13 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 229</span>
 
-<span class='def def kw'>def</span> <span class='each_predicate identifier id'>each_predicate</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='return return kw'>return</span> <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_predicate</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='each_predicate_sql identifier id'>each_predicate_sql</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_predicate identifier id'>each_predicate</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_predicate</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_each_predicate_sql identifier id'>each_predicate_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1481,13 +1481,13 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 215</span>
 
-<span class='def def kw'>def</span> <span class='each_subject identifier id'>each_subject</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span> 
-  <span class='return return kw'>return</span> <span class='enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_subject</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='block_given? fid id'>block_given?</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='each_subject_sql identifier id'>each_subject_sql</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_subject identifier id'>each_subject</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span> 
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_enum_for identifier id'>enum_for</span><span class='lparen token'>(</span><span class='symbol val'>:each_subject</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_each_subject_sql identifier id'>each_subject_sql</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1543,9 +1543,9 @@ scheme of the created connection.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 80</span>
 
-<span class='def def kw'>def</span> <span class='empty? fid id'>empty?</span>
-  <span class='count identifier id'>count</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_empty? fid id'>empty?</span>
+  <span class='rubyid_count identifier id'>count</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1611,9 +1611,9 @@ with the given *args.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 174</span>
 
-<span class='def def kw'>def</span> <span class='exec identifier id'>exec</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='@db ivar id'>@db</span><span class='dot token'>.</span><span class='create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute_non_query identifier id'>execute_non_query</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_exec identifier id'>exec</span><span class='lparen token'>(</span><span class='rubyid_sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_@db ivar id'>@db</span><span class='dot token'>.</span><span class='rubyid_create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='rubyid_sql identifier id'>sql</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_execute_non_query identifier id'>execute_non_query</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1671,9 +1671,9 @@ with the given *args.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 90</span>
 
-<span class='def def kw'>def</span> <span class='insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='statement identifier id'>statement</span><span class='rparen token'>)</span>
-  <span class='insert_statements identifier id'>insert_statements</span> <span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='rubyid_insert_statements identifier id'>insert_statements</span> <span class='lbrack token'>[</span><span class='rubyid_statement identifier id'>statement</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1746,24 +1746,24 @@ with the given *args.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 110</span>
 
-<span class='def def kw'>def</span> <span class='insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='statements identifier id'>statements</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:multiple_insert_sql</span><span class='rparen token'>)</span>
-    <span class='each identifier id'>each</span> <span class='assign token'>=</span> <span class='statements identifier id'>statements</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:each_statement</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:each_statement</span> <span class='colon op'>:</span> <span class='symbol val'>:each</span>
-    <span class='args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-    <span class='count identifier id'>count</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
-    <span class='statements identifier id'>statements</span><span class='dot token'>.</span><span class='__send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='each identifier id'>each</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
-      <span class='count identifier id'>count</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
-      <span class='args identifier id'>args</span> <span class='opasgn op'>+=</span> <span class='lbrack token'>[</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span> <span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='context identifier id'>context</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
-    <span class='end end kw'>end</span>
-    <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='multiple_insert_sql identifier id'>multiple_insert_sql</span><span class='lparen token'>(</span><span class='count identifier id'>count</span><span class='rparen token'>)</span>
-    <span class='exec identifier id'>exec</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span><span class='mult op'>*</span><span class='lparen token'>(</span><span class='args identifier id'>args</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='insert_sql identifier id'>insert_sql</span>
-    <span class='statements identifier id'>statements</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='s identifier id'>s</span><span class='bitor op'>|</span>
-      <span class='exec identifier id'>exec</span><span class='lparen token'>(</span><span class='query identifier id'>query</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span> <span class='subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='s identifier id'>s</span><span class='dot token'>.</span><span class='context identifier id'>context</span><span class='rparen token'>)</span><span class='rparen token'>)</span> 
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:multiple_insert_sql</span><span class='rparen token'>)</span>
+    <span class='rubyid_each identifier id'>each</span> <span class='assign token'>=</span> <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:each_statement</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:each_statement</span> <span class='colon op'>:</span> <span class='symbol val'>:each</span>
+    <span class='rubyid_args identifier id'>args</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='rubyid_count identifier id'>count</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid___send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='rubyid_each identifier id'>each</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span>
+      <span class='rubyid_count identifier id'>count</span> <span class='opasgn op'>+=</span> <span class='integer val'>1</span>
+      <span class='rubyid_args identifier id'>args</span> <span class='opasgn op'>+=</span> <span class='lbrack token'>[</span><span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span> <span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span><span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span><span class='rbrack token'>]</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_multiple_insert_sql identifier id'>multiple_insert_sql</span><span class='lparen token'>(</span><span class='rubyid_count identifier id'>count</span><span class='rparen token'>)</span>
+    <span class='rubyid_exec identifier id'>exec</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span><span class='mult op'>*</span><span class='lparen token'>(</span><span class='rubyid_args identifier id'>args</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_insert_sql identifier id'>insert_sql</span>
+    <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span>
+      <span class='rubyid_exec identifier id'>exec</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span> <span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span><span class='comma token'>,</span><span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_predicate identifier id'>predicate</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span><span class='rparen token'>)</span> 
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1847,16 +1847,16 @@ well for RDF::Query objects.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 277</span>
 
-<span class='def def kw'>def</span> <span class='query_pattern identifier id'>query_pattern</span><span class='lparen token'>(</span><span class='pattern identifier id'>pattern</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span><span class='pattern identifier id'>pattern</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
-  <span class='while while kw'>while</span> <span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='next! fid id'>next!</span>
-    <span class='yield yield kw'>yield</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Statement constant id'>Statement</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span>
-        <span class='symbol val'>:subject</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-        <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-        <span class='symbol val'>:object</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-        <span class='symbol val'>:context</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='reader identifier id'>reader</span><span class='dot token'>.</span><span class='values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_query_pattern identifier id'>query_pattern</span><span class='lparen token'>(</span><span class='rubyid_pattern identifier id'>pattern</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_reader identifier id'>reader</span> <span class='assign token'>=</span> <span class='rubyid_@adapter ivar id'>@adapter</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='comma token'>,</span><span class='rubyid_pattern identifier id'>pattern</span><span class='dot token'>.</span><span class='rubyid_to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
+  <span class='rubyid_while while kw'>while</span> <span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_next! fid id'>next!</span>
+    <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span>
+        <span class='symbol val'>:subject</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+        <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+        <span class='symbol val'>:object</span>    <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+        <span class='symbol val'>:context</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='lbrack token'>[</span><span class='integer val'>3</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1922,9 +1922,9 @@ with the given *args.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 187</span>
 
-<span class='def def kw'>def</span> <span class='result identifier id'>result</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-  <span class='@db ivar id'>@db</span><span class='dot token'>.</span><span class='create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='sql identifier id'>sql</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='execute_reader identifier id'>execute_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_result identifier id'>result</span><span class='lparen token'>(</span><span class='rubyid_sql identifier id'>sql</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='rubyid_@db ivar id'>@db</span><span class='dot token'>.</span><span class='rubyid_create_command identifier id'>create_command</span><span class='lparen token'>(</span><span class='rubyid_sql identifier id'>sql</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_execute_reader identifier id'>execute_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1997,9 +1997,9 @@ implementations considering null values as distinct from one another.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 150</span>
 
-<span class='def def kw'>def</span> <span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='value identifier id'>value</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='string val'>'nil'</span> <span class='colon op'>:</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='Writer constant id'>Writer</span><span class='dot token'>.</span><span class='serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='integer val'>? </span><span class='string val'>'nil'</span> <span class='colon op'>:</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2071,9 +2071,9 @@ Expects nil values to be encoded as 'nil'.</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/rdf-do-0.3.3/lib/rdf/do.rb', line 161</span>
 
-<span class='def def kw'>def</span> <span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='value identifier id'>value</span> <span class='eq op'>==</span> <span class='string val'>'nil'</span> <span class='question op'>?</span> <span class='nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='Reader constant id'>Reader</span><span class='dot token'>.</span><span class='unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='value identifier id'>value</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+  <span class='rubyid_value identifier id'>value</span> <span class='eq op'>==</span> <span class='string val'>'nil'</span> <span class='question op'>?</span> <span class='rubyid_nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Reader constant id'>Reader</span><span class='dot token'>.</span><span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2085,9 +2085,9 @@ Expects nil values to be encoded as 'nil'.</p>
 </div>
     
     <div id="footer">
-  Generated on Fri Nov 18 17:41:55 2011 by 
+  Generated on Fri Jan  6 18:06:19 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.4 (ruby-1.8.7).
 </div>
 
   </body>

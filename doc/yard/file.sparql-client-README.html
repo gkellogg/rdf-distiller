@@ -80,44 +80,44 @@ instances.</li>
 
 <h2>Examples</h2>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'sparql/client'</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'sparql/client'</span>
 
-<span class='sparql identifier id'>sparql</span> <span class='assign token'>=</span> <span class='SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://dbpedia.org/sparql&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_sparql identifier id'>sparql</span> <span class='assign token'>=</span> <span class='rubyid_SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='rubyid_Client constant id'>Client</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;http://dbpedia.org/sparql&quot;</span><span class='rparen token'>)</span>
 </pre>
 
 <h3>Executing a boolean query and outputting the result</h3>
 
 <pre class="code"><span class='comment val'># ASK WHERE { ?s ?p ?o }</span>
-<span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='ask identifier id'>ask</span><span class='dot token'>.</span><span class='whether identifier id'>whether</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='true? fid id'>true?</span>
+<span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='rubyid_ask identifier id'>ask</span><span class='dot token'>.</span><span class='rubyid_whether identifier id'>whether</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_true? fid id'>true?</span>
 
-<span class='puts identifier id'>puts</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>   <span class='comment val'>#=&gt; true or false</span>
+<span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_result identifier id'>result</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>   <span class='comment val'>#=&gt; true or false</span>
 </pre>
 
 <h3>Executing a tuple query and iterating over the returned solutions</h3>
 
 <pre class="code"><span class='comment val'># SELECT * WHERE { ?s ?p ?o } OFFSET 100 LIMIT 10</span>
-<span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='select identifier id'>select</span><span class='dot token'>.</span><span class='where identifier id'>where</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='offset identifier id'>offset</span><span class='lparen token'>(</span><span class='integer val'>100</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>
+<span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span><span class='dot token'>.</span><span class='rubyid_where identifier id'>where</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_offset identifier id'>offset</span><span class='lparen token'>(</span><span class='integer val'>100</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>
 
-<span class='query identifier id'>query</span><span class='dot token'>.</span><span class='each_solution identifier id'>each_solution</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='solution identifier id'>solution</span><span class='bitor op'>|</span>
-  <span class='puts identifier id'>puts</span> <span class='solution identifier id'>solution</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_each_solution identifier id'>each_solution</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_solution identifier id'>solution</span><span class='bitor op'>|</span>
+  <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_solution identifier id'>solution</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <h3>Executing a graph query and iterating over the returned statements</h3>
 
 <pre class="code"><span class='comment val'># CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o } LIMIT 10</span>
-<span class='query identifier id'>query</span> <span class='assign token'>=</span> <span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='construct identifier id'>construct</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='where identifier id'>where</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>
+<span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='rubyid_construct identifier id'>construct</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_where identifier id'>where</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='symbol val'>:s</span><span class='comma token'>,</span> <span class='symbol val'>:p</span><span class='comma token'>,</span> <span class='symbol val'>:o</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_limit identifier id'>limit</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>
 
-<span class='query identifier id'>query</span><span class='dot token'>.</span><span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
-  <span class='puts identifier id'>puts</span> <span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+  <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <h3>Executing an arbitrary textual SPARQL query string</h3>
 
-<pre class="code"><span class='result identifier id'>result</span> <span class='assign token'>=</span> <span class='sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='query identifier id'>query</span><span class='lparen token'>(</span><span class='string val'>&quot;ASK WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
+<pre class="code"><span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_sparql identifier id'>sparql</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='string val'>&quot;ASK WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
 
-<span class='puts identifier id'>puts</span> <span class='result identifier id'>result</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span>   <span class='comment val'>#=&gt; true or false</span>
+<span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_result identifier id'>result</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>   <span class='comment val'>#=&gt; true or false</span>
 </pre>
 
 <h2>Documentation</h2>
@@ -149,20 +149,20 @@ instances.</li>
 <p>The recommended installation method is via <a href="http://rubygems.org/">RubyGems</a>.
 To install the latest official release of the <code>SPARQL::Client</code> gem, do:</p>
 
-<pre class="code"><span class='string val'>% [sudo] </span><span class='gem identifier id'>gem</span> <span class='install identifier id'>install</span> <span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='client identifier id'>client</span>
+<pre class="code"><span class='string val'>% [sudo] </span><span class='rubyid_gem identifier id'>gem</span> <span class='rubyid_install identifier id'>install</span> <span class='rubyid_sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='rubyid_client identifier id'>client</span>
 </pre>
 
 <h2>Download</h2>
 
 <p>To get a local working copy of the development repository, do:</p>
 
-<pre class="code"><span class='string val'>% git </span><span class='clone identifier id'>clone</span> <span class='git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='client identifier id'>client</span><span class='dot token'>.</span><span class='git identifier id'>git</span>
+<pre class="code"><span class='string val'>% git </span><span class='rubyid_clone identifier id'>clone</span> <span class='rubyid_git identifier id'>git</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='rubyid_bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='rubyid_sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_git identifier id'>git</span>
 </pre>
 
 <p>Alternatively, download the latest development version as a tarball as
 follows:</p>
 
-<pre class="code"><span class='string val'>% wget </span><span class='http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='client identifier id'>client</span><span class='div op'>/</span><span class='tarball identifier id'>tarball</span><span class='div op'>/</span><span class='master identifier id'>master</span>
+<pre class="code"><span class='string val'>% wget </span><span class='rubyid_http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/github.com/</span><span class='rubyid_bendiken identifier id'>bendiken</span><span class='div op'>/</span><span class='rubyid_sparql identifier id'>sparql</span><span class='minus op'>-</span><span class='rubyid_client identifier id'>client</span><span class='div op'>/</span><span class='rubyid_tarball identifier id'>tarball</span><span class='div op'>/</span><span class='rubyid_master identifier id'>master</span>
 </pre>
 
 <h2>Mailing List</h2>
@@ -229,9 +229,9 @@ explicit <a href="http://unlicense.org/#unlicensing-contributions">public domain
 see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p></div></div>
     
     <div id="footer">
-  Generated on Fri Nov 18 17:41:36 2011 by 
+  Generated on Fri Jan  6 18:05:58 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.4 (ruby-1.8.7).
 </div>
 
   </body>

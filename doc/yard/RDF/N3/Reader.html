@@ -1452,41 +1452,41 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 47</span>
 
-<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='input identifier id'>input</span> <span class='assign token'>=</span> <span class='$stdin gvar id'>$stdin</span><span class='comma token'>,</span> <span class='options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='super super kw'>super</span> <span class='do do kw'>do</span>
-    <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='rewind identifier id'>rewind</span> <span class='if if_mod kw'>if</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:rewind</span><span class='rparen token'>)</span>
-    <span class='@input ivar id'>@input</span> <span class='assign token'>=</span> <span class='input identifier id'>input</span><span class='dot token'>.</span><span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:read</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='input identifier id'>input</span> <span class='colon op'>:</span> <span class='StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='input identifier id'>input</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
-    <span class='@lineno ivar id'>@lineno</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
-    <span class='readline identifier id'>readline</span>  <span class='comment val'># Prime the pump</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span> <span class='assign token'>=</span> <span class='rubyid_$stdin gvar id'>$stdin</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_super super kw'>super</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_rewind identifier id'>rewind</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:rewind</span><span class='rparen token'>)</span>
+    <span class='rubyid_@input ivar id'>@input</span> <span class='assign token'>=</span> <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:read</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_input identifier id'>input</span> <span class='colon op'>:</span> <span class='rubyid_StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='rubyid_@lineno ivar id'>@lineno</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
+    <span class='rubyid_readline identifier id'>readline</span>  <span class='comment val'># Prime the pump</span>
     
-    <span class='@memo ivar id'>@memo</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-    <span class='@keyword_mode ivar id'>@keyword_mode</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
-    <span class='@keywords ivar id'>@keywords</span> <span class='assign token'>=</span> <span class='dstring node'>%w(a is of this has)</span>
-    <span class='@productions ivar id'>@productions</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
-    <span class='@prod_data ivar id'>@prod_data</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='rubyid_@memo ivar id'>@memo</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='rubyid_@keyword_mode ivar id'>@keyword_mode</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>
+    <span class='rubyid_@keywords ivar id'>@keywords</span> <span class='assign token'>=</span> <span class='dstring node'>%w(a is of this has)</span>
+    <span class='rubyid_@productions ivar id'>@productions</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+    <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
 
-    <span class='@branches ivar id'>@branches</span> <span class='assign token'>=</span> <span class='BRANCHES constant id'>BRANCHES</span> <span class='comment val'># Get from meta class</span>
-    <span class='@regexps ivar id'>@regexps</span> <span class='assign token'>=</span> <span class='REGEXPS constant id'>REGEXPS</span> <span class='comment val'># Get from meta class</span>
+    <span class='rubyid_@branches ivar id'>@branches</span> <span class='assign token'>=</span> <span class='rubyid_BRANCHES constant id'>BRANCHES</span> <span class='comment val'># Get from meta class</span>
+    <span class='rubyid_@regexps ivar id'>@regexps</span> <span class='assign token'>=</span> <span class='rubyid_REGEXPS constant id'>REGEXPS</span> <span class='comment val'># Get from meta class</span>
     
-    <span class='@formulae ivar id'>@formulae</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>      <span class='comment val'># Nodes used as Formluae context identifiers</span>
-    <span class='@variables ivar id'>@variables</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>    <span class='comment val'># variable definitions along with defining formula</span>
+    <span class='rubyid_@formulae ivar id'>@formulae</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>      <span class='comment val'># Nodes used as Formluae context identifiers</span>
+    <span class='rubyid_@variables ivar id'>@variables</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>    <span class='comment val'># variable definitions along with defining formula</span>
 
-    <span class='if if kw'>if</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
-      <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;@uri&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
-      <span class='namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{base_uri}#&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='end end kw'>end</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;validate&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='validate? fid id'>validate?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;canonicalize&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='canonicalize? fid id'>canonicalize?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;intern&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='intern? fid id'>intern?</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
+      <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;@uri&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='rubyid_base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+      <span class='rubyid_namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_uri identifier id'>uri</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{base_uri}#&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;validate&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_validate? fid id'>validate?</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;canonicalize&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_canonicalize? fid id'>canonicalize?</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;intern&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_intern? fid id'>intern?</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
 
-    <span class='if if kw'>if</span> <span class='block_given? fid id'>block_given?</span>
-      <span class='case case kw'>case</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='arity identifier id'>arity</span>
-        <span class='when when kw'>when</span> <span class='integer val'>0</span> <span class='then then kw'>then</span> <span class='instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-        <span class='else else kw'>else</span> <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+      <span class='rubyid_case case kw'>case</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_arity identifier id'>arity</span>
+        <span class='rubyid_when when kw'>when</span> <span class='integer val'>0</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+        <span class='rubyid_else else kw'>else</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1521,10 +1521,10 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 142</span>
 
-<span class='def def kw'>def</span> <span class='booleanToken identifier id'>booleanToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;@&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='boolean identifier id'>boolean</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='lit identifier id'>lit</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_booleanToken identifier id'>booleanToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;@&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_boolean identifier id'>boolean</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='rubyid_lit identifier id'>lit</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1578,16 +1578,16 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 164</span>
 
-<span class='def def kw'>def</span> <span class='declarationFinish identifier id'>declarationFinish</span>
-  <span class='decl identifier id'>decl</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='case case kw'>case</span> <span class='decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:prod</span><span class='rbrack token'>]</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;@prefix&quot;</span>
-    <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:explicituri</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:prefix</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;@base&quot;</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_declarationFinish identifier id'>declarationFinish</span>
+  <span class='rubyid_decl identifier id'>decl</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:prod</span><span class='rbrack token'>]</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;@prefix&quot;</span>
+    <span class='rubyid_uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='rubyid_process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='rubyid_decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:explicituri</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='rubyid_namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='rubyid_decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:prefix</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;@base&quot;</span>
     <span class='comment val'># Base, set or update document URI</span>
-    <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:explicituri</span><span class='rbrack token'>]</span>
-    <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
+    <span class='rubyid_uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='rubyid_decl identifier id'>decl</span><span class='lbrack token'>[</span><span class='symbol val'>:explicituri</span><span class='rbrack token'>]</span>
+    <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span>
     
     <span class='comment val'># The empty prefix &quot;&quot; is by default , bound to &quot;#&quot; -- the local namespace of the file.</span>
     <span class='comment val'># The parser behaves as though there were a</span>
@@ -1595,19 +1595,19 @@ all readers)</p></div>
     <span class='comment val'># just before the file.</span>
     <span class='comment val'># This means that &lt;#foo&gt; can be written :foo and using @keywords one can reduce that to foo.</span>
     
-    <span class='namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/[\/\#]$/</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='base_uri identifier id'>base_uri</span> <span class='colon op'>:</span> <span class='process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{uri}#&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;declarationFinish[@base]&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;@base=#{base_uri}&quot;</span><span class='rbrace token'>}</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;@keywords&quot;</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;declarationFinish[@keywords]&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='@keywords ivar id'>@keywords</span><span class='dot token'>.</span><span class='inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+    <span class='rubyid_namespace identifier id'>namespace</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_uri identifier id'>uri</span><span class='dot token'>.</span><span class='rubyid_match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/[\/\#]$/</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_base_uri identifier id'>base_uri</span> <span class='colon op'>:</span> <span class='rubyid_process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{uri}#&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;declarationFinish[@base]&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;@base=#{base_uri}&quot;</span><span class='rbrace token'>}</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;@keywords&quot;</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;declarationFinish[@keywords]&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_@keywords ivar id'>@keywords</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
     <span class='comment val'># Keywords are handled in tokenizer and maintained in @keywords array</span>
-    <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='@keywords ivar id'>@keywords</span> <span class='bitand op'>&amp;</span> <span class='N3_KEYWORDS constant id'>N3_KEYWORDS</span><span class='rparen token'>)</span> <span class='neq op'>!=</span> <span class='@keywords ivar id'>@keywords</span>
-      <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Undefined keywords used: #{(@keywords - N3_KEYWORDS).to_sentence}&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='validate? fid id'>validate?</span>
-    <span class='end end kw'>end</span>
-    <span class='@userkeys ivar id'>@userkeys</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;declarationFinish: FIXME #{decl.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+    <span class='rubyid_if if kw'>if</span> <span class='lparen token'>(</span><span class='rubyid_@keywords ivar id'>@keywords</span> <span class='bitand op'>&amp;</span> <span class='rubyid_N3_KEYWORDS constant id'>N3_KEYWORDS</span><span class='rparen token'>)</span> <span class='neq op'>!=</span> <span class='rubyid_@keywords ivar id'>@keywords</span>
+      <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;Undefined keywords used: #{(@keywords - N3_KEYWORDS).to_sentence}&quot;</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_validate? fid id'>validate?</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_@userkeys ivar id'>@userkeys</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;declarationFinish: FIXME #{decl.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1634,9 +1634,9 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 147</span>
 
-<span class='def def kw'>def</span> <span class='declarationStart identifier id'>declarationStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_declarationStart identifier id'>declarationStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1672,18 +1672,18 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 151</span>
 
-<span class='def def kw'>def</span> <span class='declarationToken identifier id'>declarationToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='prod identifier id'>prod</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;@prefix&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;@base&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;@keywords&quot;</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:prod</span><span class='comma token'>,</span> <span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;prefix&quot;</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:prefix</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;explicituri&quot;</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:explicituri</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_declarationToken identifier id'>declarationToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_prod identifier id'>prod</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;@prefix&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;@base&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;@keywords&quot;</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:prod</span><span class='comma token'>,</span> <span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;prefix&quot;</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:prefix</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;explicituri&quot;</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:explicituri</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1720,10 +1720,10 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 196</span>
 
-<span class='def def kw'>def</span> <span class='documentStart identifier id'>documentStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='push identifier id'>push</span><span class='lparen token'>(</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_documentStart identifier id'>documentStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='rubyid_push identifier id'>push</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1750,9 +1750,9 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 201</span>
 
-<span class='def def kw'>def</span> <span class='dtlangToken identifier id'>dtlangToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:langcode</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='prod identifier id'>prod</span> <span class='eq op'>==</span> <span class='string val'>&quot;langcode&quot;</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_dtlangToken identifier id'>dtlangToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:langcode</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_prod identifier id'>prod</span> <span class='eq op'>==</span> <span class='string val'>&quot;langcode&quot;</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1818,11 +1818,11 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 93</span>
 
-<span class='def def kw'>def</span> <span class='each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='block identifier id'>block</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='rubyid_block identifier id'>block</span>
 
-  <span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='START constant id'>START</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_START constant id'>START</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1910,11 +1910,11 @@ all readers)</p></div>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 107</span>
 
-<span class='def def kw'>def</span> <span class='each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='each_statement identifier id'>each_statement</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='statement identifier id'>statement</span><span class='bitor op'>|</span>
-    <span class='block identifier id'>block</span><span class='dot token'>.</span><span class='call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='statement identifier id'>statement</span><span class='dot token'>.</span><span class='to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1959,13 +1959,13 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 215</span>
 
-<span class='def def kw'>def</span> <span class='existentialFinish identifier id'>existentialFinish</span>
-  <span class='pd identifier id'>pd</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='forSome identifier id'>forSome</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='pd identifier id'>pd</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
-  <span class='forSome identifier id'>forSome</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span>
-    <span class='@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='term identifier id'>term</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/[\/#]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_existentialFinish identifier id'>existentialFinish</span>
+  <span class='rubyid_pd identifier id'>pd</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_forSome identifier id'>forSome</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_pd identifier id'>pd</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+  <span class='rubyid_forSome identifier id'>forSome</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_term identifier id'>term</span><span class='bitor op'>|</span>
+    <span class='rubyid_@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='rubyid_term identifier id'>term</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Node constant id'>Node</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/[\/#]/</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -1992,9 +1992,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 205</span>
 
-<span class='def def kw'>def</span> <span class='existentialStart identifier id'>existentialStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_existentialStart identifier id'>existentialStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2047,26 +2047,26 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 228</span>
 
-<span class='def def kw'>def</span> <span class='expressionFinish identifier id'>expressionFinish</span>
-  <span class='expression identifier id'>expression</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_expressionFinish identifier id'>expressionFinish</span>
+  <span class='rubyid_expression identifier id'>expression</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
   
   <span class='comment val'># If we're in teh middle of a pathtail, append</span>
-  <span class='if if kw'>if</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
-    <span class='path_list identifier id'>path_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expressionFinish(pathtail)&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;set pathtail to #{path_list.inspect}&quot;</span><span class='rbrace token'>}</span>
-    <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='path_list identifier id'>path_list</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
+    <span class='rubyid_path_list identifier id'>path_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expressionFinish(pathtail)&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;set pathtail to #{path_list.inspect}&quot;</span><span class='rbrace token'>}</span>
+    <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_path_list identifier id'>path_list</span>
 
-    <span class='dir_list identifier id'>dir_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span>
-    <span class='dir_list identifier id'>dir_list</span> <span class='opasgn op'>+=</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span>
-    <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='dir_list identifier id'>dir_list</span> <span class='if if_mod kw'>if</span> <span class='dir_list identifier id'>dir_list</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='process_path identifier id'>process_path</span><span class='lparen token'>(</span><span class='expression identifier id'>expression</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;expressionFinish: FIXME #{expression.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+    <span class='rubyid_dir_list identifier id'>dir_list</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span>
+    <span class='rubyid_dir_list identifier id'>dir_list</span> <span class='opasgn op'>+=</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span>
+    <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_dir_list identifier id'>dir_list</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_dir_list identifier id'>dir_list</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_process_path identifier id'>process_path</span><span class='lparen token'>(</span><span class='rubyid_expression identifier id'>expression</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_expression identifier id'>expression</span><span class='lbrack token'>[</span><span class='symbol val'>:pathitem</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;expressionFinish: FIXME #{expression.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2093,9 +2093,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 223</span>
 
-<span class='def def kw'>def</span> <span class='expressionStart identifier id'>expressionStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_expressionStart identifier id'>expressionStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2122,9 +2122,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 83</span>
 
-<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
-  <span class='sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;#&lt;%s:%#0x(%s)&gt;&quot;</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='name identifier id'>name</span><span class='comma token'>,</span> <span class='__id__ identifier id'>__id__</span><span class='comma token'>,</span> <span class='base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
+  <span class='rubyid_sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;#&lt;%s:%#0x(%s)&gt;&quot;</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid___id__ identifier id'>__id__</span><span class='comma token'>,</span> <span class='rubyid_base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2158,16 +2158,16 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 258</span>
 
-<span class='def def kw'>def</span> <span class='literalFinish identifier id'>literalFinish</span>
-  <span class='lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='content identifier id'>content</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='NTriples constant id'>NTriples</span><span class='dot token'>.</span><span class='unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:string</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='language identifier id'>language</span> <span class='assign token'>=</span> <span class='lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:langcode</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:langcode</span><span class='rbrack token'>]</span>
-  <span class='language identifier id'>language</span> <span class='assign token'>=</span> <span class='language identifier id'>language</span><span class='dot token'>.</span><span class='downcase identifier id'>downcase</span> <span class='if if_mod kw'>if</span> <span class='language identifier id'>language</span> <span class='andop op'>&amp;&amp;</span> <span class='canonicalize? fid id'>canonicalize?</span>
-  <span class='datatype identifier id'>datatype</span> <span class='assign token'>=</span> <span class='lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_literalFinish identifier id'>literalFinish</span>
+  <span class='rubyid_lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='dot token'>.</span><span class='rubyid_unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='rubyid_lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:string</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_language identifier id'>language</span> <span class='assign token'>=</span> <span class='rubyid_lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:langcode</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:langcode</span><span class='rbrack token'>]</span>
+  <span class='rubyid_language identifier id'>language</span> <span class='assign token'>=</span> <span class='rubyid_language identifier id'>language</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_language identifier id'>language</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_canonicalize? fid id'>canonicalize?</span>
+  <span class='rubyid_datatype identifier id'>datatype</span> <span class='assign token'>=</span> <span class='rubyid_lit identifier id'>lit</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span>
   
-  <span class='lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='content identifier id'>content</span><span class='comma token'>,</span> <span class='symbol val'>:language</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='language identifier id'>language</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='datatype identifier id'>datatype</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='lit identifier id'>lit</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_content identifier id'>content</span><span class='comma token'>,</span> <span class='symbol val'>:language</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_language identifier id'>language</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_datatype identifier id'>datatype</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='rubyid_lit identifier id'>lit</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2194,9 +2194,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 249</span>
 
-<span class='def def kw'>def</span> <span class='literalStart identifier id'>literalStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_literalStart identifier id'>literalStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2224,10 +2224,10 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 253</span>
 
-<span class='def def kw'>def</span> <span class='literalToken identifier id'>literalToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='tok identifier id'>tok</span> <span class='assign token'>=</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'&quot;&quot;&quot;'</span> <span class='question op'>?</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>3</span><span class='dot2 op'>..</span><span class='integer val'>-4</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:string</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_literalToken identifier id'>literalToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_tok identifier id'>tok</span> <span class='assign token'>=</span> <span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>3</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'&quot;&quot;&quot;'</span> <span class='question op'>?</span> <span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>3</span><span class='dot2 op'>..</span><span class='integer val'>-4</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:string</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2259,14 +2259,14 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 273</span>
 
-<span class='def def kw'>def</span> <span class='objectFinish identifier id'>objectFinish</span>
-  <span class='object identifier id'>object</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='if if kw'>if</span> <span class='object identifier id'>object</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;objectFinish: FIXME #{object.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_objectFinish identifier id'>objectFinish</span>
+  <span class='rubyid_object identifier id'>object</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_object identifier id'>object</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;objectFinish: FIXME #{object.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2293,9 +2293,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 269</span>
 
-<span class='def def kw'>def</span> <span class='objectStart identifier id'>objectStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_objectStart identifier id'>objectStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2334,12 +2334,12 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 123</span>
 
-<span class='def def kw'>def</span> <span class='onFinish identifier id'>onFinish</span>
-  <span class='prod identifier id'>prod</span> <span class='assign token'>=</span> <span class='@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
-  <span class='handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{prod}Finish&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-  <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;#{prod}: #{@prod_data.last.inspect}&quot;</span><span class='rbrace token'>}</span>
-  <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_onFinish identifier id'>onFinish</span>
+  <span class='rubyid_prod identifier id'>prod</span> <span class='assign token'>=</span> <span class='rubyid_@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='rubyid_handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{prod}Finish&quot;</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+  <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;#{prod}: #{@prod_data.last.inspect}&quot;</span><span class='rbrace token'>}</span>
+  <span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2378,12 +2378,12 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 115</span>
 
-<span class='def def kw'>def</span> <span class='onStart identifier id'>onStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{prod}Start&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-  <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='comma token'>,</span> <span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@productions ivar id'>@productions</span> <span class='lshft op'>&lt;&lt;</span> <span class='prod identifier id'>prod</span>
-  <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='comma token'>,</span> <span class='prod identifier id'>prod</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_onStart identifier id'>onStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{prod}Start&quot;</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+  <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='comma token'>,</span> <span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@productions ivar id'>@productions</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_prod identifier id'>prod</span>
+  <span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='comma token'>,</span> <span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2426,16 +2426,16 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 131</span>
 
-<span class='def def kw'>def</span> <span class='onToken identifier id'>onToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='unless unless kw'>unless</span> <span class='@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span>
-    <span class='parentProd identifier id'>parentProd</span> <span class='assign token'>=</span> <span class='@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
-    <span class='handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{parentProd}Token&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;#{prod}, #{tok}: #{@prod_data.last.inspect}&quot;</span><span class='rbrace token'>}</span>
-    <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='comma token'>,</span> <span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='handler identifier id'>handler</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Token has no parent production&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_onToken identifier id'>onToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+    <span class='rubyid_parentProd identifier id'>parentProd</span> <span class='assign token'>=</span> <span class='rubyid_@productions ivar id'>@productions</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span>
+    <span class='rubyid_handler identifier id'>handler</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;#{parentProd}Token&quot;</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{handler}(#{respond_to?(handler)})&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;#{prod}, #{tok}: #{@prod_data.last.inspect}&quot;</span><span class='rbrace token'>}</span>
+    <span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='comma token'>,</span> <span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='rubyid_handler identifier id'>handler</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Token has no parent production&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2471,18 +2471,18 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 328</span>
 
-<span class='def def kw'>def</span> <span class='pathitemFinish identifier id'>pathitemFinish</span>
-  <span class='pathitem identifier id'>pathitem</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='if if kw'>if</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish(pathlist): FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish(propertylist): FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='elsif elsif kw'>elsif</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:literal</span><span class='rbrack token'>]</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathitem</span><span class='comma token'>,</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:literal</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish: FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathitemFinish identifier id'>pathitemFinish</span>
+  <span class='rubyid_pathitem identifier id'>pathitem</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish(pathlist): FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish(propertylist): FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:literal</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathitem</span><span class='comma token'>,</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_pathitem identifier id'>pathitem</span><span class='lbrack token'>[</span><span class='symbol val'>:literal</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemFinish: FIXME #{pathitem.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2509,9 +2509,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 282</span>
 
-<span class='def def kw'>def</span> <span class='pathitemStart identifier id'>pathitemStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathitemStart identifier id'>pathitemStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2576,47 +2576,47 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 286</span>
 
-<span class='def def kw'>def</span> <span class='pathitemToken identifier id'>pathitemToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='prod identifier id'>prod</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;numericliteral&quot;</span>
-    <span class='nl identifier id'>nl</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='NTriples constant id'>NTriples</span><span class='dot token'>.</span><span class='unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-    <span class='datatype identifier id'>datatype</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='nl identifier id'>nl</span>
-    <span class='when when kw'>when</span> <span class='regexp val'>/e/i</span> <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='double identifier id'>double</span>
-    <span class='when when kw'>when</span> <span class='regexp val'>/\./</span> <span class='then then kw'>then</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='decimal identifier id'>decimal</span>
-    <span class='else else kw'>else</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='integer identifier id'>integer</span>
-    <span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathitemToken identifier id'>pathitemToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_prod identifier id'>prod</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;numericliteral&quot;</span>
+    <span class='rubyid_nl identifier id'>nl</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='dot token'>.</span><span class='rubyid_unescape identifier id'>unescape</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+    <span class='rubyid_datatype identifier id'>datatype</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_nl identifier id'>nl</span>
+    <span class='rubyid_when when kw'>when</span> <span class='regexp val'>/e/i</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_double identifier id'>double</span>
+    <span class='rubyid_when when kw'>when</span> <span class='regexp val'>/\./</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_decimal identifier id'>decimal</span>
+    <span class='rubyid_else else kw'>else</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_integer identifier id'>integer</span>
+    <span class='rubyid_end end kw'>end</span>
     
-    <span class='lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='nl identifier id'>nl</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='datatype identifier id'>datatype</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='lit identifier id'>lit</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;quickvariable&quot;</span>
+    <span class='rubyid_lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_nl identifier id'>nl</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_datatype identifier id'>datatype</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='rubyid_lit identifier id'>lit</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;quickvariable&quot;</span>
     <span class='comment val'># There is a also a shorthand syntax ?x which is the same as :x except that it implies that x is</span>
     <span class='comment val'># universally quantified not in the formula but in its parent formula</span>
-    <span class='uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='process_qname identifier id'>process_qname</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'?'</span><span class='comma token'>,</span> <span class='string val'>':'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='uri identifier id'>uri</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@formulae ivar id'>@formulae</span><span class='lbrack token'>[</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='univar identifier id'>univar</span><span class='lparen token'>(</span><span class='uri identifier id'>uri</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='uri identifier id'>uri</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;boolean&quot;</span>
-    <span class='lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;@&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='XSD constant id'>XSD</span><span class='dot token'>.</span><span class='boolean identifier id'>boolean</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='lit identifier id'>lit</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;[&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;(&quot;</span>
+    <span class='rubyid_uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='rubyid_process_qname identifier id'>process_qname</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='dot token'>.</span><span class='rubyid_sub identifier id'>sub</span><span class='lparen token'>(</span><span class='string val'>'?'</span><span class='comma token'>,</span> <span class='string val'>':'</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rubyid_@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='rubyid_uri identifier id'>uri</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_@formulae ivar id'>@formulae</span><span class='lbrack token'>[</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_univar identifier id'>univar</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;boolean&quot;</span>
+    <span class='rubyid_lit identifier id'>lit</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>&quot;@&quot;</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='symbol val'>:datatype</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_boolean identifier id'>boolean</span><span class='comma token'>,</span> <span class='symbol val'>:validate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_validate? fid id'>validate?</span><span class='comma token'>,</span> <span class='symbol val'>:canonicalize</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_canonicalize? fid id'>canonicalize?</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:literal</span><span class='comma token'>,</span> <span class='rubyid_lit identifier id'>lit</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;[&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;(&quot;</span>
     <span class='comment val'># Push on state for content of blank node</span>
-    <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;]&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;)&quot;</span>
+    <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;]&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;)&quot;</span>
     <span class='comment val'># Construct</span>
-    <span class='symbol identifier id'>symbol</span> <span class='assign token'>=</span> <span class='process_anonnode identifier id'>process_anonnode</span><span class='lparen token'>(</span><span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='symbol identifier id'>symbol</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;{&quot;</span>
+    <span class='rubyid_symbol identifier id'>symbol</span> <span class='assign token'>=</span> <span class='rubyid_process_anonnode identifier id'>process_anonnode</span><span class='lparen token'>(</span><span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='rubyid_symbol identifier id'>symbol</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;{&quot;</span>
     <span class='comment val'># A new formula, push on a graph as a formula context</span>
-    <span class='context identifier id'>context</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Node constant id'>Node</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='rparen token'>)</span>
-    <span class='@formulae ivar id'>@formulae</span> <span class='lshft op'>&lt;&lt;</span> <span class='context identifier id'>context</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;}&quot;</span>
+    <span class='rubyid_context identifier id'>context</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Node constant id'>Node</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='rparen token'>)</span>
+    <span class='rubyid_@formulae ivar id'>@formulae</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_context identifier id'>context</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;}&quot;</span>
     <span class='comment val'># Pop off the formula, and remove any variables defined in this context</span>
-    <span class='formula identifier id'>formula</span> <span class='assign token'>=</span> <span class='@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-    <span class='@variables ivar id'>@variables</span><span class='dot token'>.</span><span class='delete_if identifier id'>delete_if</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span> <span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='lbrack token'>[</span><span class='symbol val'>:formula</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='formula identifier id'>formula</span><span class='rbrace token'>}</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='formula identifier id'>formula</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemToken(#{prod}, #{tok}): FIXME&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+    <span class='rubyid_formula identifier id'>formula</span> <span class='assign token'>=</span> <span class='rubyid_@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+    <span class='rubyid_@variables ivar id'>@variables</span><span class='dot token'>.</span><span class='rubyid_delete_if identifier id'>delete_if</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='comma token'>,</span> <span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span> <span class='rubyid_v identifier id'>v</span><span class='lbrack token'>[</span><span class='symbol val'>:formula</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='rubyid_formula identifier id'>formula</span><span class='rbrace token'>}</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='rubyid_formula identifier id'>formula</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;pathitemToken(#{prod}, #{tok}): FIXME&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2647,13 +2647,13 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 345</span>
 
-<span class='def def kw'>def</span> <span class='pathlistFinish identifier id'>pathlistFinish</span>
-  <span class='pathlist identifier id'>pathlist</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathlistFinish identifier id'>pathlistFinish</span>
+  <span class='rubyid_pathlist identifier id'>pathlist</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
   <span class='comment val'># Flatten propertylist into an array</span>
-  <span class='expr identifier id'>expr</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='rparen token'>)</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathlist</span><span class='comma token'>,</span> <span class='expr identifier id'>expr</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='expr identifier id'>expr</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathlist</span><span class='comma token'>,</span> <span class='pathlist identifier id'>pathlist</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='pathlist identifier id'>pathlist</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_expr identifier id'>expr</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathlist</span><span class='comma token'>,</span> <span class='rubyid_expr identifier id'>expr</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_expr identifier id'>expr</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathlist</span><span class='comma token'>,</span> <span class='rubyid_pathlist identifier id'>pathlist</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_pathlist identifier id'>pathlist</span><span class='lbrack token'>[</span><span class='symbol val'>:pathlist</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2680,9 +2680,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 341</span>
 
-<span class='def def kw'>def</span> <span class='pathlistStart identifier id'>pathlistStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:pathlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathlistStart identifier id'>pathlistStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:pathlist</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2712,12 +2712,12 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 366</span>
 
-<span class='def def kw'>def</span> <span class='pathtailFinish identifier id'>pathtailFinish</span>
-  <span class='pathtail identifier id'>pathtail</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathtail</span><span class='comma token'>,</span> <span class='pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span>
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:directiontail</span><span class='comma token'>,</span> <span class='pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathtailFinish identifier id'>pathtailFinish</span>
+  <span class='rubyid_pathtail identifier id'>pathtail</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:pathtail</span><span class='comma token'>,</span> <span class='rubyid_pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:pathtail</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='rubyid_pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:direction</span><span class='rbrack token'>]</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:directiontail</span><span class='comma token'>,</span> <span class='rubyid_pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_pathtail identifier id'>pathtail</span><span class='lbrack token'>[</span><span class='symbol val'>:directiontail</span><span class='rbrack token'>]</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2744,9 +2744,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 353</span>
 
-<span class='def def kw'>def</span> <span class='pathtailStart identifier id'>pathtailStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:pathtail</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathtailStart identifier id'>pathtailStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='symbol val'>:pathtail</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2778,14 +2778,14 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 357</span>
 
-<span class='def def kw'>def</span> <span class='pathtailToken identifier id'>pathtailToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='tok identifier id'>tok</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;!&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;.&quot;</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='symbol val'>:forward</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>&quot;^&quot;</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='symbol val'>:reverse</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_pathtailToken identifier id'>pathtailToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_tok identifier id'>tok</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;!&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;.&quot;</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='symbol val'>:forward</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;^&quot;</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:direction</span><span class='comma token'>,</span> <span class='symbol val'>:reverse</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2815,12 +2815,12 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 377</span>
 
-<span class='def def kw'>def</span> <span class='propertylistFinish identifier id'>propertylistFinish</span>
-  <span class='propertylist identifier id'>propertylist</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_propertylistFinish identifier id'>propertylistFinish</span>
+  <span class='rubyid_propertylist identifier id'>propertylist</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
   <span class='comment val'># Flatten propertylist into an array</span>
-  <span class='ary identifier id'>ary</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='propertylist identifier id'>propertylist</span><span class='comma token'>,</span> <span class='propertylist identifier id'>propertylist</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:propertylist</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
-  <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='ary identifier id'>ary</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_ary identifier id'>ary</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_propertylist identifier id'>propertylist</span><span class='comma token'>,</span> <span class='rubyid_propertylist identifier id'>propertylist</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:propertylist</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_ary identifier id'>ary</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2847,9 +2847,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 373</span>
 
-<span class='def def kw'>def</span> <span class='propertylistStart identifier id'>propertylistStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_propertylistStart identifier id'>propertylistStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2902,26 +2902,26 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 389</span>
 
-<span class='def def kw'>def</span> <span class='simpleStatementFinish identifier id'>simpleStatementFinish</span>
-  <span class='statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_simpleStatementFinish identifier id'>simpleStatementFinish</span>
+  <span class='rubyid_statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
   
-  <span class='subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='statement identifier id'>statement</span><span class='lbrack token'>[</span><span class='symbol val'>:subject</span><span class='rbrack token'>]</span>
-  <span class='properties identifier id'>properties</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='statement identifier id'>statement</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
-  <span class='properties identifier id'>properties</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span>
-    <span class='predicate identifier id'>predicate</span> <span class='assign token'>=</span> <span class='p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:verb</span><span class='rbrack token'>]</span>
-    <span class='next next kw'>next</span> <span class='unless unless_mod kw'>unless</span> <span class='predicate identifier id'>predicate</span>
-    <span class='add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish(pred)&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='predicate identifier id'>predicate</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrace token'>}</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>%(Illegal statment: &quot;#{predicate}&quot; missing object)</span><span class='rparen token'>)</span> <span class='unless unless_mod kw'>unless</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span>
-    <span class='objects identifier id'>objects</span> <span class='assign token'>=</span><span class='lbrack token'>[</span> <span class='p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:object</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
-    <span class='objects identifier id'>objects</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='object identifier id'>object</span><span class='bitor op'>|</span>
-      <span class='if if kw'>if</span> <span class='p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:invert</span><span class='rbrack token'>]</span>
-        <span class='add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish&quot;</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='subject identifier id'>subject</span><span class='rparen token'>)</span>
-      <span class='else else kw'>else</span>
-        <span class='add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish&quot;</span><span class='comma token'>,</span> <span class='subject identifier id'>subject</span><span class='comma token'>,</span> <span class='predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='object identifier id'>object</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='rubyid_statement identifier id'>statement</span><span class='lbrack token'>[</span><span class='symbol val'>:subject</span><span class='rbrack token'>]</span>
+  <span class='rubyid_properties identifier id'>properties</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_statement identifier id'>statement</span><span class='lbrack token'>[</span><span class='symbol val'>:propertylist</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+  <span class='rubyid_properties identifier id'>properties</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_p identifier id'>p</span><span class='bitor op'>|</span>
+    <span class='rubyid_predicate identifier id'>predicate</span> <span class='assign token'>=</span> <span class='rubyid_p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:verb</span><span class='rbrack token'>]</span>
+    <span class='rubyid_next next kw'>next</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_predicate identifier id'>predicate</span>
+    <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish(pred)&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_predicate identifier id'>predicate</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrace token'>}</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>%(Illegal statment: &quot;#{predicate}&quot; missing object)</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_p identifier id'>p</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:object</span><span class='rparen token'>)</span>
+    <span class='rubyid_objects identifier id'>objects</span> <span class='assign token'>=</span><span class='lbrack token'>[</span> <span class='rubyid_p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:object</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+    <span class='rubyid_objects identifier id'>objects</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_object identifier id'>object</span><span class='bitor op'>|</span>
+      <span class='rubyid_if if kw'>if</span> <span class='rubyid_p identifier id'>p</span><span class='lbrack token'>[</span><span class='symbol val'>:invert</span><span class='rbrack token'>]</span>
+        <span class='rubyid_add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish&quot;</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span>
+      <span class='rubyid_else else kw'>else</span>
+        <span class='rubyid_add_triple identifier id'>add_triple</span><span class='lparen token'>(</span><span class='string val'>&quot;simpleStatementFinish&quot;</span><span class='comma token'>,</span> <span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2948,9 +2948,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 384</span>
 
-<span class='def def kw'>def</span> <span class='simpleStatementStart identifier id'>simpleStatementStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_simpleStatementStart identifier id'>simpleStatementStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -2983,15 +2983,15 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 414</span>
 
-<span class='def def kw'>def</span> <span class='subjectFinish identifier id'>subjectFinish</span>
-  <span class='subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_subjectFinish identifier id'>subjectFinish</span>
+  <span class='rubyid_subject identifier id'>subject</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
   
-  <span class='if if kw'>if</span> <span class='subject identifier id'>subject</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='subject identifier id'>subject</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;unknown expression type&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_subject identifier id'>subject</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='rubyid_subject identifier id'>subject</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;unknown expression type&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3018,9 +3018,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 410</span>
 
-<span class='def def kw'>def</span> <span class='subjectStart identifier id'>subjectStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_subjectStart identifier id'>subjectStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3056,18 +3056,18 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 424</span>
 
-<span class='def def kw'>def</span> <span class='symbolToken identifier id'>symbolToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='term identifier id'>term</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='prod identifier id'>prod</span>
-  <span class='when when kw'>when</span> <span class='string val'>'explicituri'</span>
-    <span class='process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>'qname'</span>
-    <span class='process_qname identifier id'>process_qname</span><span class='lparen token'>(</span><span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;symbolToken(#{prod}, #{tok}): FIXME #{term.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_symbolToken identifier id'>symbolToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_term identifier id'>term</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_prod identifier id'>prod</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'explicituri'</span>
+    <span class='rubyid_process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-2</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'qname'</span>
+    <span class='rubyid_process_qname identifier id'>process_qname</span><span class='lparen token'>(</span><span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;symbolToken(#{prod}, #{tok}): FIXME #{term.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
   
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='term identifier id'>term</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='rubyid_term identifier id'>term</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3112,13 +3112,13 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 447</span>
 
-<span class='def def kw'>def</span> <span class='universalFinish identifier id'>universalFinish</span>
-  <span class='pd identifier id'>pd</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='forAll identifier id'>forAll</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='pd identifier id'>pd</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='compact identifier id'>compact</span>
-  <span class='forAll identifier id'>forAll</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='term identifier id'>term</span><span class='bitor op'>|</span>
-    <span class='@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='term identifier id'>term</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='last identifier id'>last</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='univar identifier id'>univar</span><span class='lparen token'>(</span><span class='term identifier id'>term</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_universalFinish identifier id'>universalFinish</span>
+  <span class='rubyid_pd identifier id'>pd</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_forAll identifier id'>forAll</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_pd identifier id'>pd</span><span class='lbrack token'>[</span><span class='symbol val'>:symbol</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+  <span class='rubyid_forAll identifier id'>forAll</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_term identifier id'>term</span><span class='bitor op'>|</span>
+    <span class='rubyid_@variables ivar id'>@variables</span><span class='lbrack token'>[</span><span class='rubyid_term identifier id'>term</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:formula</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_@formulae ivar id'>@formulae</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='comma token'>,</span> <span class='symbol val'>:var</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_univar identifier id'>univar</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3145,9 +3145,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 437</span>
 
-<span class='def def kw'>def</span> <span class='universalStart identifier id'>universalStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_universalStart identifier id'>universalStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3182,17 +3182,17 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 481</span>
 
-<span class='def def kw'>def</span> <span class='verbFinish identifier id'>verbFinish</span>
-  <span class='verb identifier id'>verb</span> <span class='assign token'>=</span> <span class='@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='pop identifier id'>pop</span>
-  <span class='if if kw'>if</span> <span class='verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Literal may not be used as a predicate&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Literal constant id'>Literal</span><span class='rparen token'>)</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Formula may not be used as a peredicate&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Graph constant id'>Graph</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:verb</span><span class='comma token'>,</span> <span class='verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:invert</span><span class='rbrack token'>]</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;verbFinish: FIXME #{verb.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_verbFinish identifier id'>verbFinish</span>
+  <span class='rubyid_verb identifier id'>verb</span> <span class='assign token'>=</span> <span class='rubyid_@prod_data ivar id'>@prod_data</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Literal may not be used as a predicate&quot;</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='rparen token'>)</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='string val'>&quot;Formula may not be used as a peredicate&quot;</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:verb</span><span class='comma token'>,</span> <span class='rubyid_verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:expression</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_verb identifier id'>verb</span><span class='lbrack token'>[</span><span class='symbol val'>:invert</span><span class='rbrack token'>]</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;verbFinish: FIXME #{verb.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3219,9 +3219,9 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 455</span>
 
-<span class='def def kw'>def</span> <span class='verbStart identifier id'>verbStart</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='rparen token'>)</span>
-  <span class='@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_verbStart identifier id'>verbStart</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='rparen token'>)</span>
+  <span class='rubyid_@prod_data ivar id'>@prod_data</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3266,27 +3266,27 @@ when the formula is completed against all in-scope variables</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-n3-112aac72331e/lib/rdf/n3/reader.rb', line 459</span>
 
-<span class='def def kw'>def</span> <span class='verbToken identifier id'>verbToken</span><span class='lparen token'>(</span><span class='prod identifier id'>prod</span><span class='comma token'>,</span> <span class='tok identifier id'>tok</span><span class='rparen token'>)</span>
-  <span class='term identifier id'>term</span> <span class='assign token'>=</span> <span class='case case kw'>case</span> <span class='prod identifier id'>prod</span>
-  <span class='when when kw'>when</span> <span class='string val'>'&lt;='</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='implies identifier id'>implies</span><span class='rparen token'>)</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>'=&gt;'</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='LOG constant id'>LOG</span><span class='dot token'>.</span><span class='implies identifier id'>implies</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>'='</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='OWL constant id'>OWL</span><span class='dot token'>.</span><span class='sameAs identifier id'>sameAs</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>'@a'</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='RDF constant id'>RDF</span><span class='dot token'>.</span><span class='type identifier id'>type</span><span class='rparen token'>)</span>
-  <span class='when when kw'>when</span> <span class='string val'>'@has'</span><span class='comma token'>,</span> <span class='string val'>&quot;@of&quot;</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_verbToken identifier id'>verbToken</span><span class='lparen token'>(</span><span class='rubyid_prod identifier id'>prod</span><span class='comma token'>,</span> <span class='rubyid_tok identifier id'>tok</span><span class='rparen token'>)</span>
+  <span class='rubyid_term identifier id'>term</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_prod identifier id'>prod</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'&lt;='</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_LOG constant id'>LOG</span><span class='dot token'>.</span><span class='rubyid_implies identifier id'>implies</span><span class='rparen token'>)</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'=&gt;'</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_LOG constant id'>LOG</span><span class='dot token'>.</span><span class='rubyid_implies identifier id'>implies</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'='</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_OWL constant id'>OWL</span><span class='dot token'>.</span><span class='rubyid_sameAs identifier id'>sameAs</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'@a'</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:expression</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span><span class='rparen token'>)</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'@has'</span><span class='comma token'>,</span> <span class='string val'>&quot;@of&quot;</span>
     <span class='comment val'># Syntactic sugar</span>
-  <span class='when when kw'>when</span> <span class='string val'>'@is'</span>
-    <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;verbToken(#{prod}, #{tok}): FIXME #{term.inspect}&quot;</span><span class='rparen token'>)</span>
-  <span class='end end kw'>end</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>'@is'</span>
+    <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:invert</span><span class='comma token'>,</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='dstring node'>&quot;verbToken(#{prod}, #{tok}): FIXME #{term.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
   
-  <span class='add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='term identifier id'>term</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
+  <span class='rubyid_add_prod_data identifier id'>add_prod_data</span><span class='lparen token'>(</span><span class='symbol val'>:symbol</span><span class='comma token'>,</span> <span class='rubyid_term identifier id'>term</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
   </tr>
@@ -3298,9 +3298,9 @@ when the formula is completed against all in-scope variables</p>
 </div>
     
     <div id="footer">
-  Generated on Fri Nov 18 17:41:59 2011 by 
+  Generated on Fri Jan  6 18:06:32 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.4 (ruby-1.8.7).
 </div>
 
   </body>

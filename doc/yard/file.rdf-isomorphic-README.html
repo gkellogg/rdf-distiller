@@ -63,22 +63,22 @@ That includes RDF::Repository, RDF::Graph, query results, and more.</p>
 
 <h2>Synopsis:</h2>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
-<span class='require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
 
 
-<span class='a identifier id'>a</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-1.nt'</span>
-<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='rubyid_a identifier id'>a</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-1.nt'</span>
+<span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
 <span class='comment val'># &lt; RDF::Statement:0xd344c4(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:abc&gt; .) &gt;</span>
 
-<span class='b identifier id'>b</span> <span class='assign token'>=</span> <span class='RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='Repository constant id'>Repository</span><span class='dot token'>.</span><span class='load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-2.nt'</span>
-<span class='b identifier id'>b</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+<span class='rubyid_b identifier id'>b</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span> <span class='string val'>'./tests/isomorphic/test1/test1-2.nt'</span>
+<span class='rubyid_b identifier id'>b</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span>
 <span class='comment val'># &lt; RDF::Statement:0xd3801a(&lt;http://example.org/a&gt; &lt;http://example.org/prop&gt; &lt;_:testing&gt; .) &gt;</span>
 
-<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='isomorphic_with? fid id'>isomorphic_with?</span> <span class='b identifier id'>b</span>
+<span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_isomorphic_with? fid id'>isomorphic_with?</span> <span class='rubyid_b identifier id'>b</span>
 <span class='comment val'># true</span>
 
-<span class='a identifier id'>a</span><span class='dot token'>.</span><span class='bijection_to identifier id'>bijection_to</span> <span class='b identifier id'>b</span>
+<span class='rubyid_a identifier id'>a</span><span class='dot token'>.</span><span class='rubyid_bijection_to identifier id'>bijection_to</span> <span class='rubyid_b identifier id'>b</span>
 <span class='comment val'># { #&lt;RDF::Node:0xd345a0(_:abc)&gt;=&gt;#&lt;RDF::Node:0xd38574(_:testing)&gt; }</span>
 </pre>
 
@@ -101,20 +101,20 @@ can sometimes be a factorial-complexity problem and it seemed better to perhaps
 not overwrite such a commonly used method for that.  But it's really useful for
 specs in RDF libraries.  Try this in your tests:</p>
 
-<pre class="code"><span class='require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
-<span class='module module kw'>module</span> <span class='RDF constant id'>RDF</span>
-  <span class='module module kw'>module</span> <span class='Isomorphic constant id'>Isomorphic</span>
-    <span class='alias_method identifier id'>alias_method</span> <span class='symbol val'>:==</span><span class='comma token'>,</span> <span class='symbol val'>:isomorphic_with?</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<pre class="code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/isomorphic'</span>
+<span class='rubyid_module module kw'>module</span> <span class='rubyid_RDF constant id'>RDF</span>
+  <span class='rubyid_module module kw'>module</span> <span class='rubyid_Isomorphic constant id'>Isomorphic</span>
+    <span class='rubyid_alias_method identifier id'>alias_method</span> <span class='symbol val'>:==</span><span class='comma token'>,</span> <span class='symbol val'>:isomorphic_with?</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 
-<span class='describe identifier id'>describe</span> <span class='string val'>'something'</span> <span class='do do kw'>do</span>
-  <span class='context identifier id'>context</span> <span class='string val'>'does'</span> <span class='do do kw'>do</span>
-    <span class='it identifier id'>it</span> <span class='string val'>'should be equal'</span> <span class='do do kw'>do</span>
-      <span class='repository_a identifier id'>repository_a</span><span class='dot token'>.</span><span class='should identifier id'>should</span> <span class='eq op'>==</span> <span class='repository_b identifier id'>repository_b</span>
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
+<span class='rubyid_describe identifier id'>describe</span> <span class='string val'>'something'</span> <span class='rubyid_do do kw'>do</span>
+  <span class='rubyid_context identifier id'>context</span> <span class='string val'>'does'</span> <span class='rubyid_do do kw'>do</span>
+    <span class='rubyid_it identifier id'>it</span> <span class='string val'>'should be equal'</span> <span class='rubyid_do do kw'>do</span>
+      <span class='rubyid_repository_a identifier id'>repository_a</span><span class='dot token'>.</span><span class='rubyid_should identifier id'>should</span> <span class='eq op'>==</span> <span class='rubyid_repository_b identifier id'>repository_b</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
 </pre>
 
 <h3>Information</h3>
@@ -141,9 +141,9 @@ specs in RDF libraries.  Try this in your tests:</p>
 more information, see the accompanying UNLICENSE file or <a href="http://unlicense.org">http://unlicense.org</a></p></div></div>
     
     <div id="footer">
-  Generated on Fri Nov 18 17:41:36 2011 by 
+  Generated on Fri Jan  6 18:05:57 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.3 (ruby-1.8.7).
+  0.7.4 (ruby-1.8.7).
 </div>
 
   </body>

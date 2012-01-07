@@ -4,6 +4,7 @@ require 'sinatra/partials'
 require 'erubis'
 require 'rdf/microdata'
 require 'rdf/turtle'
+require 'rdf/trig'
 require 'json/ld'
 
 module RDF
