@@ -34,3 +34,25 @@ task :readme do
     FileUtils.ln_s path, "#{d}-README" unless File.exist?("#{d}-README")
   end
 end
+
+desc "Create DOAP links"
+task :doap do
+  require 'linkeddata'
+  require 'rdf/trig'
+  require 'json/ld'
+  require 'rdf/json'
+  require 'rdf/microdata'
+  require 'equivalent-xml'
+  require 'yaml'
+
+  g = RDF::Repository.new
+  Dir.glob('vendor/bundler/**/etc/doap.*') do |path|
+    begin
+      puts "load #{path}"
+      g.load(path)
+    rescue
+      puts "#{$!}"
+    end
+  end
+  RDF::NTriples::Writer.open("etc/doap.nt") {|w| w << g}
+end
