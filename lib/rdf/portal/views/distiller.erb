@@ -33,13 +33,13 @@ params["fmt"] ||= :ttl
           <option value="content" <%= 'selected="selected"' if params["in_fmt"].to_s == "content" %>>
             Content Detect
           </option>
-          <% formats(:reader).each do |sym| %>
+          <% formats(:reader).map(&:to_s).sort.uniq.each do |sym| %>
             <option value="<%=sym%>" <%= 'selected="selected"' if params["in_fmt"].to_s == sym.to_s %>><%=sym %></option>
           <% end %>
         </select>
         <label for="fmt">Output Format:</label>
         <select id="fmt" name="fmt">
-          <% formats(:writer).each do |sym| %>
+          <% formats(:writer).map(&:to_s).sort.uniq.each do |sym| %>
             <option value="<%=sym%>" <%= 'selected="selected"' if params["fmt"].to_s == sym.to_s %>><%=sym %></option>
           <% end %>
         </select>

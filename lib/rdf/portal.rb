@@ -17,6 +17,7 @@ module RDF
       helpers Sinatra::Partials
       #use Rack::LinkedData::ContentNegotiation, :default => "text/html"
       set :views, ::File.expand_path('../portal/views',  __FILE__)
+      DOAP_FILE = File.expand_path("../../etc/doap.nt", File.dirname(__FILE__))
 
       before do
         puts "[#{request.path_info}], #{params.inspect}"
@@ -32,6 +33,18 @@ module RDF
         erb :about, :locals => {:title => "About the Ruby Linked Data Service"}
       end
 
+      get '/doap' do
+        cache_control :public, :must_revalidate, :max_age => 60
+        params["fmt"], content_type = writer(params["fmt"] || :ntriples)
+        status 200
+        headers "Allow" => "GET", "Content-Type" => content_type
+        if content_type == "text/plain"
+          File.read(DOAP_FILE)
+        else
+          doap.dump(params["fmt"].to_sym, :standard_prefixes => true)
+        end
+      end
+
       get '/distiller' do
         distil
       end
@@ -40,12 +53,20 @@ module RDF
         distil
       end
       
+      get '/sparql' do
+        sparql
+      end
+
+      post '/sparql' do
+        sparql
+      end
+
       private
 
       # Handle GET/POST /distiller
       def distil
         content_type, content = parse
-        if !params["raw"].to_s.empty?
+        if !content_type.match('html') || !params["raw"].to_s.empty?
           puts "render distilled content as type #{content_type}"
           status 200
           headers "Allow" => "GET, POST", "Content-Type" => content_type
@@ -56,6 +77,24 @@ module RDF
         end
       end
       
+      # Handle GET/POST /sparql
+      def sparql
+        content_type, content = query
+        if !content_type.match('html') || !params["raw"].to_s.empty?
+          puts "render query results as type #{content_type}"
+          status 200
+          headers "Allow" => "GET, POST", "Content-Type" => content_type
+          body content
+        else
+          @output = content unless content == @error
+          erb :sparql, :locals => {
+            :title => "SPARQL Endpoint",
+            :head => :distiller,
+            :doap_count => doap.count
+          }
+        end
+      end
+
       # Return ordered accept mime-types
       def accepts
         types = []
@@ -93,6 +132,14 @@ module RDF
           reader_or_writer != :reader || f.reader
           reader_or_writer != :writer || f.writer
         end.map(&:to_sym).sort_by(&:to_s)
+      end
+
+      ## Default graph, loaded from DOAP file
+      def doap
+        @doap ||= begin
+          puts "load #{DOAP_FILE}"
+          RDF::Repository.load(DOAP_FILE)
+        end
       end
 
       # Parse the an input file and re-serialize based on params and/or content-type/accept headers
@@ -169,7 +216,110 @@ module RDF
           ["text/plain", @error]
         end
       end
+
+      # Perform a SPARQL query, either on the input URI or the form data
+      def query
+        sparql_opts = {
+          :base_uri => params["uri"],
+          :validate => params["validate"],
+        }
+        sparql_opts[:format] = params["fmt"].to_sym if params["fmt"]
+        sparql_opts[:debug] = @debug = [] if params["debug"]
+
+        sxp = nil
+
+        case
+        when !params["query"].to_s.empty?
+          @query = params["query"]
+          puts "Open form data: #{@query.inspect}"
+          sxp = SPARQL.parse(@query, sparql_opts)
+        when !params["uri"].to_s.empty?
+          puts "Open uri <#{params["uri"]}>"
+          RDF::Util::File.open_file(params["uri"]) do |f|
+            sxp = SPARQL.parse(f, sparql_opts)
+          end
+        else
+          # Otherwise, return service description
+          params["fmt"], content_type = writer(params["fmt"])
+          puts "SSD: content_type=#{content_type.inspect}"
+          case content_type
+          when nil, "text/html", "application/xhtml+xml"
+            return [content_type || "text/html", ""]
+          else
+            # Serialize service description graph
+            return [content_type, service_description.dump(params["fmt"].to_sym, :standard_prefixes => true)]
+          end
+        end
+
+        raise "No SPARQL query created" unless sxp
+
+        return ["application/sse+json", sxp.to_sxp] if params["fmt"].to_s == "sse"
+
+        puts "execute query"
+        solutions = sxp.execute(doap, sparql_opts)
+
+        results = SPARQL.serialize_results(solutions, sparql_opts.merge(:standard_prefixes => true))
+        [results.content_type, results]
+      rescue
+        raise unless settings.environment == :production
+        @error = "#{$!.class}: #{$!.message}"
+        puts @error  # to log
+        content_type ||= "text/html" if accepts.include?("text/html")
+        content_type ||= "application/xml" if accepts.include?("application/xml")
+        content_type ||= "text/plain"
+        case content_type
+        when "application/xml"
+          [content_type, @error.to_xml]
+        when "text/html"
+          [content_type, @error] # XXX
+        else
+          ["text/plain", @error]
+        end
+      end
+
+      ##
+      # Return a service description graph
+      #
+      # @see http://www.w3.org/TR/sparql11-service-description
+      def service_description
+        @ssd ||= begin
+          g = RDF::Graph.new
+          sd = RDF::URI("http://www.w3.org/ns/sparql-service-description#")
+          void = RDF::URI("http://rdfs.org/ns/void#")
+        
+          node = RDF::Node.new
+          g << [node, RDF.type, sd.join("Service")]
+          g << [node, sd.join("endpoint"), url("/sparql")]
+          g << [node, sd.join("supportedLanguage"), sd.join("SPARQL10Query")]
+        
+          # Result formats, both RDF and SPARQL Results.
+          # FIXME: We should get this from the avaliable serializers
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/RDF_XML")]
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/Turtle")]
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/RDFa")]
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/N-Triples")]
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/SPARQL_RESULTS_XML")]
+          g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/SPARQL_RESULTS_JSON")]
+        
+          # Features
+          g << [node, sd.join("feature"), sd.join("DereferencesURIs")]
+        
+          # Datasets
+          ds = RDF::Node.new
+          g << [node, sd.join("defaultDataset"), ds]
+          g << [ds, RDF.type, sd.join("Dataset")]
+        
+          # Default graph
+          dg = RDF::Node.new
+          g << [ds, sd.join("defaultGraph"), dg]
+          g << [dg, RDF.type, sd.join("Graph")]
+          g << [dg, void.join("triples"), doap.count]
+          g << [dg, void.join("dataDump"), url("/doap")]
+          g
+        end
+      end
     end
+
   end
 
   module Util::File
