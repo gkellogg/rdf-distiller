@@ -18,7 +18,7 @@ params["fmt"] ||= :html
           <acronym title="Description of a Project">DOAP</acronym>
         </a>
         information about gems included in the RDF Portal. A dump of the default dataset can be retrieved
-        from <a property="void:dataDump" href="/doap"><%=url("/doap")%><a>.
+        from <a property="void:dataDump" href="/doap.nt"><%=url("/doap.nt")%><a>.
       </span>
     </span>
   </p>
@@ -110,8 +110,8 @@ params["fmt"] ||= :html
   <pre class="alt_acess">
     <%=
       url = url('/sparql')
-      url_params = ["raw=true"]
-      url_params << %(fmt=#{params["fmt"]}) unless params["fmt"].nil? || params["fmt"].to_s == "accept"
+      url_params = []
+      url_params << %(format=#{params["fmt"] || xml})
       url_params << %(query=#{CGI.escape(params["query"].to_s)}) if params["query"]
       url_params << %(url=#{params["uri"]}) unless params["uri"].nil?
       url += "?#{url_params.join('&')}" unless url_params.empty?

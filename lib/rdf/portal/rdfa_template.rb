@@ -8,16 +8,16 @@ module RDF::Portal
     :doc => %q(
       !!! XML
       !!! 5
-      %html{:xmlns => "http://www.w3.org/1999/xhtml", :lang => lang, :profile => profile, :prefix => prefix}
+      %html{:xmlns => "http://www.w3.org/1999/xhtml", :lang => lang, :prefix => prefix}
         - if base || title
           %head
             - if base
               %base{:href => base}
             - if title
               %title= title
-            %link{:rel => "stylesheet", :href => "--root--/css/distiller.css", :type => "text/css"}
+            %link{:rel => "stylesheet", :href => "http://rdf.kellogg-assoc.com/css/distiller.css", :type => "text/css"}
             %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js", :type => "text/javascript"}
-            %script{:src => "--root--/js/distiller.js", :type => "text/javascript"}
+            %script{:src => "http://rdf.kellogg-assoc.com/js/distiller.js", :type => "text/javascript"}
         %body
           - if base
             %p= "RDFa serialization URI base: &lt;#{base}&gt;"
@@ -39,26 +39,14 @@ module RDF::Portal
     # Yield: predicates.each
     :subject => %q(
       - if element == :li
-        %li{:rel => rel, :resource => resource, :inlist => inlist}
+        %li{:rel => rel, :resource => (about || resource), :typeof => typeof, :inlist => inlist}
           - if typeof
-            %span{:rel => 'rdf:type', :resource => typeof}.type!= typeof
-          %table.properties
-            - predicates.each do |predicate|
-              != yield(predicate)
-      - elsif rel && typeof
-        %td{:rel => rel, :inlist => inlist}
-          %div{:about => resource, :typeof => typeof}
             %span.type!= typeof
-            %table.properties
-              - predicates.each do |predicate|
-                != yield(predicate)
-      - elsif rel
-        %td{:rel => rel, :resource => resource, :inlist => inlist}
           %table.properties
             - predicates.each do |predicate|
               != yield(predicate)
       - else
-        %div{:about => about, :typeof => typeof}
+        %td{:rel => rel, :resource => (about || resource), :typeof => typeof, :inlist => inlist}
           - if typeof
             %span.type!= typeof
           %table.properties
@@ -83,10 +71,10 @@ module RDF::Portal
           - elsif get_curie(object) == 'rdf:nil'
             %td{:rel => get_curie(predicate), :inlist => ''}= "Empty"
           - elsif object.node?
-            %td{:resource => get_curie(object), :rel => get_curie(predicate), :inlist => inlist}= get_curie(object)
+            %td{:property => get_curie(predicate), :resource => get_curie(object), :inlist => inlist}= get_curie(object)
           - elsif object.uri?
             %td
-              %a{:href => object.to_s, :rel => get_curie(predicate), :inlist => inlist}= object.to_s
+              %a{:property => get_curie(predicate), :href => object.to_s, :inlist => inlist}= object.to_s
           - elsif object.datatype == RDF.XMLLiteral
             %td{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_dt_curie(object), :inlist => inlist}<!= get_value(object)
           - else
@@ -106,10 +94,10 @@ module RDF::Portal
               - if res = yield(object)
                 != res
               - elsif object.node?
-                %li{:rel => get_curie(predicate), :resource => get_curie(object), :inlist => inlist}= get_curie(object)
+                %li{:property => get_curie(predicate), :resource => get_curie(object), :inlist => inlist}= get_curie(object)
               - elsif object.uri?
                 %li
-                  %a{:rel => get_curie(predicate), :href => object.to_s, :inlist => inlist}= object.to_s
+                  %a{:property => get_curie(predicate), :href => object.to_s, :inlist => inlist}= object.to_s
               - elsif object.datatype == RDF.XMLLiteral
                 %li{:property => get_curie(predicate), :lang => get_lang(object), :datatype => get_curie(object.datatype), :inlist => inlist}<!= get_value(object)
               - else

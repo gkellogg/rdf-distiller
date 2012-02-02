@@ -96,8 +96,7 @@ params["fmt"] ||= :ttl
     <%=
       url = url('/distiller')
       base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
-      url_params = ["raw=true"]
-      url_params << %(fmt=#{params["fmt"]}) unless params["fmt"].nil? || params["fmt"].to_s == "accept"
+      url_params = ["format=#{params["fmt"] || ttl}"]
       url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
       url_params << %(uri=#{base})
       url += "?#{url_params.join('&')}" unless url_params.empty?
