@@ -1,0 +1,832 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RDF::TriG::Writer
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (W)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../TriG.html" title="RDF::TriG (module)">TriG</a></span></span>
+     &raquo; 
+    <span class="title">Writer</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: RDF::TriG::Writer
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Turtle/Writer.html" title="RDF::Turtle::Writer (class)">RDF::Turtle::Writer</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Turtle/Writer.html" title="RDF::Turtle::Writer (class)">RDF::Turtle::Writer</a></span></li>
+          
+            <li class="next">RDF::TriG::Writer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-trig-957b68d4583d/lib/rdf/trig/writer.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A TriG serialiser</p>
+
+<p>Note that the natural interface is to write a whole repository at a time.
+Writing statements or Triples will create a repository to add them to
+and then serialize the repository.</p>
+
+<p>The writer will add prefix definitions, and use them for creating @prefix definitions, and minting QNames</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Obtaining a TriG writer class</p></div></h4>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:trig</span><span class='rparen token'>)</span>         <span class='comment val'>#=&gt; RDF::TriG::Writer</span>
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.trig&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_name</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;etc/test.trig&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_extension</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;trig&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:content_type</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;application/trig&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+      <h4><div class='inline'><p>Serializing RDF repo into an TriG file</p></div></h4>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_TriG constant id'>TriG</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.trig&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_repo identifier id'>repo</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Serializing RDF statements into an TriG file</p></div></h4>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_TriG constant id'>TriG</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.trig&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Serializing RDF statements into an TriG string</p></div></h4>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_TriG constant id'>TriG</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    
+      <h4><div class='inline'><p>Creating @base and @prefix definitions in output</p></div></h4>
+      <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_TriG constant id'>TriG</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span><span class='lparen token'>(</span><span class='symbol val'>:base_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:prefixes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+    <span class='rubyid_nil nil kw'>nil</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/ns#&quot;</span><span class='comma token'>,</span>
+    <span class='symbol val'>:foaf</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://xmlns.com/foaf/0.1/&quot;</span><span class='rbrace token'>}</span>
+<span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
+  <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    
+  </div>
+
+<h3>Author:</h3>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p><a href="http://kellogg-assoc.com/">Gregg Kellogg</a></p></div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Writer/ContextFilteredRepo.html" title="RDF::TriG::Writer::ContextFilteredRepo (class)">ContextFilteredRepo</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Turtle/Writer.html" title="RDF::Turtle::Writer (class)">RDF::Turtle::Writer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Turtle/Writer.html#base_uri-instance_method" title="RDF::Turtle::Writer#base_uri (method)">#base_uri</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#graph-instance_method" title="RDF::Turtle::Writer#graph (method)">#graph</a></span></p>
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Writer.html#options-instance_method" title="RDF::Writer#options (method)">#options</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Writer) <strong>initialize</strong>(output = $stdout, options = {}) {|writer| ... }</a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initializes the TriG writer instance.</p></div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#order_contexts-instance_method" title="#order_contexts (instance method)">- (Object) <strong>order_contexts</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Order contexts for output.</p></div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#preprocess_statement-instance_method" title="#preprocess_statement (instance method)">- (Object) <strong>preprocess_statement</strong>(statement) </a>
+    
+
+    
+  </span>
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Perform any statement preprocessing required.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#write_epilogue-instance_method" title="#write_epilogue (instance method)">- <strong>write_epilogue</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Outputs the TriG representation of all stored triples.</p></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Turtle/Writer.html" title="RDF::Turtle::Writer (class)">RDF::Turtle::Writer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Turtle/Writer.html#debug-instance_method" title="RDF::Turtle::Writer#debug (method)">#debug</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#format_literal-instance_method" title="RDF::Turtle::Writer#format_literal (method)">#format_literal</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#format_node-instance_method" title="RDF::Turtle::Writer#format_node (method)">#format_node</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#format_uri-instance_method" title="RDF::Turtle::Writer#format_uri (method)">#format_uri</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#get_pname-instance_method" title="RDF::Turtle::Writer#get_pname (method)">#get_pname</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#indent-instance_method" title="RDF::Turtle::Writer#indent (method)">#indent</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#order_subjects-instance_method" title="RDF::Turtle::Writer#order_subjects (method)">#order_subjects</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#predicate_order-instance_method" title="RDF::Turtle::Writer#predicate_order (method)">#predicate_order</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#preprocess-instance_method" title="RDF::Turtle::Writer#preprocess (method)">#preprocess</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#quoted-instance_method" title="RDF::Turtle::Writer#quoted (method)">#quoted</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#ref_count-instance_method" title="RDF::Turtle::Writer#ref_count (method)">#ref_count</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#relativize-instance_method" title="RDF::Turtle::Writer#relativize (method)">#relativize</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#reset-instance_method" title="RDF::Turtle::Writer#reset (method)">#reset</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#sort_properties-instance_method" title="RDF::Turtle::Writer#sort_properties (method)">#sort_properties</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#start_document-instance_method" title="RDF::Turtle::Writer#start_document (method)">#start_document</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#top_classes-instance_method" title="RDF::Turtle::Writer#top_classes (method)">#top_classes</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#write_graph-instance_method" title="RDF::Turtle::Writer#write_graph (method)">#write_graph</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#write_statement-instance_method" title="RDF::Turtle::Writer#write_statement (method)">#write_statement</a></span>, <span class='object_link'><a href="../Turtle/Writer.html#write_triple-instance_method" title="RDF::Turtle::Writer#write_triple (method)">#write_triple</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Writer.html#base_uri-instance_method" title="RDF::Writer#base_uri (method)">#base_uri</a></span>, <span class='object_link'><a href="../Writer.html#buffer-class_method" title="RDF::Writer.buffer (method)">buffer</a></span>, <span class='object_link'><a href="../Writer.html#dump-class_method" title="RDF::Writer.dump (method)">dump</a></span>, <span class='object_link'><a href="../Writer.html#each-class_method" title="RDF::Writer.each (method)">each</a></span>, <span class='object_link'><a href="../Writer.html#escaped-instance_method" title="RDF::Writer#escaped (method)">#escaped</a></span>, <span class='object_link'><a href="../Writer.html#flush-instance_method" title="RDF::Writer#flush (method)">#flush</a></span>, <span class='object_link'><a href="../Writer.html#for-class_method" title="RDF::Writer.for (method)">for</a></span>, <span class='object_link'><a href="../Writer.html#format-class_method" title="RDF::Writer.format (method)">format</a></span>, <span class='object_link'><a href="../Writer.html#format_list-instance_method" title="RDF::Writer#format_list (method)">#format_list</a></span>, <span class='object_link'><a href="../Writer.html#format_literal-instance_method" title="RDF::Writer#format_literal (method)">#format_literal</a></span>, <span class='object_link'><a href="../Writer.html#format_node-instance_method" title="RDF::Writer#format_node (method)">#format_node</a></span>, <span class='object_link'><a href="../Writer.html#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span>, <span class='object_link'><a href="../Writer.html#format_uri-instance_method" title="RDF::Writer#format_uri (method)">#format_uri</a></span>, <span class='object_link'><a href="../Writer.html#node_id-instance_method" title="RDF::Writer#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="../Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span>, <span class='object_link'><a href="../Writer.html#prefix-instance_method" title="RDF::Writer#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Writer.html#prefixes-instance_method" title="RDF::Writer#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Writer.html#prefixes%3D-instance_method" title="RDF::Writer#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Writer.html#puts-instance_method" title="RDF::Writer#puts (method)">#puts</a></span>, <span class='object_link'><a href="../Writer.html#quoted-instance_method" title="RDF::Writer#quoted (method)">#quoted</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-instance_method" title="RDF::Writer#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-class_method" title="RDF::Writer.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Writer.html#uri_for-instance_method" title="RDF::Writer#uri_for (method)">#uri_for</a></span>, <span class='object_link'><a href="../Writer.html#write_comment-instance_method" title="RDF::Writer#write_comment (method)">#write_comment</a></span>, <span class='object_link'><a href="../Writer.html#write_graph-instance_method" title="RDF::Writer#write_graph (method)">#write_graph</a></span>, <span class='object_link'><a href="../Writer.html#write_prologue-instance_method" title="RDF::Writer#write_prologue (method)">#write_prologue</a></span>, <span class='object_link'><a href="../Writer.html#write_statement-instance_method" title="RDF::Writer#write_statement (method)">#write_statement</a></span>, <span class='object_link'><a href="../Writer.html#write_statements-instance_method" title="RDF::Writer#write_statements (method)">#write_statements</a></span>, <span class='object_link'><a href="../Writer.html#write_triple-instance_method" title="RDF::Writer#write_triple (method)">#write_triple</a></span>, <span class='object_link'><a href="../Writer.html#write_triples-instance_method" title="RDF::Writer#write_triples (method)">#write_triples</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">#alias_method</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="../Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="../Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="../Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="../Writable.html#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span>, <span class='object_link'><a href="../Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="../Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::TriG::Writer (class)">Writer</a></span></tt>) <strong>initialize</strong>(output = $stdout, options = {}) {|writer| ... }
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Initializes the TriG writer instance.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>output</span>
+      
+      
+        <span class='type'>(<tt>IO</tt>, <tt>File</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>$stdout</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>the output stream</p></div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>any additional options</p></div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:encoding</span>
+          <span class="type">(<tt>Encoding</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>Encoding::UTF_8</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>the encoding to use on the output stream (Ruby 1.9+)</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:canonicalize</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:prefixes</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>Hash.new</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:base_uri</span>
+          <span class="type">(<tt>#to_s</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:max_depth</span>
+          <span class="type">(<tt><span class='object_link'><a href="../../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>3</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>Maximum depth for recursively defining resources, defaults to 3</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:standard_prefixes</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>false</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>Add standard prefixes to @prefixes, if necessary.</p></div>
+        </li>
+      
+        <li>
+          <span class="name">:default_namespace</span>
+          <span class="type">(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash; <div class='inline'><p>URI to use as default namespace, same as prefixes[nil]</p></div>
+        </li>
+      
+    </ul>
+  
+
+<h3>Yields:</h3>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>writer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p><code>self</code></p></div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>writer</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Parameters:</h3>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>writer</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>writer</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Yield Returns:</h3>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-trig-957b68d4583d/lib/rdf/trig/writer.rb', line 113</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_output identifier id'>output</span> <span class='assign token'>=</span> <span class='rubyid_$stdout gvar id'>$stdout</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_super super kw'>super</span> <span class='rubyid_do do kw'>do</span>
+    <span class='comment val'># Set both @repo and @graph to a new repository.</span>
+    <span class='comment val'># When serializing a context, @graph is changed</span>
+    <span class='comment val'># to a ContextFilteredRepo</span>
+    <span class='rubyid_@repo ivar id'>@repo</span> <span class='assign token'>=</span> <span class='rubyid_@graph ivar id'>@graph</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+      <span class='rubyid_case case kw'>case</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_arity identifier id'>arity</span>
+        <span class='rubyid_when when kw'>when</span> <span class='integer val'>0</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_instance_eval identifier id'>instance_eval</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+        <span class='rubyid_else else kw'>else</span> <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="order_contexts-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>order_contexts</strong>  <span class="extras">(protected)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Order contexts for output</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175
+176
+177
+178
+179
+180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-trig-957b68d4583d/lib/rdf/trig/writer.rb', line 172</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_order_contexts identifier id'>order_contexts</span>
+  <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;order_contexts&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_contexts identifier id'>contexts</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+  <span class='rubyid_contexts identifier id'>contexts</span> <span class='assign token'>=</span> <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_contexts identifier id'>contexts</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_sort identifier id'>sort</span>
+  
+  <span class='comment val'># include default context, if necessary</span>
+  <span class='rubyid_contexts identifier id'>contexts</span><span class='dot token'>.</span><span class='rubyid_unshift identifier id'>unshift</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_false false kw'>false</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+  
+  <span class='rubyid_contexts identifier id'>contexts</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="preprocess_statement-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>preprocess_statement</strong>(statement)  <span class="extras">(protected)</span>
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Perform any statement preprocessing required. This is used to perform reference counts and determine required
+prefixes.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>statement</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Statement.html" title="RDF::Statement (class)">Statement</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+185
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-trig-957b68d4583d/lib/rdf/trig/writer.rb', line 185</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_preprocess_statement identifier id'>preprocess_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='rubyid_super super kw'>super</span>
+  <span class='rubyid_get_pname identifier id'>get_pname</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_has_context? fid id'>has_context?</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="write_epilogue-instance_method">
+  
+    - <strong>write_epilogue</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Outputs the TriG representation of all stored triples.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <h3>See Also:</h3>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Turtle/Writer.html#write_triple-instance_method" title="RDF::Turtle::Writer#write_triple (method)">RDF::Turtle::Writer#write_triple</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-trig-957b68d4583d/lib/rdf/trig/writer.rb', line 133</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_write_epilogue identifier id'>write_epilogue</span>
+  <span class='rubyid_@max_depth ivar id'>@max_depth</span> <span class='assign token'>=</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:max_depth</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>3</span>
+  <span class='rubyid_@base_uri ivar id'>@base_uri</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='lparen token'>(</span><span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+
+  <span class='rubyid_reset identifier id'>reset</span>
+
+  <span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;\nserialize: repo: #{@repo.size}&quot;</span><span class='rbrace token'>}</span>
+
+  <span class='rubyid_preprocess identifier id'>preprocess</span>
+  <span class='rubyid_start_document identifier id'>start_document</span>
+
+  <span class='rubyid_order_contexts identifier id'>order_contexts</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_ctx identifier id'>ctx</span><span class='bitor op'>|</span>
+    <span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;context: #{ctx.inspect}&quot;</span><span class='rbrace token'>}</span>
+    <span class='rubyid_reset identifier id'>reset</span>
+    <span class='rubyid_@depth ivar id'>@depth</span> <span class='assign token'>=</span> <span class='integer val'>2</span>
+
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_ctx identifier id'>ctx</span>
+      <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='dstring node'>&quot;\n#{format_value(ctx)} {&quot;</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span>
+      <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='string val'>&quot;\n{&quot;</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+
+    <span class='comment val'># Restrict view to the particular context</span>
+    <span class='rubyid_@graph ivar id'>@graph</span> <span class='assign token'>=</span> <span class='rubyid_ContextFilteredRepo constant id'>ContextFilteredRepo</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_@repo ivar id'>@repo</span><span class='comma token'>,</span> <span class='rubyid_ctx identifier id'>ctx</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># Pre-process statements again, but in the specified context</span>
+    <span class='rubyid_@graph ivar id'>@graph</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_st identifier id'>st</span><span class='bitor op'>|</span> <span class='rubyid_preprocess_statement identifier id'>preprocess_statement</span><span class='lparen token'>(</span><span class='rubyid_st identifier id'>st</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='rubyid_order_subjects identifier id'>order_subjects</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_subject identifier id'>subject</span><span class='bitor op'>|</span>
+      <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_is_done? fid id'>is_done?</span><span class='lparen token'>(</span><span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span>
+        <span class='rubyid_statement identifier id'>statement</span><span class='lparen token'>(</span><span class='rubyid_subject identifier id'>subject</span><span class='rparen token'>)</span>
+      <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+
+    <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_puts identifier id'>puts</span><span class='lparen token'>(</span><span class='string val'>&quot;}&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Wed Feb  1 23:26:30 2012 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.5 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

@@ -24,14 +24,14 @@ end
 
 desc "Create README links"
 task :readme do
-  Dir.glob("*-README").each {|d| FileUtils.rm d}
+  Dir.glob("readmes/*").each {|d| FileUtils.rm d}
   Dir.glob('vendor/bundler/**/README').each do |path|
     d = path.split('/')[-2]
     next unless d
     d.sub!(/-([a-z0-9]{12})$/, '')
     d.sub!(/-\d+\.\d+(?:\.\d+)$/, '')
-    puts "link #{path} to #{d}-README"
-    FileUtils.ln_s path, "#{d}-README" unless File.exist?("#{d}-README")
+    puts "link #{path} to readmes/#{d}"
+    FileUtils.ln_s "../#{path}", "readmes/#{d}" unless File.exist?("readmes/#{d}")
   end
 end
 
