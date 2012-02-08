@@ -1,4 +1,4 @@
-require 'sinatra/linkeddata'
+require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'sinatra/respond_to'
 require 'erubis'
@@ -10,23 +10,14 @@ require 'json/ld'
 module RDF::Portal
   class Application < Sinatra::Base
     register Sinatra::RespondTo
-    register Sinatra::LinkedData
+    register Sinatra::SPARQL
     helpers Sinatra::Partials
     set :views, ::File.expand_path('../views',  __FILE__)
     DOAP_FILE = File.expand_path("../../../../etc/doap.nt", __FILE__)
 
-    #mime_type "sse", "application/sse+sparql-query"
+    mime_type "sse", "application/sse+sparql-query"
     before do
       puts "[#{request.path_info}], #{params.inspect}, #{format}, #{request.accept.inspect}"
-      
-      # Set the content type from Accept to get RespondTo to work properly
-      fmt = Rack::Mime::MIME_TYPES.invert[request.accept.first]
-      if fmt
-        puts " set format to #{fmt[1..-1]}"
-        content_type fmt[1..-1]
-      end
-      puts "  accept: #{request.accept.inspect}"
-      puts "  content type: #{headers['Content-Type'].inspect}"
     end
 
     get '/' do
@@ -72,15 +63,27 @@ module RDF::Portal
 
     # Handle GET/POST /distiller
     def distil
-      content = parse
-      # Override output format if returning something that is raw, or if
-      # the "fmt" argument is used and the output format isn't HTML
-      format params["fmt"] if params["raw"] && params.has_key?("fmt")
-      format params["fmt"] if params.has_key?("fmt") && format != :html
+      writer_options = {
+        :standard_prefixes => true,
+        :prefixes => {},
+        :base_uri => params["uri"],
+      }
+      writer_options[:format] = params["fmt"] || "ttl"
 
-      puts "distill content: #{content.class}, as type #{format.inspect}"
+      content = parse(writer_options)
+      puts "distil content: #{content.class}, as type #{format.inspect}"
 
-      if format != :html
+      if params["fmt"].to_s == "rdfa"
+        # If the format is RDFa, use specific HAML writer
+        haml = DISTILLER_HAML.dup
+        root = request.url[0,request.url.index(request.path)]
+        haml[:doc] = haml[:doc].gsub(/--root--/, root)
+        writer_options[:haml] = haml
+        writer_options[:haml_options] = {:ugly => false}
+      end
+      settings.sparql_options.replace(writer_options)
+
+      if format != :html || params["raw"]
         # Return distilled content as is
         content
       else
@@ -88,9 +91,7 @@ module RDF::Portal
         when RDF::Enumerable
           # For HTML response, the "fmt" attribute may set the type of serialization
           fmt = (params["fmt"] || "ttl").to_sym
-          content.dump(fmt, :standard_prefixes => true)
-        when Array
-          @output = content.last
+          content.dump(fmt, writer_options)
         else
           content
         end
@@ -100,6 +101,10 @@ module RDF::Portal
     
     # Handle GET/POST /sparql
     def sparql
+      writer_options = {
+        :standard_prefixes => true,
+        :prefixes => {},
+      }
       # Override output format if returning something that is raw, or if
       # the "fmt" argument is used and the output format isn't HTML
       format :xml if format == :xsl # Problem with content detection
@@ -109,13 +114,30 @@ module RDF::Portal
 
       content = query
 
-      puts "sparql content: #{content.class}, as type #{format.inspect}"
+      if params["fmt"].to_s == "rdfa"
+        # If the format is RDFa, use specific HAML writer
+        haml = DISTILLER_HAML.dup
+        root = request.url[0,request.url.index(request.path)]
+        haml[:doc] = haml[:doc].gsub(/--root--/, root)
+        writer_options[:haml] = haml
+        writer_options[:haml_options] = {:ugly => false}
+      end
+
+      puts "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
       if format != :html
-        headers "Content-Type" => content.first
-        body content.last
+        writer_options[:format] = format
+        settings.sparql_options.replace(writer_options)
+        content
       else
-        content = content.last if content.is_a?(Array)
-        @output = content
+        serialize_options = {
+          :format => params["fmt"],
+          :content_types => request.accept
+        }
+        begin
+          @output = SPARQL.serialize_results(content, serialize_options)
+        rescue RDF::WriterError => e
+          @error = "No results generated #{content.class}: #{e.message}"
+        end
         erb :sparql, :locals => {
           :title => "SPARQL Endpoint",
           :head => :distiller,
@@ -129,10 +151,17 @@ module RDF::Portal
     # @return [Array<Symbol>] List of format symbols
     def formats(reader_or_writer = nil)
       # Symbols for different input formats
-      RDF::Format.select do |f|
-        reader_or_writer != :reader || f.reader
-        reader_or_writer != :writer || f.writer
-      end.map(&:to_sym).sort_by(&:to_s)
+      %w(
+        json
+        jsonld
+        n3
+        ntriples
+        rdfa
+        rdfxml
+        trig
+        trix
+        turtle
+      ).map(&:to_sym)
     end
 
     ## Default graph, loaded from DOAP file
@@ -144,19 +173,18 @@ module RDF::Portal
     end
 
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
-    def parse
-      reader_opts = {
-        :prefixes => {},
-        :base_uri => params["uri"],
+    def parse(options)
+      reader_opts = options.merge(
         :validate => params["validate"],
-        :expand => params["expand"],
-      }
+        :expand => params["expand"]
+      )
       reader_opts[:format] = params["in_fmt"].to_sym unless params["in_fmt"].nil? || params["in_fmt"] == 'content'
       reader_opts[:debug] = @debug = [] if params["debug"]
       
       graph = RDF::Graph.new
       in_fmt = params["in_fmt"].to_sym if params["in_fmt"]
 
+      # Load data into graph
       case
       when !params["datafile"].to_s.empty?
         raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
@@ -176,19 +204,8 @@ module RDF::Portal
         graph = ""
       end
 
-      puts "parse: fmt: #{params['fmt'].inspect}"
-      if graph.is_a?(RDF::Enumerable) && (params["fmt"].to_s == "rdfa")
-        # If the format is RDFa, use specific HAML writer
-        writer_opts = reader_opts.merge(:standard_prefixes => true)
-        haml = DISTILLER_HAML.dup
-        root = request.url[0,request.url.index(request.path)]
-        haml[:doc] = haml[:doc].gsub(/--root--/, root)
-        writer_opts[:haml] = haml
-        writer_opts[:haml_options] = {:ugly => false}
-        ["text/html", graph.dump(:rdfa, writer_opts)]
-      else
-        graph
-      end
+      puts "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
+      graph
     rescue RDF::ReaderError => e
       @error = "RDF::ReaderError: #{e.message}"
       puts @error  # to log
@@ -229,20 +246,19 @@ module RDF::Portal
           ""  # Done in form
         else
           # Return service description graph
-          service_description
+          service_description(:repository => doap, :endpoint => url("/sparql"))
         end
       end
 
       raise "No SPARQL query created" unless sparql_expr
 
-      return ["application/sse+sparql-query", sparql_expr.to_sxp] if params["fmt"].to_s == "sse"
+      if params["fmt"].to_s == "sse"
+        headers = ["Content-Type" => "application/sse+sparql-query"]
+        return sparql_expr.to_sxp
+      end
 
       puts "execute query"
-      solutions = sparql_expr.execute(doap, sparql_opts)
-      puts "solutions are #{solutions.inspect}"
-      results = SPARQL.serialize_results(solutions, sparql_opts.merge(:standard_prefixes => true))
-      puts "results are [#{results.content_type}, #{results.class}] with options #{sparql_opts.inspect}"
-      [results.content_type, results]
+      sparql_expr.execute(doap, sparql_opts)
     rescue SPARQL::Grammar::Parser::Error, SPARQL::MalformedQuery, TypeError
       @error = "#{$!.class}: #{$!.message}"
       puts @error  # to log
@@ -252,48 +268,6 @@ module RDF::Portal
       @error = "#{$!.class}: #{$!.message}"
       puts @error  # to log
       nil
-    end
-
-    ##
-    # Return a service description graph
-    #
-    # @see http://www.w3.org/TR/sparql11-service-description
-    def service_description
-      @ssd ||= begin
-        g = RDF::Graph.new
-        sd = RDF::URI("http://www.w3.org/ns/sparql-service-description#")
-        void = RDF::URI("http://rdfs.org/ns/void#")
-      
-        node = RDF::Node.new
-        g << [node, RDF.type, sd.join("Service")]
-        g << [node, sd.join("endpoint"), url("/sparql")]
-        g << [node, sd.join("supportedLanguage"), sd.join("SPARQL10Query")]
-      
-        # Result formats, both RDF and SPARQL Results.
-        # FIXME: We should get this from the avaliable serializers
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/RDF_XML")]
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/Turtle")]
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/RDFa")]
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/N-Triples")]
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/SPARQL_RESULTS_XML")]
-        g << [node, sd.join("resultFormat"), RDF::URI("http://www.w3.org/ns/formats/SPARQL_RESULTS_JSON")]
-      
-        # Features
-        g << [node, sd.join("feature"), sd.join("DereferencesURIs")]
-      
-        # Datasets
-        ds = RDF::Node.new
-        g << [node, sd.join("defaultDataset"), ds]
-        g << [ds, RDF.type, sd.join("Dataset")]
-      
-        # Default graph
-        dg = RDF::Node.new
-        g << [ds, sd.join("defaultGraph"), dg]
-        g << [dg, RDF.type, sd.join("Graph")]
-        g << [dg, void.join("triples"), doap.count]
-        g << [dg, void.join("dataDump"), url("/doap.nt")]
-        g
-      end
     end
   end
 end
