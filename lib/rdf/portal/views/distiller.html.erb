@@ -1,5 +1,5 @@
 <% require 'cgi'
-params["fmt"] ||= :ttl
+params["fmt"] ||= :turtle
 %>
 <h1><%= title %></h1>
 <p>
@@ -18,7 +18,7 @@ params["fmt"] ||= :ttl
     <li><a class='input' href="#input">From Form Input</a></li>
   </ul>
 </nav>
-<form action="/distiller" method="post" enctype="multipart/form">
+<form action="/distiller" method="post" enctype="multipart/form-data">
   <fieldset class="url upload input">
     <legend>Distill RDF Information</legend>
     <fieldset class="url upload input">
@@ -57,7 +57,7 @@ params["fmt"] ||= :ttl
     </fieldset>
     <fieldset class="upload">
       <legend>File Upload</legend>
-      <input type="file" name="datafile" size="40">
+      <input type="file" name="datafile">
     </fieldset>
     <fieldset class="input">
       <legend>Markup</legend>
@@ -99,7 +99,7 @@ params["fmt"] ||= :ttl
       url_params = ["format=#{params["fmt"] || ttl}"]
       url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
       url_params << %(uri=#{base})
-      url += "?#{url_params.join('&')}" unless url_params.empty?
+      url += "?#{url_params.join('&amp;')}" unless url_params.empty?
       %(<a target="_blank" href="#{url}">#{url}</a>)
     %>
   </pre>

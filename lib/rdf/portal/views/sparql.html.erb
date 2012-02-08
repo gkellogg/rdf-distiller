@@ -3,11 +3,11 @@ params["fmt"] ||= :html
 %>
 <h1><%= title %></h1>
 <div prefix="sd: http://www.w3.org/ns/sparql-service-description# void: http://rdfs.org/ns/void#" typeof="sd:Service">
-  <p>The SPARQL <link property="sd:endpoint" href="">endpoint</link>
+  <p>The SPARQL <a property="sd:endpoint" href="<%=url()%>">endpoint</a>
     supports
-    <link property="sd:supportedLanguage" resource="sd:SPARQL10Query">
+    <span property="sd:supportedLanguage" resource="sd:SPARQL10Query">
       <a href="http://www.w3.org/TR/2008/REC-rdf-sparql-query-20080115/">SPARQL 1.0 Query</a>
-    </link>
+    </span>
     and defines a single 
     <span property="sd:defaultDataset" typeof="sd:Dataset">default dataset
       having a
@@ -15,10 +15,10 @@ params["fmt"] ||= :html
         Single default graph containing <span property="void:triples" datatype="xsd:integer"><%=doap_count%></span>
         triples describing
         <a href="https://github.com/edumbill/doap/wiki">
-          <acronym title="Description of a Project">DOAP</acronym>
+          <abbr title="Description of a Project">DOAP</abbr>
         </a>
         information about gems included in the RDF Portal. A dump of the default dataset can be retrieved
-        from <a property="void:dataDump" href="/doap.nt"><%=url("/doap.nt")%><a>.
+        from <a property="void:dataDump" href="/doap.nt"><%=url("/doap.nt")%></a>.
       </span>
     </span>
   </p>
@@ -37,7 +37,7 @@ params["fmt"] ||= :html
       <li><a href="http://www.w3.org/ns/formats/SPARQL_RESULTS_XML">XML</a></li>
     </ul></dd>
   </dl>
-  <p>The service will <link property="sd:feature" resource="sd:DereferencesURIs">Dereference URIs</link>
+  <p>The service will <span property="sd:feature" resource="sd:DereferencesURIs">Dereference URIs</span>
     used in <code>FROM</code> and <code>FROM NAMED</code> clauses.</p>
 </div>
 <nav class="distiller">
@@ -46,7 +46,7 @@ params["fmt"] ||= :html
     <li><a class='input' href="#input">From Form Input</a></li>
   </ul>
 </nav>
-<form action="/sparql" method="post" enctype="multipart/form">
+<form action="/sparql" method="post" enctype="multipart/form-data">
   <fieldset class="url input">
     <legend>Distill RDF Information</legend>
     <fieldset class="url input">
@@ -94,8 +94,8 @@ params["fmt"] ||= :html
   <% else -%>
   <textarea class="<%= params["fmt"] %>" rows="20" cols="120"><%= CGI.escapeHTML(@output)%></textarea>
   <% end -%>
-  </div>
 <% end -%>
+</div>
 
 <% if @debug %>
 <div class="debug">
