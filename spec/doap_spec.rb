@@ -1,34 +1,60 @@
 $:.unshift "."
 require 'spec_helper'
+require 'json/ld'
 
 describe RDF::Portal::Application do
   describe "/doap" do
-    it "gets RDFa by default" do
-      get '/doap'
-      last_response['Content-Type'].should =~ %r{#{mime_type(:html)}}
-      last_response.should be_ok
-      last_response.body.should match(/<html prefix/)
+    before(:all) {@doap = RDF::Repository.new << [RDF::URI("doap"), RDF.type, RDF::DOAP.to_uri]}
+    before(:each) {RDF::Repository.stub!(:load).and_return(@doap)}
+
+    context "Format symbols" do
+      RDF::Format.each do |format|
+        sym = format.to_sym
+        context "#{sym}" do
+          it "gets  with .#{sym} extension" do
+            get "/doap.#{sym}"
+            last_response['Content-Type'].should include(mime_type(sym))
+            last_response.should be_ok
+          end
+
+          it "gets  with #{sym} format" do
+            get "/doap", :format => sym
+            last_response['Content-Type'].should include(mime_type(sym))
+            last_response.should be_ok
+          end
+        end
+      end
+    end
+    
+    context "File extensions" do
+      RDF::Format.file_extensions.keys.each do |extension|
+        next if extension == :xml
+        context "#{extension}" do
+          it "gets  with .#{extension} extension" do
+            get "/doap.#{extension}"
+            last_response['Content-Type'].should include(mime_type(extension))
+            last_response.should be_ok
+          end
+
+          it "gets  with #{extension} format" do
+            get "/doap", :format => extension
+            last_response['Content-Type'].should include(mime_type(extension))
+            last_response.should be_ok
+          end
+        end
+      end
     end
 
-    it "gets RDFa with .html extension" do
-      get '/doap.html'
-      last_response['Content-Type'].should =~ %r{#{mime_type(:html)}}
-      last_response.should be_ok
-      last_response.body.should match(/<html prefix/)
-    end
-
-    it "gets NTriples with .nt extension" do
-      get '/doap.nt'
-      last_response['Content-Type'].should =~ %r{#{mime_type(:text)}}
-      last_response.should be_ok
-      last_response.body.should have_format(:nquads)
-    end
-
-    it "gets NTriples with text/plain ACCEPT header" do
-      get '/doap.nt', {}, {"HTTP_ACCEPT" => "text/plain"}
-      last_response['Content-Type'].should =~ %r{#{mime_type(:text)}}
-      last_response.should be_ok
-      last_response.body.should have_format(:nquads)
+    context "Content Type" do
+      RDF::Format.content_types.keys.each do |content_type|
+        context "#{content_type}" do
+          it "gets  with #{content_type}" do
+            get "/doap", {}, {"HTTP_ACCEPT" => content_type}
+            last_response['Content-Type'].should include(content_type)
+            last_response.should be_ok
+          end
+        end
+      end
     end
   end
 end
