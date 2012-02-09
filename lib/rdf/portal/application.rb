@@ -219,11 +219,14 @@ module RDF::Portal
       sparql_opts[:debug] = @debug = [] if params["debug"]
 
       sparql_expr = nil
+      repo = nil
 
       case
       when !params["query"].to_s.empty?
         @query = params["query"]
         puts "Open form data: #{@query.inspect}"
+        # Optimization for RDFa Test suite
+        repo = RDF::Repository.new if @query.to_s =~ /ASK FROM/
         sparql_expr = SPARQL.parse(@query, sparql_opts)
       when !params["uri"].to_s.empty?
         puts "Open uri <#{params["uri"]}>"
@@ -250,7 +253,8 @@ module RDF::Portal
       end
 
       puts "execute query"
-      sparql_expr.execute(doap, sparql_opts)
+      repo ||= doap
+      sparql_expr.execute(repo, sparql_opts)
     rescue SPARQL::Grammar::Parser::Error, SPARQL::MalformedQuery, TypeError
       @error = "#{$!.class}: #{$!.message}"
       puts @error  # to log
