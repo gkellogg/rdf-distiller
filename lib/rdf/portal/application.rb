@@ -2,10 +2,9 @@ require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'sinatra/respond_to'
 require 'erubis'
-require 'rdf/microdata'
-require 'rdf/turtle'
-require 'rdf/trig'
-require 'json/ld'
+require 'linkeddata'
+require 'rdf/portal/extensions'
+require 'uri'
 
 module RDF::Portal
   class Application < Sinatra::Base
@@ -32,7 +31,6 @@ module RDF::Portal
 
     get '/doap' do
       cache_control :public, :must_revalidate, :max_age => 60
-      puts "doap format: #{format.inspect}"
       if format == :nt
         headers "Content-Type" => "text/plain"
         body File.read(DOAP_FILE)
@@ -68,10 +66,10 @@ module RDF::Portal
         :prefixes => {},
         :base_uri => params["uri"],
       }
-      writer_options[:format] = params["fmt"] || "ttl"
+      writer_options[:format] = params["fmt"] || "turtle"
 
       content = parse(writer_options)
-      puts "distil content: #{content.class}, as type #{format.inspect}"
+      puts "distil content: #{content.class}, as type #{format.inspect}, content-type: #{content.inspect}"
 
       if params["fmt"].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
@@ -151,17 +149,7 @@ module RDF::Portal
     # @return [Array<Symbol>] List of format symbols
     def formats(reader_or_writer = nil)
       # Symbols for different input formats
-      %w(
-        json
-        jsonld
-        n3
-        ntriples
-        rdfa
-        rdfxml
-        trig
-        trix
-        turtle
-      ).map(&:to_sym)
+      RDF::Reader.each.to_a.map(&:to_sym)  
     end
 
     ## Default graph, loaded from DOAP file
@@ -178,24 +166,28 @@ module RDF::Portal
         :validate => params["validate"],
         :expand => params["expand"]
       )
-      reader_opts[:format] = params["in_fmt"].to_sym unless params["in_fmt"].nil? || params["in_fmt"] == 'content'
+      reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
       reader_opts[:debug] = @debug = [] if params["debug"]
       
-      graph = RDF::Graph.new
+      graph = RDF::Repository.new
       in_fmt = params["in_fmt"].to_sym if params["in_fmt"]
 
       # Load data into graph
       case
-      when !params["datafile"].to_s.empty?
-        raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
-        puts "Open datafile with format #{in_fmt}"
-        tempfile = params["datafile"][:tempfile]
-        RDF::Reader.for(in_fmt).new(tempfile, reader_opts) {|r| graph << r}
+      #when !params["datafile"].to_s.empty?
+      #  raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
+      #  puts "Open datafile with format #{in_fmt}"
+      #  tempfile = params["datafile"][:tempfile]
+      #  reader = RDF::Reader.for(reader_opts[:format] || reader_opts) { tempfile.read }
+      #  tempfile.rewind
+      #  puts "found reader #{reader.class} for tempfile" unless reader_opts[:format]
+      #  reader.new(tempfile, reader_opts) {|r| graph << r}
       when !params["content"].to_s.empty?
         raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
-        puts "Open form data with format #{in_fmt}"
-        @content = params["content"]
-        RDF::Reader.for(in_fmt).new(@content, reader_opts) {|r| graph << r}
+        @content = ::URI.unescape(params["content"])
+        puts "Open form data with format #{in_fmt} for #{@content.inspect}"
+        reader = RDF::Reader.for(reader_opts[:format] || reader_opts)
+        reader.new(@content, reader_opts) {|r| graph << r}
       when !params["uri"].to_s.empty?
         puts "Open uri <#{params["uri"]}> with format #{in_fmt}"
         reader = RDF::Reader.open(params["uri"], reader_opts) {|r| graph << r}
