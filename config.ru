@@ -1,9 +1,6 @@
 #!/usr/bin/env rackup
 $:.unshift(File.expand_path('../lib',  __FILE__))
 
-ENV['GEM_PATH'] = "/home/kellogg/gems:/usr/lib/ruby/gems/1.8"
-#ENV['GEM_HOME'] = "/home/kellogg/gems"
-
 require 'rubygems' || Gem.clear_paths
 require 'bundler'
 Bundler.setup
