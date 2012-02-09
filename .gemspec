@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'erubis',             '>= 2.6.6'
   s.add_runtime_dependency      "rack",               '>= 1.3.1'
   s.add_runtime_dependency      'sinatra-respond_to', '>= 0.8.0'
-  s.add_runtime_dependency      'patron',             '>= 0.4.17'
+  s.add_runtime_dependency      'patron',             '>= 0.4.9'
 
   # development dependencies    
   s.add_development_dependency  'yard' ,              '>= 0.6.7'
