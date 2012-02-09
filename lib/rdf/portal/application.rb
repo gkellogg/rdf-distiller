@@ -149,7 +149,7 @@ module RDF::Portal
     # @return [Array<Symbol>] List of format symbols
     def formats(reader_or_writer = nil)
       # Symbols for different input formats
-      RDF::Reader.each.to_a.map(&:to_sym)  
+      RDF::Format.each.to_a.map(&:reader).compact.map(&:to_sym)
     end
 
     ## Default graph, loaded from DOAP file

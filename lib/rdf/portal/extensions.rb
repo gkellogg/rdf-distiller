@@ -30,7 +30,7 @@ module RDF::Util
         io_obj = StringIO.new(resp.body)
         io_obj.instance_variable_set(:@resp, resp)
         def io_obj.content_type
-          @resp.headers["Content-Type"].split(/[;,]/).first
+          [@resp.headers["Content-Type"]].flatten.first.split(/[;,]/).first
         end
         def io_obj.status
           @resp.status
