@@ -95,7 +95,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-9ed5f8deec13/lib/sparql/algebra/operator/dataset.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-d85fdacea14d/lib/sparql/algebra/operator/dataset.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -140,6 +140,24 @@ indicating that it represents a named data source.</p>
           
         </dt>
         <dd><pre class="code"><span class='lbrack token'>[</span><span class='symbol val'>:dataset</span><span class='rbrack token'>]</span>
+</pre></dd>
+      
+        <dt id="ACCEPTS-constant" class="">ACCEPTS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Selected accept headers, from those available</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lparen token'>(</span><span class='dstring node'>%w(text/turtle application/rdf+xml;q=0.8 text/plain;q=0.4)</span><span class='dot token'>.</span>
+<span class='rubyid_select identifier id'>select</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_content_type identifier id'>content_type</span><span class='bitor op'>|</span>
+  <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_content_type identifier id'>content_type</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>' */*;q=0.1'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
 </pre></dd>
       
     </dl>
@@ -371,17 +389,6 @@ are added using a <em>context</em> of the data source URI.</p>
       <pre class="lines">
 
 
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
 46
 47
 48
@@ -402,15 +409,27 @@ are added using a <em>context</em> of the data source URI.</p>
 63
 64
 65
-66</pre>
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-9ed5f8deec13/lib/sparql/algebra/operator/dataset.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-d85fdacea14d/lib/sparql/algebra/operator/dataset.rb', line 46</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Dataset&quot;</span><span class='rbrace token'>}</span>
   <span class='rubyid_operand identifier id'>operand</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_ds identifier id'>ds</span><span class='bitor op'>|</span>
-    <span class='rubyid_load_opts identifier id'>load_opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+    <span class='rubyid_load_opts identifier id'>load_opts</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
+      <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='string val'>&quot;Accept&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_ACCEPTS constant id'>ACCEPTS</span><span class='rbrace token'>}</span>
+    <span class='rbrace token'>}</span>
     <span class='rubyid_case case kw'>case</span> <span class='rubyid_ds identifier id'>ds</span>
     <span class='rubyid_when when kw'>when</span> <span class='rubyid_Array constant id'>Array</span>
       <span class='comment val'># Format is (named &lt;uri&gt;), only need the URI part</span>
@@ -431,9 +450,6 @@ are added using a <em>context</em> of the data source URI.</p>
       <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;=&gt; read default data source #{uri}&quot;</span><span class='rbrace token'>}</span>
     <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_load_opts identifier id'>load_opts</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_uri identifier id'>uri</span>
-    <span class='rubyid_load_opts identifier id'>load_opts</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
-      <span class='string val'>&quot;Accept&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1'</span>
-    <span class='rbrace token'>}</span>
     <span class='rubyid_queryable identifier id'>queryable</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='rubyid_load_opts identifier id'>load_opts</span><span class='rparen token'>)</span>
   <span class='rubyid_end end kw'>end</span>
 
@@ -486,12 +502,12 @@ with the unique sum of the query elements</p>
       <pre class="lines">
 
 
-75
-76
-77</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-9ed5f8deec13/lib/sparql/algebra/operator/dataset.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-d85fdacea14d/lib/sparql/algebra/operator/dataset.rb', line 85</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_optimize identifier id'>optimize</span>
   <span class='rubyid_operands identifier id'>operands</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='dot token'>.</span><span class='rubyid_optimize identifier id'>optimize</span>
@@ -507,7 +523,7 @@ with the unique sum of the query elements</p>
 </div>
     
     <div id="footer">
-  Generated on Wed Feb  8 21:41:00 2012 by 
+  Generated on Thu Feb  9 12:38:02 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.5 (ruby-1.8.7).
 </div>
