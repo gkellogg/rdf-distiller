@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>
-  Module: Util::File
+  Module: RDF::Util::File
   
     &mdash; Web portal for RDF.rb.
   
@@ -56,7 +56,7 @@
     
     <iframe id="search_frame"></iframe>
     
-    <div id="content"><h1>Module: Util::File
+    <div id="content"><h1>Module: RDF::Util::File
   
   
   
@@ -72,12 +72,78 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/rdf/portal.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-8ccf25216f6b/lib/rdf/util/file.rb<span class="defines">,<br />
+  lib/rdf/portal/extensions.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Wrapper for Kernel.open. Allows implementations to override to get
+more suffisticated behavior for HTTP resources (e.g., Accept header).</p>
 
+<p>Also supports the file: scheme for access to local files.</p>
+
+<p>Classes include this module when they represent some form of a file
+as a base resource, for instance an HTTP resource representing the
+serialization of a Graph.</p>
+
+<p>This module may be monkey-patched to allow for more options
+and interfaces.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.4</p></div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#content_type-instance_method" title="#content_type (instance method)">- (String) <strong>content_type</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Content.</p></div></span>
+  
+</li>
+
+    
+  </ul>
 
 
 
@@ -106,7 +172,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Override to use Net::HTTP, which means that it only opens URIs.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Open the file, returning or yielding an IO stream and mime_type.</p></div></span>
   
 </li>
 
@@ -114,6 +180,79 @@
     </ul>
   
 
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="content_type=-instance_method"></span>
+      <span id="content_type-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="content_type-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>content_type</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Content</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.4</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-8ccf25216f6b/lib/rdf/util/file.rb', line 19</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_content_type identifier id'>content_type</span>
+  <span class='rubyid_@content_type ivar id'>@content_type</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -129,7 +268,7 @@
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>Override to use Net::HTTP, which means that it only opens URIs.</p>
+    <p>Open the file, returning or yielding an IO stream and mime_type.</p>
 
   </div>
 </div>
@@ -163,11 +302,33 @@
       
       
         &mdash;
-        <div class='inline'><p>any options to pass through to the underlying UUID library</p></div>
+        <div class='inline'><p>options are ignored in this implementation. Applications are encouraged
+to override this implementation to provide more control over HTTP
+headers and redirect following.</p></div>
       
     </li>
   
 </ul>
+
+  
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:headers</span>
+          <span class="type">(<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          &mdash; <div class='inline'><p>HTTP Request headers.</p></div>
+        </li>
+      
+    </ul>
+  
 
 <h3>Yields:</h3>
 <ul class="yield">
@@ -201,6 +362,20 @@
     </li>
   
 </ul>
+<h3>Since:</h3>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.4</p></div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -208,17 +383,15 @@
       <pre class="lines">
 
 
-183
-184
-185
-186
-187</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/portal.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/portal/extensions.rb', line 15</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_filename_or_url identifier id'>filename_or_url</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;open file #{filename_or_url.inspect}&quot;</span>
   <span class='rubyid_filename_or_url identifier id'>filename_or_url</span> <span class='assign token'>=</span> <span class='rubyid_$1 nth_ref id'>$1</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_filename_or_url identifier id'>filename_or_url</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/^file:(.*)$/</span><span class='rparen token'>)</span>
   <span class='rubyid_Kernel constant id'>Kernel</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_filename_or_url identifier id'>filename_or_url</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
@@ -233,9 +406,9 @@
 </div>
     
     <div id="footer">
-  Generated on Fri Jan  6 18:06:48 2012 by 
+  Generated on Wed Feb  8 21:40:32 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.8.7).
+  0.7.5 (ruby-1.8.7).
 </div>
 
   </body>

@@ -73,7 +73,7 @@
   
     <dt class="r1 last">Defined in:</dt>
     <dd class="r1 last">lib/rdf/portal/rdfa_template.rb<span class="defines">,<br />
-  lib/rdf/portal.rb</span>
+  lib/rdf/portal.rb,<br /> lib/rdf/portal/application.rb</span>
 </dd>
   
 </dl>
@@ -116,16 +116,16 @@
   <span class='symbol val'>:doc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     !!! XML
     !!! 5
-    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :profile =&gt; profile, :prefix =&gt; prefix}
+    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :prefix =&gt; prefix}
       - if base || title
         %head
           - if base
             %base{:href =&gt; base}
           - if title
             %title= title
-          %link{:rel =&gt; &quot;stylesheet&quot;, :href =&gt; &quot;--root--/css/distiller.css&quot;, :type =&gt; &quot;text/css&quot;}
+          %link{:rel =&gt; &quot;stylesheet&quot;, :href =&gt; &quot;http://rdf.kellogg-assoc.com/css/distiller.css&quot;, :type =&gt; &quot;text/css&quot;}
           %script{:src =&gt; &quot;https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js&quot;, :type =&gt; &quot;text/javascript&quot;}
-          %script{:src =&gt; &quot;--root--/js/distiller.js&quot;, :type =&gt; &quot;text/javascript&quot;}
+          %script{:src =&gt; &quot;http://rdf.kellogg-assoc.com/js/distiller.js&quot;, :type =&gt; &quot;text/javascript&quot;}
       %body
         - if base
           %p= &quot;RDFa serialization URI base: &amp;lt;#{base}&amp;gt;&quot;
@@ -147,26 +147,14 @@
   <span class='comment val'># Yield: predicates.each</span>
   <span class='symbol val'>:subject</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>%q(
     - if element == :li
-      %li{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
+      %li{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
         - if typeof
-          %span{:rel =&gt; 'rdf:type', :resource =&gt; typeof}.type!= typeof
-        %table.properties
-          - predicates.each do |predicate|
-            != yield(predicate)
-    - elsif rel &amp;&amp; typeof
-      %td{:rel =&gt; rel, :inlist =&gt; inlist}
-        %div{:about =&gt; resource, :typeof =&gt; typeof}
           %span.type!= typeof
-          %table.properties
-            - predicates.each do |predicate|
-              != yield(predicate)
-    - elsif rel
-      %td{:rel =&gt; rel, :resource =&gt; resource, :inlist =&gt; inlist}
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
     - else
-      %div{:about =&gt; about, :typeof =&gt; typeof}
+      %td{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
         - if typeof
           %span.type!= typeof
         %table.properties
@@ -191,10 +179,10 @@
         - elsif get_curie(object) == 'rdf:nil'
           %td{:rel =&gt; get_curie(predicate), :inlist =&gt; ''}= &quot;Empty&quot;
         - elsif object.node?
-          %td{:resource =&gt; get_curie(object), :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= get_curie(object)
+          %td{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
         - elsif object.uri?
           %td
-            %a{:href =&gt; object.to_s, :rel =&gt; get_curie(predicate), :inlist =&gt; inlist}= object.to_s
+            %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
           %td{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
         - else
@@ -214,10 +202,10 @@
             - if res = yield(object)
               != res
             - elsif object.node?
-              %li{:rel =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+              %li{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
             - elsif object.uri?
               %li
-                %a{:rel =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+                %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
             - elsif object.datatype == RDF.XMLLiteral
               %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
             - else
@@ -235,12 +223,14 @@
 
 
 
+
+
 </div>
     
     <div id="footer">
-  Generated on Fri Jan  6 18:05:58 2012 by 
+  Generated on Wed Feb  8 21:40:08 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.4 (ruby-1.8.7).
+  0.7.5 (ruby-1.8.7).
 </div>
 
   </body>

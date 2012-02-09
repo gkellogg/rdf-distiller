@@ -41,29 +41,29 @@ Distills between formats supported in [Linked Data][linkeddata].
 
 ## Documentation
 ### Core libraries
-* {file:rdf-README RDF.rb}
-  * {file:rdf-json-README RDF::JSON}
-  * {file:rdf-microdata-README RDF::Microdata}
-  * {file:rdf-n3-README RDF::N3}
-  * {file:rdf-rdfa-README RDF::RDFa}
-  * {file:rdf-rdfxml-README RDF::RDFXML}
-  * {file:rdf-trig-README RDF::TriG}
-  * {file:rdf-trix-README RDF::TriX}
-  * {file:rdf-turtle-README RDF::Turtle}
-  * {file:json-ld-README JSON::LD}
+* {file:readmes/rdf RDF.rb}
+  * {file:readmes/rdf-json RDF::JSON}
+  * {file:readmes/rdf-microdata RDF::Microdata}
+  * {file:readmes/rdf-n3 RDF::N3}
+  * {file:readmes/rdf-rdfa RDF::RDFa}
+  * {file:readmes/rdf-rdfxml RDF::RDFXML}
+  * {file:readmes/rdf-trig RDF::TriG}
+  * {file:readmes/rdf-trix RDF::TriX}
+  * {file:readmes/rdf-turtle RDF::Turtle}
+  * {file:readmes/json-ld JSON::LD}
 
 ### Rollup libraries
-* {file:linkeddata-README Linked Data}
-  * {file:rack-linkeddata-README Linked Data for Rack}
-  * {file:sinatra-linkeddata-README Linked Data for Sinatrra}
+* {file:readmes/linkeddata Linked Data}
+  * {file:readmes/rack-linkeddata Linked Data for Rack}
+  * {file:readmes/sinatra-linkeddata Linked Data for Sinatrra}
 
 ### Query/Access
-* {file:sparql-README SPARQL}
-* {file:sparql-client-README SPARQL Client}
-* {file:spira-README Spira}
+* {file:readme/sparql SPARQL}
+* {file:readme/sparql-client SPARQL Client}
+* {file:readme/spira Spira}
 
 ### Storage
-* {file:rdf-do-README RDF Dataobjects}
+* {file:readme/rdf-do RDF Dataobjects}
 
 ## Resources
 * [RDF Portal](http://rdf.kellogg-assoc.com)
@@ -101,7 +101,7 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [JSON::LD]:       http://rdoc.info/github/gkellogg/json-ld/master/frames
 [SPARQL gem]:     http://rdoc.info/github/gkellogg/sparql/master/frames
 [JSON-LD]:        http://json-ld.org/
-[linkeddata]:     {file:linkeddata-README}
+[linkeddata]:     {file:readmes/linkeddata}
 [Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
 [N-Quads]:        http://en.wikipedia.org/wiki/N-Quads
