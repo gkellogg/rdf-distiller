@@ -29,6 +29,7 @@ params["fmt"] ||= :html
       <li><a href="http://www.w3.org/ns/formats/RDFa">RDFa</a></li>
       <li><a href="http://www.w3.org/ns/formats/RDF_XML">RDF/XML</a></li>
       <li><a href="http://www.w3.org/ns/formats/Turtle">Turtle</a></li>
+      <li>Others may be supported as well</li>
     </ul></dd>
     <dt>SPARQL Results formats</dt>
     <dd><ul>
@@ -111,7 +112,7 @@ params["fmt"] ||= :html
     <%=
       url = url('/sparql')
       url_params = []
-      url_params << %(format=#{params["fmt"] || xml})
+      url_params << %(format=#{params["fmt"]}) if params["fmt"]
       url_params << %(query=#{CGI.escape(params["query"].to_s)}) if params["query"]
       url_params << %(url=#{params["uri"]}) unless params["uri"].nil?
       url += "?#{url_params.join('&')}" unless url_params.empty?
