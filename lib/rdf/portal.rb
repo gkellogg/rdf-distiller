@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'rdf/portal/extensions'
 
 module RDF
   module Portal
