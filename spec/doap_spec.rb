@@ -1,6 +1,6 @@
 $:.unshift "."
 require 'spec_helper'
-require 'json/ld'
+require 'linkeddata'
 
 describe RDF::Portal::Application do
   describe "/doap" do
