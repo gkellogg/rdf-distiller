@@ -69,7 +69,7 @@ module RDF::Portal
       writer_options[:format] = params["fmt"] || "turtle"
 
       content = parse(writer_options)
-      puts "distil content: #{content.class}, as type #{format.inspect}, content-type: #{content.inspect}"
+      puts "distil content: #{content.class}, as type #{params["fmt"].inspect}, content-type: #{content.inspect}"
 
       if params["fmt"].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
