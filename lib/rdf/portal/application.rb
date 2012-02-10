@@ -101,14 +101,25 @@ module RDF::Portal
     def sparql
       writer_options = {
         :standard_prefixes => true,
-        :prefixes => {},
+        :prefixes => {
+          :ssd => "http://www.w3.org/ns/sparql-service-description#",
+          :void => "http://rdfs.org/ns/void#"
+        }
       }
+      # Override output format if the content-type is something like
+      # application/sparql-results, as sinatra-respond_to won't find
+      # the right extension.
+      if request.accept.first =~ %r(application/sparql-results\+([^,;]+))
+        params["fmt"] = (format $1.to_sym)
+      end
+
       # Override output format if returning something that is raw, or if
       # the "fmt" argument is used and the output format isn't HTML
       format :xml if format == :xsl # Problem with content detection
       format params["fmt"] if params["raw"] && params.has_key?("fmt")
       format params["fmt"] if params.has_key?("fmt") && format != :html
-      params["fmt"] ||= format
+      # Make sure we get a format symbol, not an extension
+      params["fmt"] ||= RDF::Format.for(:file_extension => format) unless RDF::Format.for(format)
 
       content = query
 
@@ -123,7 +134,7 @@ module RDF::Portal
 
       puts "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
       if format != :html
-        writer_options[:format] = format
+        writer_options[:format] = params["fmt"]
         settings.sparql_options.replace(writer_options)
         content
       else
@@ -132,7 +143,12 @@ module RDF::Portal
           :content_types => request.accept
         }
         begin
-          @output = SPARQL.serialize_results(content, serialize_options)
+          @output = if params["fmt"] == "sse"
+            content
+          else
+            puts "content-type: #{headers['Content-Type'].inspect}"
+            SPARQL.serialize_results(content, serialize_options)
+          end
         rescue RDF::WriterError => e
           @error = "No results generated #{content.class}: #{e.message}"
         end
