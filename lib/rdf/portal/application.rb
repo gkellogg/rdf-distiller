@@ -69,7 +69,7 @@ module RDF::Portal
       writer_options[:format] = params["fmt"] || "turtle"
 
       content = parse(writer_options)
-      puts "distil content: #{content.class}, as type #{params["fmt"].inspect}, content-type: #{content.inspect}"
+      puts "distil content: #{content.class}, as type #{(params["fmt"] || format).inspect}"
 
       if params["fmt"].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
@@ -179,8 +179,9 @@ module RDF::Portal
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
       reader_opts = options.merge(
-        :validate => params["validate"],
-        :expand => params["expand"]
+        :validate        => params["validate"],
+        :vocab_expansion => params["vocab_expansion"],
+        :rdfagraph       => params["rdfagraph"]
       )
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
       reader_opts[:debug] = @debug = [] if params["debug"]
@@ -190,14 +191,6 @@ module RDF::Portal
 
       # Load data into graph
       case
-      #when !params["datafile"].to_s.empty?
-      #  raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
-      #  puts "Open datafile with format #{in_fmt}"
-      #  tempfile = params["datafile"][:tempfile]
-      #  reader = RDF::Reader.for(reader_opts[:format] || reader_opts) { tempfile.read }
-      #  tempfile.rewind
-      #  puts "found reader #{reader.class} for tempfile" unless reader_opts[:format]
-      #  reader.new(tempfile, reader_opts) {|r| graph << r}
       when !params["content"].to_s.empty?
         raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
         @content = ::URI.unescape(params["content"])
