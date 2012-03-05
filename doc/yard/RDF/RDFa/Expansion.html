@@ -76,8 +76,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/v.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/gr.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/dc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/cc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/foaf.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/doap.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/sioc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/skos.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/schema.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion/skosxl.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/v.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/gr.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/dc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/cc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/foaf.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/doap.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/sioc.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/skos.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/schema.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion/skosxl.rb</span>
 </dd>
   
 </dl>
@@ -243,7 +243,7 @@ which implementes RDF::Readable.</p>
   triples to the default graph based on rules and property/class relationships
   described in referenced vocabularies.</p>
 
-<p>For all objects that are the target of an rdfa:hasVocabulary property, load the IRI into
+<p>For all objects that are the target of an rdfa:usesVocabulary property, load the IRI into
 a repository.</p>
 
 <p>Subsequently, perform OWL expansion using rules prp-spo1, prp-eqp1,
@@ -344,7 +344,7 @@ graph. Iterate on this step until no more triples are added.</p>
 80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion.rb', line 39</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_expand identifier id'>expand</span>
   <span class='rubyid_repo identifier id'>repo</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
@@ -358,7 +358,7 @@ graph. Iterate on this step until no more triples are added.</p>
   <span class='rubyid_@@vocab_repo ivar id'>@@vocab_repo</span> <span class='assign token'>=</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab_repository</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='symbol val'>:vocab_repository</span><span class='rparen token'>)</span>
   <span class='rubyid_@@vocab_repo ivar id'>@@vocab_repo</span> <span class='opasgn op'>||=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_COOKED_VOCAB_STATEMENTS constant id'>COOKED_VOCAB_STATEMENTS</span><span class='rparen token'>)</span>
   
-  <span class='rubyid_vocabs identifier id'>vocabs</span> <span class='assign token'>=</span> <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFA constant id'>RDFA</span><span class='dot token'>.</span><span class='rubyid_hasVocabulary identifier id'>hasVocabulary</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:object</span><span class='rparen token'>)</span>
+  <span class='rubyid_vocabs identifier id'>vocabs</span> <span class='assign token'>=</span> <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFA constant id'>RDFA</span><span class='dot token'>.</span><span class='rubyid_usesVocabulary identifier id'>usesVocabulary</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:object</span><span class='rparen token'>)</span>
   <span class='rubyid_vocabs identifier id'>vocabs</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_vocab identifier id'>vocab</span><span class='bitor op'>|</span>
     <span class='rubyid_begin begin kw'>begin</span>
       <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_@@vocab_repo ivar id'>@@vocab_repo</span><span class='dot token'>.</span><span class='rubyid_has_context? fid id'>has_context?</span><span class='lparen token'>(</span><span class='rubyid_vocab identifier id'>vocab</span><span class='rparen token'>)</span>
@@ -412,7 +412,7 @@ graph. Iterate on this step until no more triples are added.</p>
 84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-0f3411aa476a/lib/rdf/rdfa/expansion.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-d82b92923dcd/lib/rdf/rdfa/expansion.rb', line 82</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_rule identifier id'>rule</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_Rule constant id'>Rule</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -428,7 +428,7 @@ graph. Iterate on this step until no more triples are added.</p>
 </div>
     
     <div id="footer">
-  Generated on Thu Feb  9 12:37:18 2012 by 
+  Generated on Sun Mar  4 19:06:04 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.5 (ruby-1.8.7).
 </div>
