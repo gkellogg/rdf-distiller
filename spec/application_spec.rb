@@ -1,7 +1,7 @@
 $:.unshift "."
 require 'spec_helper'
 
-describe RDF::Portal::Application do
+describe RDF::Distiller::Application do
   describe "/" do
     it "gets HTML" do
       get '/'

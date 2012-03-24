@@ -1,5 +1,5 @@
 # Default HAML templates used for generating output from the writer
-module RDF::Portal
+module RDF::Distiller
   DISTILLER_HAML = {
     :identifier => "distiller", 
     # Document

@@ -3,7 +3,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'rspec'
 require 'rack/test'
-require 'rdf/portal'
+require 'rdf/distiller'
 require 'matchers'
 
 set :environment, :test
@@ -17,7 +17,7 @@ set :environment, :test
   c.include ::Rack::Test::Methods
 
   def app
-   ::RDF::Portal::Application
+   ::RDF::Distiller::Application
   end
 
   def mime_type(sym)

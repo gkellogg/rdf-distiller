@@ -21,7 +21,7 @@ module RDF::Util
       when /^http/
         headers = {
           "Accept" => 'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1',
-          #"User-Agent" => "Ruby-RDF-Distiller/#{RDF::Portal::VERSION}"
+          #"User-Agent" => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"
         }.merge(options[:headers] || {})
         url = ::URI.parse(filename_or_url)
         io_obj = nil

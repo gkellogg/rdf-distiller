@@ -2,7 +2,7 @@ $:.unshift "."
 require 'spec_helper'
 require 'linkeddata'
 
-describe RDF::Portal::Application do
+describe RDF::Distiller::Application do
   describe "/doap" do
     before(:all) {@doap = RDF::Repository.new << [RDF::URI("doap"), RDF.type, RDF::DOAP.to_uri]}
     before(:each) {RDF::Repository.stub!(:load).and_return(@doap)}

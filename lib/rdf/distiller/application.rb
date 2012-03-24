@@ -3,10 +3,10 @@ require 'sinatra/partials'
 require 'sinatra/respond_to'
 require 'erubis'
 require 'linkeddata'
-require 'rdf/portal/extensions'
+require 'rdf/distiller/extensions'
 require 'uri'
 
-module RDF::Portal
+module RDF::Distiller
   class Application < Sinatra::Base
     register Sinatra::RespondTo
     register Sinatra::SPARQL

@@ -1,9 +1,9 @@
-# RDF::Portal
+# RDF::Distiller
 
 Web portal for for [RDF.rb][RDF.rb].
 
 ## DESCRIPTION
-RDF::Portal is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
+RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
 
 ## FEATURES
 Distills between formats supported in [Linked Data][linkeddata].
@@ -23,21 +23,21 @@ Distills between formats supported in [Linked Data][linkeddata].
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 
 ## Dependencies
-* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.3)
-* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.2)
+* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.5)
+* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.5)
 * [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 0.3.1)
 * [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
-* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.4.4)
-* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.1)
+* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.5.2)
+* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.0)
 * [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.2.3)
 * [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.6)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.9)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.5)
-* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 0.1.0)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.10)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.6)
+* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 0.1.1)
 * [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.0)
 * [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.1.1)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.1.0)
-* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.0.2)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.1.1)
+* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.1.1)
 
 ## Documentation
 ### Core libraries
@@ -66,7 +66,7 @@ Distills between formats supported in [Linked Data][linkeddata].
 * {file:readme/rdf-do RDF Dataobjects}
 
 ## Resources
-* [RDF Portal](http://rdf.kellogg-assoc.com)
+* [RDF Distiller](http://rdf.kellogg-assoc.com)
 
 ## AUTHOR
 * [Gregg Kellogg](http://github.com/gkellogg) - <http://kellogg-assoc.com/>

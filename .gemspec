@@ -5,10 +5,10 @@ Gem::Specification.new do |s|
   s.version            = File.read('VERSION').chomp
   s.date               = File.mtime('VERSION').strftime('%Y-%m-%d')
 
-  s.name               = 'rdf-portal'
-  s.homepage           = 'http://gkellogg/rdf-portal/'
+  s.name               = 'rdf-distiller'
+  s.homepage           = 'http://gkellogg/rdf-distiller/'
   s.license            = 'Public Domain' if s.respond_to?(:license=)
-  s.summary            = 'Web portal for RDF.rb.'
+  s.summary            = 'Translate any RDF format to any other using Ruby RDF gems'
   s.description        = s.summary
 
   s.authors            = ['Gregg Kellogg']

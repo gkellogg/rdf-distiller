@@ -5,7 +5,7 @@ require 'rubygems' || Gem.clear_paths
 require 'bundler'
 Bundler.setup
 
-require 'rdf/portal'
+require 'rdf/distiller'
 
 set :environment, (ENV['RACK_ENV'] || 'production').to_sym
 
@@ -20,4 +20,4 @@ end
 
 disable :run, :reload
 
-run RDF::Portal::Application
+run RDF::Distiller::Application

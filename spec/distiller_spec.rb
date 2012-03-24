@@ -2,7 +2,7 @@ $:.unshift "."
 require 'spec_helper'
 require 'linkeddata'
 
-describe RDF::Portal::Application do
+describe RDF::Distiller::Application do
   describe "/distiller" do
     context "HTML output" do
       context "URL" do
