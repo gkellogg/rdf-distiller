@@ -1,6 +1,5 @@
 require 'rdf/util/file'
-require 'net/http'
-require 'uri'
+require 'curb'
 
 module RDF::Util
   module File
@@ -19,34 +18,20 @@ module RDF::Util
         path = filename_or_url[5..-1]
         Kernel.open(path.to_s, &block)
       when /^http/
-        headers = {
-          "Accept" => 'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1',
-          #"User-Agent" => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"
-        }.merge(options[:headers] || {})
-        url = ::URI.parse(filename_or_url)
-        io_obj = nil
-        until io_obj do
-          Net::HTTP::start(url.host, url.port) do |http|
-            request = Net::HTTP::Get.new(url.request_uri, headers)
-            response = http.request(request)
-            case response
-            when Net::HTTPSuccess
-              # found object
-              io_obj = StringIO.new(response.body)
-              io_obj.instance_variable_set(:@resp, response)
-            when Net::HTTPRedirection
-              # Follow redirection
-              url = ::URI.parse(response["Location"])
-            else
-              raise IOError, "Failed to open #{filename_or_url}: #{response.msg}(#{response.value})"
-            end
-          end
+        io_obj = StringIO.new
+        c = Curl::Easy.perform(filename_or_url) do |curl|
+          curl.headers['Accept'] = 'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1'
+          curl.headers['User-Agent'] = "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"
+          curl.on_body {|body| io_obj.write(body); body.length}
+          curl.on_success {|easy, code| io_obj.instance_variable_set(:@status, code || 200)}
+          curl.on_failure {|easy, code| io_obj.instance_variable_set(:@status, code || 500)}
         end
+        io_obj.rewind
         def io_obj.content_type
-          @resp.content_type
+          @content_type
         end
         def io_obj.status
-          @resp.value
+          @status
         end
         if block_given?
           begin

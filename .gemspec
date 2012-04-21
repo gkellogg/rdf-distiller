@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      "linkeddata",         '>= 0.3.5'
   s.add_runtime_dependency      'equivalent-xml',     '>= 0.2.8'
   s.add_runtime_dependency      'sparql',             '>= 0.1.0'
+  s.add_runtime_dependency      'curb',               '>= 0.8.0'
 
   # Sinatra dependencies        
   s.add_runtime_dependency      'sinatra',            '>= 1.2.1'
