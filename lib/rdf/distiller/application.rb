@@ -31,6 +31,7 @@ module RDF::Distiller
 
     get '/doap' do
       cache_control :public, :must_revalidate, :max_age => 60
+      etag Digest::SHA1.hexdigest File.read(DOAP_FILE)
       if format == :nt
         headers "Content-Type" => "text/plain"
         body File.read(DOAP_FILE)

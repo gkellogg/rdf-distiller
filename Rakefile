@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'fileutils'
-
 require 'yard'
-
 
 task :yard => [:clean_doc, :readme]
 
@@ -32,6 +30,13 @@ task :readme do
     d.sub!(/-\d+\.\d+(?:\.\d+)$/, '')
     puts "link #{path} to readmes/#{d}"
     FileUtils.ln_s "../#{path}", "readmes/#{d}" unless File.exist?("readmes/#{d}")
+  end
+end
+
+namespace :cache do
+  desc 'Clear document cache'
+  task :clear do
+    FileUtils.rm_rf File.expand_path("../cache", __FILE__)
   end
 end
 
