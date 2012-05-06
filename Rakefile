@@ -50,9 +50,10 @@ task :doap do
   require 'equivalent-xml'
   require 'yaml'
 
-  g = RDF::Repository.new
+  g = RDF::Graph.new
   Dir.glob('vendor/bundler/**/etc/doap.*') do |path|
     begin
+      next if path =~ %r(/rdf-\d.*\.(nq|nt)$)
       puts "load #{path}"
       g.load(path)
     rescue
@@ -60,4 +61,16 @@ task :doap do
     end
   end
   RDF::NTriples::Writer.open("etc/doap.nt") {|w| w << g}
+  puts "dumped ntriples"
+
+  frame = File.open(File.expand_path("../etc/doap-frame.jsonld", __FILE__))
+  JSON::LD::API.fromRDF(g.each_statement.to_a) do |expanded|
+    puts "expanded"
+    JSON::LD::API.frame(expanded, frame, nil) do |framed|
+      puts "frame"
+      File.open("etc/doap.jsonld", "w") do |f|
+        f.write(framed.to_json(JSON::LD::JSON_STATE))
+      end
+    end
+  end
 end

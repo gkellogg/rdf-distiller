@@ -12,7 +12,8 @@ module RDF::Distiller
     register Sinatra::SPARQL
     helpers Sinatra::Partials
     set :views, ::File.expand_path('../views',  __FILE__)
-    DOAP_FILE = File.expand_path("../../../../etc/doap.nt", __FILE__)
+    DOAP_NT = File.expand_path("../../../../etc/doap.nt", __FILE__)
+    DOAP_JSON = File.expand_path("../../../../etc/doap.jsonld", __FILE__)
 
     mime_type "sse", "application/sse+sparql-query"
     before do
@@ -31,11 +32,23 @@ module RDF::Distiller
 
     get '/doap' do
       cache_control :public, :must_revalidate, :max_age => 60
-      etag Digest::SHA1.hexdigest File.read(DOAP_FILE)
-      if format == :nt
+      case format
+      when :nt
+        etag Digest::SHA1.hexdigest File.read(DOAP_NT)
         headers "Content-Type" => "text/plain"
-        body File.read(DOAP_FILE)
+        body File.read(DOAP_NT)
+      when :json, :jsonld
+        etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
+        headers "Content-Type" => "application/jd+json"
+        body File.read(DOAP_JSON)
+      when :html
+        etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
+        haml :doap, :locals => {
+          :title => "Project Information on included Gems",
+          :projects => ::JSON.parse(File.read(DOAP_JSON))['@graph']
+        }
       else
+        etag Digest::SHA1.hexdigest File.read(DOAP_NT)
         doap
       end
     end
@@ -172,8 +185,8 @@ module RDF::Distiller
     ## Default graph, loaded from DOAP file
     def doap
       @doap ||= begin
-        puts "load #{DOAP_FILE}"
-        RDF::Repository.load(DOAP_FILE)
+        puts "load #{DOAP_NT}"
+        RDF::Repository.load(DOAP_NT)
       end
     end
 
