@@ -43,9 +43,17 @@ module RDF::Distiller
         body File.read(DOAP_JSON)
       when :html
         etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
+        projects = ::JSON.parse(File.read(DOAP_JSON))['@graph']
+        
+        # Fix dc:created and doap:helper entries to be normalized
+        projects.each do |p|
+          devs = p['doap:developer'].inject({}) {|memo, h| memo[h['@id']] = h if h.is_a?(Hash); memo}
+          p['dc:creator'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
+          p['doap:helper'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
+        end
         haml :doap, :locals => {
           :title => "Project Information on included Gems",
-          :projects => ::JSON.parse(File.read(DOAP_JSON))['@graph']
+          :projects => projects
         }
       else
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
