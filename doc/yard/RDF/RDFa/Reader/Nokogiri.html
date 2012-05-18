@@ -72,7 +72,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -302,7 +302,7 @@
 14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 12</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_library identifier id'>library</span>
   <span class='symbol val'>:nokogiri</span>
@@ -423,10 +423,12 @@
 236
 237
 238
-239</pre>
+239
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 157</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_detect_host_language_version identifier id'>detect_host_language_version</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
   <span class='rubyid_@host_language ivar id'>@host_language</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:host_language</span><span class='rbrack token'>]</span> <span class='question op'>?</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:host_language</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span> <span class='colon op'>:</span> <span class='rubyid_nil nil kw'>nil</span>
@@ -486,8 +488,10 @@
   <span class='rubyid_@version ivar id'>@version</span> <span class='opasgn op'>||=</span> <span class='symbol val'>:&quot;rdfa1.1&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_version_attr identifier id'>version_attr</span> <span class='match op'>=~</span> <span class='regexp val'>/RDFa 1\.1/</span>
   <span class='rubyid_@version ivar id'>@version</span> <span class='opasgn op'>||=</span> <span class='symbol val'>:&quot;rdfa1.1&quot;</span>
 
+  <span class='rubyid_@host_language ivar id'>@host_language</span> <span class='opasgn op'>||=</span> <span class='symbol val'>:xhtml1</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@version ivar id'>@version</span> <span class='eq op'>==</span> <span class='symbol val'>:&quot;rdfa1.0&quot;</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_doc_type_string identifier id'>doc_type_string</span> <span class='match op'>=~</span> <span class='regexp val'>/html/i</span>
+
   <span class='rubyid_@host_language ivar id'>@host_language</span> <span class='opasgn op'>||=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_content_type identifier id'>content_type</span>
-  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;application/xml&quot;</span>  <span class='rubyid_then then kw'>then</span> <span class='symbol val'>:xml1</span>
+  <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;application/xml&quot;</span>  <span class='rubyid_then then kw'>then</span> <span class='symbol val'>:xml</span>
   <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;image/svg+xml&quot;</span>    <span class='rubyid_then then kw'>then</span> <span class='symbol val'>:svg</span>
   <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;text/html&quot;</span>
     <span class='rubyid_case case kw'>case</span> <span class='rubyid_doc_type_string identifier id'>doc_type_string</span>
@@ -507,7 +511,7 @@
     <span class='rubyid_case case kw'>case</span> <span class='rubyid_root_element identifier id'>root_element</span>
     <span class='rubyid_when when kw'>when</span> <span class='regexp val'>/svg/i</span>           <span class='rubyid_then then kw'>then</span> <span class='symbol val'>:svg</span>
     <span class='rubyid_when when kw'>when</span> <span class='regexp val'>/html/i</span>          <span class='rubyid_then then kw'>then</span> <span class='symbol val'>:html5</span>
-    <span class='rubyid_else else kw'>else</span>                       <span class='symbol val'>:xml1</span>
+    <span class='rubyid_else else kw'>else</span>                       <span class='symbol val'>:xml</span>
     <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
@@ -570,8 +574,6 @@
       <pre class="lines">
 
 
-260
-261
 262
 263
 264
@@ -582,10 +584,12 @@
 269
 270
 271
-272</pre>
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 262</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_doc_base identifier id'>doc_base</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
   <span class='comment val'># find if the document has a base element</span>
@@ -628,12 +632,12 @@
       <pre class="lines">
 
 
-251
-252
-253</pre>
+253
+254
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 253</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_doc_errors identifier id'>doc_errors</span>
   <span class='rubyid_@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='rubyid_errors identifier id'>errors</span>
@@ -705,7 +709,7 @@
 154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 135</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize_xml identifier id'>initialize_xml</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_require identifier id'>require</span> <span class='string val'>'nokogiri'</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='rubyid_Nokogiri constant id'>Nokogiri</span><span class='rparen token'>)</span>
@@ -755,12 +759,12 @@
       <pre class="lines">
 
 
-245
-246
-247</pre>
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-588d3e447832/lib/rdf/rdfa/reader/nokogiri.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-e1acbe7b54fa/lib/rdf/rdfa/reader/nokogiri.rb', line 247</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_root identifier id'>root</span>
   <span class='rubyid_@root ivar id'>@root</span> <span class='opasgn op'>||=</span> <span class='rubyid_NodeProxy constant id'>NodeProxy</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='rubyid_root identifier id'>root</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@doc ivar id'>@doc</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_@doc ivar id'>@doc</span><span class='dot token'>.</span><span class='rubyid_root identifier id'>root</span>
@@ -776,7 +780,7 @@
 </div>
     
     <div id="footer">
-  Generated on Sat Apr 21 14:56:25 2012 by 
+  Generated on Thu May 17 19:46:07 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.5 (ruby-1.8.7).
 </div>
