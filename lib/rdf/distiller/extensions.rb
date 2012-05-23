@@ -29,7 +29,7 @@ module RDF::Util
         io_obj.rewind
 
         content_type, ct_param = c.content_type.to_s.downcase.split(";")
-        io_obj.instance_variable_set(:@content_type, content_type) unless content_type.empty?
+        io_obj.instance_variable_set(:@content_type, content_type) unless content_type.to_s.empty?
         
         # Set charset, if available
         if ct_param.to_s =~ /charset=([^\s]*)$/i
