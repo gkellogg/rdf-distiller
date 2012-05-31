@@ -24,4 +24,5 @@ group :development, :test do
   gem 'shotgun'
   gem "wirble"
   gem "syntax"
+  gem "rake"
 end

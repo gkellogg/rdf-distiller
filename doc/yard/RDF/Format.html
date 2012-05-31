@@ -91,7 +91,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -191,7 +191,7 @@
         <li class="protected ">
   <span class="summary_signature">
     
-      <a href="#content_encoding-class_method" title="content_encoding (class method)">+ <strong>content_encoding</strong>(encoding) </a>
+      <a href="#content_encoding-class_method" title="content_encoding (class method)">+ <strong>content_encoding</strong>(encoding = nil) </a>
     
 
     
@@ -338,6 +338,27 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#name-class_method" title="name (class method)">+ (Symbol) <strong>name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a human-readable name for the format.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#reader-class_method" title="reader (class method)">+ <strong>reader</strong>(klass = nil, &amp;block) </a>
     
 
@@ -355,6 +376,27 @@
   
     <span class="summary_desc"><div class='inline'><p>Retrieves or defines the reader class for this RDF serialization
 format.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reader_symbols-class_method" title="reader_symbols (class method)">+ (Array&lt;Symbol&gt;) <strong>reader_symbols</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the set of format symbols for loaded RDF::Reader subclasses.</p></div></span>
   
 </li>
 
@@ -425,6 +467,27 @@ format.</p></div></span>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#writer_symbols-class_method" title="writer_symbols (class method)">+ (Array&lt;Symbol&gt;) <strong>writer_symbols</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the set of format symbols for loaded RDF::Writer subclasses.</p></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -438,13 +501,16 @@ format.</p></div></span>
       <div class="method_details first">
   <p class="signature first" id="content_encoding-class_method">
   
-    + <strong>content_encoding</strong>(encoding)  <span class="extras">(protected)</span>
+    + <strong>content_encoding</strong>(encoding = nil)  <span class="extras">(protected)</span>
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Defines the content encoding for this RDF serialization format.</p>
+
+<p>When called without an encoding, it returns the currently defined
+content encoding for this format</p>
 
   </div>
 </div>
@@ -460,6 +526,8 @@ format.</p></div></span>
         <span class='type'>(<tt>#<span class='object_link'><a href="#to_sym-class_method" title="RDF::Format.to_sym (method)">to_sym</a></span></tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
       
     </li>
   
@@ -472,15 +540,17 @@ format.</p></div></span>
       <pre class="lines">
 
 
-353
-354
-355</pre>
+411
+412
+413
+414</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 411</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_encoding identifier id'>content_encoding</span><span class='lparen token'>(</span><span class='rubyid_encoding identifier id'>encoding</span><span class='rparen token'>)</span>
-  <span class='rubyid_@@content_encoding ivar id'>@@content_encoding</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_encoding identifier id'>encoding</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_encoding identifier id'>content_encoding</span><span class='lparen token'>(</span><span class='rubyid_encoding identifier id'>encoding</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='rubyid_@@content_encoding ivar id'>@@content_encoding</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_encoding identifier id'>encoding</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_encoding identifier id'>encoding</span>
+  <span class='rubyid_@@content_encoding ivar id'>@@content_encoding</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>&quot;utf-8&quot;</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -656,26 +726,26 @@ MIME type for the format and following elements are alias MIME types.</p>
       <pre class="lines">
 
 
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331</pre>
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 370</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_type identifier id'>content_type</span><span class='lparen token'>(</span><span class='rubyid_type identifier id'>type</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_type identifier id'>type</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
@@ -715,6 +785,16 @@ MIME type for the format and following elements are alias MIME types.</p>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>retrieving a list of supported Mime types</p></div></h4>
+      <pre class="example code">
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
+</pre>
+    
+  </div>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -735,12 +815,12 @@ MIME type for the format and following elements are alias MIME types.</p>
       <pre class="lines">
 
 
-157
-158
-159</pre>
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 165</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span>
   <span class='rubyid_@@content_types ivar id'>@@content_types</span>
@@ -818,12 +898,12 @@ match cannot be unambigiously found otherwise.</p>
       <pre class="lines">
 
 
-279
-280
-281</pre>
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 334</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_detect identifier id'>detect</span><span class='lparen token'>(</span><span class='rubyid_sample identifier id'>sample</span><span class='rparen token'>)</span>
   <span class='rubyid_false false kw'>false</span>
@@ -902,7 +982,7 @@ match cannot be unambigiously found otherwise.</p>
 56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 54</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@@subclasses ivar id'>@@subclasses</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -928,6 +1008,16 @@ match cannot be unambigiously found otherwise.</p>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>retrieving a list of supported file extensions</p></div></h4>
+      <pre class="example code">
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_file_extensions identifier id'>file_extensions</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
+</pre>
+    
+  </div>
+
 <h3>Returns:</h3>
 <ul class="return">
   
@@ -948,12 +1038,12 @@ match cannot be unambigiously found otherwise.</p>
       <pre class="lines">
 
 
-165
-166
-167</pre>
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 177</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_file_extensions identifier id'>file_extensions</span>
   <span class='rubyid_@@file_extensions ivar id'>@@file_extensions</span>
@@ -1296,10 +1386,14 @@ we pick the first one we find</p></div>
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 94</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_options identifier id'>options</span>
@@ -1315,7 +1409,11 @@ we pick the first one we find</p></div>
           <span class='comment val'># @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7</span>
           <span class='rubyid_mime_type identifier id'>mime_type</span> <span class='assign token'>=</span> <span class='rubyid_mime_type identifier id'>mime_type</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
           <span class='rubyid_mime_type identifier id'>mime_type</span> <span class='assign token'>=</span> <span class='rubyid_mime_type identifier id'>mime_type</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>';'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span> <span class='comment val'># remove any media type parameters</span>
-          <span class='rubyid_content_types identifier id'>content_types</span><span class='lbrack token'>[</span><span class='rubyid_mime_type identifier id'>mime_type</span><span class='rbrack token'>]</span>
+
+          <span class='comment val'># Ignore text/plain, a historical encoding for N-Triples, which is</span>
+          <span class='comment val'># problematic in format detection, as many web servers will serve</span>
+          <span class='comment val'># content by default text/plain.</span>
+          <span class='rubyid_content_types identifier id'>content_types</span><span class='lbrack token'>[</span><span class='rubyid_mime_type identifier id'>mime_type</span><span class='rbrack token'>]</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_mime_type identifier id'>mime_type</span> <span class='eq op'>==</span> <span class='string val'>'text/plain'</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:sample</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_block_given? fid id'>block_given?</span><span class='rparen token'>)</span>
         <span class='comment val'># Find a format based on the file name:</span>
         <span class='rubyid_when when kw'>when</span> <span class='rubyid_file_name identifier id'>file_name</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:file_name</span><span class='rbrack token'>]</span>
           <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_extension</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_extname identifier id'>extname</span><span class='lparen token'>(</span><span class='rubyid_file_name identifier id'>file_name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='float val'>1</span><span class='dot2 op'>..</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span> <span class='rbrace token'>}</span>
@@ -1358,6 +1456,75 @@ we pick the first one we find</p></div>
   <span class='rubyid_else else kw'>else</span>
     <span class='rubyid_nil nil kw'>nil</span>
   <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="name-class_method">
+  
+    + (<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>) <strong>name</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns a human-readable name for the format.
+Subclasses should override this to use something
+difererent than the Class name.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code">
+<span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;NTriples&quot;</span>
+</pre>
+    
+  </div>
+
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+227
+228
+229
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 227</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span>
+  <span class='rubyid_elements identifier id'>elements</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_elements identifier id'>elements</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span>
+  <span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_elements identifier id'>elements</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_name identifier id'>name</span> <span class='eq op'>==</span> <span class='string val'>'Format'</span>
+  <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1512,21 +1679,21 @@ reader class is first needed.</p>
       <pre class="lines">
 
 
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220</pre>
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 264</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_reader identifier id'>reader</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span>
@@ -1539,6 +1706,68 @@ reader class is first needed.</p>
       <span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_@@readers ivar id'>@@readers</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Proc constant id'>Proc</span><span class='rparen token'>)</span>
       <span class='rubyid_klass identifier id'>klass</span>
   <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="reader_symbols-class_method">
+  
+    + (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>) <strong>reader_symbols</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the set of format symbols for loaded RDF::Reader subclasses.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code">
+<span class='rubyid_formats identifier id'>formats</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_reader_symbols identifier id'>reader_symbols</span>
+<span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_formats identifier id'>formats</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+190
+191
+192</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 190</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_reader_symbols identifier id'>reader_symbols</span>
+  <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:reader</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_uniq identifier id'>uniq</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1587,12 +1816,12 @@ instance for this format.</p>
       <pre class="lines">
 
 
-344
-345
-346</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 399</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_require identifier id'>require</span><span class='lparen token'>(</span><span class='rubyid_library identifier id'>library</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='rubyid_@@requires ivar id'>@@requires</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_library identifier id'>library</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
@@ -1638,15 +1867,15 @@ instance for this format.</p>
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177</pre>
+210
+211
+212
+213
+214
+215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 210</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
   <span class='rubyid_elements identifier id'>elements</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
@@ -1807,21 +2036,21 @@ writer class is first needed.</p>
       <pre class="lines">
 
 
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263</pre>
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-528adf79fc53/lib/rdf/format.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 307</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_writer identifier id'>writer</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span>
@@ -1841,12 +2070,74 @@ writer class is first needed.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <p class="signature " id="writer_symbols-class_method">
+  
+    + (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>) <strong>writer_symbols</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the set of format symbols for loaded RDF::Writer subclasses.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'></div></h4>
+      <pre class="example code">
+<span class='rubyid_formats identifier id'>formats</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_writer_symbols identifier id'>writer_symbols</span>
+<span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_formats identifier id'>formats</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+203
+204
+205</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 203</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_writer_symbols identifier id'>writer_symbols</span>
+  <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:writer</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_uniq identifier id'>uniq</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
     
     <div id="footer">
-  Generated on Thu May 17 19:45:16 2012 by 
+  Generated on Thu May 31 12:51:54 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.5 (ruby-1.8.7).
 </div>
