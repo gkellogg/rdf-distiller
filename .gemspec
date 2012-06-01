@@ -41,7 +41,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rack-cache'
 
   # development dependencies    
-  s.add_development_dependency  'yard' ,              '= 0.7.5'
+  s.add_development_dependency  'yard'
   s.add_development_dependency  'rspec',              '>= 2.5.0'
   s.add_development_dependency  'rack-test',          '>= 0.5.6'
   s.add_development_dependency  'bundler'

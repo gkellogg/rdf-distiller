@@ -14,6 +14,7 @@ gem 'rdf-trig',         :git => "git://github.com/ruby-rdf/rdf-trig.git", :requi
 gem 'json-ld',          :git => "git://github.com/gkellogg/json-ld.git", :require => 'json/ld'
 gem 'spira',            '>= 0.0.12'
 gem 'linkeddata',       :git => "git://github.com/ruby-rdf/linkeddata.git"
+gem 'sparql-client',    :git => "git://github.com/ruby-rdf/sparql-client.git"
 gem 'sparql',           :git => "git://github.com/ruby-rdf/sparql.git"
 gem 'sinatra-respond_to', :git => "git://github.com/gkellogg/sinatra-respond_to.git", :require => 'sinatra/respond_to'
 
@@ -25,4 +26,5 @@ group :development, :test do
   gem "wirble"
   gem "syntax"
   gem "rake"
+  gem "yard",  :git => "git://github.com/lsegal/yard.git"
 end
