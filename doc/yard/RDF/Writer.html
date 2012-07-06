@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (W)</a> &raquo; 
+    <a href="../_index.html">Index (W)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
      &raquo; 
     <span class="title">Writer</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Class: RDF::Writer
   <span class="abstract note title">Abstract</span>
   
@@ -95,7 +102,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -103,7 +110,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This class is abstract.</strong> 
+  <strong>This class is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p>The base class for RDF serializers.</p>
@@ -113,17 +120,23 @@
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Loading an RDF writer implementation</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Loading an RDF writer implementation</p></div></p>
+      
       <pre class="example code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
 </pre>
     
-      <h4><div class='inline'><p>Iterating over known RDF writer classes</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Iterating over known RDF writer classes</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_klass identifier id'>klass</span><span class='bitor op'>|</span> <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='rbrace token'>}</span>
 </pre>
     
-      <h4><div class='inline'><p>Obtaining an RDF writer class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Obtaining an RDF writer class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span>     <span class='comment val'>#=&gt; RDF::NTriples::Writer</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;spec/data/output.nt&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_name</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;spec/data/output.nt&quot;</span><span class='rparen token'>)</span>
@@ -131,11 +144,15 @@
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:content_type</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;text/plain&quot;</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Instantiating an RDF writer class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Instantiating an RDF writer class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdout gvar id'>$stdout</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into a file</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into a file</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;spec/data/output.nt&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -143,7 +160,9 @@
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into a string</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into a string</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -154,7 +173,7 @@
   </div>
 
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="Format.html" title="RDF::Format (class)">Format</a></span></li>
@@ -165,7 +184,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="JSON/Writer.html" title="RDF::JSON::Writer (class)">JSON::Writer</a></span>, <span class='object_link'><a href="N3/Writer.html" title="RDF::N3::Writer (class)">N3::Writer</a></span>, <span class='object_link'><a href="NTriples/Writer.html" title="RDF::NTriples::Writer (class)">NTriples::Writer</a></span>, <span class='object_link'><a href="RDFXML/Writer.html" title="RDF::RDFXML::Writer (class)">RDFXML::Writer</a></span>, <span class='object_link'><a href="RDFa/Writer.html" title="RDF::RDFa::Writer (class)">RDFa::Writer</a></span>, <span class='object_link'><a href="TriX/Writer.html" title="RDF::TriX::Writer (class)">TriX::Writer</a></span>, <span class='object_link'><a href="Turtle/Writer.html" title="RDF::Turtle::Writer (class)">Turtle::Writer</a></span></p>
+  <p class="children"><span class='object_link'><a href="../JSON/LD/Writer.html" title="JSON::LD::Writer (class)">JSON::LD::Writer</a></span>, <span class='object_link'><a href="JSON/Writer.html" title="RDF::JSON::Writer (class)">JSON::Writer</a></span>, <span class='object_link'><a href="N3/Writer.html" title="RDF::N3::Writer (class)">N3::Writer</a></span>, <span class='object_link'><a href="NTriples/Writer.html" title="RDF::NTriples::Writer (class)">NTriples::Writer</a></span>, <span class='object_link'><a href="RDFXML/Writer.html" title="RDF::RDFXML::Writer (class)">RDFXML::Writer</a></span>, <span class='object_link'><a href="RDFa/Writer.html" title="RDF::RDFa::Writer (class)">RDFa::Writer</a></span>, <span class='object_link'><a href="TriX/Writer.html" title="RDF::TriX::Writer (class)">TriX::Writer</a></span>, <span class='object_link'><a href="Turtle/Writer.html" title="RDF::Turtle::Writer (class)">Turtle::Writer</a></span></p>
 </div>
 
 
@@ -184,7 +203,10 @@
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -225,6 +247,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Buffers output into a string buffer.</p></div></span>
@@ -240,6 +263,7 @@
 
     
   </span>
+  
   
   
   
@@ -267,6 +291,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Enumerates known RDF writer classes.</p></div></span>
@@ -282,6 +307,7 @@
 
     
   </span>
+  
   
   
   
@@ -311,6 +337,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Retrieves the RDF serialization format class for this writer class.</p></div></span>
@@ -332,6 +359,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Writes output to the given <code>filename</code>.</p></div></span>
@@ -347,6 +375,7 @@
 
     
   </span>
+  
   
   
   
@@ -383,6 +412,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the base URI used for this writer.</p></div></span>
@@ -404,6 +434,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the encoding of the output stream.</p></div></span>
@@ -419,6 +450,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -448,6 +480,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Flushes the underlying output buffer.</p></div></span>
@@ -466,7 +499,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -487,7 +521,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -508,7 +543,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -534,6 +570,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'></div></span>
@@ -552,7 +589,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -570,6 +608,7 @@
 
     
   </span>
+  
   
     <span class="note title constructor">constructor</span>
   
@@ -593,6 +632,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -622,6 +662,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Defines the given named URI prefix for this writer.</p></div></span>
@@ -637,6 +678,7 @@
 
     
   </span>
+  
   
   
   
@@ -664,6 +706,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Defines the given URI prefixes for this writer.</p></div></span>
@@ -679,6 +722,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -700,6 +744,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -727,6 +772,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns a symbol appropriate to use with RDF::Writer.for().</p></div></span>
@@ -742,6 +788,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -766,7 +813,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -787,7 +835,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -809,7 +858,8 @@
   
   
   
-  <span class="deprecated note title">Deprecated</span>
+  
+  <span class="deprecated note title">deprecated</span>
   
 
   
@@ -829,7 +879,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -855,6 +906,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p><code>self</code>.</p></div></span>
@@ -874,7 +926,8 @@
   
   
   
-  <span class="deprecated note title">Deprecated</span>
+  
+  <span class="deprecated note title">deprecated</span>
   
 
   
@@ -894,7 +947,8 @@
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -918,6 +972,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p><code>self</code>.</p></div></span>
@@ -936,9 +991,11 @@
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">alias_method</a></span></p>
 
+  
   
   
   
@@ -953,20 +1010,22 @@
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="RDF::Writer (class)">Writer</a></span></tt>) <strong>initialize</strong>(output = $stdout, options = {}) {|writer| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Initializes the writer.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -990,7 +1049,7 @@
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1008,7 +1067,7 @@
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -1017,8 +1076,10 @@
           <span class="default">
             
           </span>
-          &mdash; <div class='inline'><p>the encoding to use on the output stream (Ruby 1.9+).
+          
+            &mdash; <div class='inline'><p>the encoding to use on the output stream (Ruby 1.9+).
 Defaults to the format associated with <code>content_encoding</code>.</p></div>
+          
         </li>
       
         <li>
@@ -1030,19 +1091,23 @@ Defaults to the format associated with <code>content_encoding</code>.</p></div>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
+            &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
         </li>
       
         <li>
           <span class="name">:prefixes</span>
-          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="type">(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
           <span class="default">
             
               &mdash; default:
               <tt>Hash.new</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
+            &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
         </li>
       
         <li>
@@ -1054,14 +1119,16 @@ Defaults to the format associated with <code>content_encoding</code>.</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs (not supported
+          
+            &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs (not supported
 by all writers)</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1077,7 +1144,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1092,7 +1159,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1127,7 +1194,7 @@ by all writers)</p></div>
 211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 199</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_output identifier id'>output</span> <span class='assign token'>=</span> <span class='rubyid_$stdout gvar id'>$stdout</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@output ivar id'>@output</span><span class='comma token'>,</span> <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='rubyid_output identifier id'>output</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
@@ -1157,13 +1224,15 @@ by all writers)</p></div>
       <span id=""></span>
       <span id="options-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="options-instance_method">
+  <h3 class="signature first" id="options-instance_method">
   
-    - (<tt>Hash</tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Any additional options for this writer.</p>
 
@@ -1171,20 +1240,20 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1210,7 +1279,7 @@ by all writers)</p></div>
 220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 218</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_options identifier id'>options</span>
   <span class='rubyid_@options ivar id'>@options</span>
@@ -1226,16 +1295,18 @@ by all writers)</p></div>
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="buffer-class_method">
+  <h3 class="signature first" id="buffer-class_method">
   
     + (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>buffer</strong>(*args) {|writer| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Buffers output into a string buffer.</p>
 
@@ -1243,7 +1314,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1256,7 +1327,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1271,7 +1342,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1284,7 +1355,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1312,7 +1383,7 @@ by all writers)</p></div>
 144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 139</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_StringIO constant id'>StringIO</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_buffer identifier id'>buffer</span><span class='bitor op'>|</span>
@@ -1327,20 +1398,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="dump-class_method">
+  <h3 class="signature " id="dump-class_method">
   
     + <strong>dump</strong>(data, io = nil, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1378,7 +1451,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1418,7 +1491,7 @@ by all writers)</p></div>
 130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 113</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_dump identifier id'>dump</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_io identifier id'>io</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_io identifier id'>io</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_io identifier id'>io</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_io identifier id'>io</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
@@ -1445,13 +1518,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="each-class_method">
+  <h3 class="signature " id="each-class_method">
   
     + (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each</strong> {|klass| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Enumerates known RDF writer classes.</p>
 
@@ -1459,7 +1534,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1472,7 +1547,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1487,7 +1562,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1503,7 +1578,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1528,7 +1603,7 @@ by all writers)</p></div>
 52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 50</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@@subclasses ivar id'>@@subclasses</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1540,7 +1615,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="for-class_method">
+  <h3 class="signature " id="for-class_method">
   
     
       <span class="overload">+ (<tt>Class</tt>) <strong>for</strong>(format) </span>
@@ -1552,7 +1627,9 @@ by all writers)</p></div>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Finds an RDF writer class based on the given criteria.</p>
 
@@ -1560,7 +1637,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -1573,7 +1650,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1589,7 +1666,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1616,7 +1693,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1632,7 +1709,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1659,7 +1736,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1667,7 +1744,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -1678,7 +1755,7 @@ by all writers)</p></div>
   
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -1690,7 +1767,7 @@ by all writers)</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -1702,7 +1779,7 @@ by all writers)</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -1714,13 +1791,13 @@ by all writers)</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1739,7 +1816,7 @@ by all writers)</p></div>
     
   </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1767,7 +1844,7 @@ by all writers)</p></div>
 84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 79</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:has_writer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
@@ -1782,7 +1859,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format-class_method">
+  <h3 class="signature " id="format-class_method">
   
     + (<tt>Class</tt>) <strong>format</strong>(klass = nil) 
   
@@ -1792,7 +1869,9 @@ by all writers)</p></div>
     <span class="names"><span id='format_class-class_method'>format_class</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Retrieves the RDF serialization format class for this writer class.</p>
 
@@ -1800,7 +1879,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1832,7 +1911,7 @@ by all writers)</p></div>
 99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 90</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_format identifier id'>format</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
@@ -1851,20 +1930,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="open-class_method">
+  <h3 class="signature " id="open-class_method">
   
     + (<tt><span class='object_link'><a href="" title="RDF::Writer (class)">RDF::Writer</a></span></tt>) <strong>open</strong>(filename, options = {}, &amp;block) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Writes output to the given <code>filename</code>.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1883,7 +1964,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1901,7 +1982,7 @@ by all writers)</p></div>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -1913,7 +1994,7 @@ by all writers)</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
     </ul>
@@ -1921,7 +2002,7 @@ by all writers)</p></div>
     
     
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1950,7 +2031,7 @@ by all writers)</p></div>
 160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 154</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_filename identifier id'>filename</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_filename identifier id'>filename</span><span class='comma token'>,</span> <span class='string val'>'wb'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_file identifier id'>file</span><span class='bitor op'>|</span>
@@ -1966,13 +2047,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="to_sym-class_method">
+  <h3 class="signature " id="to_sym-class_method">
   
     + (<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>) <strong>to_sym</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns a symbol appropriate to use with RDF::Writer.for()</p>
 
@@ -1980,7 +2063,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2008,7 +2091,7 @@ by all writers)</p></div>
 170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 165</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
   <span class='rubyid_elements identifier id'>elements</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
@@ -2026,16 +2109,18 @@ by all writers)</p></div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="base_uri-instance_method">
+  <h3 class="signature first" id="base_uri-instance_method">
   
-    - (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>base_uri</strong> 
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>base_uri</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the base URI used for this writer.</p>
 
@@ -2044,28 +2129,28 @@ by all writers)</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_prefixes identifier id'>prefixes</span><span class='lbrack token'>[</span><span class='symbol val'>:dc</span><span class='rbrack token'>]</span>  <span class='comment val'>#=&gt; RDF::URI('http://purl.org/dc/terms/')</span>
 </pre>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2091,7 +2176,7 @@ by all writers)</p></div>
 230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 228</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_base_uri identifier id'>base_uri</span>
   <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:base_uri</span><span class='rbrack token'>]</span>
@@ -2103,13 +2188,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="encoding-instance_method">
+  <h3 class="signature " id="encoding-instance_method">
   
     - (<tt>Encoding</tt>) <strong>encoding</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the encoding of the output stream.</p>
 
@@ -2119,7 +2206,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2152,7 +2239,7 @@ by all writers)</p></div>
 298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 288</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_encoding identifier id'>encoding</span>
   <span class='rubyid_return return kw'>return</span> <span class='rubyid_nil nil kw'>nil</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='string val'>&quot;&quot;</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:force_encoding</span><span class='rparen token'>)</span>
@@ -2172,20 +2259,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="escaped-instance_method">
+  <h3 class="signature " id="escaped-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>escaped</strong>(string)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2201,7 +2290,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2227,7 +2316,7 @@ by all writers)</p></div>
 468</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 465</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 465</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_escaped identifier id'>escaped</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
   <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>'\\'</span><span class='comma token'>,</span> <span class='string val'>'\\\\'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>&quot;\t&quot;</span><span class='comma token'>,</span> <span class='string val'>'\\t'</span><span class='rparen token'>)</span><span class='dot token'>.</span>
@@ -2240,7 +2329,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="flush-instance_method">
+  <h3 class="signature " id="flush-instance_method">
   
     - <strong>flush</strong> 
   
@@ -2250,7 +2339,9 @@ by all writers)</p></div>
     <span class="names"><span id='flush!-instance_method'>flush!</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Flushes the underlying output buffer.</p>
 
@@ -2271,7 +2362,7 @@ by all writers)</p></div>
 307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 304</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_flush identifier id'>flush</span>
   <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_flush identifier id'>flush</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:flush</span><span class='rparen token'>)</span>
@@ -2284,16 +2375,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_list-instance_method">
+  <h3 class="signature " id="format_list-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_list</strong>(value, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 
@@ -2301,7 +2394,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2320,7 +2413,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2330,7 +2423,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2343,7 +2436,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2369,7 +2462,7 @@ by all writers)</p></div>
 432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 430</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_list identifier id'>format_list</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_format_term identifier id'>format_term</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -2381,16 +2474,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_literal-instance_method">
+  <h3 class="signature " id="format_literal-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_literal</strong>(value, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 
@@ -2398,7 +2493,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2417,7 +2512,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2427,7 +2522,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2440,7 +2535,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -2468,7 +2563,7 @@ by all writers)</p></div>
 422</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 420</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_literal identifier id'>format_literal</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{self.class}#format_literal&quot;</span><span class='rparen token'>)</span> <span class='comment val'># override in subclasses</span>
@@ -2480,16 +2575,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_node-instance_method">
+  <h3 class="signature " id="format_node-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_node</strong>(value, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 
@@ -2497,7 +2594,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2516,7 +2613,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2526,7 +2623,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2539,7 +2636,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -2567,7 +2664,7 @@ by all writers)</p></div>
 402</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 400</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 400</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_node identifier id'>format_node</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{self.class}#format_node&quot;</span><span class='rparen token'>)</span> <span class='comment val'># override in subclasses</span>
@@ -2579,7 +2676,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_term-instance_method">
+  <h3 class="signature " id="format_term-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_term</strong>(term, options = {}) 
   
@@ -2589,14 +2686,16 @@ by all writers)</p></div>
     <span class="names"><span id='format_value-instance_method'>format_value</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2612,7 +2711,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2625,7 +2724,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2658,7 +2757,7 @@ by all writers)</p></div>
 391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 382</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 382</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_term identifier id'>format_term</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_term identifier id'>term</span>
@@ -2677,16 +2776,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_uri-instance_method">
+  <h3 class="signature " id="format_uri-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_uri</strong>(value, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 
@@ -2694,7 +2795,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2713,7 +2814,7 @@ by all writers)</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2723,7 +2824,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2736,7 +2837,7 @@ by all writers)</p></div>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -2764,7 +2865,7 @@ by all writers)</p></div>
 412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 410</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_uri identifier id'>format_uri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{self.class}#format_uri&quot;</span><span class='rparen token'>)</span> <span class='comment val'># override in subclasses</span>
@@ -2776,13 +2877,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="node_id-instance_method">
+  <h3 class="signature " id="node_id-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>node_id</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
@@ -2790,7 +2893,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2815,7 +2918,7 @@ by all writers)</p></div>
 460</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 458</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 458</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_node_id identifier id'>node_id</span>
   <span class='dstring node'>&quot;_:n#{@node_id += 1}&quot;</span>
@@ -2827,7 +2930,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="prefix-instance_method">
+  <h3 class="signature " id="prefix-instance_method">
   
     
       <span class="overload">- (<tt><span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>prefix</strong>(name, uri) </span>
@@ -2841,7 +2944,9 @@ by all writers)</p></div>
     <span class="names"><span id='prefix!-instance_method'>prefix!</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines the given named URI prefix for this writer.</p>
 
@@ -2850,19 +2955,23 @@ by all writers)</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Defining a URI prefix</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Defining a URI prefix</p></div></p>
+      
       <pre class="example code"><span class='rubyid_writer identifier id'>writer</span><span class='dot token'>.</span><span class='rubyid_prefix identifier id'>prefix</span> <span class='symbol val'>:dc</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Returning a URI prefix</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Returning a URI prefix</p></div></p>
+      
       <pre class="example code"><span class='rubyid_writer identifier id'>writer</span><span class='dot token'>.</span><span class='rubyid_prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='symbol val'>:dc</span><span class='rparen token'>)</span>    <span class='comment val'>#=&gt; RDF::URI('http://purl.org/dc/terms/')</span>
 </pre>
     
   </div>
 
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -2875,7 +2984,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2916,7 +3025,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2938,7 +3047,7 @@ by all writers)</p></div>
     
   </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2964,7 +3073,7 @@ by all writers)</p></div>
 279</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 276</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span> <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='rubyid_nil nil kw'>nil</span> <span class='colon op'>:</span> <span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span> <span class='colon op'>:</span> <span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rparen token'>)</span>
@@ -2977,13 +3086,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="prefixes-instance_method">
+  <h3 class="signature " id="prefixes-instance_method">
   
-    - (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>prefixes</strong> 
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>prefixes</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the URI prefixes currently defined for this writer.</p>
 
@@ -2992,28 +3103,28 @@ by all writers)</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_writer identifier id'>writer</span><span class='dot token'>.</span><span class='rubyid_prefixes identifier id'>prefixes</span><span class='lbrack token'>[</span><span class='symbol val'>:dc</span><span class='rbrack token'>]</span>  <span class='comment val'>#=&gt; RDF::URI('http://purl.org/dc/terms/')</span>
 </pre>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -3039,7 +3150,7 @@ by all writers)</p></div>
 242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 240</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_prefixes identifier id'>prefixes</span>
   <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:prefixes</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -3051,13 +3162,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="prefixes=-instance_method">
+  <h3 class="signature " id="prefixes=-instance_method">
   
-    - (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>prefixes=</strong>(prefixes) 
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>) <strong>prefixes=</strong>(prefixes) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines the given URI prefixes for this writer.</p>
 
@@ -3066,16 +3179,16 @@ by all writers)</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_writer identifier id'>writer</span><span class='dot token'>.</span><span class='rubyid_prefixes identifier id'>prefixes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
   <span class='symbol val'>:dc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>'http://purl.org/dc/terms/'</span><span class='rparen token'>)</span><span class='comma token'>,</span>
 <span class='rbrace token'>}</span>
 </pre>
     
   </div>
-<h3>Parameters:</h3>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3083,7 +3196,7 @@ by all writers)</p></div>
         <span class='name'>prefixes</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
       
       
       
@@ -3091,20 +3204,20 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>}</tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -3130,7 +3243,7 @@ by all writers)</p></div>
 257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 255</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_prefixes= identifier id'>prefixes=</span><span class='lparen token'>(</span><span class='rubyid_prefixes identifier id'>prefixes</span><span class='rparen token'>)</span>
   <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:prefixes</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_prefixes identifier id'>prefixes</span>
@@ -3142,13 +3255,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="puts-instance_method">
+  <h3 class="signature " id="puts-instance_method">
   
     - <strong>puts</strong>(*args)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
 
@@ -3168,7 +3283,7 @@ by all writers)</p></div>
 440</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 438</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_puts identifier id'>puts</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_puts identifier id'>puts</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
@@ -3180,20 +3295,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="quoted-instance_method">
+  <h3 class="signature " id="quoted-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>quoted</strong>(string)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3209,7 +3326,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -3234,7 +3351,7 @@ by all writers)</p></div>
 475</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 473</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 473</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_quoted identifier id'>quoted</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
   <span class='dstring node'>&quot;\&quot;#{string}\&quot;&quot;</span>
@@ -3246,13 +3363,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="to_sym-instance_method">
+  <h3 class="signature " id="to_sym-instance_method">
   
     - (<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>) <strong>to_sym</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns a symbol appropriate to use with RDF::Writer.for()</p>
 
@@ -3260,7 +3379,7 @@ by all writers)</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -3285,7 +3404,7 @@ by all writers)</p></div>
 177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 175</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_sym identifier id'>to_sym</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
@@ -3297,20 +3416,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="uri_for-instance_method">
+  <h3 class="signature " id="uri_for-instance_method">
   
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>uri_for</strong>(uriref)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3326,7 +3447,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -3358,7 +3479,7 @@ by all writers)</p></div>
 454</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 445</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 445</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_uri_for identifier id'>uri_for</span><span class='lparen token'>(</span><span class='rubyid_uriref identifier id'>uriref</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span>
@@ -3377,16 +3498,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_comment-instance_method">
+  <h3 class="signature " id="write_comment-instance_method">
   
     - <strong>write_comment</strong>(text) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3394,7 +3517,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3422,7 +3545,7 @@ by all writers)</p></div>
 330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 328</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 328</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_comment identifier id'>write_comment</span><span class='lparen token'>(</span><span class='rubyid_text identifier id'>text</span><span class='rparen token'>)</span>
   <span class='rubyid_self self kw'>self</span>
@@ -3434,16 +3557,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_epilogue-instance_method">
+  <h3 class="signature " id="write_epilogue-instance_method">
   
     - <strong>write_epilogue</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3464,7 +3589,7 @@ by all writers)</p></div>
 322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 320</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_epilogue identifier id'>write_epilogue</span>
   <span class='rubyid_self self kw'>self</span>
@@ -3476,13 +3601,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_graph-instance_method">
+  <h3 class="signature " id="write_graph-instance_method">
   
     - <strong>write_graph</strong>(graph) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>replace by <code>RDF::Writable#insert_graph</code></p></div></div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3490,7 +3617,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3519,7 +3646,7 @@ by all writers)</p></div>
 339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 336</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 336</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_graph identifier id'>write_graph</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_triple identifier id'>each_triple</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='mult op'>*</span><span class='rubyid_triple identifier id'>triple</span><span class='bitor op'>|</span> <span class='rubyid_write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_triple identifier id'>triple</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -3532,16 +3659,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_prologue-instance_method">
+  <h3 class="signature " id="write_prologue-instance_method">
   
     - <strong>write_prologue</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3562,7 +3691,7 @@ by all writers)</p></div>
 315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 313</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 313</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_prologue identifier id'>write_prologue</span>
   <span class='rubyid_self self kw'>self</span>
@@ -3574,7 +3703,7 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_statement-instance_method">
+  <h3 class="signature " id="write_statement-instance_method">
   
     - <strong>write_statement</strong>(statement) 
   
@@ -3584,14 +3713,16 @@ by all writers)</p></div>
     <span class="names"><span id='insert_statement-instance_method'>insert_statement</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3620,7 +3751,7 @@ by all writers)</p></div>
 356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 353</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_statement identifier id'>write_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
   <span class='rubyid_write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_to_triple identifier id'>to_triple</span><span class='rparen token'>)</span>
@@ -3633,13 +3764,15 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_statements-instance_method">
+  <h3 class="signature " id="write_statements-instance_method">
   
     - <strong>write_statements</strong>(*statements) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>replace by <code>RDF::Writable#insert_statements</code></p></div></div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3647,7 +3780,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3676,7 +3809,7 @@ by all writers)</p></div>
 348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 345</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_statements identifier id'>write_statements</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span>
   <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span> <span class='rubyid_write_statement identifier id'>write_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -3689,16 +3822,18 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_triple-instance_method">
+  <h3 class="signature " id="write_triple-instance_method">
   
     - <strong>write_triple</strong>(subject, predicate, object) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
@@ -3706,7 +3841,7 @@ by all writers)</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3744,7 +3879,7 @@ by all writers)</p></div>
   
 </ul>
 
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -3772,7 +3907,7 @@ by all writers)</p></div>
 376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 374</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span>
   <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{self.class}#write_triple&quot;</span><span class='rparen token'>)</span> <span class='comment val'># override in subclasses</span>
@@ -3784,20 +3919,22 @@ by all writers)</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_triples-instance_method">
+  <h3 class="signature " id="write_triples-instance_method">
   
     - <strong>write_triples</strong>(*triples) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -3826,7 +3963,7 @@ by all writers)</p></div>
 365</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/writer.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/writer.rb', line 362</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_triples identifier id'>write_triples</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_triples identifier id'>triples</span><span class='rparen token'>)</span>
   <span class='rubyid_triples identifier id'>triples</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_triple identifier id'>triple</span><span class='bitor op'>|</span> <span class='rubyid_write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_triple identifier id'>triple</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -3841,11 +3978,11 @@ by all writers)</p></div>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:03:21 2012 by 
+  Generated on Thu Jul  5 18:08:19 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>

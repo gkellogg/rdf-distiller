@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (G)</a> &raquo; 
+    <a href="../_index.html">Index (G)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../SPARQL.html" title="SPARQL (module)">SPARQL</a></span></span>
      &raquo; 
     <span class="title">Grammar</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Module: SPARQL::Grammar
   
   
@@ -72,8 +79,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar/lexer.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar/parser.rb</span>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar/lexer.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar/parser.rb</span>
 </dd>
   
 </dl>
@@ -88,7 +95,7 @@
 <div class="tags">
   
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><a href="http://www.w3.org/TR/rdf-sparql-query/#grammar" target="_parent" title="http://www.w3.org/TR/rdf-sparql-query/#grammar">http://www.w3.org/TR/rdf-sparql-query/#grammar</a></li>
@@ -97,11 +104,11 @@
 
 </div><h2>Defined Under Namespace</h2>
 <p class="children">
-   
+  
     
       <strong class="modules">Modules:</strong> <span class='object_link'><a href="Grammar/Meta.html" title="SPARQL::Grammar::Meta (module)">Meta</a></span>
     
-   
+  
     
       <strong class="classes">Classes:</strong> <span class='object_link'><a href="Grammar/Lexer.html" title="SPARQL::Grammar::Lexer (class)">Lexer</a></span>, <span class='object_link'><a href="Grammar/Parser.html" title="SPARQL::Grammar::Parser (class)">Parser</a></span>, <span class='object_link'><a href="Grammar/SPARQL_GRAMMAR.html" title="SPARQL::Grammar::SPARQL_GRAMMAR (class)">SPARQL_GRAMMAR</a></span>
     
@@ -164,6 +171,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Parses input from the given file name or URL.</p></div></span>
@@ -179,6 +187,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
 
     
   </span>
+  
   
   
   
@@ -206,6 +215,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Tokenizes the given SPARQL <code>query</code> string.</p></div></span>
@@ -227,6 +237,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if the given SPARQL <code>query</code> string is valid.</p></div></span>
@@ -241,23 +252,25 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="open-class_method">
+  <h3 class="signature first" id="open-class_method">
   
     + (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>open</strong>(filename, options = {}) {|reader| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Parses input from the given file name or URL.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -276,7 +289,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -294,7 +307,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -306,13 +319,13 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
               <tt>:ntriples</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -325,7 +338,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -340,7 +353,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -356,7 +369,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -386,7 +399,7 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
 261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar.rb', line 257</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_filename identifier id'>filename</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Util constant id'>Util</span><span class='colon2 op'>::</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_filename identifier id'>filename</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_file identifier id'>file</span><span class='bitor op'>|</span>
@@ -400,13 +413,15 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="parse-class_method">
+  <h3 class="signature " id="parse-class_method">
   
     + (<tt><span class='object_link'><a href="Grammar/Parser.html" title="SPARQL::Grammar::Parser (class)">Parser</a></span></tt>) <strong>parse</strong>(query, options = {}, &amp;block) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Parse the given SPARQL <code>query</code> string.</p>
 
@@ -415,14 +430,14 @@ isIRI isURI isBLANK isLITERAL REGEX)</span><span class='dot token'>.</span><span
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='rubyid_Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
 </pre>
     
   </div>
-<h3>Parameters:</h3>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -445,7 +460,7 @@ string or open file.</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -455,7 +470,7 @@ string or open file.</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -468,7 +483,7 @@ string or open file.</p></div>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -496,7 +511,7 @@ string or open file.</p></div>
 244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar.rb', line 242</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_Parser constant id'>Parser</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span>
@@ -508,13 +523,15 @@ string or open file.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="tokenize-class_method">
+  <h3 class="signature " id="tokenize-class_method">
   
     + (<tt><span class='object_link'><a href="Grammar/Lexer.html" title="SPARQL::Grammar::Lexer (class)">Lexer</a></span></tt>) <strong>tokenize</strong>(query, options = {}) {|lexer| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Tokenizes the given SPARQL <code>query</code> string.</p>
 
@@ -523,9 +540,9 @@ string or open file.</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_lexer identifier id'>lexer</span> <span class='assign token'>=</span> <span class='rubyid_SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='rubyid_Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='rubyid_tokenize identifier id'>tokenize</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT * WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_lexer identifier id'>lexer</span><span class='dot token'>.</span><span class='rubyid_each_token identifier id'>each_token</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_token identifier id'>token</span><span class='bitor op'>|</span>
   <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_token identifier id'>token</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
@@ -533,7 +550,7 @@ string or open file.</p></div>
 </pre>
     
   </div>
-<h3>Parameters:</h3>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -552,7 +569,7 @@ string or open file.</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -562,7 +579,7 @@ string or open file.</p></div>
   
 </ul>
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -575,7 +592,7 @@ string or open file.</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -590,7 +607,7 @@ string or open file.</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -603,7 +620,7 @@ string or open file.</p></div>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -631,7 +648,7 @@ string or open file.</p></div>
 294</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar.rb', line 292</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_tokenize identifier id'>tokenize</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_Lexer constant id'>Lexer</span><span class='dot token'>.</span><span class='rubyid_tokenize identifier id'>tokenize</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -643,13 +660,15 @@ string or open file.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="valid?-class_method">
+  <h3 class="signature " id="valid?-class_method">
   
     + (<tt>Boolean</tt>) <strong>valid?</strong>(query, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns <code>true</code> if the given SPARQL <code>query</code> string is valid.</p>
 
@@ -658,15 +677,15 @@ string or open file.</p></div>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='rubyid_Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='rubyid_valid? fid id'>valid?</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT ?s WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>  <span class='comment val'>#=&gt; true</span>
 <span class='rubyid_SPARQL constant id'>SPARQL</span><span class='colon2 op'>::</span><span class='rubyid_Grammar constant id'>Grammar</span><span class='dot token'>.</span><span class='rubyid_valid? fid id'>valid?</span><span class='lparen token'>(</span><span class='string val'>&quot;SELECT s WHERE { ?s ?p ?o }&quot;</span><span class='rparen token'>)</span>   <span class='comment val'>#=&gt; false</span>
 </pre>
     
   </div>
-<h3>Parameters:</h3>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -685,7 +704,7 @@ string or open file.</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -695,7 +714,7 @@ string or open file.</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -720,7 +739,7 @@ string or open file.</p></div>
 275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/grammar.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/grammar.rb', line 273</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_valid? fid id'>valid?</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_Parser constant id'>Parser</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_valid? fid id'>valid?</span>
@@ -734,11 +753,11 @@ string or open file.</p></div>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:03:49 2012 by 
+  Generated on Thu Jul  5 18:07:31 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>

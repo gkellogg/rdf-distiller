@@ -2,35 +2,20 @@ require 'rubygems'
 require 'fileutils'
 require 'yard'
 
-task :yard => [:clean_doc, :readme]
+task :yard => :clean_doc
 
 YARD::Rake::YardocTask.new do |y|
   y.files = Dir.glob("lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/rdf*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/json-ld/lib/**/*.rb") +
+            Dir.glob("vendor/bundler/**/json-ld*/lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/sparql*/lib/**/*.rb") +
             Dir.glob("vendor/bundler/**/spira*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/sxp*/lib/**/*.rb") +
-            ["-"] +
-            Dir.glob("*-README")
+            Dir.glob("vendor/bundler/**/sxp*/lib/**/*.rb")
 end
 
 desc "Clean documentation"
 task :clean_doc do
   FileUtils.rm_rf 'doc'
-end
-
-desc "Create README links"
-task :readme do
-  Dir.glob("readmes/*").each {|d| FileUtils.rm d}
-  Dir.glob('vendor/bundler/**/README').each do |path|
-    d = path.split('/')[-2]
-    next unless d
-    d.sub!(/-([a-z0-9]{12})$/, '')
-    d.sub!(/-\d+\.\d+(?:\.\d+)$/, '')
-    puts "link #{path} to readmes/#{d}"
-    FileUtils.ln_s "../#{path}", "readmes/#{d}" unless File.exist?("readmes/#{d}")
-  end
 end
 
 namespace :cache do

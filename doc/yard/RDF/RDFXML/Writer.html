@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '../..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../../_index.html">Index (W)</a> &raquo; 
+    <a href="../../_index.html">Index (W)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../RDFXML.html" title="RDF::RDFXML (module)">RDFXML</a></span></span>
      &raquo; 
     <span class="title">Writer</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Class: RDF::RDFXML::Writer
   
   
@@ -109,9 +116,11 @@ and then serialize the graph.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Obtaining a RDF/XML writer class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Obtaining a RDF/XML writer class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:rdf</span><span class='rparen token'>)</span>         <span class='comment val'>#=&gt; RDF::RDFXML::Writer</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.rdf&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_name</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;etc/test.rdf&quot;</span><span class='rparen token'>)</span>
@@ -119,13 +128,17 @@ and then serialize the graph.</p>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:content_type</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;application/rdf+xml&quot;</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF graph into an RDF/XML file</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF graph into an RDF/XML file</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFXML constant id'>RDFXML</span><span class='colon2 op'>::</span><span class='rubyid_Write constant id'>Write</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.rdf&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_graph identifier id'>graph</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into an RDF/XML file</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into an RDF/XML file</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFXML constant id'>RDFXML</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.rdf&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -133,7 +146,9 @@ and then serialize the graph.</p>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into an RDF/XML string</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into an RDF/XML string</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFXML constant id'>RDFXML</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -141,7 +156,9 @@ and then serialize the graph.</p>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Creating @base and @prefix definitions in output</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Creating @base and @prefix definitions in output</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFXML constant id'>RDFXML</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span><span class='lparen token'>(</span><span class='symbol val'>:base_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:prefixes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
     <span class='rubyid_nil nil kw'>nil</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/ns#&quot;</span><span class='comma token'>,</span>
     <span class='symbol val'>:foaf</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://xmlns.com/foaf/0.1/&quot;</span><span class='rbrace token'>}</span>
@@ -154,7 +171,7 @@ and then serialize the graph.</p>
     
   </div>
 
-<h3>Author:</h3>
+<p class="tag_title">Author:</p>
 <ul class="author">
   
     <li>
@@ -199,6 +216,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
     
     
   
@@ -221,6 +239,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
     
@@ -269,6 +288,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Return a QName for the URI, or nil.</p></div></span>
@@ -284,6 +304,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -305,6 +326,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
     <span class="note title constructor">constructor</span>
   
@@ -330,6 +352,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -349,6 +372,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -372,6 +396,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -391,6 +416,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -414,6 +440,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -435,6 +462,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -454,6 +482,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -481,6 +510,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Outputs the RDF/XML representation of all stored triples.</p></div></span>
@@ -496,6 +526,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   
@@ -523,6 +554,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Addes a statement to be serialized.</p></div></span>
@@ -541,7 +573,8 @@ and then serialize the graph.</p>
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -562,9 +595,11 @@ and then serialize the graph.</p>
   
   
   
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Writer.html#buffer-class_method" title="RDF::Writer.buffer (method)">buffer</a></span>, <span class='object_link'><a href="../Writer.html#dump-class_method" title="RDF::Writer.dump (method)">dump</a></span>, <span class='object_link'><a href="../Writer.html#each-class_method" title="RDF::Writer.each (method)">each</a></span>, <span class='object_link'><a href="../Writer.html#encoding-instance_method" title="RDF::Writer#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Writer.html#escaped-instance_method" title="RDF::Writer#escaped (method)">#escaped</a></span>, <span class='object_link'><a href="../Writer.html#flush-instance_method" title="RDF::Writer#flush (method)">#flush</a></span>, <span class='object_link'><a href="../Writer.html#for-class_method" title="RDF::Writer.for (method)">for</a></span>, <span class='object_link'><a href="../Writer.html#format-class_method" title="RDF::Writer.format (method)">format</a></span>, <span class='object_link'><a href="../Writer.html#format_list-instance_method" title="RDF::Writer#format_list (method)">#format_list</a></span>, <span class='object_link'><a href="../Writer.html#format_literal-instance_method" title="RDF::Writer#format_literal (method)">#format_literal</a></span>, <span class='object_link'><a href="../Writer.html#format_node-instance_method" title="RDF::Writer#format_node (method)">#format_node</a></span>, <span class='object_link'><a href="../Writer.html#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span>, <span class='object_link'><a href="../Writer.html#format_uri-instance_method" title="RDF::Writer#format_uri (method)">#format_uri</a></span>, <span class='object_link'><a href="../Writer.html#node_id-instance_method" title="RDF::Writer#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="../Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span>, <span class='object_link'><a href="../Writer.html#prefix-instance_method" title="RDF::Writer#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Writer.html#prefixes-instance_method" title="RDF::Writer#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Writer.html#prefixes%3D-instance_method" title="RDF::Writer#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Writer.html#puts-instance_method" title="RDF::Writer#puts (method)">#puts</a></span>, <span class='object_link'><a href="../Writer.html#quoted-instance_method" title="RDF::Writer#quoted (method)">#quoted</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-instance_method" title="RDF::Writer#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-class_method" title="RDF::Writer.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Writer.html#uri_for-instance_method" title="RDF::Writer#uri_for (method)">#uri_for</a></span>, <span class='object_link'><a href="../Writer.html#write_comment-instance_method" title="RDF::Writer#write_comment (method)">#write_comment</a></span>, <span class='object_link'><a href="../Writer.html#write_prologue-instance_method" title="RDF::Writer#write_prologue (method)">#write_prologue</a></span>, <span class='object_link'><a href="../Writer.html#write_statements-instance_method" title="RDF::Writer#write_statements (method)">#write_statements</a></span>, <span class='object_link'><a href="../Writer.html#write_triples-instance_method" title="RDF::Writer#write_triples (method)">#write_triples</a></span></p>
 
+  
   
   
   
@@ -583,26 +618,29 @@ and then serialize the graph.</p>
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="../Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="../Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="../Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="../Writable.html#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span>, <span class='object_link'><a href="../Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="../Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="RDF::RDFXML::Writer (class)">Writer</a></span></tt>) <strong>initialize</strong>(output = $stdout, options = {}) {|writer| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Initializes the RDF/XML writer instance.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -626,7 +664,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -644,7 +682,7 @@ and then serialize the graph.</p>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -656,19 +694,23 @@ and then serialize the graph.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
+            &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
         </li>
       
         <li>
           <span class="name">:prefixes</span>
-          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="type">(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
           <span class="default">
             
               &mdash; default:
               <tt>Hash.new</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
+            &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
         </li>
       
         <li>
@@ -680,7 +722,9 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs</p></div>
+          
+            &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs</p></div>
+          
         </li>
       
         <li>
@@ -692,7 +736,9 @@ and then serialize the graph.</p>
               <tt>3</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Maximum depth for recursively defining resources</p></div>
+          
+            &mdash; <div class='inline'><p>Maximum depth for recursively defining resources</p></div>
+          
         </li>
       
         <li>
@@ -704,7 +750,9 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Output as root xml:lang attribute, and avoid generation <em>xml:lang</em> where possible</p></div>
+          
+            &mdash; <div class='inline'><p>Output as root xml:lang attribute, and avoid generation <em>xml:lang</em> where possible</p></div>
+          
         </li>
       
         <li>
@@ -716,7 +764,9 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>How to use XML attributes when serializing, one of :none, :untyped, :typed. The default is :none.</p></div>
+          
+            &mdash; <div class='inline'><p>How to use XML attributes when serializing, one of :none, :untyped, :typed. The default is :none.</p></div>
+          
         </li>
       
         <li>
@@ -728,7 +778,9 @@ and then serialize the graph.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Add standard prefixes to <em>prefixes</em>, if necessary.</p></div>
+          
+            &mdash; <div class='inline'><p>Add standard prefixes to <em>prefixes</em>, if necessary.</p></div>
+          
         </li>
       
         <li>
@@ -740,7 +792,9 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>URI to use as default namespace, same as prefix(nil)</p></div>
+          
+            &mdash; <div class='inline'><p>URI to use as default namespace, same as prefix(nil)</p></div>
+          
         </li>
       
         <li>
@@ -752,13 +806,15 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>URI to use as @href for output stylesheet processing instruction.</p></div>
+          
+            &mdash; <div class='inline'><p>URI to use as @href for output stylesheet processing instruction.</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -771,7 +827,7 @@ and then serialize the graph.</p>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -828,13 +884,15 @@ and then serialize the graph.</p>
       <span id="base_uri=-instance_method"></span>
       <span id="base_uri-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="base_uri-instance_method">
+  <h3 class="signature first" id="base_uri-instance_method">
   
     - (<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>) <strong>base_uri</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Base URI used for relativizing URIs</p>
 
@@ -842,7 +900,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -885,13 +943,15 @@ and then serialize the graph.</p>
       <span id="graph=-instance_method"></span>
       <span id="graph-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="graph-instance_method">
+  <h3 class="signature " id="graph-instance_method">
   
     - (<tt><span class='object_link'><a href="../Graph.html" title="RDF::Graph (class)">Graph</a></span></tt>) <strong>graph</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Graph of statements serialized</p>
 
@@ -899,7 +959,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -943,23 +1003,25 @@ and then serialize the graph.</p>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="get_qname-instance_method">
+  <h3 class="signature first" id="get_qname-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt><sup>?</sup>) <strong>get_qname</strong>(resource, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Return a QName for the URI, or nil. Adds namespace of QName to defined prefixes</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -978,7 +1040,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>&gt;</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -991,7 +1053,7 @@ and then serialize the graph.</p>
         <span class='name'>[Boolean]</span>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
       
       
       
@@ -1008,7 +1070,7 @@ and then serialize the graph.</p>
     
     
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1024,7 +1086,7 @@ and then serialize the graph.</p>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -1165,20 +1227,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="indent-instance_method">
+  <h3 class="signature " id="indent-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>indent</strong>(modifier = 0)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns indent string multiplied by the depth</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1199,7 +1263,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1239,13 +1303,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="order_subjects-instance_method">
+  <h3 class="signature " id="order_subjects-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">Resource</a></span>&gt;</tt>) <strong>order_subjects</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Order subjects for output. Override this to output subjects in another order.</p>
 
@@ -1255,7 +1321,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1329,13 +1395,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="predicate_order-instance_method">
+  <h3 class="signature " id="predicate_order-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span>&gt;</tt>) <strong>predicate_order</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines order of predicates to to emit at begninning of a resource description. Defaults to
 [rdf:type, rdfs:label, dc:title]</p>
@@ -1344,7 +1412,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1377,13 +1445,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="preprocess-instance_method">
+  <h3 class="signature " id="preprocess-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>preprocess</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Perform any preprocessing of statements required</p>
 
@@ -1441,13 +1511,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="preprocess_statement-instance_method">
+  <h3 class="signature " id="preprocess_statement-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>preprocess_statement</strong>(statement)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Perform any statement preprocessing required. This is used to perform reference counts and determine required
 prefixes.</p>
@@ -1455,7 +1527,7 @@ prefixes.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1501,20 +1573,22 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="relativize-instance_method">
+  <h3 class="signature " id="relativize-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>relativize</strong>(uri)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>If base_uri is defined, use it to try to make uri relative</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1530,7 +1604,7 @@ prefixes.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1569,13 +1643,15 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="reset-instance_method">
+  <h3 class="signature " id="reset-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>reset</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><table class="source_code">
+
+  
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -1610,13 +1686,15 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="top_classes-instance_method">
+  <h3 class="signature " id="top_classes-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span>&gt;</tt>) <strong>top_classes</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines rdf:type of subjects to be emitted at the beginning of the graph. Defaults to none</p>
 
@@ -1624,7 +1702,7 @@ prefixes.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1657,13 +1735,15 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_epilogue-instance_method">
+  <h3 class="signature " id="write_epilogue-instance_method">
   
     - <strong>write_epilogue</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Outputs the RDF/XML representation of all stored triples.</p>
 
@@ -1671,7 +1751,7 @@ prefixes.</p>
 </div>
 <div class="tags">
   
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -1688,7 +1768,7 @@ prefixes.</p>
   
 </ul>
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="#write_triple-instance_method" title="RDF::RDFXML::Writer#write_triple (method)">#write_triple</a></span></li>
@@ -1814,20 +1894,22 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_graph-instance_method">
+  <h3 class="signature " id="write_graph-instance_method">
   
     - <strong>write_graph</strong>(graph) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Write whole graph</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1867,20 +1949,22 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_statement-instance_method">
+  <h3 class="signature " id="write_statement-instance_method">
   
     - <strong>write_statement</strong>(statement) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Addes a statement to be serialized</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1920,16 +2004,18 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_triple-instance_method">
+  <h3 class="signature " id="write_triple-instance_method">
   
     - <strong>write_triple</strong>(subject, predicate, object) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p>Addes a triple to be serialized</p>
@@ -1937,7 +2023,7 @@ prefixes.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2001,11 +2087,11 @@ prefixes.</p>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:03:19 2012 by 
+  Generated on Thu Jul  5 18:09:04 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>

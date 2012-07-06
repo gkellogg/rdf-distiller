@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (F)</a> &raquo; 
+    <a href="../_index.html">Index (F)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
      &raquo; 
     <span class="title">Format</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Class: RDF::Format
   <span class="abstract note title">Abstract</span>
   
@@ -91,7 +98,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -99,7 +106,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This class is abstract.</strong> 
+  <strong>This class is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p>The base class for RDF serialization formats.</p>
@@ -109,17 +116,23 @@
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Loading an RDF serialization format implementation</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Loading an RDF serialization format implementation</p></div></p>
+      
       <pre class="example code"><span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/ntriples'</span>
 </pre>
     
-      <h4><div class='inline'><p>Iterating over known RDF serialization formats</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Iterating over known RDF serialization formats</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_klass identifier id'>klass</span><span class='bitor op'>|</span> <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='rbrace token'>}</span>
 </pre>
     
-      <h4><div class='inline'><p>Getting a serialization format class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Getting a serialization format class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span>     <span class='comment val'>#=&gt; RDF::NTriples::Format</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/doap.nt&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;etc/doap.nt&quot;</span><span class='rparen token'>)</span>
@@ -127,15 +140,21 @@
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;text/plain&quot;</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Obtaining serialization format MIME types</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Obtaining serialization format MIME types</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span>      <span class='comment val'>#=&gt; {&quot;text/plain&quot; =&gt; [RDF::NTriples::Format]}</span>
 </pre>
     
-      <h4><div class='inline'><p>Obtaining serialization format file extension mappings</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Obtaining serialization format file extension mappings</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_file_extensions identifier id'>file_extensions</span>    <span class='comment val'>#=&gt; {:nt =&gt; [RDF::NTriples::Format]}</span>
 </pre>
     
-      <h4><div class='inline'><p>Defining a new RDF serialization format class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Defining a new RDF serialization format class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_class class kw'>class</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span> <span class='lt op'>&lt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span>
   <span class='rubyid_content_type identifier id'>content_type</span>     <span class='string val'>'text/plain'</span><span class='comma token'>,</span> <span class='symbol val'>:extension</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:nt</span>
   <span class='rubyid_content_encoding identifier id'>content_encoding</span> <span class='string val'>'ascii'</span>
@@ -145,12 +164,16 @@
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Instantiating an RDF reader or writer class (1)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Instantiating an RDF reader or writer class (1)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_reader identifier id'>reader</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdin gvar id'>$stdin</span><span class='rparen token'>)</span>  <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_reader identifier id'>reader</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_writer identifier id'>writer</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdout gvar id'>$stdout</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
 </pre>
     
-      <h4><div class='inline'><p>Instantiating an RDF reader or writer class (2)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Instantiating an RDF reader or writer class (2)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Reader constant id'>Reader</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdin gvar id'>$stdin</span><span class='rparen token'>)</span>  <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_reader identifier id'>reader</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ntriples</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_$stdout gvar id'>$stdout</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span> <span class='dot3 op'>...</span> <span class='rbrace token'>}</span>
 </pre>
@@ -158,7 +181,7 @@
   </div>
 
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="Reader.html" title="RDF::Reader (class)">Reader</a></span></li>
@@ -171,7 +194,7 @@
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="JSON/Format.html" title="RDF::JSON::Format (class)">JSON::Format</a></span>, <span class='object_link'><a href="Microdata/Format.html" title="RDF::Microdata::Format (class)">Microdata::Format</a></span>, <span class='object_link'><a href="N3/Format.html" title="RDF::N3::Format (class)">N3::Format</a></span>, <span class='object_link'><a href="N3/Notation3.html" title="RDF::N3::Notation3 (class)">N3::Notation3</a></span>, <span class='object_link'><a href="NQuads/Format.html" title="RDF::NQuads::Format (class)">NQuads::Format</a></span>, <span class='object_link'><a href="NTriples/Format.html" title="RDF::NTriples::Format (class)">NTriples::Format</a></span>, <span class='object_link'><a href="RDFXML/Format.html" title="RDF::RDFXML::Format (class)">RDFXML::Format</a></span>, <span class='object_link'><a href="RDFa/Format.html" title="RDF::RDFa::Format (class)">RDFa::Format</a></span>, <span class='object_link'><a href="RDFa/HTML.html" title="RDF::RDFa::HTML (class)">RDFa::HTML</a></span>, <span class='object_link'><a href="RDFa/Lite.html" title="RDF::RDFa::Lite (class)">RDFa::Lite</a></span>, <span class='object_link'><a href="RDFa/SVG.html" title="RDF::RDFa::SVG (class)">RDFa::SVG</a></span>, <span class='object_link'><a href="RDFa/XHTML.html" title="RDF::RDFa::XHTML (class)">RDFa::XHTML</a></span>, <span class='object_link'><a href="TriG/Format.html" title="RDF::TriG::Format (class)">TriG::Format</a></span>, <span class='object_link'><a href="TriX/Format.html" title="RDF::TriX::Format (class)">TriX::Format</a></span>, <span class='object_link'><a href="Turtle/Format.html" title="RDF::Turtle::Format (class)">Turtle::Format</a></span>, <span class='object_link'><a href="Turtle/TTL.html" title="RDF::Turtle::TTL (class)">Turtle::TTL</a></span></p>
+  <p class="children"><span class='object_link'><a href="../JSON/LD/Format.html" title="JSON::LD::Format (class)">JSON::LD::Format</a></span>, <span class='object_link'><a href="JSON/Format.html" title="RDF::JSON::Format (class)">JSON::Format</a></span>, <span class='object_link'><a href="Microdata/Format.html" title="RDF::Microdata::Format (class)">Microdata::Format</a></span>, <span class='object_link'><a href="N3/Format.html" title="RDF::N3::Format (class)">N3::Format</a></span>, <span class='object_link'><a href="N3/Notation3.html" title="RDF::N3::Notation3 (class)">N3::Notation3</a></span>, <span class='object_link'><a href="NQuads/Format.html" title="RDF::NQuads::Format (class)">NQuads::Format</a></span>, <span class='object_link'><a href="NTriples/Format.html" title="RDF::NTriples::Format (class)">NTriples::Format</a></span>, <span class='object_link'><a href="RDFXML/Format.html" title="RDF::RDFXML::Format (class)">RDFXML::Format</a></span>, <span class='object_link'><a href="RDFa/Format.html" title="RDF::RDFa::Format (class)">RDFa::Format</a></span>, <span class='object_link'><a href="RDFa/HTML.html" title="RDF::RDFa::HTML (class)">RDFa::HTML</a></span>, <span class='object_link'><a href="RDFa/Lite.html" title="RDF::RDFa::Lite (class)">RDFa::Lite</a></span>, <span class='object_link'><a href="RDFa/SVG.html" title="RDF::RDFa::SVG (class)">RDFa::SVG</a></span>, <span class='object_link'><a href="RDFa/XHTML.html" title="RDF::RDFa::XHTML (class)">RDFa::XHTML</a></span>, <span class='object_link'><a href="TriG/Format.html" title="RDF::TriG::Format (class)">TriG::Format</a></span>, <span class='object_link'><a href="TriX/Format.html" title="RDF::TriX::Format (class)">TriX::Format</a></span>, <span class='object_link'><a href="Turtle/Format.html" title="RDF::Turtle::Format (class)">Turtle::Format</a></span>, <span class='object_link'><a href="Turtle/TTL.html" title="RDF::Turtle::TTL (class)">Turtle::TTL</a></span></p>
 </div>
 
 
@@ -196,6 +219,7 @@
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -223,6 +247,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Retrieves or defines MIME content types for this RDF serialization format.</p></div></span>
@@ -238,6 +263,7 @@
 
     
   </span>
+  
   
   
   
@@ -265,6 +291,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Use a text sample to detect the format of an input file.</p></div></span>
@@ -280,6 +307,7 @@
 
     
   </span>
+  
   
   
   
@@ -307,6 +335,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns file extensions for known RDF serialization formats.</p></div></span>
@@ -328,6 +357,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Finds an RDF serialization format class based on the given criteria.</p></div></span>
@@ -343,6 +373,7 @@
 
     
   </span>
+  
   
   
   
@@ -372,6 +403,7 @@
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Retrieves or defines the reader class for this RDF serialization
@@ -388,6 +420,7 @@ format.</p></div></span>
 
     
   </span>
+  
   
   
   
@@ -411,6 +444,7 @@ format.</p></div></span>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -430,6 +464,7 @@ format.</p></div></span>
 
     
   </span>
+  
   
   
   
@@ -459,6 +494,7 @@ format.</p></div></span>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Retrieves or defines the writer class for this RDF serialization
@@ -481,6 +517,7 @@ format.</p></div></span>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the set of format symbols for loaded RDF::Writer subclasses.</p></div></span>
@@ -496,16 +533,18 @@ format.</p></div></span>
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="content_encoding-class_method">
+  <h3 class="signature first" id="content_encoding-class_method">
   
     + <strong>content_encoding</strong>(encoding = nil)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Defines the content encoding for this RDF serialization format.</p>
 
@@ -515,7 +554,7 @@ content encoding for this format</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -546,7 +585,7 @@ content encoding for this format</p>
 414</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 411</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 411</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_encoding identifier id'>content_encoding</span><span class='lparen token'>(</span><span class='rubyid_encoding identifier id'>encoding</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='rubyid_@@content_encoding ivar id'>@@content_encoding</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_encoding identifier id'>encoding</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_encoding identifier id'>encoding</span>
@@ -559,7 +598,7 @@ content encoding for this format</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="content_type-class_method">
+  <h3 class="signature " id="content_type-class_method">
   
     
       <span class="overload">+ <strong>content_type</strong>(type, options) </span>
@@ -569,7 +608,9 @@ content encoding for this format</p>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Retrieves or defines MIME content types for this RDF serialization format.</p>
 
@@ -577,7 +618,7 @@ content encoding for this format</p>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -596,7 +637,7 @@ by this class.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -615,7 +656,7 @@ by this class.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -628,7 +669,7 @@ by this class.</p>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -640,7 +681,7 @@ by this class.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -652,7 +693,7 @@ by this class.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -664,7 +705,7 @@ by this class.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -676,7 +717,7 @@ by this class.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
     </ul>
@@ -700,7 +741,7 @@ MIME type for the format and following elements are alias MIME types.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -745,7 +786,7 @@ MIME type for the format and following elements are alias MIME types.</p>
 386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 370</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_type identifier id'>content_type</span><span class='lparen token'>(</span><span class='rubyid_type identifier id'>type</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_type identifier id'>type</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
@@ -771,13 +812,15 @@ MIME type for the format and following elements are alias MIME types.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="content_types-class_method">
+  <h3 class="signature " id="content_types-class_method">
   
-    + (<tt>Hash{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>) <strong>content_types</strong> 
+    + (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>) <strong>content_types</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns MIME content types for known RDF serialization formats.</p>
 
@@ -786,22 +829,24 @@ MIME type for the format and following elements are alias MIME types.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>retrieving a list of supported Mime types</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>retrieving a list of supported Mime types</p></div></p>
+      
       <pre class="example code">
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
 </pre>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>)</span>
       
       
       
@@ -820,7 +865,7 @@ MIME type for the format and following elements are alias MIME types.</p>
 167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 165</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span>
   <span class='rubyid_@@content_types ivar id'>@@content_types</span>
@@ -832,13 +877,15 @@ MIME type for the format and following elements are alias MIME types.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="detect-class_method">
+  <h3 class="signature " id="detect-class_method">
   
     + (<tt>Boolean</tt>) <strong>detect</strong>(sample) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Use a text sample to detect the format of an input file. Sub-classes implement
 a matcher sufficient to detect probably format matches, including disambiguating
@@ -852,14 +899,14 @@ match cannot be unambigiously found otherwise.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_detect identifier id'>detect</span><span class='lparen token'>(</span><span class='string val'>&quot;&lt;a&gt; &lt;b&gt; &lt;c&gt; .&quot;</span><span class='rparen token'>)</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span>
 </pre>
     
   </div>
-<h3>Parameters:</h3>
+<p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -878,7 +925,7 @@ match cannot be unambigiously found otherwise.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -903,7 +950,7 @@ match cannot be unambigiously found otherwise.</p>
 336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 334</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_detect identifier id'>detect</span><span class='lparen token'>(</span><span class='rubyid_sample identifier id'>sample</span><span class='rparen token'>)</span>
   <span class='rubyid_false false kw'>false</span>
@@ -915,13 +962,15 @@ match cannot be unambigiously found otherwise.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="each-class_method">
+  <h3 class="signature " id="each-class_method">
   
     + (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each</strong> {|klass| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Enumerates known RDF serialization format classes.</p>
 
@@ -929,7 +978,7 @@ match cannot be unambigiously found otherwise.</p>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -942,7 +991,7 @@ match cannot be unambigiously found otherwise.</p>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -957,7 +1006,7 @@ match cannot be unambigiously found otherwise.</p>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -982,7 +1031,7 @@ match cannot be unambigiously found otherwise.</p>
 56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 54</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@@subclasses ivar id'>@@subclasses</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -994,13 +1043,15 @@ match cannot be unambigiously found otherwise.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="file_extensions-class_method">
+  <h3 class="signature " id="file_extensions-class_method">
   
-    + (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>) <strong>file_extensions</strong> 
+    + (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>) <strong>file_extensions</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns file extensions for known RDF serialization formats.</p>
 
@@ -1009,22 +1060,24 @@ match cannot be unambigiously found otherwise.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>retrieving a list of supported file extensions</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>retrieving a list of supported file extensions</p></div></p>
+      
       <pre class="example code">
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_file_extensions identifier id'>file_extensions</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span>
 </pre>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Class&gt;}</tt>)</span>
       
       
       
@@ -1043,7 +1096,7 @@ match cannot be unambigiously found otherwise.</p>
 179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 177</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_file_extensions identifier id'>file_extensions</span>
   <span class='rubyid_@@file_extensions ivar id'>@@file_extensions</span>
@@ -1055,7 +1108,7 @@ match cannot be unambigiously found otherwise.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="for-class_method">
+  <h3 class="signature " id="for-class_method">
   
     
       <span class="overload">+ (<tt>Class</tt>) <strong>for</strong>(format) </span>
@@ -1067,7 +1120,9 @@ match cannot be unambigiously found otherwise.</p>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Finds an RDF serialization format class based on the given criteria.</p>
 
@@ -1075,7 +1130,7 @@ match cannot be unambigiously found otherwise.</p>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -1088,7 +1143,7 @@ match cannot be unambigiously found otherwise.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1104,7 +1159,7 @@ match cannot be unambigiously found otherwise.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1131,7 +1186,7 @@ match cannot be unambigiously found otherwise.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1147,7 +1202,7 @@ match cannot be unambigiously found otherwise.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1174,7 +1229,7 @@ match cannot be unambigiously found otherwise.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1182,7 +1237,7 @@ match cannot be unambigiously found otherwise.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -1193,7 +1248,7 @@ match cannot be unambigiously found otherwise.</p>
   
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -1205,7 +1260,7 @@ match cannot be unambigiously found otherwise.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -1217,7 +1272,7 @@ match cannot be unambigiously found otherwise.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -1229,7 +1284,9 @@ match cannot be unambigiously found otherwise.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Note that content<em>type will be taken from a URL opened using Util::File.open&lt;/em&gt;file.</p></div>
+          
+            &mdash; <div class='inline'><p>Note that content<em>type will be taken from a URL opened using Util::File.open&lt;/em&gt;file.</p></div>
+          
         </li>
       
         <li>
@@ -1241,7 +1298,9 @@ match cannot be unambigiously found otherwise.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Only return a format having a reader.</p></div>
+          
+            &mdash; <div class='inline'><p>Only return a format having a reader.</p></div>
+          
         </li>
       
         <li>
@@ -1253,7 +1312,9 @@ match cannot be unambigiously found otherwise.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Only return a format having a writer.</p></div>
+          
+            &mdash; <div class='inline'><p>Only return a format having a writer.</p></div>
+          
         </li>
       
         <li>
@@ -1265,16 +1326,18 @@ match cannot be unambigiously found otherwise.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>A sample of input used for performing format detection.
+          
+            &mdash; <div class='inline'><p>A sample of input used for performing format detection.
 If we find no formats, or we find more than one, and we have a sample, we can
 perform format detection to find a specific format to use, in which case
 we pick the first one we find</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1290,7 +1353,7 @@ we pick the first one we find</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1309,7 +1372,7 @@ we pick the first one we find</p></div>
     
   </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1393,7 +1456,7 @@ we pick the first one we find</p></div>
 155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 94</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_options identifier id'>options</span>
@@ -1464,13 +1527,15 @@ we pick the first one we find</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="name-class_method">
+  <h3 class="signature " id="name-class_method">
   
     + (<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>) <strong>name</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns a human-readable name for the format.
 Subclasses should override this to use something
@@ -1481,16 +1546,16 @@ difererent than the Class name.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code">
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_NTriples constant id'>NTriples</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;NTriples&quot;</span>
 </pre>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1518,7 +1583,7 @@ difererent than the Class name.</p>
 232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 227</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span>
   <span class='rubyid_elements identifier id'>elements</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
@@ -1533,7 +1598,7 @@ difererent than the Class name.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="reader-class_method">
+  <h3 class="signature " id="reader-class_method">
   
     
       <span class="overload">+ <strong>reader</strong>(klass) </span>
@@ -1549,7 +1614,9 @@ difererent than the Class name.</p>
     <span class="names"><span id='reader_class-class_method'>reader_class</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Retrieves or defines the reader class for this RDF serialization
 format.</p>
@@ -1558,7 +1625,7 @@ format.</p>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -1574,7 +1641,7 @@ same interface.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1609,7 +1676,7 @@ reader class is first needed.</p>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1622,7 +1689,7 @@ reader class is first needed.</p>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1653,7 +1720,7 @@ reader class is first needed.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1693,7 +1760,7 @@ reader class is first needed.</p>
 275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 264</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_reader identifier id'>reader</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span>
@@ -1714,13 +1781,15 @@ reader class is first needed.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="reader_symbols-class_method">
+  <h3 class="signature " id="reader_symbols-class_method">
   
     + (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>) <strong>reader_symbols</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the set of format symbols for loaded RDF::Reader subclasses.</p>
 
@@ -1729,9 +1798,9 @@ reader class is first needed.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code">
 <span class='rubyid_formats identifier id'>formats</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_reader_symbols identifier id'>reader_symbols</span>
 <span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_formats identifier id'>formats</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
@@ -1739,7 +1808,7 @@ reader class is first needed.</p>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1764,7 +1833,7 @@ reader class is first needed.</p>
 192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 190</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_reader_symbols identifier id'>reader_symbols</span>
   <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:reader</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_uniq identifier id'>uniq</span>
@@ -1776,13 +1845,15 @@ reader class is first needed.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="require-class_method">
+  <h3 class="signature " id="require-class_method">
   
     + <strong>require</strong>(library)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Defines a required Ruby library for this RDF serialization format.</p>
 
@@ -1793,7 +1864,7 @@ instance for this format.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1821,7 +1892,7 @@ instance for this format.</p>
 401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 399</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_require identifier id'>require</span><span class='lparen token'>(</span><span class='rubyid_library identifier id'>library</span><span class='rparen token'>)</span>
   <span class='lparen token'>(</span><span class='rubyid_@@requires ivar id'>@@requires</span><span class='lbrack token'>[</span><span class='rubyid_self self kw'>self</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_library identifier id'>library</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
@@ -1833,13 +1904,15 @@ instance for this format.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="to_sym-class_method">
+  <h3 class="signature " id="to_sym-class_method">
   
     + (<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>) <strong>to_sym</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns a symbol appropriate to use with RDF::Format.for()</p>
 
@@ -1847,7 +1920,7 @@ instance for this format.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1875,7 +1948,7 @@ instance for this format.</p>
 215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 210</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
   <span class='rubyid_elements identifier id'>elements</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>&quot;::&quot;</span><span class='rparen token'>)</span>
@@ -1890,7 +1963,7 @@ instance for this format.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="writer-class_method">
+  <h3 class="signature " id="writer-class_method">
   
     
       <span class="overload">+ <strong>writer</strong>(klass) </span>
@@ -1906,7 +1979,9 @@ instance for this format.</p>
     <span class="names"><span id='writer_class-class_method'>writer_class</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Retrieves or defines the writer class for this RDF serialization
 format.</p>
@@ -1915,7 +1990,7 @@ format.</p>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -1931,7 +2006,7 @@ same interface.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1966,7 +2041,7 @@ writer class is first needed.</p>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1979,7 +2054,7 @@ writer class is first needed.</p>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -2010,7 +2085,7 @@ writer class is first needed.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2050,7 +2125,7 @@ writer class is first needed.</p>
 318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 307</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_writer identifier id'>writer</span><span class='lparen token'>(</span><span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span>
@@ -2071,13 +2146,15 @@ writer class is first needed.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="writer_symbols-class_method">
+  <h3 class="signature " id="writer_symbols-class_method">
   
     + (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>) <strong>writer_symbols</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the set of format symbols for loaded RDF::Writer subclasses.</p>
 
@@ -2086,9 +2163,9 @@ writer class is first needed.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'></div></h4>
+      
       <pre class="example code">
 <span class='rubyid_formats identifier id'>formats</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_writer_symbols identifier id'>writer_symbols</span>
 <span class='rubyid_format identifier id'>format</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='rubyid_formats identifier id'>formats</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span><span class='rparen token'>)</span>
@@ -2096,7 +2173,7 @@ writer class is first needed.</p>
     
   </div>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2121,7 +2198,7 @@ writer class is first needed.</p>
 205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/format.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/format.rb', line 203</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_writer_symbols identifier id'>writer_symbols</span>
   <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='dot token'>.</span><span class='rubyid_to_a identifier id'>to_a</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:writer</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_uniq identifier id'>uniq</span>
@@ -2135,11 +2212,11 @@ writer class is first needed.</p>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:04:16 2012 by 
+  Generated on Thu Jul  5 18:08:16 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>

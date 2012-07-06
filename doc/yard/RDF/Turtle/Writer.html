@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '../..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../../_index.html">Index (W)</a> &raquo; 
+    <a href="../../_index.html">Index (W)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span>
      &raquo; 
     <span class="title">Writer</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Class: RDF::Turtle::Writer
   
   
@@ -89,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -109,9 +116,11 @@ and then serialize the graph.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Obtaining a Turtle writer class</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Obtaining a Turtle writer class</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:ttl</span><span class='rparen token'>)</span>         <span class='comment val'>#=&gt; RDF::Turtle::Writer</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.ttl&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:file_name</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;etc/test.ttl&quot;</span><span class='rparen token'>)</span>
@@ -119,13 +128,17 @@ and then serialize the graph.</p>
 <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_for identifier id'>for</span><span class='lparen token'>(</span><span class='symbol val'>:content_type</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;text/turtle&quot;</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF graph into an Turtle file</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF graph into an Turtle file</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Turtle constant id'>Turtle</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.ttl&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_graph identifier id'>graph</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into an Turtle file</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into an Turtle file</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Turtle constant id'>Turtle</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='string val'>&quot;etc/test.ttl&quot;</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -133,7 +146,9 @@ and then serialize the graph.</p>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Serializing RDF statements into an Turtle string</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Serializing RDF statements into an Turtle string</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Turtle constant id'>Turtle</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_writer identifier id'>writer</span><span class='bitor op'>|</span>
   <span class='rubyid_graph identifier id'>graph</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
     <span class='rubyid_writer identifier id'>writer</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
@@ -141,7 +156,9 @@ and then serialize the graph.</p>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Creating @base and @prefix definitions in output</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Creating @base and @prefix definitions in output</p></div></p>
+      
       <pre class="example code"><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Turtle constant id'>Turtle</span><span class='colon2 op'>::</span><span class='rubyid_Writer constant id'>Writer</span><span class='dot token'>.</span><span class='rubyid_buffer identifier id'>buffer</span><span class='lparen token'>(</span><span class='symbol val'>:base_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:prefixes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
     <span class='rubyid_nil nil kw'>nil</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.com/ns#&quot;</span><span class='comma token'>,</span>
     <span class='symbol val'>:foaf</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://xmlns.com/foaf/0.1/&quot;</span><span class='rbrace token'>}</span>
@@ -154,7 +171,7 @@ and then serialize the graph.</p>
     
   </div>
 
-<h3>Author:</h3>
+<p class="tag_title">Author:</p>
 <ul class="author">
   
     <li>
@@ -190,6 +207,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
     
     
   
@@ -212,6 +230,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
     
@@ -256,6 +275,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -275,6 +295,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   
@@ -302,6 +323,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the Turtle representation of a blank node.</p></div></span>
@@ -317,6 +339,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   
@@ -344,6 +367,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Return a QName for the URI, or nil.</p></div></span>
@@ -359,6 +383,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -380,6 +405,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
     <span class="note title constructor">constructor</span>
   
@@ -405,6 +431,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -424,6 +451,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -447,6 +475,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -466,6 +495,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -489,6 +519,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -508,6 +539,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -531,6 +563,7 @@ and then serialize the graph.</p>
   </span>
   
   
+  
   <span class="note title protected">protected</span>
   
   
@@ -550,6 +583,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -577,6 +611,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Take a hash from predicate uris to lists of values.</p></div></span>
@@ -592,6 +627,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -613,6 +649,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   <span class="note title protected">protected</span>
@@ -640,6 +677,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Outputs the Turtle representation of all stored triples.</p></div></span>
@@ -655,6 +693,7 @@ and then serialize the graph.</p>
 
     
   </span>
+  
   
   
   
@@ -682,6 +721,7 @@ and then serialize the graph.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Adds a statement to be serialized.</p></div></span>
@@ -700,7 +740,8 @@ and then serialize the graph.</p>
   
   
   
-  <span class="abstract note title">Abstract</span>
+  
+  <span class="abstract note title">abstract</span>
   
   
 
@@ -721,9 +762,11 @@ and then serialize the graph.</p>
   
   
   
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Writer.html#buffer-class_method" title="RDF::Writer.buffer (method)">buffer</a></span>, <span class='object_link'><a href="../Writer.html#dump-class_method" title="RDF::Writer.dump (method)">dump</a></span>, <span class='object_link'><a href="../Writer.html#each-class_method" title="RDF::Writer.each (method)">each</a></span>, <span class='object_link'><a href="../Writer.html#encoding-instance_method" title="RDF::Writer#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Writer.html#escaped-instance_method" title="RDF::Writer#escaped (method)">#escaped</a></span>, <span class='object_link'><a href="../Writer.html#flush-instance_method" title="RDF::Writer#flush (method)">#flush</a></span>, <span class='object_link'><a href="../Writer.html#for-class_method" title="RDF::Writer.for (method)">for</a></span>, <span class='object_link'><a href="../Writer.html#format-class_method" title="RDF::Writer.format (method)">format</a></span>, <span class='object_link'><a href="../Writer.html#format_list-instance_method" title="RDF::Writer#format_list (method)">#format_list</a></span>, <span class='object_link'><a href="../Writer.html#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span>, <span class='object_link'><a href="../Writer.html#node_id-instance_method" title="RDF::Writer#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="../Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span>, <span class='object_link'><a href="../Writer.html#prefix-instance_method" title="RDF::Writer#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Writer.html#prefixes-instance_method" title="RDF::Writer#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Writer.html#prefixes%3D-instance_method" title="RDF::Writer#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Writer.html#puts-instance_method" title="RDF::Writer#puts (method)">#puts</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-instance_method" title="RDF::Writer#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-class_method" title="RDF::Writer.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Writer.html#uri_for-instance_method" title="RDF::Writer#uri_for (method)">#uri_for</a></span>, <span class='object_link'><a href="../Writer.html#write_comment-instance_method" title="RDF::Writer#write_comment (method)">#write_comment</a></span>, <span class='object_link'><a href="../Writer.html#write_prologue-instance_method" title="RDF::Writer#write_prologue (method)">#write_prologue</a></span>, <span class='object_link'><a href="../Writer.html#write_statements-instance_method" title="RDF::Writer#write_statements (method)">#write_statements</a></span>, <span class='object_link'><a href="../Writer.html#write_triples-instance_method" title="RDF::Writer#write_triples (method)">#write_triples</a></span></p>
 
+  
   
   
   
@@ -742,26 +785,29 @@ and then serialize the graph.</p>
   
   
   
+  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="../Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="../Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="../Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="../Writable.html#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span>, <span class='object_link'><a href="../Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="../Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="RDF::Turtle::Writer (class)">Writer</a></span></tt>) <strong>initialize</strong>(output = $stdout, options = {}) {|writer| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Initializes the Turtle writer instance.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -785,7 +831,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -803,7 +849,7 @@ and then serialize the graph.</p>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -815,7 +861,9 @@ and then serialize the graph.</p>
               <tt>Encoding::UTF_8</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the encoding to use on the output stream (Ruby 1.9+)</p></div>
+          
+            &mdash; <div class='inline'><p>the encoding to use on the output stream (Ruby 1.9+)</p></div>
+          
         </li>
       
         <li>
@@ -827,19 +875,23 @@ and then serialize the graph.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
+            &mdash; <div class='inline'><p>whether to canonicalize literals when serializing</p></div>
+          
         </li>
       
         <li>
           <span class="name">:prefixes</span>
-          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="type">(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
           <span class="default">
             
               &mdash; default:
               <tt>Hash.new</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
+            &mdash; <div class='inline'><p>the prefix mappings to use (not supported by all writers)</p></div>
+          
         </li>
       
         <li>
@@ -851,7 +903,9 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs</p></div>
+          
+            &mdash; <div class='inline'><p>the base URI to use when constructing relative URIs</p></div>
+          
         </li>
       
         <li>
@@ -863,7 +917,9 @@ and then serialize the graph.</p>
               <tt>3</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Maximum depth for recursively defining resources, defaults to 3</p></div>
+          
+            &mdash; <div class='inline'><p>Maximum depth for recursively defining resources, defaults to 3</p></div>
+          
         </li>
       
         <li>
@@ -875,7 +931,9 @@ and then serialize the graph.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Add standard prefixes to @prefixes, if necessary.</p></div>
+          
+            &mdash; <div class='inline'><p>Add standard prefixes to @prefixes, if necessary.</p></div>
+          
         </li>
       
         <li>
@@ -887,13 +945,15 @@ and then serialize the graph.</p>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>URI to use as default namespace, same as prefixes[nil]</p></div>
+          
+            &mdash; <div class='inline'><p>URI to use as default namespace, same as prefixes[nil]</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -918,7 +978,7 @@ and then serialize the graph.</p>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -944,7 +1004,7 @@ and then serialize the graph.</p>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -979,7 +1039,7 @@ and then serialize the graph.</p>
 96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 84</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_output identifier id'>output</span> <span class='assign token'>=</span> <span class='rubyid_$stdout gvar id'>$stdout</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_super super kw'>super</span> <span class='rubyid_do do kw'>do</span>
@@ -1009,13 +1069,15 @@ and then serialize the graph.</p>
       <span id="base_uri=-instance_method"></span>
       <span id="base_uri-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="base_uri-instance_method">
+  <h3 class="signature first" id="base_uri-instance_method">
   
     - (<tt><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></tt>) <strong>base_uri</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Base URI used for relativizing URIs</p>
 
@@ -1023,7 +1085,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1051,7 +1113,7 @@ and then serialize the graph.</p>
 58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 56</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_base_uri identifier id'>base_uri</span>
   <span class='rubyid_@base_uri ivar id'>@base_uri</span>
@@ -1066,13 +1128,15 @@ and then serialize the graph.</p>
       <span id="graph=-instance_method"></span>
       <span id="graph-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="graph-instance_method">
+  <h3 class="signature " id="graph-instance_method">
   
     - (<tt><span class='object_link'><a href="../Graph.html" title="RDF::Graph (class)">Graph</a></span></tt>) <strong>graph</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Graph of statements serialized</p>
 
@@ -1080,7 +1144,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1108,7 +1172,7 @@ and then serialize the graph.</p>
 56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 54</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_graph identifier id'>graph</span>
   <span class='rubyid_@graph ivar id'>@graph</span>
@@ -1124,16 +1188,18 @@ and then serialize the graph.</p>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="debug-instance_method">
+  <h3 class="signature first" id="debug-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>debug</strong>(*args)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Add debug event to debug array, if specified
   param [String] message ("")
@@ -1164,7 +1230,7 @@ and then serialize the graph.</p>
 409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 398</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_return return kw'>return</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Turtle constant id'>Turtle</span><span class='dot token'>.</span><span class='rubyid_debug? fid id'>debug?</span>
@@ -1185,20 +1251,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_literal-instance_method">
+  <h3 class="signature " id="format_literal-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>format_literal</strong>(literal, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the N-Triples representation of a literal.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1217,7 +1285,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1227,7 +1295,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1268,7 +1336,7 @@ and then serialize the graph.</p>
 241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 223</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_literal identifier id'>format_literal</span><span class='lparen token'>(</span><span class='rubyid_literal identifier id'>literal</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_literal identifier id'>literal</span> <span class='assign token'>=</span> <span class='rubyid_literal identifier id'>literal</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span><span class='dot token'>.</span><span class='rubyid_canonicalize! fid id'>canonicalize!</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:canonicalize</span><span class='rbrack token'>]</span>
@@ -1296,20 +1364,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_node-instance_method">
+  <h3 class="signature " id="format_node-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>format_node</strong>(node, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the Turtle representation of a blank node.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1328,7 +1398,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1338,7 +1408,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1363,7 +1433,7 @@ and then serialize the graph.</p>
 263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 261</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_node identifier id'>format_node</span><span class='lparen token'>(</span><span class='rubyid_node identifier id'>node</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='string val'>&quot;_:%s&quot;</span> <span class='mod op'>%</span> <span class='rubyid_node identifier id'>node</span><span class='dot token'>.</span><span class='rubyid_id identifier id'>id</span>
@@ -1375,20 +1445,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="format_uri-instance_method">
+  <h3 class="signature " id="format_uri-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>format_uri</strong>(uri, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns the Turtle representation of a URI reference.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1407,7 +1479,7 @@ and then serialize the graph.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1417,7 +1489,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1444,7 +1516,7 @@ and then serialize the graph.</p>
 253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 249</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_format_uri identifier id'>format_uri</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_md identifier id'>md</span> <span class='assign token'>=</span> <span class='rubyid_relativize identifier id'>relativize</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span>
@@ -1458,20 +1530,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="get_pname-instance_method">
+  <h3 class="signature " id="get_pname-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt><sup>?</sup>) <strong>get_pname</strong>(resource) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Return a QName for the URI, or nil. Adds namespace of QName to defined prefixes</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1487,7 +1561,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1503,7 +1577,7 @@ and then serialize the graph.</p>
     </li>
   
 </ul>
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -1566,7 +1640,7 @@ and then serialize the graph.</p>
 193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 153</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_get_pname identifier id'>get_pname</span><span class='lparen token'>(</span><span class='rubyid_resource identifier id'>resource</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_resource identifier id'>resource</span>
@@ -1616,20 +1690,22 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="indent-instance_method">
+  <h3 class="signature " id="indent-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>indent</strong>(modifier = 0)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns indent string multiplied by the depth</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1650,7 +1726,7 @@ and then serialize the graph.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1678,7 +1754,7 @@ and then serialize the graph.</p>
 367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 365</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_indent identifier id'>indent</span><span class='lparen token'>(</span><span class='rubyid_modifier identifier id'>modifier</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
   <span class='string val'>&quot; &quot;</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='rubyid_@depth ivar id'>@depth</span> <span class='plus op'>+</span> <span class='rubyid_modifier identifier id'>modifier</span><span class='rparen token'>)</span>
@@ -1690,13 +1766,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="order_subjects-instance_method">
+  <h3 class="signature " id="order_subjects-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">Resource</a></span>&gt;</tt>) <strong>order_subjects</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Order subjects for output. Override this to output subjects in another order.</p>
 
@@ -1706,7 +1784,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1758,7 +1836,7 @@ and then serialize the graph.</p>
 323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 297</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_order_subjects identifier id'>order_subjects</span>
   <span class='rubyid_seen identifier id'>seen</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -1794,13 +1872,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="predicate_order-instance_method">
+  <h3 class="signature " id="predicate_order-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span>&gt;</tt>) <strong>predicate_order</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines order of predicates to to emit at begninning of a resource description. Defaults to
 [rdf:type, rdfs:label, dc:title]</p>
@@ -1809,7 +1889,7 @@ and then serialize the graph.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1832,7 +1912,7 @@ and then serialize the graph.</p>
 291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 291</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 291</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_predicate_order identifier id'>predicate_order</span><span class='semicolon token'>;</span> <span class='lbrack token'>[</span><span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFS constant id'>RDFS</span><span class='dot token'>.</span><span class='rubyid_label identifier id'>label</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_DC constant id'>DC</span><span class='dot token'>.</span><span class='rubyid_title identifier id'>title</span><span class='rbrack token'>]</span> <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -1842,13 +1922,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="preprocess-instance_method">
+  <h3 class="signature " id="preprocess-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>preprocess</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Perform any preprocessing of statements required</p>
 
@@ -1876,7 +1958,7 @@ and then serialize the graph.</p>
 336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 326</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_preprocess identifier id'>preprocess</span>
   <span class='comment val'># Load defined prefixes</span>
@@ -1896,13 +1978,15 @@ and then serialize the graph.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="preprocess_statement-instance_method">
+  <h3 class="signature " id="preprocess_statement-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>preprocess_statement</strong>(statement)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Perform any statement preprocessing required. This is used to perform reference counts and determine required
 prefixes.</p>
@@ -1910,7 +1994,7 @@ prefixes.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1949,7 +2033,7 @@ prefixes.</p>
 354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 341</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_preprocess_statement identifier id'>preprocess_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
   <span class='comment val'>#debug(&quot;preprocess&quot;) {statement.inspect}</span>
@@ -1972,13 +2056,15 @@ prefixes.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="quoted-instance_method">
+  <h3 class="signature " id="quoted-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>quoted</strong>(string)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Use single- or multi-line quotes. If literal contains \t, \n, or \r, use a multiline quote,
 otherwise, use a single-line</p>
@@ -1986,7 +2072,7 @@ otherwise, use a single-line</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2002,7 +2088,7 @@ otherwise, use a single-line</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2032,7 +2118,7 @@ otherwise, use a single-line</p>
 390</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 383</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_quoted identifier id'>quoted</span><span class='lparen token'>(</span><span class='rubyid_string identifier id'>string</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_string identifier id'>string</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_match identifier id'>match</span><span class='lparen token'>(</span><span class='regexp val'>/[\t\n\r]/</span><span class='rparen token'>)</span>
@@ -2049,13 +2135,15 @@ otherwise, use a single-line</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="ref_count-instance_method">
+  <h3 class="signature " id="ref_count-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Integer.html" title="Integer (class)">Integer</a></span></tt>) <strong>ref_count</strong>(node)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Return the number of times this node has been referenced in the object position</p>
 
@@ -2063,7 +2151,7 @@ otherwise, use a single-line</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2088,7 +2176,7 @@ otherwise, use a single-line</p>
 360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 358</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 358</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_ref_count identifier id'>ref_count</span><span class='lparen token'>(</span><span class='rubyid_node identifier id'>node</span><span class='rparen token'>)</span>
   <span class='rubyid_@references ivar id'>@references</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='rubyid_node identifier id'>node</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
@@ -2100,20 +2188,22 @@ otherwise, use a single-line</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="relativize-instance_method">
+  <h3 class="signature " id="relativize-instance_method">
   
     - (<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>) <strong>relativize</strong>(uri)  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>If base_uri is defined, use it to try to make uri relative</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2129,7 +2219,7 @@ otherwise, use a single-line</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2155,7 +2245,7 @@ otherwise, use a single-line</p>
 282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 279</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 279</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_relativize identifier id'>relativize</span><span class='lparen token'>(</span><span class='rubyid_uri identifier id'>uri</span><span class='rparen token'>)</span>
   <span class='rubyid_uri identifier id'>uri</span> <span class='assign token'>=</span> <span class='rubyid_uri identifier id'>uri</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
@@ -2168,13 +2258,15 @@ otherwise, use a single-line</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="reset-instance_method">
+  <h3 class="signature " id="reset-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>reset</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Reset internal helper instance variables</p>
 
@@ -2198,7 +2290,7 @@ otherwise, use a single-line</p>
 376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 370</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_reset identifier id'>reset</span>
   <span class='rubyid_@depth ivar id'>@depth</span> <span class='assign token'>=</span> <span class='integer val'>0</span>
@@ -2214,13 +2306,15 @@ otherwise, use a single-line</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="sort_properties-instance_method">
+  <h3 class="signature " id="sort_properties-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span>&gt;</tt>) <strong>sort_properties</strong>(properties) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Take a hash from predicate uris to lists of values.
 Sort the lists of values.  Return a sorted list of properties.</p>
@@ -2228,7 +2322,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2236,7 +2330,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
         <span class='name'>properties</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">Resource</a></span>&gt;}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Resource.html" title="RDF::Resource (module)">Resource</a></span>&gt;}</tt>)</span>
       
       
       
@@ -2247,7 +2341,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2289,7 +2383,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 199</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_sort_properties identifier id'>sort_properties</span><span class='lparen token'>(</span><span class='rubyid_properties identifier id'>properties</span><span class='rparen token'>)</span>
   <span class='comment val'># Make sorted list of properties</span>
@@ -2315,13 +2409,15 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="start_document-instance_method">
+  <h3 class="signature " id="start_document-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>start_document</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Output @base and @prefix definitions</p>
 
@@ -2346,7 +2442,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 267</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_start_document identifier id'>start_document</span>
   <span class='rubyid_@output ivar id'>@output</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{indent}@base &lt;#{base_uri}&gt; .\n&quot;</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_base_uri identifier id'>base_uri</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -2363,13 +2459,15 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="top_classes-instance_method">
+  <h3 class="signature " id="top_classes-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span>&gt;</tt>) <strong>top_classes</strong>  <span class="extras">(protected)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Defines rdf:type of subjects to be emitted at the beginning of the graph. Defaults to rdfs:Class</p>
 
@@ -2377,7 +2475,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2400,7 +2498,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 286</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_top_classes identifier id'>top_classes</span><span class='semicolon token'>;</span> <span class='lbrack token'>[</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFS constant id'>RDFS</span><span class='dot token'>.</span><span class='rubyid_Class constant id'>Class</span><span class='rbrack token'>]</span> <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -2410,13 +2508,15 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_epilogue-instance_method">
+  <h3 class="signature " id="write_epilogue-instance_method">
   
     - <strong>write_epilogue</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Outputs the Turtle representation of all stored triples.</p>
 
@@ -2425,7 +2525,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 <div class="tags">
   
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="#write_triple-instance_method" title="RDF::Turtle::Writer#write_triple (method)">#write_triple</a></span></li>
@@ -2457,7 +2557,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 132</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_epilogue identifier id'>write_epilogue</span>
   <span class='rubyid_@max_depth ivar id'>@max_depth</span> <span class='assign token'>=</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:max_depth</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='integer val'>3</span>
@@ -2483,20 +2583,22 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_graph-instance_method">
+  <h3 class="signature " id="write_graph-instance_method">
   
     - <strong>write_graph</strong>(graph) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Write whole graph</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2524,7 +2626,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 103</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_graph identifier id'>write_graph</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span>
   <span class='rubyid_@graph ivar id'>@graph</span> <span class='assign token'>=</span> <span class='rubyid_graph identifier id'>graph</span>
@@ -2536,20 +2638,22 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_statement-instance_method">
+  <h3 class="signature " id="write_statement-instance_method">
   
     - <strong>write_statement</strong>(statement) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Adds a statement to be serialized</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2577,7 +2681,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 111</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_statement identifier id'>write_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
   <span class='rubyid_@graph ivar id'>@graph</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
@@ -2589,16 +2693,18 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="write_triple-instance_method">
+  <h3 class="signature " id="write_triple-instance_method">
   
     - <strong>write_triple</strong>(subject, predicate, object) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <div class="note abstract">
-  <strong>This method is abstract.</strong> 
+  <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p>Adds a triple to be serialized</p>
@@ -2606,7 +2712,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2644,7 +2750,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   
 </ul>
 
-<h3>Raises:</h3>
+<p class="tag_title">Raises:</p>
 <ul class="raise">
   
     <li>
@@ -2672,7 +2778,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-25799b72e2e6/lib/rdf/turtle/writer.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-turtle-d9d055f75085/lib/rdf/turtle/writer.rb', line 123</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_write_triple identifier id'>write_triple</span><span class='lparen token'>(</span><span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span>
   <span class='rubyid_@graph ivar id'>@graph</span><span class='dot token'>.</span><span class='rubyid_insert identifier id'>insert</span><span class='lparen token'>(</span><span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
@@ -2686,11 +2792,11 @@ Sort the lists of values.  Return a sorted list of properties.</p>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:03:22 2012 by 
+  Generated on Thu Jul  5 18:09:07 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>

@@ -280,7 +280,7 @@ module RDF::Distiller
 
       if params["fmt"].to_s == "sse"
         headers = ["Content-Type" => "application/sse+sparql-query"]
-        return sparql_expr.to_sxp
+        return sparql_expr.to_sse
       end
 
       puts "execute query"

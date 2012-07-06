@@ -1,6 +1,6 @@
 # RDF::Distiller
 
-Web portal for for [RDF.rb][RDF.rb].
+Ruby-based RDF Distiller and SPARQL servce.
 
 ## DESCRIPTION
 RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
@@ -41,29 +41,29 @@ Distills between formats supported in [Linked Data][linkeddata].
 
 ## Documentation
 ### Core libraries
-* {file:readmes/rdf RDF.rb}
-  * {file:readmes/rdf-json RDF::JSON}
-  * {file:readmes/rdf-microdata RDF::Microdata}
-  * {file:readmes/rdf-n3 RDF::N3}
-  * {file:readmes/rdf-rdfa RDF::RDFa}
-  * {file:readmes/rdf-rdfxml RDF::RDFXML}
-  * {file:readmes/rdf-trig RDF::TriG}
-  * {file:readmes/rdf-trix RDF::TriX}
-  * {file:readmes/rdf-turtle RDF::Turtle}
-  * {file:readmes/json-ld JSON::LD}
+* {RDF RDF.rb}
+  * {RDF::JSON}
+  * {RDF::Microdata}
+  * {RDF::N3}
+  * {RDF::RDFa}
+  * {RDF::RDFXML}
+  * {RDF::TriG}
+  * {RDF::TriX}
+  * {RDF::Turtle}
+  * {JSON::LD}
 
 ### Rollup libraries
-* {file:readmes/linkeddata Linked Data}
-  * {file:readmes/rack-linkeddata Linked Data for Rack}
-  * {file:readmes/sinatra-linkeddata Linked Data for Sinatrra}
+* {LinkedData Linked Data}
+  * {Rack::SPARQL Linked Data for Rack}
+  * {Sinatra::SPARQL Linked Data for Sinatra}
 
 ### Query/Access
-* {file:readme/sparql SPARQL}
-* {file:readme/sparql-client SPARQL Client}
-* {file:readme/spira Spira}
+* {SPARQL}
+* {SPARQL::Client SPARQL Client}
+* {Spira}
 
 ### Storage
-* {file:readme/rdf-do RDF Dataobjects}
+* {RDF::DO RDF Dataobjects}
 
 ## Resources
 * [RDF Distiller](http://rdf.kellogg-assoc.com)
@@ -89,7 +89,7 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <http://github.com/gkellogg/rdf-portal>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
-[RDF.rb]:         http://rdf.rubyforge.org/
+[RDF.rb]:         http://ruby-rdf.github.com/rdf
 [RDF::JSON]:      http://rdf.rubyforge.org/json/
 [RDF::Microdata]: http://rdoc.info/github/gkellogg/rdf-microdata/master/frames
 [RDF::N3]:        http://rdoc.info/github/gkellogg/rdf-n3/master/frames

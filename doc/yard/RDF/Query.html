@@ -15,9 +15,11 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  relpath = '..';
-  if (relpath != '') relpath += '/';
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
 </script>
+
 
   <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
 
@@ -26,36 +28,41 @@
 
   </head>
   <body>
-    <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) document.body.className = 'frames';
-    </script>
-    
     <div id="header">
       <div id="menu">
   
-    <a href="../_index.html">Index (Q)</a> &raquo; 
+    <a href="../_index.html">Index (Q)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
      &raquo; 
     <span class="title">Query</span>
   
-  
+
   <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
 </div>
 
       <div id="search">
   
-    <a id="class_list_link" href="#">Class List</a>
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
   
-    <a id="method_list_link" href="#">Method List</a>
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
   
-    <a id="file_list_link" href="#">File List</a>
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
   
 </div>
       <div class="clear"></div>
     </div>
-    
+
     <iframe id="search_frame"></iframe>
-    
+
     <div id="content"><h1>Class: RDF::Query
   
   
@@ -87,8 +94,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/writer.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query/pattern.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query/variable.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query/solution.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query/solutions.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/algebra/extensions.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/sxp-ruby-8458dbf53a84/lib/sxp/writer.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query/pattern.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query/solution.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query/variable.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query/solutions.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/algebra/extensions.rb</span>
 </dd>
   
 </dl>
@@ -112,9 +119,11 @@ elements.</p>
 <div class="tags">
   
   <div class="examples">
-    <h3>Examples:</h3>
+    <p class="tag_title">Examples:</p>
     
-      <h4><div class='inline'><p>Constructing a basic graph pattern query (1)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Constructing a basic graph pattern query (1)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_do do kw'>do</span>
   <span class='rubyid_pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span><span class='comma token'>,</span>  <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_Person constant id'>Person</span><span class='rbrack token'>]</span>
   <span class='rubyid_pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='symbol val'>:name</span><span class='rbrack token'>]</span>
@@ -122,7 +131,9 @@ elements.</p>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Constructing a basic graph pattern query (2)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Constructing a basic graph pattern query (2)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='lbrace token'>{</span>
   <span class='symbol val'>:person</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
     <span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_Person constant id'>Person</span><span class='comma token'>,</span>
@@ -132,20 +143,26 @@ elements.</p>
 <span class='rbrace token'>}</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>Executing a basic graph pattern query</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Executing a basic graph pattern query</p></div></p>
+      
       <pre class="example code"><span class='rubyid_graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>'etc/doap.nt'</span><span class='rparen token'>)</span>
 <span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_solution identifier id'>solution</span><span class='bitor op'>|</span>
   <span class='rubyid_puts identifier id'>puts</span> <span class='rubyid_solution identifier id'>solution</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Constructing and executing a query in one go (1)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Constructing and executing a query in one go (1)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_solutions identifier id'>solutions</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='dot token'>.</span><span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span>
   <span class='rubyid_pattern identifier id'>pattern</span> <span class='lbrack token'>[</span><span class='symbol val'>:person</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span><span class='comma token'>,</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_Person constant id'>Person</span><span class='rbrack token'>]</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     
-      <h4><div class='inline'><p>Constructing and executing a query in one go (2)</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>Constructing and executing a query in one go (2)</p></div></p>
+      
       <pre class="example code"><span class='rubyid_solutions identifier id'>solutions</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='dot token'>.</span><span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
   <span class='symbol val'>:person</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
     <span class='rubyid_RDF constant id'>RDF</span><span class='dot token'>.</span><span class='rubyid_type identifier id'>type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_Person constant id'>Person</span><span class='comma token'>,</span>
@@ -153,7 +170,9 @@ elements.</p>
 <span class='rbrace token'>}</span><span class='rparen token'>)</span>
 </pre>
     
-      <h4><div class='inline'><p>In this example, the default graph contains the names of the publishers of two named graphs. The triples in the named graphs are not visible in the default graph in this example.</p></div></h4>
+      
+        <p class="example_title"><div class='inline'><p>In this example, the default graph contains the names of the publishers of two named graphs. The triples in the named graphs are not visible in the default graph in this example.</p></div></p>
+      
       <pre class="example code"><span class='comment val'># default graph</span>
 <span class='rubyid_@prefix ivar id'>@prefix</span> <span class='rubyid_dc identifier id'>dc</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='rubyid_http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/purl.org/</span><span class='rubyid_dc identifier id'>dc</span><span class='div op'>/</span><span class='rubyid_elements identifier id'>elements</span><span class='div op'>/</span><span class='float val'>1.1</span><span class='div op'>/</span>
 
@@ -176,13 +195,13 @@ elements.</p>
   </div>
 
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><a href="http://www.w3.org/TR/rdf-sparql-query/#rdfDataset" target="_parent" title="http://www.w3.org/TR/rdf-sparql-query/#rdfDataset">http://www.w3.org/TR/rdf-sparql-query/#rdfDataset</a></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -203,9 +222,9 @@ elements.</p>
 </div>
 <h2>Defined Under Namespace</h2>
 <p class="children">
-   
+  
     
-   
+  
     
       <strong class="classes">Classes:</strong> <span class='object_link'><a href="Query/Pattern.html" title="RDF::Query::Pattern (class)">Pattern</a></span>, <span class='object_link'><a href="Query/Solution.html" title="RDF::Query::Solution (class)">Solution</a></span>, <span class='object_link'><a href="Query/Solutions.html" title="RDF::Query::Solutions (class)">Solutions</a></span>, <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span>
     
@@ -228,7 +247,10 @@ elements.</p>
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -252,7 +274,10 @@ elements.</p>
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -276,7 +301,10 @@ elements.</p>
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -300,7 +328,10 @@ elements.</p>
   </span>
   
   
-    <span class="note title readonly">readonly</span>
+  
+    
+      <span class="note title readonly">readonly</span>
+    
     
   
   
@@ -341,6 +372,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Executes a query on the given <code>queryable</code> graph or repository.</p></div></span>
@@ -371,6 +403,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Add patterns from another query to form a new Query.</p></div></span>
@@ -386,6 +419,7 @@ elements.</p>
 
     
   </span>
+  
   
   
   
@@ -413,6 +447,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Equivalence for Queries:.</p></div></span>
@@ -434,6 +469,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Name of this query, if any.</p></div></span>
@@ -449,6 +485,7 @@ elements.</p>
 
     
   </span>
+  
   
   
   
@@ -478,6 +515,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Enumerates over each matching query solution.</p></div></span>
@@ -493,6 +531,7 @@ elements.</p>
 
     
   </span>
+  
   
   
   
@@ -520,6 +559,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Executes this query on the given <code>queryable</code> graph or repository.</p></div></span>
@@ -541,6 +581,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this query did not match when last executed.</p></div></span>
@@ -556,6 +597,7 @@ elements.</p>
 
     
   </span>
+  
   
     <span class="note title constructor">constructor</span>
   
@@ -585,6 +627,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this query matched when last executed.</p></div></span>
@@ -600,6 +643,7 @@ elements.</p>
 
     
   </span>
+  
   
   
   
@@ -627,6 +671,7 @@ elements.</p>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Returns an optimized copy of this query.</p></div></span>
@@ -642,6 +687,7 @@ elements.</p>
 
     
   </span>
+  
   
   
   
@@ -670,6 +716,7 @@ according to their cost estimates.</p></div></span>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Appends the given query <code>pattern</code> to this query.</p></div></span>
@@ -685,6 +732,7 @@ according to their cost estimates.</p></div></span>
 
     
   </span>
+  
   
   
   
@@ -712,6 +760,7 @@ according to their cost estimates.</p></div></span>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Transform Query into an Array form of an SSE.</p></div></span>
@@ -733,6 +782,7 @@ according to their cost estimates.</p></div></span>
   
   
   
+  
 
   
     <span class="summary_desc"><div class='inline'><p>Is this is an unamed query?.</p></div></span>
@@ -747,7 +797,7 @@ according to their cost estimates.</p></div></span>
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
-  <p class="signature first" id="initialize-instance_method">
+  <h3 class="signature first" id="initialize-instance_method">
   
     
       <span class="overload">- (<tt><span class='object_link'><a href="" title="RDF::Query (class)">Query</a></span></tt>) <strong>initialize</strong>(patterns = [], options = {}) {|query| ... }</span>
@@ -757,7 +807,9 @@ according to their cost estimates.</p></div></span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Initializes a new basic graph pattern query.</p>
 
@@ -765,7 +817,7 @@ according to their cost estimates.</p></div></span>
 </div>
 <div class="tags">
   
-  <h3>Overloads:</h3>
+  <p class="tag_title">Overloads:</p>
   <ul class="overload">
     
       
@@ -778,7 +830,7 @@ according to their cost estimates.</p></div></span>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -800,7 +852,7 @@ according to their cost estimates.</p></div></span>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -816,7 +868,7 @@ according to their cost estimates.</p></div></span>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -828,7 +880,7 @@ according to their cost estimates.</p></div></span>
               <tt>Solutions.new</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -840,18 +892,20 @@ according to their cost estimates.</p></div></span>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Default context for matching against queryable.
+          
+            &mdash; <div class='inline'><p>Default context for matching against queryable.
 Named queries either match against a specifically named
 contexts if the name is an RDF::Term or bound RDF::Query::Variable.
 Names that are against unbound variables match either detault
 or named contexts.
 The name of `false' will only match against the default context.</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -864,7 +918,7 @@ The name of `false' will only match against the default context.</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -879,7 +933,7 @@ The name of `false' will only match against the default context.</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -909,7 +963,7 @@ The name of `false' will only match against the default context.</p></div>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -917,7 +971,7 @@ The name of `false' will only match against the default context.</p></div>
         <span class='name'>patterns</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -931,7 +985,7 @@ The name of `false' will only match against the default context.</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
       
@@ -947,7 +1001,7 @@ The name of `false' will only match against the default context.</p></div>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -959,7 +1013,7 @@ The name of `false' will only match against the default context.</p></div>
               <tt>Solutions.new</tt>
             
           </span>
-          &mdash; <div class='inline'></div>
+          
         </li>
       
         <li>
@@ -971,17 +1025,19 @@ The name of `false' will only match against the default context.</p></div>
               <tt>nil</tt>
             
           </span>
-          &mdash; <div class='inline'><p>Default context for matching against queryable.
+          
+            &mdash; <div class='inline'><p>Default context for matching against queryable.
 Named queries either match against a specifically named
 contexts if the name is an RDF::Term or bound RDF::Query::Variable.
 Names that are against unbound variables match either detault
 or named contexts.</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -994,7 +1050,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1009,7 +1065,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1031,7 +1087,7 @@ or named contexts.</p></div>
     
   </ul>
 
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1076,7 +1132,7 @@ or named contexts.</p></div>
 175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 154</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_patterns identifier id'>patterns</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@options ivar id'>@options</span>  <span class='assign token'>=</span> <span class='rubyid_patterns identifier id'>patterns</span><span class='dot token'>.</span><span class='rubyid_last identifier id'>last</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='rubyid_patterns identifier id'>patterns</span><span class='dot token'>.</span><span class='rubyid_pop identifier id'>pop</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span> <span class='colon op'>:</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
@@ -1115,13 +1171,15 @@ or named contexts.</p></div>
       <span id=""></span>
       <span id="options-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="options-instance_method">
+  <h3 class="signature first" id="options-instance_method">
   
-    - (<tt>Hash</tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Any additional options for this query.</p>
 
@@ -1129,20 +1187,20 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1168,7 +1226,7 @@ or named contexts.</p></div>
 119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 117</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_options identifier id'>options</span>
   <span class='rubyid_@options ivar id'>@options</span>
@@ -1183,13 +1241,15 @@ or named contexts.</p></div>
       <span id=""></span>
       <span id="patterns-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="patterns-instance_method">
+  <h3 class="signature " id="patterns-instance_method">
   
     - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Query/Pattern.html" title="RDF::Query::Pattern (class)">RDF::Query::Pattern</a></span>&gt;</tt>) <strong>patterns</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>The patterns that constitute this query.</p>
 
@@ -1197,7 +1257,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1210,7 +1270,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1236,7 +1296,7 @@ or named contexts.</p></div>
 107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 105</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_patterns identifier id'>patterns</span>
   <span class='rubyid_@patterns ivar id'>@patterns</span>
@@ -1251,13 +1311,15 @@ or named contexts.</p></div>
       <span id=""></span>
       <span id="solutions-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="solutions-instance_method">
+  <h3 class="signature " id="solutions-instance_method">
   
     - (<tt><span class='object_link'><a href="Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></tt>) <strong>solutions</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>The solution sequence for this query.</p>
 
@@ -1265,7 +1327,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1278,7 +1340,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1304,7 +1366,7 @@ or named contexts.</p></div>
 113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 111</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_solutions identifier id'>solutions</span>
   <span class='rubyid_@solutions ivar id'>@solutions</span>
@@ -1319,13 +1381,15 @@ or named contexts.</p></div>
       <span id=""></span>
       <span id="variables-instance_method"></span>
       <div class="method_details ">
-  <p class="signature " id="variables-instance_method">
+  <h3 class="signature " id="variables-instance_method">
   
-    - (<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span>}</tt>) <strong>variables</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span>}</tt>) <strong>variables</strong>  <span class="extras">(readonly)</span>
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>The variables used in this query.</p>
 
@@ -1333,20 +1397,20 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span>}</tt>)</span>
       
       
       
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1372,7 +1436,7 @@ or named contexts.</p></div>
 101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 99</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_variables identifier id'>variables</span>
   <span class='rubyid_@variables ivar id'>@variables</span>
@@ -1388,23 +1452,25 @@ or named contexts.</p></div>
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="execute-class_method">
+  <h3 class="signature first" id="execute-class_method">
   
     + (<tt><span class='object_link'><a href="Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></tt>) <strong>execute</strong>(queryable, patterns = nil, options = {}) {|query| ... }
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Executes a query on the given <code>queryable</code> graph or repository.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1426,7 +1492,7 @@ or named contexts.</p></div>
         <span class='name'>patterns</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -1442,7 +1508,7 @@ or named contexts.</p></div>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -1455,7 +1521,7 @@ or named contexts.</p></div>
   
 </ul>
 
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1468,7 +1534,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1483,7 +1549,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Yield Returns:</h3>
+<p class="tag_title">Yield Returns:</p>
 <ul class="yieldreturn">
   
     <li>
@@ -1499,7 +1565,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1516,13 +1582,13 @@ or named contexts.</p></div>
   
 </ul>
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="#execute-instance_method" title="RDF::Query#execute (method)">#execute</a></span></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1548,7 +1614,7 @@ or named contexts.</p></div>
 93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 91</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='rubyid_patterns identifier id'>patterns</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_patterns identifier id'>patterns</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -1563,23 +1629,25 @@ or named contexts.</p></div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
-    
+
     
       <div class="method_details first">
-  <p class="signature first" id="+-instance_method">
+  <h3 class="signature first" id="+-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="RDF::Query (class)">RDF::Query</a></span></tt>) <strong>+</strong>(other) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Add patterns from another query to form a new Query</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1595,7 +1663,7 @@ or named contexts.</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1608,7 +1676,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1634,7 +1702,7 @@ or named contexts.</p></div>
 337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 335</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 335</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='plus op'>+</span><span class='lparen token'>(</span><span class='rubyid_other identifier id'>other</span><span class='rparen token'>)</span>
   <span class='rubyid_Query constant id'>Query</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_patterns identifier id'>patterns</span> <span class='plus op'>+</span> <span class='rubyid_other identifier id'>other</span><span class='dot token'>.</span><span class='rubyid_patterns identifier id'>patterns</span><span class='rparen token'>)</span>
@@ -1646,20 +1714,22 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="<<-instance_method">
+  <h3 class="signature " id="<<-instance_method">
   
     - <strong>&lt;&lt;</strong>(pattern) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Appends the given query <code>pattern</code> to this query.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1678,7 +1748,7 @@ or named contexts.</p></div>
   
 </ul>
 
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1705,7 +1775,7 @@ or named contexts.</p></div>
 186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 183</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='lshft op'>&lt;&lt;</span><span class='lparen token'>(</span><span class='rubyid_pattern identifier id'>pattern</span><span class='rparen token'>)</span>
   <span class='rubyid_@patterns ivar id'>@patterns</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_Pattern constant id'>Pattern</span><span class='dot token'>.</span><span class='rubyid_from identifier id'>from</span><span class='lparen token'>(</span><span class='rubyid_pattern identifier id'>pattern</span><span class='rparen token'>)</span>
@@ -1718,13 +1788,15 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="==-instance_method">
+  <h3 class="signature " id="==-instance_method">
   
     - (<tt>Boolean</tt>) <strong>==</strong>(other) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Equivalence for Queries:
   Same Patterns
@@ -1734,7 +1806,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1747,7 +1819,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1768,12 +1840,12 @@ or named contexts.</p></div>
       <pre class="lines">
 
 
-101
-102
-103</pre>
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/algebra/extensions.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/algebra/extensions.rb', line 107</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='eq op'>==</span><span class='lparen token'>(</span><span class='rubyid_other identifier id'>other</span><span class='rparen token'>)</span>
   <span class='rubyid_other identifier id'>other</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_patterns identifier id'>patterns</span> <span class='eq op'>==</span> <span class='rubyid_other identifier id'>other</span><span class='dot token'>.</span><span class='rubyid_patterns identifier id'>patterns</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_context identifier id'>context</span> <span class='eq op'>==</span> <span class='rubyid_context identifier id'>context</span>
@@ -1785,13 +1857,15 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="context-instance_method">
+  <h3 class="signature " id="context-instance_method">
   
     - (<tt><span class='object_link'><a href="Value.html" title="RDF::Value (module)">RDF::Value</a></span></tt>) <strong>context</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Name of this query, if any</p>
 
@@ -1799,7 +1873,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1812,7 +1886,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1838,7 +1912,7 @@ or named contexts.</p></div>
 362</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 360</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_context identifier id'>context</span>
   <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span>
@@ -1850,20 +1924,22 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="context=-instance_method">
+  <h3 class="signature " id="context=-instance_method">
   
     - (<tt><span class='object_link'><a href="Value.html" title="RDF::Value (module)">RDF::Value</a></span></tt>) <strong>context=</strong>(value) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Add name to query</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1879,7 +1955,7 @@ or named contexts.</p></div>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1892,7 +1968,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -1918,7 +1994,7 @@ or named contexts.</p></div>
 356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 354</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_context= identifier id'>context=</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
   <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_value identifier id'>value</span>
@@ -1930,7 +2006,7 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="each_solution-instance_method">
+  <h3 class="signature " id="each_solution-instance_method">
   
     - (<tt><span class='object_link'><a href="../RDF.html#Enumerator-constant" title="RDF::Enumerator (constant)">Enumerator</a></span></tt>) <strong>each_solution</strong> {|solution| ... }
   
@@ -1940,7 +2016,9 @@ or named contexts.</p></div>
     <span class="names"><span id='each-instance_method'>each</span></span>
     </span>
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Enumerates over each matching query solution.</p>
 
@@ -1948,7 +2026,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Yields:</h3>
+<p class="tag_title">Yields:</p>
 <ul class="yield">
   
     <li>
@@ -1961,7 +2039,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Yield Parameters:</h3>
+<p class="tag_title">Yield Parameters:</p>
 <ul class="yieldparam">
   
     <li>
@@ -1976,7 +2054,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -1989,7 +2067,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2015,7 +2093,7 @@ or named contexts.</p></div>
 378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 376</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 376</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_each_solution identifier id'>each_solution</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@solutions ivar id'>@solutions</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -2027,13 +2105,15 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="empty?-instance_method">
+  <h3 class="signature " id="empty?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>empty?</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Query has no patterns</p>
 
@@ -2041,7 +2121,7 @@ or named contexts.</p></div>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2054,7 +2134,7 @@ or named contexts.</p></div>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2080,7 +2160,7 @@ or named contexts.</p></div>
 368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 366</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_empty? fid id'>empty?</span>
   <span class='rubyid_patterns identifier id'>patterns</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -2092,13 +2172,15 @@ or named contexts.</p></div>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="execute-instance_method">
+  <h3 class="signature " id="execute-instance_method">
   
     - (<tt><span class='object_link'><a href="Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></tt>) <strong>execute</strong>(queryable, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Executes this query on the given <code>queryable</code> graph or repository.</p>
 
@@ -2111,7 +2193,7 @@ The name of `false' will only match against the default context.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2133,7 +2215,7 @@ The name of `false' will only match against the default context.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2151,31 +2233,35 @@ The name of `false' will only match against the default context.</p>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
           <span class="name">bindings</span>
-          <span class="type">(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>)</span>
+          <span class="type">(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>)</span>
           <span class="default">
             
           </span>
-          &mdash; <div class='inline'><p>optional variable bindings to use</p></div>
+          
+            &mdash; <div class='inline'><p>optional variable bindings to use</p></div>
+          
         </li>
       
         <li>
           <span class="name">solutions</span>
-          <span class="type">(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>)</span>
+          <span class="type">(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span>}</tt>)</span>
           <span class="default">
             
           </span>
-          &mdash; <div class='inline'><p>optional initial solutions for chained queries</p></div>
+          
+            &mdash; <div class='inline'><p>optional initial solutions for chained queries</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2192,13 +2278,13 @@ The name of `false' will only match against the default context.</p>
   
 </ul>
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><a href="http://www.holygoat.co.uk/blog/entry/2005-10-25-1" target="_parent" title="http://www.holygoat.co.uk/blog/entry/2005-10-25-1">http://www.holygoat.co.uk/blog/entry/2005-10-25-1</a></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2278,7 +2364,7 @@ The name of `false' will only match against the default context.</p>
 306</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 250</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 250</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_execute identifier id'>execute</span><span class='lparen token'>(</span><span class='rubyid_queryable identifier id'>queryable</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
@@ -2344,13 +2430,15 @@ The name of `false' will only match against the default context.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="failed?-instance_method">
+  <h3 class="signature " id="failed?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>failed?</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns <code>true</code> if this query did not match when last executed.</p>
 
@@ -2361,7 +2449,7 @@ determine whether the query failed to match or not.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2375,13 +2463,13 @@ determine whether the query failed to match or not.</p>
   
 </ul>
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="#matched%3F-instance_method" title="RDF::Query#matched? (method)">#matched?</a></span></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2407,7 +2495,7 @@ determine whether the query failed to match or not.</p>
 318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 316</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_failed? fid id'>failed?</span>
   <span class='rubyid_@solutions ivar id'>@solutions</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -2419,13 +2507,15 @@ determine whether the query failed to match or not.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="matched?-instance_method">
+  <h3 class="signature " id="matched?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>matched?</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns <code>true</code> if this query matched when last executed.</p>
 
@@ -2436,7 +2526,7 @@ determine whether the query matched successfully or not.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2450,13 +2540,13 @@ determine whether the query matched successfully or not.</p>
   
 </ul>
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="#failed%3F-instance_method" title="RDF::Query#failed? (method)">#failed?</a></span></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2482,7 +2572,7 @@ determine whether the query matched successfully or not.</p>
 330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 328</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 328</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_matched? fid id'>matched?</span>
   <span class='notop op'>!</span><span class='rubyid_@failed ivar id'>@failed</span>
@@ -2494,13 +2584,15 @@ determine whether the query matched successfully or not.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="named?-instance_method">
+  <h3 class="signature " id="named?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>named?</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Is this is a named query?</p>
 
@@ -2508,7 +2600,7 @@ determine whether the query matched successfully or not.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2521,7 +2613,7 @@ determine whether the query matched successfully or not.</p>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2547,7 +2639,7 @@ determine whether the query matched successfully or not.</p>
 343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 341</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_named? fid id'>named?</span>
   <span class='notop op'>!</span><span class='notop op'>!</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:context</span><span class='rbrack token'>]</span>
@@ -2559,20 +2651,22 @@ determine whether the query matched successfully or not.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="optimize-instance_method">
+  <h3 class="signature " id="optimize-instance_method">
   
     - (<tt><span class='object_link'><a href="" title="RDF::Query (class)">RDF::Query</a></span></tt>) <strong>optimize</strong>(options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Returns an optimized copy of this query.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2580,7 +2674,7 @@ determine whether the query matched successfully or not.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2593,7 +2687,7 @@ determine whether the query matched successfully or not.</p>
   
 </ul>
 
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2609,7 +2703,7 @@ determine whether the query matched successfully or not.</p>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2635,7 +2729,7 @@ determine whether the query matched successfully or not.</p>
 212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 210</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_optimize identifier id'>optimize</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span><span class='dot token'>.</span><span class='rubyid_optimize! fid id'>optimize!</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -2647,13 +2741,15 @@ determine whether the query matched successfully or not.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="optimize!-instance_method">
+  <h3 class="signature " id="optimize!-instance_method">
   
     - <strong>optimize!</strong>(options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Optimizes this query by reordering its constituent triple patterns
 according to their cost estimates.</p>
@@ -2661,7 +2757,7 @@ according to their cost estimates.</p>
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2669,7 +2765,7 @@ according to their cost estimates.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2683,13 +2779,13 @@ according to their cost estimates.</p>
 </ul>
 
 
-  <h3>See Also:</h3>
+  <p class="tag_title">See Also:</p>
   <ul class="see">
     
       <li><span class='object_link'><a href="Query/Pattern.html#cost-instance_method" title="RDF::Query::Pattern#cost (method)">RDF::Query::Pattern#cost</a></span></li>
     
   </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2718,7 +2814,7 @@ according to their cost estimates.</p>
 228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 223</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_optimize! fid id'>optimize!</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_@patterns ivar id'>@patterns</span><span class='dot token'>.</span><span class='rubyid_sort! fid id'>sort!</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_a identifier id'>a</span><span class='comma token'>,</span> <span class='rubyid_b identifier id'>b</span><span class='bitor op'>|</span>
@@ -2733,20 +2829,22 @@ according to their cost estimates.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="pattern-instance_method">
+  <h3 class="signature " id="pattern-instance_method">
   
     - <strong>pattern</strong>(pattern, options = {}) 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Appends the given query <code>pattern</code> to this query.</p>
 
   </div>
 </div>
 <div class="tags">
-  <h3>Parameters:</h3>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -2768,7 +2866,7 @@ according to their cost estimates.</p>
         <span class='name'>options</span>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>{}</tt>)</em>
@@ -2786,7 +2884,7 @@ according to their cost estimates.</p>
     
     
     
-    <h3>Options Hash (<tt>options</tt>):</h3>
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
     <ul class="option">
       
         <li>
@@ -2798,13 +2896,15 @@ according to their cost estimates.</p>
               <tt>false</tt>
             
           </span>
-          &mdash; <div class='inline'><p>whether this is an optional pattern</p></div>
+          
+            &mdash; <div class='inline'><p>whether this is an optional pattern</p></div>
+          
         </li>
       
     </ul>
   
 
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2831,7 +2931,7 @@ according to their cost estimates.</p>
 201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 198</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_pattern identifier id'>pattern</span><span class='lparen token'>(</span><span class='rubyid_pattern identifier id'>pattern</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_@patterns ivar id'>@patterns</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_Pattern constant id'>Pattern</span><span class='dot token'>.</span><span class='rubyid_from identifier id'>from</span><span class='lparen token'>(</span><span class='rubyid_pattern identifier id'>pattern</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -2844,13 +2944,15 @@ according to their cost estimates.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="to_sxp-instance_method">
+  <h3 class="signature " id="to_sxp-instance_method">
   
     - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>) <strong>to_sxp</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Transform Query into an Array form of an SXP</p>
 
@@ -2860,7 +2962,7 @@ according to their cost estimates.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2873,62 +2975,7 @@ according to their cost estimates.</p>
     </li>
   
 </ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-193
-194
-195
-196</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/gems/sxp-0.0.14/lib/sxp/writer.rb', line 193</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_sxp identifier id'>to_sxp</span>
-  <span class='rubyid_res identifier id'>res</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:bgp</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='rubyid_patterns identifier id'>patterns</span>
-  <span class='lparen token'>(</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:named?</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_named? fid id'>named?</span> <span class='integer val'>? </span><span class='lbrack token'>[</span><span class='symbol val'>:graph</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_res identifier id'>res</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='rubyid_res identifier id'>res</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_sxp identifier id'>to_sxp</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="to_sxp_bin-instance_method">
-  
-    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>) <strong>to_sxp_bin</strong> 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>Transform Query into an Array form of an SSE</p>
-
-<p>If Query is named, it's treated as a GroupGraphPattern, otherwise, a BGP</p>
-
-  </div>
-</div>
-<div class="tags">
-  
-<h3>Returns:</h3>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -2949,13 +2996,84 @@ according to their cost estimates.</p>
       <pre class="lines">
 
 
-110
-111
-112
-113</pre>
+193
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-ecc53b9a8b9c/lib/sparql/algebra/extensions.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sxp-ruby-8458dbf53a84/lib/sxp/writer.rb', line 193</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_to_sxp identifier id'>to_sxp</span>
+  <span class='rubyid_res identifier id'>res</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:bgp</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='rubyid_patterns identifier id'>patterns</span>
+  <span class='lparen token'>(</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:named?</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_named? fid id'>named?</span> <span class='integer val'>? </span><span class='lbrack token'>[</span><span class='symbol val'>:graph</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_res identifier id'>res</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='rubyid_res identifier id'>res</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_sxp identifier id'>to_sxp</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_sxp_bin-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>) <strong>to_sxp_bin</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Transform Query into an Array form of an SSE</p>
+
+<p>If Query is named, it's treated as a GroupGraphPattern, otherwise, a BGP</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p></div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/algebra/extensions.rb', line 116</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_to_sxp_bin identifier id'>to_sxp_bin</span>
   <span class='rubyid_res identifier id'>res</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:bgp</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='rubyid_patterns identifier id'>patterns</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sxp_bin</span><span class='rparen token'>)</span>
@@ -2968,13 +3086,15 @@ according to their cost estimates.</p>
 </div>
     
       <div class="method_details ">
-  <p class="signature " id="unnamed?-instance_method">
+  <h3 class="signature " id="unnamed?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>unnamed?</strong> 
   
 
   
-</p><div class="docstring">
+
+  
+</h3><div class="docstring">
   <div class="discussion">
     <p>Is this is an unamed query?</p>
 
@@ -2982,7 +3102,7 @@ according to their cost estimates.</p>
 </div>
 <div class="tags">
   
-<h3>Returns:</h3>
+<p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
@@ -2995,7 +3115,7 @@ according to their cost estimates.</p>
     </li>
   
 </ul>
-<h3>Since:</h3>
+<p class="tag_title">Since:</p>
 <ul class="since">
   
     <li>
@@ -3021,7 +3141,7 @@ according to their cost estimates.</p>
 349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-d370dbb82fd0/lib/rdf/query.rb', line 347</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/query.rb', line 347</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_unnamed? fid id'>unnamed?</span>
   <span class='notop op'>!</span><span class='rubyid_named? fid id'>named?</span>
@@ -3035,11 +3155,11 @@ according to their cost estimates.</p>
   </div>
 
 </div>
-    
+
     <div id="footer">
-  Generated on Fri Jun  1 10:03:33 2012 by 
+  Generated on Thu Jul  5 18:08:14 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.8.1 (ruby-1.8.7).
 </div>
 
   </body>
