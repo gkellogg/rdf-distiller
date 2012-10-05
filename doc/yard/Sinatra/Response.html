@@ -101,8 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Patch Sinatra::Response#finish to not calculate Content-Length unless
-all members of an array are strings</p>
+    <p>Patch Sinatra::Response#finish to not calculate Content-Length unless all members of an array are strings</p>
 
   </div>
 </div>
@@ -189,22 +188,21 @@ all members of an array are strings</p>
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sinatra/sparql/extensions.rb', line 4</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_finish identifier id'>finish</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_status identifier id'>status</span><span class='dot token'>.</span><span class='rubyid_to_i identifier id'>to_i</span> <span class='div op'>/</span> <span class='integer val'>100</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
-    <span class='rubyid_headers identifier id'>headers</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span> <span class='string val'>&quot;Content-Length&quot;</span>
-    <span class='rubyid_headers identifier id'>headers</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span> <span class='string val'>&quot;Content-Type&quot;</span>
-  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Query constant id'>Query</span><span class='colon2 op'>::</span><span class='rubyid_Solutions constant id'>Solutions</span> <span class='eqq op'>===</span> <span class='rubyid_body identifier id'>body</span>
-    <span class='comment val'># Don't calculate content-length here</span>
-  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_Array constant id'>Array</span> <span class='eqq op'>===</span> <span class='rubyid_body identifier id'>body</span> <span class='rubyid_and and kw'>and</span> <span class='rubyid_not not kw'>not</span> <span class='lbrack token'>[</span><span class='integer val'>204</span><span class='comma token'>,</span> <span class='integer val'>304</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_status identifier id'>status</span><span class='dot token'>.</span><span class='rubyid_to_i identifier id'>to_i</span><span class='rparen token'>)</span>
-    <span class='rubyid_headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>&quot;Content-Length&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_body identifier id'>body</span><span class='dot token'>.</span><span class='rubyid_inject identifier id'>inject</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_l identifier id'>l</span><span class='comma token'>,</span> <span class='rubyid_p identifier id'>p</span><span class='bitor op'>|</span> <span class='rubyid_l identifier id'>l</span> <span class='plus op'>+</span> <span class='rubyid_Rack constant id'>Rack</span><span class='colon2 op'>::</span><span class='rubyid_Utils constant id'>Utils</span><span class='dot token'>.</span><span class='rubyid_bytesize identifier id'>bytesize</span><span class='lparen token'>(</span><span class='rubyid_p identifier id'>p</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
-  <span class='rubyid_end end kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_finish'>finish</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>/</span> <span class='int'>100</span> <span class='op'>==</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span> <span class='op'>===</span> <span class='id identifier rubyid_body'>body</span>
+    <span class='comment'># Don't calculate content-length here
+</span>  <span class='kw'>elsif</span> <span class='const'>Array</span> <span class='op'>===</span> <span class='id identifier rubyid_body'>body</span> <span class='kw'>and</span> <span class='kw'>not</span> <span class='lbracket'>[</span><span class='int'>204</span><span class='comma'>,</span> <span class='int'>304</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Length</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='comma'>,</span> <span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_l'>l</span> <span class='op'>+</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>end</span>
 
-  <span class='comment val'># Rack::Response#finish sometimes returns self as response body. We don't want that.</span>
-  <span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_super super kw'>super</span>
-  <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_body identifier id'>body</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_result identifier id'>result</span> <span class='eq op'>==</span> <span class='rubyid_self self kw'>self</span>
-  <span class='lbrack token'>[</span><span class='rubyid_status identifier id'>status</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='comma token'>,</span> <span class='rubyid_result identifier id'>result</span><span class='rbrack token'>]</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+  <span class='comment'># Rack::Response#finish sometimes returns self as response body. We don't want that.
+</span>  <span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_body'>body</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>==</span> <span class='kw'>self</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -215,9 +213,9 @@ all members of an array are strings</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Jul  5 18:09:14 2012 by
+  Generated on Fri Oct  5 16:18:02 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.1 (ruby-1.8.7).
+  0.8.2.1 (ruby-1.9.3).
 </div>
 
   </body>

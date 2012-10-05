@@ -98,7 +98,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/nquads.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/nquads.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -333,7 +333,11 @@
       
       
         
-        <div class='inline'><p>0.4.0</p></div>
+        <div class='inline'><ol>
+<li>
+<li>0</li>
+</li>
+</ol></div>
       
     </li>
   
@@ -350,12 +354,11 @@
 62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/nquads.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/nquads.rb', line 60</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse_context identifier id'>parse_context</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='rparen token'>)</span>
-  <span class='rubyid_parse_uri identifier id'>parse_uri</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_parse_node identifier id'>parse_node</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_parse_literal identifier id'>parse_literal</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_context'>parse_context</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parse_uri'>parse_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_parse_node'>parse_node</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_parse_literal'>parse_literal</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -413,7 +416,11 @@
       
       
         
-        <div class='inline'><p>0.4.0</p></div>
+        <div class='inline'><ol>
+<li>
+<li>0</li>
+</li>
+</ol></div>
       
     </li>
   
@@ -446,28 +453,27 @@
 88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-29170682010e/lib/rdf/nquads.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/nquads.rb', line 70</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_read_triple identifier id'>read_triple</span>
-  <span class='rubyid_loop identifier id'>loop</span> <span class='rubyid_do do kw'>do</span>
-    <span class='rubyid_readline identifier id'>readline</span><span class='dot token'>.</span><span class='rubyid_strip! fid id'>strip!</span> <span class='comment val'># EOFError thrown on end of input</span>
-    <span class='rubyid_line identifier id'>line</span> <span class='assign token'>=</span> <span class='rubyid_@line ivar id'>@line</span>    <span class='comment val'># for backtracking input in case of parse error</span>
-
-    <span class='rubyid_begin begin kw'>begin</span>
-      <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_blank? fid id'>blank?</span> <span class='orop op'>||</span> <span class='rubyid_read_comment identifier id'>read_comment</span>
-        <span class='rubyid_subject identifier id'>subject</span>   <span class='assign token'>=</span> <span class='rubyid_read_uriref identifier id'>read_uriref</span> <span class='orop op'>||</span> <span class='rubyid_read_node identifier id'>read_node</span> <span class='orop op'>||</span> <span class='rubyid_fail_subject identifier id'>fail_subject</span>
-        <span class='rubyid_predicate identifier id'>predicate</span> <span class='assign token'>=</span> <span class='rubyid_read_uriref identifier id'>read_uriref</span><span class='lparen token'>(</span><span class='symbol val'>:intern</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_fail_predicate identifier id'>fail_predicate</span>
-        <span class='rubyid_object identifier id'>object</span>    <span class='assign token'>=</span> <span class='rubyid_read_uriref identifier id'>read_uriref</span> <span class='orop op'>||</span> <span class='rubyid_read_node identifier id'>read_node</span> <span class='orop op'>||</span> <span class='rubyid_read_literal identifier id'>read_literal</span> <span class='orop op'>||</span> <span class='rubyid_fail_object identifier id'>fail_object</span>
-        <span class='rubyid_context identifier id'>context</span>    <span class='assign token'>=</span> <span class='rubyid_read_uriref identifier id'>read_uriref</span> <span class='orop op'>||</span> <span class='rubyid_read_node identifier id'>read_node</span> <span class='orop op'>||</span> <span class='rubyid_read_literal identifier id'>read_literal</span>
-        <span class='rubyid_return return kw'>return</span> <span class='lbrack token'>[</span><span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_predicate identifier id'>predicate</span><span class='comma token'>,</span> <span class='rubyid_object identifier id'>object</span><span class='comma token'>,</span> <span class='lbrace token'>{</span><span class='symbol val'>:context</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_context identifier id'>context</span><span class='rbrace token'>}</span><span class='rbrack token'>]</span>
-      <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_rescue rescue kw'>rescue</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_ReaderError constant id'>ReaderError</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_e identifier id'>e</span>
-      <span class='rubyid_@line ivar id'>@line</span> <span class='assign token'>=</span> <span class='rubyid_line identifier id'>line</span>  <span class='comment val'># this allows #read_value to work</span>
-      <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_e identifier id'>e</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_read_triple'>read_triple</span>
+  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_readline'>readline</span><span class='period'>.</span><span class='id identifier rubyid_strip!'>strip!</span> <span class='comment'># EOFError thrown on end of input
+</span>    <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='ivar'>@line</span>    <span class='comment'># for backtracking input in case of parse error
+</span>
+    <span class='kw'>begin</span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_read_comment'>read_comment</span>
+        <span class='id identifier rubyid_subject'>subject</span>   <span class='op'>=</span> <span class='id identifier rubyid_read_uriref'>read_uriref</span> <span class='op'>||</span> <span class='id identifier rubyid_read_node'>read_node</span> <span class='op'>||</span> <span class='id identifier rubyid_fail_subject'>fail_subject</span>
+        <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='id identifier rubyid_read_uriref'>read_uriref</span><span class='lparen'>(</span><span class='symbol'>:intern</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_fail_predicate'>fail_predicate</span>
+        <span class='id identifier rubyid_object'>object</span>    <span class='op'>=</span> <span class='id identifier rubyid_read_uriref'>read_uriref</span> <span class='op'>||</span> <span class='id identifier rubyid_read_node'>read_node</span> <span class='op'>||</span> <span class='id identifier rubyid_read_literal'>read_literal</span> <span class='op'>||</span> <span class='id identifier rubyid_fail_object'>fail_object</span>
+        <span class='id identifier rubyid_context'>context</span>    <span class='op'>=</span> <span class='id identifier rubyid_read_uriref'>read_uriref</span> <span class='op'>||</span> <span class='id identifier rubyid_read_node'>read_node</span> <span class='op'>||</span> <span class='id identifier rubyid_read_literal'>read_literal</span>
+        <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='symbol'>:context</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_context'>context</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>rescue</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>ReaderError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='ivar'>@line</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span>  <span class='comment'># this allows #read_value to work
+</span>      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -478,9 +484,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Jul  5 18:08:20 2012 by
+  Generated on Fri Oct  5 16:17:47 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.1 (ruby-1.8.7).
+  0.8.2.1 (ruby-1.9.3).
 </div>
 
   </body>

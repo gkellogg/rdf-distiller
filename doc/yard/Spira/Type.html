@@ -94,38 +94,31 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Spira::Type can be included by classes to create new property types for
-Spira.  These types are responsible for serialization a Ruby value into an
-<code>RDF::Value</code>, and deserialization of an <code>RDF::Value</code> into a Ruby value.</p>
+    <p>Spira::Type can be included by classes to create new property types for Spira. These types are responsible for serialization a Ruby value into an <code>RDF::Value</code>, and deserialization of an <code>RDF::Value</code> into a Ruby value.</p>
 
 <p>A simple example:</p>
 
-<pre class="code ruby"><code><span class='rubyid_class class kw'>class</span> <span class='rubyid_Integer constant id'>Integer</span>
+<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>Integer</span>
+  
+  <span class='id identifier rubyid_include'>include</span> <span class='const'>Spira</span><span class='op'>::</span><span class='const'>Type</span>
+  
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_unserialize'>unserialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span>
+  <span class='kw'>end</span>
+  
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_serialize'>serialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+    <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='id identifier rubyid_register_alias'>register_alias</span> <span class='const'>XSD</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span>
+<span class='kw'>end</span></code></pre>
 
-  <span class='rubyid_include identifier id'>include</span> <span class='rubyid_Spira constant id'>Spira</span><span class='colon2 op'>::</span><span class='rubyid_Type constant id'>Type</span>
+<p>This example will serialize and deserialize integers. It&#8217;s included with Spira by default. It allows either of the following forms to declare an integer property on a Spira resource:</p>
 
-  <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_unserialize identifier id'>unserialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_object identifier id'>object</span>
-  <span class='rubyid_end end kw'>end</span>
+<pre class="code ruby"><code><span class='id identifier rubyid_property'>property</span> <span class='symbol'>:age</span><span class='comma'>,</span> <span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='const'>FOAF</span><span class='period'>.</span><span class='id identifier rubyid_age'>age</span><span class='comma'>,</span> <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='const'>Integer</span>
+<span class='id identifier rubyid_property'>property</span> <span class='symbol'>:age</span><span class='comma'>,</span> <span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='const'>FOAF</span><span class='period'>.</span><span class='id identifier rubyid_age'>age</span><span class='comma'>,</span> <span class='symbol'>:type</span> <span class='op'>=&gt;</span> <span class='const'>XSD</span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span></code></pre>
 
-  <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_serialize identifier id'>serialize</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-    <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-
-  <span class='rubyid_register_alias identifier id'>register_alias</span> <span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_integer identifier id'>integer</span>
-<span class='rubyid_end end kw'>end</span>
-</code></pre>
-
-<p>This example will serialize and deserialize integers.  It's included with
-Spira by default.  It allows either of the following forms to declare an
-integer property on a Spira resource:</p>
-
-<pre class="code ruby"><code><span class='rubyid_property identifier id'>property</span> <span class='symbol val'>:age</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_age identifier id'>age</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_Integer constant id'>Integer</span>
-<span class='rubyid_property identifier id'>property</span> <span class='symbol val'>:age</span><span class='comma token'>,</span> <span class='symbol val'>:predicate</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_age identifier id'>age</span><span class='comma token'>,</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_XSD constant id'>XSD</span><span class='dot token'>.</span><span class='rubyid_integer identifier id'>integer</span>
-</code></pre>
-
-<p><code>Spira::Type</code>s include the RDF namespace and thus have all of the base RDF
-vocabularies available to them without the <code>RDF::</code> prefix.</p>
+<p><code>Spira::Type</code>s include the RDF namespace and thus have all of the base RDF vocabularies available to them without the <code>RDF::</code> prefix.</p>
 
   </div>
 </div>
@@ -183,9 +176,9 @@ vocabularies available to them without the <code>RDF::</code> prefix.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Jul  5 18:07:18 2012 by
+  Generated on Fri Oct  5 16:17:29 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.1 (ruby-1.8.7).
+  0.8.2.1 (ruby-1.9.3).
 </div>
 
   </body>
