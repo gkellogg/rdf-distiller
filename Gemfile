@@ -26,6 +26,7 @@ group :development, :test do
   gem 'shotgun'
   gem "wirble"
   gem "syntax"
+  gem "redcarpet"
   gem "rake"
   gem "yard",  :git => "git://github.com/lsegal/yard.git"
 end
