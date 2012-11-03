@@ -94,7 +94,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Classes that include this module must implement the methods <code>#insert_statement</code>.</p>
+    <p>Classes that include this module must implement the methods
+<code>#insert_statement</code>.</p>
+
 
   </div>
 </div>
@@ -142,7 +144,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts RDF data into <code>self</code>.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts RDF data into <code>self</code>.</p>
+</div></span>
   
 </li>
 
@@ -166,7 +169,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts RDF statements into <code>self</code>.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts RDF statements into <code>self</code>.</p>
+</div></span>
   
 </li>
 
@@ -188,7 +192,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts the given RDF graph into the underlying storage or output stream.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts the given RDF graph into the underlying storage or output
+stream.</p>
+</div></span>
   
 </li>
 
@@ -210,7 +216,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts statements from the given RDF reader into the underlying storage or output stream.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts statements from the given RDF reader into the underlying
+storage or output stream.</p>
+</div></span>
   
 </li>
 
@@ -232,7 +240,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts an RDF statement into the underlying storage or output stream.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts an RDF statement into the underlying storage or output stream.</p>
+</div></span>
   
 </li>
 
@@ -254,7 +263,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Inserts the given RDF statements into the underlying storage or output stream.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Inserts the given RDF statements into the underlying storage or output
+stream.</p>
+</div></span>
   
 </li>
 
@@ -276,7 +287,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> is writable.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if <code>self</code> is writable.</p>
+</div></span>
   
 </li>
 
@@ -314,6 +326,7 @@
   <div class="discussion">
     <p>Inserts RDF data into <code>self</code>.</p>
 
+
   </div>
 </div>
 <div class="tags">
@@ -344,7 +357,8 @@
       
       
         &mdash;
-        <div class='inline'><p><code>self</code></p></div>
+        <div class='inline'><p><code>self</code></p>
+</div>
       
     </li>
   
@@ -380,26 +394,27 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-  <span class='kw'>case</span> <span class='id identifier rubyid_data'>data</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Reader</span>
-      <span class='id identifier rubyid_insert_reader'>insert_reader</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span>
-      <span class='id identifier rubyid_insert_graph'>insert_graph</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Enumerable</span>
-      <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Statement</span>
-      <span class='id identifier rubyid_insert_statement'>insert_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
-    <span class='kw'>else</span> <span class='kw'>case</span>
-      <span class='kw'>when</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_rdf</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span><span class='lparen'>(</span><span class='id identifier rubyid_rdf'>rdf</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_to_rdf'>to_rdf</span><span class='rparen'>)</span>
-        <span class='kw'>self</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rdf'>rdf</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_insert_statement'>insert_statement</span><span class='lparen'>(</span><span class='const'>Statement</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+<span class='rubyid_def def kw'>def</span> <span class='lshft op'>&lt;&lt;</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_data identifier id'>data</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Reader constant id'>Reader</span>
+      <span class='rubyid_insert_reader identifier id'>insert_reader</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span>
+      <span class='rubyid_insert_graph identifier id'>insert_graph</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Enumerable constant id'>Enumerable</span>
+      <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Statement constant id'>Statement</span>
+      <span class='rubyid_insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span> <span class='rubyid_case case kw'>case</span>
+      <span class='rubyid_when when kw'>when</span> <span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:to_rdf</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_equal? fid id'>equal?</span><span class='lparen token'>(</span><span class='rubyid_rdf identifier id'>rdf</span> <span class='assign token'>=</span> <span class='rubyid_data identifier id'>data</span><span class='dot token'>.</span><span class='rubyid_to_rdf identifier id'>to_rdf</span><span class='rparen token'>)</span>
+        <span class='rubyid_self self kw'>self</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_rdf identifier id'>rdf</span>
+      <span class='rubyid_else else kw'>else</span>
+        <span class='rubyid_insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_from identifier id'>from</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 
-  <span class='kw'>return</span> <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -421,6 +436,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>Inserts RDF statements into <code>self</code>.</p>
+
 
   </div>
 </div>
@@ -452,7 +468,8 @@
       
       
         &mdash;
-        <div class='inline'><p><code>self</code></p></div>
+        <div class='inline'><p><code>self</code></p>
+</div>
       
     </li>
   
@@ -485,23 +502,24 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 51</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-    <span class='kw'>case</span>
-      <span class='kw'>when</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-        <span class='kw'>nil</span>
-      <span class='kw'>when</span> <span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='const'>Statement</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
-        <span class='id identifier rubyid_statement'>statement</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>not a valid statement: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_compact!'>compact!</span>
-  <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert identifier id'>insert</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span>
+  <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_map! fid id'>map!</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
+    <span class='rubyid_case case kw'>case</span>
+      <span class='rubyid_when when kw'>when</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:each_statement</span><span class='rparen token'>)</span>
+        <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+        <span class='rubyid_nil nil kw'>nil</span>
+      <span class='rubyid_when when kw'>when</span> <span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span> <span class='assign token'>=</span> <span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_from identifier id'>from</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_valid? fid id'>valid?</span>
+        <span class='rubyid_statement identifier id'>statement</span>
+      <span class='rubyid_else else kw'>else</span>
+        <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;not a valid statement: #{value.inspect}&quot;</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_compact! fid id'>compact!</span>
+  <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
 
-  <span class='kw'>return</span> <span class='kw'>self</span>
-<span class='kw'>end</span></pre>
+  <span class='rubyid_return return kw'>return</span> <span class='rubyid_self self kw'>self</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -518,13 +536,20 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts the given RDF graph into the underlying storage or output stream.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts the given RDF graph into the underlying storage or output
+stream.</p>
 
-<p>Defaults to passing the graph to the method.</p>
+<p>Defaults to passing the graph to the <span class='object_link'><a href="#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span> method.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method in case their underlying storage architecture is graph-centric rather than statement-oriented.</p>
+<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method in
+case their underlying storage architecture is graph-centric rather
+than statement-oriented.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span> may wish to override this method if the output format they implement supports named graphs, in which case implementing this method may help in producing prettier and more concise output.</p>
+<p>Subclasses of <span class='object_link'><a href="Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span> may wish to override this method if the
+output format they implement supports named graphs, in which case
+implementing this method may help in producing prettier and more
+concise output.</p>
+
 
   </div>
 </div>
@@ -559,9 +584,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 107</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert_graph'>insert_graph</span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_graph identifier id'>insert_graph</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span>
+  <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_graph identifier id'>graph</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -578,11 +604,16 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts statements from the given RDF reader into the underlying storage or output stream.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts statements from the given RDF reader into the underlying
+storage or output stream.</p>
 
-<p>Defaults to passing the reader to the method.</p>
+<p>Defaults to passing the reader to the <span class='object_link'><a href="#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span> method.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method in case their underlying storage can efficiently import RDF data directly in particular serialization formats, thus avoiding the intermediate parsing overhead.</p>
+<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method in
+case their underlying storage can efficiently import RDF data directly
+in particular serialization formats, thus avoiding the intermediate
+parsing overhead.</p>
+
 
   </div>
 </div>
@@ -612,11 +643,8 @@
       
       
         
-        <div class='inline'><ol>
-<li>
-<li>3</li>
-</li>
-</ol></div>
+        <div class='inline'><p>0.2.3</p>
+</div>
       
     </li>
   
@@ -635,9 +663,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 86</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert_reader'>insert_reader</span><span class='lparen'>(</span><span class='id identifier rubyid_reader'>reader</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_reader'>reader</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_reader identifier id'>insert_reader</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='rparen token'>)</span>
+  <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_reader identifier id'>reader</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -660,9 +689,11 @@
 </div>
 <p class="note returns_void">This method returns an undefined value.</p><p>Inserts an RDF statement into the underlying storage or output stream.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> must implement this method, except if they are immutable.</p>
+<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> must implement this method, except if
+they are immutable.</p>
 
 <p>Subclasses of <span class='object_link'><a href="Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span> must implement this method.</p>
+
 
   </div>
 </div>
@@ -710,9 +741,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 145</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert_statement'>insert_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbrace'>}</span><span class='tstring_content'>#insert_statement</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_NotImplementedError constant id'>NotImplementedError</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{self.class}#insert_statement&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -729,13 +761,18 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts the given RDF statements into the underlying storage or output stream.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Inserts the given RDF statements into the underlying storage or output
+stream.</p>
 
-<p>Defaults to invoking for each given statement.</p>
+<p>Defaults to invoking <span class='object_link'><a href="#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span> for each given statement.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method if they are capable of more efficiently inserting multiple statements at once.</p>
+<p>Subclasses of <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span> may wish to override this method if
+they are capable of more efficiently inserting multiple statements at
+once.</p>
 
-<p>Subclasses of <span class='object_link'><a href="Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span> don&#8217;t generally need to implement this method.</p>
+<p>Subclasses of <span class='object_link'><a href="Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span> don&#39;t generally need to implement this
+method.</p>
+
 
   </div>
 </div>
@@ -765,11 +802,8 @@
       
       
         
-        <div class='inline'><ol>
-<li>
-<li>6</li>
-</li>
-</ol></div>
+        <div class='inline'><p>0.1.6</p>
+</div>
       
     </li>
   
@@ -791,12 +825,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 127</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_insert_statements'>insert_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_each'>each</span> <span class='op'>=</span> <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:each_statement</span> <span class='op'>:</span> <span class='symbol'>:each</span>
-  <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='id identifier rubyid_each'>each</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
-    <span class='id identifier rubyid_insert_statement'>insert_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_statements identifier id'>insert_statements</span><span class='lparen token'>(</span><span class='rubyid_statements identifier id'>statements</span><span class='rparen token'>)</span>
+  <span class='rubyid_each identifier id'>each</span> <span class='assign token'>=</span> <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:each_statement</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='symbol val'>:each_statement</span> <span class='colon op'>:</span> <span class='symbol val'>:each</span>
+  <span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid___send__ identifier id'>__send__</span><span class='lparen token'>(</span><span class='rubyid_each identifier id'>each</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_insert_statement identifier id'>insert_statement</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -815,6 +850,7 @@
   <div class="discussion">
     <p>Returns <code>true</code> if <code>self</code> is writable.</p>
 
+
   </div>
 </div>
 <div class="tags">
@@ -830,7 +866,8 @@
       
       
         &mdash;
-        <div class='inline'><p><code>true</code> or <code>false</code></p></div>
+        <div class='inline'><p><code>true</code> or <code>false</code></p>
+</div>
       
     </li>
   
@@ -856,9 +893,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-0696b96aac0d/lib/rdf/mixin/writable.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_writable?'>writable?</span>
-  <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_writable? fid id'>writable?</span>
+  <span class='rubyid_true true kw'>true</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -869,9 +907,9 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct  5 16:17:32 2012 by
+  Generated on Fri Nov  2 19:03:37 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.3 (ruby-1.8.7).
 </div>
 
   </body>

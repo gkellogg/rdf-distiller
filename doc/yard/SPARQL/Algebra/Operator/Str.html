@@ -111,6 +111,7 @@
   <div class="discussion">
     <p>The SPARQL <code>str</code> operator.</p>
 
+
   </div>
 </div>
 <div class="tags">
@@ -119,11 +120,12 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code">(prefix ((xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;)
-         (: &lt;http://example.org/things#&gt;))
-  (project (?x ?v)
-    (filter (= (str ?v) &quot;1&quot;)
-      (bgp (triple ?x :p ?v)))))</pre>
+      <pre class="example code"><span class='lparen token'>(</span><span class='rubyid_prefix identifier id'>prefix</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='rubyid_xsd identifier id'>xsd</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='rubyid_http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/www.w3.org/</span><span class='integer val'>2001</span><span class='div op'>/</span><span class='rubyid_XMLSchema constant id'>XMLSchema</span><span class='comment val'>#&gt;)</span>
+         <span class='lparen token'>(</span><span class='colon op'>:</span> <span class='lt op'>&lt;</span><span class='rubyid_http identifier id'>http</span><span class='symbol val'>:/</span><span class='regexp val'>/example.org/</span><span class='rubyid_things identifier id'>things</span><span class='comment val'>#&gt;))</span>
+  <span class='lparen token'>(</span><span class='rubyid_project identifier id'>project</span> <span class='lparen token'>(</span><span class='integer val'>?x</span> <span class='question op'>?</span><span class='rubyid_v identifier id'>v</span><span class='rparen token'>)</span>
+    <span class='lparen token'>(</span><span class='rubyid_filter identifier id'>filter</span> <span class='lparen token'>(</span><span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_str identifier id'>str</span> <span class='question op'>?</span><span class='rubyid_v identifier id'>v</span><span class='rparen token'>)</span> <span class='string val'>&quot;1&quot;</span><span class='rparen token'>)</span>
+      <span class='lparen token'>(</span><span class='rubyid_bgp identifier id'>bgp</span> <span class='lparen token'>(</span><span class='rubyid_triple identifier id'>triple</span> <span class='question op'>?</span><span class='rubyid_x identifier id'>x</span> <span class='symbol val'>:p</span> <span class='question op'>?</span><span class='rubyid_v identifier id'>v</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
     
   </div>
 
@@ -143,7 +145,8 @@
         <dt id="NAME-constant" class="">NAME =
           
         </dt>
-        <dd><pre class="code"><span class='symbol'>:str</span></pre></dd>
+        <dd><pre class="code"><span class='symbol val'>:str</span>
+</pre></dd>
       
     </dl>
   
@@ -196,7 +199,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the string form of the operand.</p></div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the string form of the operand.</p>
+</div></span>
   
 </li>
 
@@ -273,6 +277,7 @@
   <div class="discussion">
     <p>Returns the string form of the operand.</p>
 
+
   </div>
 </div>
 <div class="tags">
@@ -289,7 +294,8 @@
       
       
         &mdash;
-        <div class='inline'><p>a literal or IRI</p></div>
+        <div class='inline'><p>a literal or IRI</p>
+</div>
       
     </li>
   
@@ -306,7 +312,8 @@
       
       
         &mdash;
-        <div class='inline'><p>a simple literal</p></div>
+        <div class='inline'><p>a simple literal</p>
+</div>
       
     </li>
   
@@ -322,7 +329,8 @@
       
       
         &mdash;
-        <div class='inline'><p>if the operand is not a literal or IRI</p></div>
+        <div class='inline'><p>if the operand is not a literal or IRI</p>
+</div>
       
     </li>
   
@@ -345,13 +353,14 @@
     <td>
       <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-0ee7980cbe77/lib/sparql/algebra/operator/str.rb', line 26</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='rparen'>)</span>
-  <span class='kw'>case</span> <span class='id identifier rubyid_term'>term</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span> <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span>     <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-    <span class='kw'>else</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expected an RDF::Literal or RDF::URI, but got </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_apply identifier id'>apply</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='rubyid_term identifier id'>term</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='dot token'>.</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span>     <span class='rubyid_then then kw'>then</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Literal constant id'>Literal</span><span class='lparen token'>(</span><span class='rubyid_term identifier id'>term</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span> <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_TypeError constant id'>TypeError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;expected an RDF::Literal or RDF::URI, but got #{term.inspect}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
     </td>
   </tr>
 </table>
@@ -362,9 +371,9 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Oct  5 16:18:05 2012 by
+  Generated on Fri Nov  2 19:05:28 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.2.1 (ruby-1.9.3).
+  0.8.3 (ruby-1.8.7).
 </div>
 
   </body>
