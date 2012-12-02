@@ -15,6 +15,7 @@ module RDF::Distiller
     DOAP_NT = File.expand_path("../../../../etc/doap.nt", __FILE__)
     DOAP_JSON = File.expand_path("../../../../etc/doap.jsonld", __FILE__)
 
+    set :public_folder, File.expand_path("../../../../public", __FILE__)
     mime_type "sse", "application/sse+sparql-query"
     before do
       puts "[#{request.path_info}], #{params.inspect}, #{format}, #{request.accept.inspect}"
