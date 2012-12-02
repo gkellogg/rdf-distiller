@@ -6,7 +6,7 @@ Ruby-based RDF Distiller and SPARQL servce.
 RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
 
 ## FEATURES
-Distills between formats supported in [Linked Data][linkeddata].
+Distills between formats supported in [Linked Data][].
 
 * Includes [N-Triples][] support using [RDF.rb][].
 * Includes [N-Quads][] support using [RDF.rb][].
@@ -23,21 +23,21 @@ Distills between formats supported in [Linked Data][linkeddata].
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 
 ## Dependencies
-* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.5)
+* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.11)
 * [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.5)
 * [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 0.3.1)
 * [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
-* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.5.2)
+* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.5.5)
 * [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.0)
-* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.2.3)
+* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.3.0)
 * [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.6)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.10)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.6)
-* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 0.1.1)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.17)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.9)
+* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 0.1.4)
 * [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.0)
-* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.1.1)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.1.1)
-* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.1.1)
+* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.3.2)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.3.1)
+* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.3.1)
 
 ## Documentation
 ### Core libraries
@@ -53,7 +53,7 @@ Distills between formats supported in [Linked Data][linkeddata].
   * {JSON::LD}
 
 ### Rollup libraries
-* {LinkedData Linked Data}
+* [Linked Data][LinkedData]
   * {Rack::SPARQL Linked Data for Rack}
   * {Sinatra::SPARQL Linked Data for Sinatra}
 
@@ -85,8 +85,8 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 ## FEEDBACK
 
 * gregg@kellogg-assoc.com
-* <http://rubygems.org/rdf-portal>
-* <http://github.com/gkellogg/rdf-portal>
+* <http://rubygems.org/rdf-distiller>
+* <http://github.com/gkellogg/rdf-distiller>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
 [RDF.rb]:         http://ruby-rdf.github.com/rdf
@@ -101,11 +101,12 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [JSON::LD]:       http://rdoc.info/github/gkellogg/json-ld/master/frames
 [SPARQL gem]:     http://rdoc.info/github/gkellogg/sparql/master/frames
 [JSON-LD]:        http://json-ld.org/
-[linkeddata]:     {file:readmes/linkeddata}
 [Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
 [N-Quads]:        http://en.wikipedia.org/wiki/N-Quads
 [Notation3]:      http://en.wikipedia.org/wiki/Notation3
+[LinkedData]:     http://ruby-rdf.github.com/linkeddata
+[Linked Data]:    http://en.wikipedia.org/wiki/LinkedData
 [RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification
 [RDF/XML]:        http://www.w3.org/TR/rdf-syntax-grammar/
 [RDFa]:           http://en.wikipedia.org/wiki/RDFa
