@@ -98,7 +98,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -140,6 +140,31 @@ entirety of the following API must be implemented.</p>
 </ul>
 
 </div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="OPEN_OPTS-constant" class="">OPEN_OPTS =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Options used for open_file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span>
+  <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='dstring node'>%w(Accept: application/ld+json, application/json)</span>
+<span class='rbrace token'>}</span>
+</pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -504,7 +529,7 @@ entirety of the following API must be implemented.</p>
         <span class='name'>context</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt></tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt></tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="EvaluationContext.html" title="JSON::LD::EvaluationContext (class)">JSON::LD::EvaluationContext</a></span></tt>)</span>
       
       
       
@@ -671,10 +696,6 @@ entirety of the following API must be implemented.</p>
       <pre class="lines">
 
 
-53
-54
-55
-56
 57
 58
 59
@@ -690,10 +711,15 @@ entirety of the following API must be implemented.</p>
 69
 70
 71
-72</pre>
+72
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 57</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:compactArrays</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -702,10 +728,11 @@ entirety of the following API must be implemented.</p>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_IO constant id'>IO</span><span class='comma token'>,</span> <span class='rubyid_StringIO constant id'>StringIO</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_String constant id'>String</span>
     <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
-    <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Util constant id'>Util</span><span class='colon2 op'>::</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:base</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_input identifier id'>input</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_@options ivar id'>@options</span><span class='rparen token'>)</span>
+    <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Util constant id'>Util</span><span class='colon2 op'>::</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_OPEN_OPTS constant id'>OPEN_OPTS</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
     <span class='rubyid_content identifier id'>content</span>
   <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_@context ivar id'>@context</span> <span class='assign token'>=</span> <span class='rubyid_EvaluationContext constant id'>EvaluationContext</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='rubyid_@context ivar id'>@context</span> <span class='assign token'>=</span> <span class='rubyid_EvaluationContext constant id'>EvaluationContext</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_@options ivar id'>@options</span><span class='rparen token'>)</span>
   <span class='rubyid_@context ivar id'>@context</span> <span class='assign token'>=</span> <span class='rubyid_@context ivar id'>@context</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_context identifier id'>context</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_context identifier id'>context</span>
   
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
@@ -753,12 +780,12 @@ entirety of the following API must be implemented.</p>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 32</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_context identifier id'>context</span>
   <span class='rubyid_@context ivar id'>@context</span>
@@ -796,12 +823,12 @@ entirety of the following API must be implemented.</p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 31</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_value identifier id'>value</span>
   <span class='rubyid_@value ivar id'>@value</span>
@@ -866,7 +893,7 @@ returned if there are no errors. If the compaction fails, an appropirate excepti
         <span class='name'>context</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="EvaluationContext.html" title="JSON::LD::EvaluationContext (class)">JSON::LD::EvaluationContext</a></span></tt>)</span>
       
       
       
@@ -994,11 +1021,6 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
       <pre class="lines">
 
 
-140
-141
-142
-143
-144
 145
 146
 147
@@ -1019,10 +1041,15 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
 162
 163
 164
-165</pre>
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 145</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_expanded identifier id'>expanded</span> <span class='assign token'>=</span> <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
@@ -1101,7 +1128,7 @@ if there are no errors. If the expansion fails, an appropriate exception must be
         <span class='name'>context</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="EvaluationContext.html" title="JSON::LD::EvaluationContext (class)">JSON::LD::EvaluationContext</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -1230,11 +1257,6 @@ Alternative to using block, with same parameters.</p>
       <pre class="lines">
 
 
-97
-98
-99
-100
-101
 102
 103
 104
@@ -1245,10 +1267,15 @@ Alternative to using block, with same parameters.</p>
 109
 110
 111
-112</pre>
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 102</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
@@ -1331,7 +1358,7 @@ Alternative to using block, with same parameters.</p>
         <span class='name'>context</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="EvaluationContext.html" title="JSON::LD::EvaluationContext (class)">JSON::LD::EvaluationContext</a></span></tt>)</span>
       
       
       
@@ -1459,11 +1486,6 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
 197
 198
 199
@@ -1495,10 +1517,15 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
 225
 226
 227
-228</pre>
+228
+229
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 197</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_graph identifier id'>graph</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
@@ -1780,11 +1807,6 @@ input should be omitted from the output.</p>
       <pre class="lines">
 
 
-264
-265
-266
-267
-268
 269
 270
 271
@@ -1847,10 +1869,15 @@ input should be omitted from the output.</p>
 328
 329
 330
-331</pre>
+331
+332
+333
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 269</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_frame identifier id'>frame</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_frame identifier id'>frame</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_result identifier id'>result</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
@@ -1871,7 +1898,7 @@ input should be omitted from the output.</p>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_IO constant id'>IO</span><span class='comma token'>,</span> <span class='rubyid_StringIO constant id'>StringIO</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_frame identifier id'>frame</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span>
   <span class='rubyid_when when kw'>when</span> <span class='rubyid_String constant id'>String</span>
     <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
-    <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Util constant id'>Util</span><span class='colon2 op'>::</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_frame identifier id'>frame</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+    <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Util constant id'>Util</span><span class='colon2 op'>::</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open_file identifier id'>open_file</span><span class='lparen token'>(</span><span class='rubyid_frame identifier id'>frame</span><span class='comma token'>,</span> <span class='rubyid_OPEN_OPTS constant id'>OPEN_OPTS</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span> <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
     <span class='rubyid_content identifier id'>content</span>
   <span class='rubyid_end end kw'>end</span>
 
@@ -2058,21 +2085,21 @@ Alternative to using block, with same parameteres.</p>
       <pre class="lines">
 
 
-382
-383
-384
-385
-386
 387
 388
 389
 390
 391
 392
-393</pre>
+393
+394
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 382</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 387</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_fromRDF identifier id'>fromRDF</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:useNativeTypes</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
@@ -2134,7 +2161,7 @@ Alternative to using block, with same parameteres.</p>
         <span class='name'>context</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>, <tt>#read</tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>, <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="EvaluationContext.html" title="JSON::LD::EvaluationContext (class)">JSON::LD::EvaluationContext</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -2236,11 +2263,6 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
       <pre class="lines">
 
 
-350
-351
-352
-353
-354
 355
 356
 357
@@ -2249,10 +2271,15 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
 360
 361
 362
-363</pre>
+363
+364
+365
+366
+367
+368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-f4f9c49ba28a/lib/json/ld/api.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/api.rb', line 355</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_toRDF identifier id'>toRDF</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_callback identifier id'>callback</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='comment val'># 1) Perform the Expansion Algorithm on the JSON-LD input.</span>
@@ -2279,7 +2306,7 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
 </div>
 
     <div id="footer">
-  Generated on Sun Dec  2 12:26:06 2012 by
+  Generated on Fri Dec  7 14:19:34 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.8.7).
 </div>
