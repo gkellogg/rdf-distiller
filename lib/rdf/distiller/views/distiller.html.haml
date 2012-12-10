@@ -1,0 +1,104 @@
+- require 'cgi'
+- params['fmt'] ||= :turtle
+%h1= title
+%p
+  RDF.rb is a <span property="doap:programming-language">Ruby</span> Gem
+  implementing RDF graphs, readers and writers to help integrate semantic technologies
+  into Ruby projects.
+%p
+  The distiller transforms data between different RDF formats.
+  The <a href="#distiller">form below</a> can be used to start the service installed at this site.
+%nav.distiller
+  %ul
+    %li
+      %a.url{:href => "#url"}
+        From URL
+    %li
+      %a.input{:href => "#input"}
+        From Form Input
+%form{:action => "/distiller", :method => :post, :enctype => "multipart/form-data"}
+  %fieldset.url.upload.input
+    %legend
+      Distill RDF Information
+    %fieldset.url.upload.input
+      %label{:for => :uri}
+        URI
+      %input#uri{:name => :uri, :size => 80, :type => :text, :value => params['uri']}
+    %fieldset.url.upload.input
+      %legend
+        Options
+      %p
+        %label{:for => :in_fmt}
+          Input Format:
+        %select#in_fmt{:name => :in_fmt}
+          %option{:value => :content, :selected => (:selected if params["in_fmt"].to_s == "content")}
+            Content Detect
+          - formats(:reader).map(&:to_s).sort.uniq.each do |sym|
+            %option{:value => sym, :selected => (:selected if params["in_fmt"].to_s == sym.to_s)}=sym
+        %label{:for => :fmt}
+          Output Format:
+        %select#in_fmt{:name => :fmt}
+          - formats(:writer).map(&:to_s).sort.uniq.each do |sym|
+            %option{:value => sym, :selected => (:selected if params["fmt"].to_s == sym.to_s)}=sym
+      %p
+        %label{:for => :debug}
+          Show Parser debug information:
+        %input#debug{:name => :debug, :type => :checkbox, :value => :true}
+        %br
+        %label{:for => :validate}
+          Validate Input:
+        %input#validate{:name => :strict, :type => :checkbox, :value => true}
+        %br
+        %label{:for => :vocab_expnsion}
+          Expand graph (RDFa only):
+        %input#vocab_expansion{:name => :vocab_expansion, :type => :checkbox, :value => true}
+        %br
+        %label{:for => :rdfagraph}
+          Output Graph (RDFa only):
+        %select#rdfagraph{:name => :rdfagraph}
+          - [:output, :processor, :"output,processor"].each do |sym|
+            %option{:value => sym, :selected => (:selected if params["rdfagraph"].to_s == sym.to_s)}=sym
+        %br
+        %label{:for => :raw}
+          Raw Output:
+        %input#raw{:name => :raw, :type => :checkbox, :value => true}
+    %fieldset.input
+      %legend
+        Markup
+      %textarea.input#content{:cols => 128, :name => :content, :rows => 15}= @content
+    %input{:name => :commit, :type => :submit, :value => "Submit"}
+
+- if @error
+  %div.errors
+    %h2
+      Errors
+    %pre= CGI.escapeHTML(@error)
+
+%div.results
+  - if @output
+    %h2
+      Result
+    %p
+    Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.
+    %textarea{:class => params["fmt"], :rows => 20, :cols => 128}= CGI.escapeHTML(@output)
+
+- if @debug
+  %div.debug
+    %h2
+      Parser Debug Information:
+    %textarea{:rows => 20, :cols => 120}= CGI.escapeHTML(@debug.join("\n"))
+
+%div
+  %h2
+    Alternative access to the Distiller
+  %p
+    The distiller URI may be used directly with an HTML GET by passing the source URI and other options as parameters:
+  %pre.alt_access
+    - url = url('/distiller')
+    - base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
+    - url_params = ["format=#{params["fmt"] || ttl}"]
+    - url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
+    - url_params << %(uri=#{base})
+    - url += "?#{url_params.join('&amp;')}" unless url_params.empty?
+    %a{:target => :_blank, :href => url}=url
+

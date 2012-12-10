@@ -36,6 +36,8 @@ Gem::Specification.new do |s|
   # Sinatra dependencies        
   s.add_runtime_dependency      'sinatra',            '>= 1.3.3'
   s.add_runtime_dependency      'erubis',             '>= 2.7.0'
+  s.add_runtime_dependency      'haml'
+  s.add_runtime_dependency      'maruku'
   s.add_runtime_dependency      "rack",               '>= 1.4.1'
   s.add_runtime_dependency      'sinatra-respond_to', '>= 0.8.0'
   s.add_runtime_dependency      'rack-cache'

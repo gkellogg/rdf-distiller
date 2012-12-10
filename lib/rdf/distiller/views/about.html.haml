@@ -1,0 +1,68 @@
+%section
+  %h1=title
+
+  :markdown
+    [RDF.rb](http://ruby-rdf.github.com/rdf) is a suite of Ruby Gems providing
+    classes that implement elements of the
+    [Resource Description Framework](http://www.w3.org/TR/rdf-concepts/) in Ruby.
+
+  %section.informative
+    :markdown
+
+      ## About RDF
+
+      Short for _R_esource _D_escription _F_ramework,
+      [RDF](http://en.wikipedia.org/wiki/RDF) is the language of the [Semantic
+      Web](http://en.wikipedia.org/wiki/Semantic_Web). It provides for a number
+      of machine-readable formats for expressing meta-data.
+
+      Developed under the guidance of the World Wide Web Consortium (W3C), RDF
+      was designed to create a machine-readable graph of information about
+      different entities called Resources.
+
+      Resources are defined by a
+      [URI](http://en.wikipedia.org/wiki/URI)(Universal Resource Identifier)
+      and are defined by a series of statements relating a *Subject* resource
+      using a *Predicate* to an *Object* resource or a literal, such as a
+      string or date.
+
+      RDF is based on the idea of making statements about resources in the form
+      of subject-predicate-object expressions, known as _Statement_s in RDF
+      terminology. *Subject*s represent resources, typically associated with a
+      URI. *Predicate*s are also represented as URIs, and refer to a particular
+      defined Ontology relative to a namespace. *Object*s are either other URI
+      resources or literals, such as strings or typed scalar data types such as
+      dates and durations.
+
+  %section>
+    :markdown
+      ## About the RDF.rb service
+
+      The service provides a means of manipulating RDF resources as a web
+      service using the [linkeddata](https://rubygems.org/gems/linkeddata) gem,
+      based on RDF.rb and related gems. The service includes Readers and
+      Writers for the following RDF serialization formats:
+
+    %dl
+      - RDF::Format.reject{|f| f.content_type.empty?}.each do |format|
+        %dt
+          = format.to_s.sub(/::Format$/, '') + "(#{format_version(format)})"
+        %dd
+          This format has a 
+          - if format.reader && format.writer
+            reader and a writer
+          - elsif format.reader
+            reader
+          - else
+            writer
+          for
+          = format.content_type.join(", ") + "."
+      %dt
+        SPARQL
+        = "(#{SPARQL::VERSION})"
+      %dd
+        SPARQL 1.0 Query
+
+    :markdown
+      The [distiller](/distiller) can be used to read existing web resources, or
+      data from an input form and generate the output in an alternative format.

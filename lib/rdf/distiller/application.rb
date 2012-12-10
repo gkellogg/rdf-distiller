@@ -22,13 +22,15 @@ module RDF::Distiller
     end
 
     get '/' do
-      cache_control :public, :must_revalidate, :max_age => 60
-      erb :index, :locals => {:title => "Ruby Linked Data Service"}
+      cache_control :public, :must_revalidate
+      result = erb :index, :locals => {:title => "Ruby Linked Data Service"}
+      etag result.hash
+      result
     end
 
     get '/about' do
       cache_control :public, :must_revalidate, :max_age => 60
-      erb :about, :locals => {:title => "About the Ruby Linked Data Service"}
+      haml :about, :locals => {:title => "About the Ruby Linked Data Service"}
     end
 
     get '/doap' do
@@ -96,10 +98,10 @@ module RDF::Distiller
 
       if params["fmt"].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
-        haml = DISTILLER_HAML.dup
+        haml_input = DISTILLER_HAML.dup
         root = request.url[0,request.url.index(request.path)]
-        haml[:doc] = haml[:doc].gsub(/--root--/, root)
-        writer_options[:haml] = haml
+        haml_input[:doc] = haml_input[:doc].gsub(/--root--/, root)
+        writer_options[:haml] = haml_input
         writer_options[:haml_options] = {:ugly => false}
       end
       settings.sparql_options.replace(writer_options)
@@ -116,7 +118,7 @@ module RDF::Distiller
         else
           content
         end
-        erb :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
+        haml :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
       end
     end
     
@@ -296,6 +298,15 @@ module RDF::Distiller
       @error = "#{$!.class}: #{$!.message}"
       puts @error  # to log
       nil
+    end
+    
+    private
+    def format_version(format)
+      if %w(RDF::NTriples::Format RDF::NQuads::Format).include?(format.to_s)
+        return RDF::VERSION
+      else
+        format.to_s.split('::')[0..-2].inject(Kernel) {|mod, name| mod.const_get(name)}.const_get('VERSION')
+      end
     end
   end
 end
