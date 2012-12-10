@@ -22,7 +22,7 @@ module RDF::Distiller
     end
 
     get '/' do
-      cache_control :public, :must_revalidate
+      cache_control :public, :must_revalidate, :max_age => 60
       result = erb :index, :locals => {:title => "Ruby Linked Data Service"}
       etag result.hash
       result

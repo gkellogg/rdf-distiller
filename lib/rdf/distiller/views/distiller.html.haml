@@ -43,15 +43,15 @@
       %p
         %label{:for => :debug}
           Show Parser debug information:
-        %input#debug{:name => :debug, :type => :checkbox, :value => :true}
+        %input#debug{:name => :debug, :type => :checkbox, :value => :true, :checked => params[:debug]}
         %br
         %label{:for => :validate}
           Validate Input:
-        %input#validate{:name => :strict, :type => :checkbox, :value => true}
+        %input#validate{:name => :validate, :type => :checkbox, :value => true, :checked => params[:validate]}
         %br
         %label{:for => :vocab_expnsion}
           Expand graph (RDFa only):
-        %input#vocab_expansion{:name => :vocab_expansion, :type => :checkbox, :value => true}
+        %input#vocab_expansion{:name => :vocab_expansion, :type => :checkbox, :value => true, :checked => params[:vocab_expansion]}
         %br
         %label{:for => :rdfagraph}
           Output Graph (RDFa only):
@@ -98,7 +98,10 @@
     - base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
     - url_params = ["format=#{params["fmt"] || ttl}"]
     - url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
+    - url_params << %(validate=true) if params[:validate]
+    - url_params << %(vocab_expansion=true) if params[:vocab_expansion]
+    - url_params << %(rdfagraph=#{params[:rdfagraph]}) if params[:rdfagraph].to_s != 'output'
     - url_params << %(uri=#{base})
-    - url += "?#{url_params.join('&amp;')}" unless url_params.empty?
-    %a{:target => :_blank, :href => url}=url
+    - url += "?#{url_params.join('&')}" unless url_params.empty?
+    %a{:target => :_blank, :href => url}&=url
 
