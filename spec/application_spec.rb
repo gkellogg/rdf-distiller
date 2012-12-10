@@ -2,6 +2,12 @@ $:.unshift "."
 require 'spec_helper'
 
 describe RDF::Distiller::Application do
+  before(:each) do
+    $debug_output = StringIO.new()
+    $logger = Logger.new($debug_output)
+    $logger.formatter = lambda {|severity, datetime, progname, msg| "#{msg}\n"}
+  end
+
   describe "/" do
     it "gets HTML" do
       get '/'

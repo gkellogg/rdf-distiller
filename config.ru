@@ -7,16 +7,17 @@ Bundler.setup
 
 require 'rack/cache'
 require 'rdf/distiller'
+require 'logger'
 
 set :environment, (ENV['RACK_ENV'] || 'production').to_sym
 
 if settings.environment == :production
   puts "Mode set to #{settings.environment.inspect}, logging to sinatra.log"
-  log = File.new('sinatra.log', 'a')
-  STDOUT.reopen(log)
-  STDERR.reopen(log)
+  $logger = Logger.new('sinatra.log', 10, 3600*24*7)
 else
   puts "Mode set to #{settings.environment.inspect}, logging to console"
+  $logger = Logger.new(STDOUT)
+  $logger.formatter = lambda {|severity, datetime, progname, msg| "#{msg}\n"}
 end
 
 use Rack::Cache,

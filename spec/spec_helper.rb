@@ -5,6 +5,7 @@ require 'rspec'
 require 'rack/test'
 require 'rdf/distiller'
 require 'matchers'
+require 'logger'
 
 set :environment, :test
 

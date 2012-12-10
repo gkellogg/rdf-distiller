@@ -3,6 +3,12 @@ require 'spec_helper'
 require 'linkeddata'
 
 describe RDF::Distiller::Application do
+  before(:each) do
+    $debug_output = StringIO.new()
+    $logger = Logger.new($debug_output)
+    $logger.formatter = lambda {|severity, datetime, progname, msg| "#{msg}\n"}
+  end
+
   describe "/sparql" do
     before(:all) {@doap = RDF::Repository.new << [RDF::URI("doap"), RDF.type, RDF::DOAP.to_uri]}
     before(:each) {RDF::Repository.stub!(:load).and_return(@doap)}
@@ -42,7 +48,7 @@ describe RDF::Distiller::Application do
           context content_types do
             it "returns serialization" do
               get '/sparql', {:query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o})}, {"HTTP_ACCEPT" => content_types}
-              puts last_response.inspect
+              $logger.debug last_response.inspect
               last_response.status.should == 200
               last_response.body.should match(expected)
               last_response.content_type.should == content_types
@@ -55,7 +61,7 @@ describe RDF::Distiller::Application do
     context "serializes solutions" do
       context "with format" do
         {
-          :json => /{\s*"head"/,
+          :json => /\s*"head"/,
           :html => /<table class="sparql"/,
           :xml => /<\?xml version/,
         }.each do |fmt, expected|
@@ -73,7 +79,7 @@ describe RDF::Distiller::Application do
 
       context "with Accept" do
         {
-          ::SPARQL::Results::MIME_TYPES[:json] => /{\s*"head"/,
+          ::SPARQL::Results::MIME_TYPES[:json] => /\s*"head"/,
           ::SPARQL::Results::MIME_TYPES[:html] => /<!DOCTYPE html/,
           ::SPARQL::Results::MIME_TYPES[:xml] => /<\?xml version/,
         }.each do |content_types, expected|
@@ -92,7 +98,7 @@ describe RDF::Distiller::Application do
     it "returns sse" do
       get '/sparql', :query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}), :fmt => "sse", :raw => true
       last_response.status.should == 200
-      last_response.body.should == %((construct ((triple ?s ?p ?o)) (bgp (triple ?s ?p ?o))))
+      last_response.body.should == %((construct\n ((triple ?s ?p ?o))\n (bgp (triple ?s ?p ?o))\n)\n)
       last_response.content_type.should include("application/sse+sparql-query")
     end
   end
