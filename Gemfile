@@ -5,6 +5,7 @@ gemspec :name => ""
 
 # Include non-released gems first
 gem 'rdf',              :git => "git://github.com/ruby-rdf/rdf.git"
+gem 'rdf-json',         :git => "git://github.com/ruby-rdf/rdf-json.git", :require => "rdf/json"
 gem 'rdf-microdata',    :git => "git://github.com/ruby-rdf/rdf-microdata.git", :require => "rdf/microdata"
 gem 'rdf-n3',           :git => "git://github.com/ruby-rdf/rdf-n3.git", :require => "rdf/n3"
 gem 'rdf-rdfa',         :git => "git://github.com/ruby-rdf/rdf-rdfa.git", :require => "rdf/rdfa"
@@ -29,4 +30,5 @@ group :development, :test do
   gem "redcarpet"
   gem "rake"
   gem "yard",  :git => "git://github.com/lsegal/yard.git"
+  gem "debugger" if RUBY_VERSION > "1.9"
 end
