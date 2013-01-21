@@ -91,12 +91,12 @@ module RDF::Distiller
         :prefixes => {},
         :base_uri => params["uri"],
       }
-      writer_options[:format] = params["fmt"] || "turtle"
+      writer_options[:format] = params["fmt"] || params["format"] || "turtle"
 
       content = parse(writer_options)
-      $logger.debug "distil content: #{content.class}, as type #{(params["fmt"] || format).inspect}"
+      $logger.debug "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}"
 
-      if params["fmt"].to_s == "rdfa"
+      if writer_options[:format].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
         haml_input = DISTILLER_HAML.dup
         root = request.url[0,request.url.index(request.path)]
@@ -113,7 +113,7 @@ module RDF::Distiller
         @output = case content
         when RDF::Enumerable
           # For HTML response, the "fmt" attribute may set the type of serialization
-          fmt = (params["fmt"] || "ttl").to_sym
+          fmt = (writer_options[:format] || "turtle").to_sym
           content.dump(fmt, writer_options)
         else
           content
@@ -140,6 +140,7 @@ module RDF::Distiller
 
       # Override output format if returning something that is raw, or if
       # the "fmt" argument is used and the output format isn't HTML
+      params["fmt"] ||= params["format"] if params.has_key?("format") # likely alias
       format :xml if format == :xsl # Problem with content detection
       format params["fmt"] if params["raw"] && params.has_key?("fmt")
       format params["fmt"] if params.has_key?("fmt") && format != :html

@@ -87,7 +87,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/expand.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/json-ld-3eb8b24c72e3/lib/json/ld/expand.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -140,6 +140,28 @@
 </li>
 
       
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#label_blanknodes-instance_method" title="#label_blanknodes (instance method)">- (Object) <strong>label_blanknodes</strong>(element) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -153,7 +175,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Utils.html" title="JSON::LD::Utils (module)">Utils</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Utils.html#blank_node%3F-instance_method" title="JSON::LD::Utils#blank_node? (method)">#blank_node?</a></span>, <span class='object_link'><a href="Utils.html#list%3F-instance_method" title="JSON::LD::Utils#list? (method)">#list?</a></span>, <span class='object_link'><a href="Utils.html#node%3F-instance_method" title="JSON::LD::Utils#node? (method)">#node?</a></span>, <span class='object_link'><a href="Utils.html#node_reference%3F-instance_method" title="JSON::LD::Utils#node_reference? (method)">#node_reference?</a></span>, <span class='object_link'><a href="Utils.html#value%3F-instance_method" title="JSON::LD::Utils#value? (method)">#value?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Utils.html#annotation%3F-instance_method" title="JSON::LD::Utils#annotation? (method)">#annotation?</a></span>, <span class='object_link'><a href="Utils.html#blank_node%3F-instance_method" title="JSON::LD::Utils#blank_node? (method)">#blank_node?</a></span>, <span class='object_link'><a href="Utils.html#list%3F-instance_method" title="JSON::LD::Utils#list? (method)">#list?</a></span>, <span class='object_link'><a href="Utils.html#node%3F-instance_method" title="JSON::LD::Utils#node? (method)">#node?</a></span>, <span class='object_link'><a href="Utils.html#node_reference%3F-instance_method" title="JSON::LD::Utils#node_reference? (method)">#node_reference?</a></span>, <span class='object_link'><a href="Utils.html#value%3F-instance_method" title="JSON::LD::Utils#value? (method)">#value?</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -422,10 +444,99 @@
 186
 187
 188
-189</pre>
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-91d0cbb19c66/lib/json/ld/expand.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-3eb8b24c72e3/lib/json/ld/expand.rb', line 15</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_active_property identifier id'>active_property</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expand&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;input: #{input.inspect}, active_property: #{active_property.inspect}, context: #{context.inspect}&quot;</span><span class='rbrace token'>}</span>
@@ -462,117 +573,194 @@
     <span class='rubyid_depth identifier id'>depth</span> <span class='rubyid_do do kw'>do</span>
       <span class='rubyid_output_object identifier id'>output_object</span> <span class='assign token'>=</span> <span class='rubyid_Hash constant id'>Hash</span><span class='dot token'>.</span><span class='rubyid_ordered identifier id'>ordered</span>
       <span class='comment val'># Then, proceed and process each property and value in element as follows:</span>
-      <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
-        <span class='comment val'># Remove property from element expand property according to the steps outlined in IRI Expansion</span>
-        <span class='rubyid_property identifier id'>property</span> <span class='assign token'>=</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:predicate</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span>
+      <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_kw_sort identifier id'>kw_sort</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_property identifier id'>property</span><span class='bitor op'>|</span>
+        <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_input identifier id'>input</span><span class='lbrack token'>[</span><span class='rubyid_property identifier id'>property</span><span class='rbrack token'>]</span>
+        <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='assign token'>=</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='comma token'>,</span> <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:predicate</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='rparen token'>)</span>
 
-        <span class='comment val'># Set active property to the original un-expanded property if property if not a keyword</span>
-        <span class='rubyid_active_property identifier id'>active_property</span> <span class='assign token'>=</span> <span class='rubyid_key identifier id'>key</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_key identifier id'>key</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'@'</span>
-        <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expand property&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;#{active_property.inspect}, expanded: #{property}, value: #{value.inspect}&quot;</span><span class='rbrace token'>}</span>
-      
-        <span class='comment val'># If property does not expand to a keyword or absolute IRI, remove property from element</span>
-        <span class='comment val'># and continue to the next property from element</span>
-        <span class='rubyid_if if kw'>if</span> <span class='rubyid_property identifier id'>property</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
-          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; &quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='string val'>&quot;skip nil key&quot;</span><span class='rbrace token'>}</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+          <span class='comment val'># If expanded property is an array, remove every element which is not a absolute IRI.</span>
+          <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='assign token'>=</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_p identifier id'>p</span><span class='bitor op'>|</span> <span class='rubyid_p identifier id'>p</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_p identifier id'>p</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_p identifier id'>p</span><span class='dot token'>.</span><span class='rubyid_uri? fid id'>uri?</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_p identifier id'>p</span><span class='dot token'>.</span><span class='rubyid_absolute? fid id'>absolute?</span> <span class='orop op'>||</span> <span class='rubyid_p identifier id'>p</span><span class='dot token'>.</span><span class='rubyid_node? fid id'>node?</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_compact identifier id'>compact</span>
+          <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+        <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Resource constant id'>Resource</span><span class='rparen token'>)</span>
+          <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='assign token'>=</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+        <span class='rubyid_end end kw'>end</span>
+
+        <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expand property&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;ap: #{active_property.inspect}, expanded: #{expanded_property.inspect}, value: #{value.inspect}&quot;</span><span class='rbrace token'>}</span>
+
+        <span class='comment val'># If expanded property is an empty array, or null, continue with the next property from element</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; &quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='string val'>&quot;skip nil property&quot;</span><span class='rbrace token'>}</span>
           <span class='rubyid_next next kw'>next</span>
         <span class='rubyid_end end kw'>end</span>
-        <span class='rubyid_property identifier id'>property</span> <span class='assign token'>=</span> <span class='rubyid_property identifier id'>property</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+        <span class='rubyid_expanded_property identifier id'>expanded_property</span>
 
-        <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_property identifier id'>property</span>
-        <span class='rubyid_when when kw'>when</span> <span class='string val'>'@id'</span>
-          <span class='comment val'># If the property is @id the value must be a string. Expand the value according to IRI Expansion.</span>
-          <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
-        <span class='rubyid_when when kw'>when</span> <span class='string val'>'@type'</span>
-          <span class='comment val'># Otherwise, if the property is @type the value must be a string, an array of strings</span>
-          <span class='comment val'># or an empty JSON Object.</span>
-          <span class='comment val'># Expand value or each of it's entries according to IRI Expansion</span>
-          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;@type&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;value: #{value.inspect}&quot;</span><span class='rbrace token'>}</span>
-          <span class='rubyid_case case kw'>case</span> <span class='rubyid_value identifier id'>value</span>
-          <span class='rubyid_when when kw'>when</span> <span class='rubyid_Array constant id'>Array</span>
-            <span class='rubyid_depth identifier id'>depth</span> <span class='rubyid_do do kw'>do</span>
-              <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span>
-                <span class='rubyid_v identifier id'>v</span> <span class='assign token'>=</span> <span class='rubyid_v identifier id'>v</span><span class='lbrack token'>[</span><span class='string val'>'@id'</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_node_reference? fid id'>node_reference?</span><span class='lparen token'>(</span><span class='rubyid_v identifier id'>v</span><span class='rparen token'>)</span>
-                <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Object value must be a string or a node reference: #{v.inspect}&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
-                <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_v identifier id'>v</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:property</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='string val'>'@'</span>
+          <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@id'</span>
+            <span class='comment val'># If expanded property is @id, value must be a string. Set the @id member in result to the result of expanding value according the IRI Expansion algorithm relative to the document base and re-labeling Blank Nodes.</span>
+            <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@type'</span>
+            <span class='comment val'># If expanded property is @type, value must be a string or array of strings. Set the @type member of result to the result of expanding value according the IRI Expansion algorithm relative to the document base and re-labeling Blank Nodes, unless that result is an empty array.</span>
+            <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;@type&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;value: #{value.inspect}&quot;</span><span class='rbrace token'>}</span>
+            <span class='rubyid_case case kw'>case</span> <span class='rubyid_value identifier id'>value</span>
+            <span class='rubyid_when when kw'>when</span> <span class='rubyid_Array constant id'>Array</span>
+              <span class='rubyid_depth identifier id'>depth</span> <span class='rubyid_do do kw'>do</span>
+                <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span>
+                  <span class='rubyid_v identifier id'>v</span> <span class='assign token'>=</span> <span class='rubyid_v identifier id'>v</span><span class='lbrack token'>[</span><span class='string val'>'@id'</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_node_reference? fid id'>node_reference?</span><span class='lparen token'>(</span><span class='rubyid_v identifier id'>v</span><span class='rparen token'>)</span>
+                  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Object value must be a string or a node reference: #{v.inspect}&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
+                  <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_v identifier id'>v</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+                <span class='rubyid_end end kw'>end</span>
               <span class='rubyid_end end kw'>end</span>
-            <span class='rubyid_end end kw'>end</span>
-          <span class='rubyid_when when kw'>when</span> <span class='rubyid_Hash constant id'>Hash</span>
-            <span class='comment val'># Empty object used for @type wildcard or node reference</span>
-            <span class='rubyid_if if kw'>if</span> <span class='rubyid_node_reference? fid id'>node_reference?</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
-              <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='lbrack token'>[</span><span class='string val'>'@id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:property</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
-            <span class='rubyid_elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
-              <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Object value of @type must be empty or a node reference: #{value.inspect}&quot;</span>
+            <span class='rubyid_when when kw'>when</span> <span class='rubyid_Hash constant id'>Hash</span>
+              <span class='comment val'># Empty object used for @type wildcard or node reference</span>
+              <span class='rubyid_if if kw'>if</span> <span class='rubyid_node_reference? fid id'>node_reference?</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
+                <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='lbrack token'>[</span><span class='string val'>'@id'</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:property</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+              <span class='rubyid_elsif elsif kw'>elsif</span> <span class='notop op'>!</span><span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+                <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Object value of @type must be empty or a node reference: #{value.inspect}&quot;</span>
+              <span class='rubyid_else else kw'>else</span>
+                <span class='rubyid_value identifier id'>value</span>
+              <span class='rubyid_end end kw'>end</span>
             <span class='rubyid_else else kw'>else</span>
-              <span class='rubyid_value identifier id'>value</span>
+              <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:property</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
             <span class='rubyid_end end kw'>end</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@value'</span>
+            <span class='comment val'># If expanded property is @value, value must be a scalar or null. Set the @value member of result to value.</span>
+            <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_Lossy constant id'>Lossy</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Value of #{expanded_property} must be a string, was #{value.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+            <span class='rubyid_value identifier id'>value</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@language'</span>
+            <span class='comment val'># If expanded property is @language, value must be a string with the lexical form described in [BCP47] or null. Set the @language member of result to the lowercased value.</span>
+            <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_Lossy constant id'>Lossy</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Value of #{expanded_property} must be a string, was #{value.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+            <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@annotation'</span>
+            <span class='comment val'># If expanded property is @annotation value must be a string. Set the @annotation member of result to value.</span>
+            <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span> <span class='eq op'>==</span> <span class='integer val'>1</span>
+            <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Value of @annotation is not a string: #{value.inspect}&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
+            <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+          <span class='rubyid_when when kw'>when</span> <span class='string val'>'@list'</span><span class='comma token'>,</span> <span class='string val'>'@set'</span><span class='comma token'>,</span> <span class='string val'>'@graph'</span>
+            <span class='comment val'># If expanded property is @set, @list, or @graph, set the expanded property member of result to the result of expanding value by recursively using this algorithm, along with the active context and active property. If expanded property is @list and active property is null or @graph, pass @list as active property instead.</span>
+            <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='rbrack token'>]</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+            <span class='rubyid_ap identifier id'>ap</span> <span class='assign token'>=</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='eq op'>==</span> <span class='string val'>'@list'</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span> <span class='orop op'>||</span> <span class='string val'>'@graph'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@graph'</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='string val'>'@list'</span> <span class='colon op'>:</span> <span class='rubyid_active_property identifier id'>active_property</span>
+            <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_depth identifier id'>depth</span> <span class='lbrace token'>{</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_ap identifier id'>ap</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+
+            <span class='comment val'># If expanded property is @list, and any expanded value</span>
+            <span class='comment val'># is an object containing an @list property, throw an exception, as lists of lists are not supported</span>
+            <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span> <span class='eq op'>==</span> <span class='string val'>'@list'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_any? fid id'>any?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@list'</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+              <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_ListOfLists constant id'>ListOfLists</span><span class='comma token'>,</span> <span class='string val'>&quot;A list may not contain another list&quot;</span>
+            <span class='rubyid_end end kw'>end</span>
+
+            <span class='rubyid_value identifier id'>value</span>
           <span class='rubyid_else else kw'>else</span>
-            <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_iri identifier id'>expand_iri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:property</span><span class='comma token'>,</span> <span class='symbol val'>:quiet</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
-          <span class='rubyid_end end kw'>end</span>
-        <span class='rubyid_when when kw'>when</span> <span class='string val'>'@value'</span><span class='comma token'>,</span> <span class='string val'>'@language'</span>
-          <span class='comment val'># Otherwise, if the property is @value or @language the value must not be a JSON object or an array.</span>
-          <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_Lossy constant id'>Lossy</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Value of #{property} must be a string, was #{value.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
-          <span class='rubyid_value identifier id'>value</span>
-        <span class='rubyid_when when kw'>when</span> <span class='string val'>'@list'</span><span class='comma token'>,</span> <span class='string val'>'@set'</span><span class='comma token'>,</span> <span class='string val'>'@graph'</span>
-          <span class='comment val'># Otherwise, if the property is @list, @set, or @graph, expand value recursively</span>
-          <span class='comment val'># using this algorithm, passing copies of the active context and active property.</span>
-          <span class='comment val'># If the expanded value is not an array, convert it to an array.</span>
-          <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='rbrack token'>]</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
-          <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_depth identifier id'>depth</span> <span class='lbrace token'>{</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_active_property identifier id'>active_property</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
-
-          <span class='comment val'># If property is @list, and any expanded value</span>
-          <span class='comment val'># is an object containing an @list property, throw an exception, as lists of lists are not supported</span>
-          <span class='rubyid_if if kw'>if</span> <span class='rubyid_property identifier id'>property</span> <span class='eq op'>==</span> <span class='string val'>'@list'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_any? fid id'>any?</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@list'</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
-            <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_ListOfLists constant id'>ListOfLists</span><span class='comma token'>,</span> <span class='string val'>&quot;A list may not contain another list&quot;</span>
+            <span class='comment val'># Skip unknown keyword</span>
+            <span class='rubyid_next next kw'>next</span>
           <span class='rubyid_end end kw'>end</span>
 
-          <span class='rubyid_value identifier id'>value</span>
-        <span class='rubyid_else else kw'>else</span>
-          <span class='comment val'># Otherwise, expand value recursively using this algorithm, passing copies of the active context and active property.</span>
-          <span class='rubyid_depth identifier id'>depth</span> <span class='lbrace token'>{</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_active_property identifier id'>active_property</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot;expand #{expanded_property}&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+          <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+          <span class='rubyid_next next kw'>next</span>
         <span class='rubyid_end end kw'>end</span>
 
-        <span class='comment val'># moved from step 2.2.3</span>
-        <span class='comment val'># If expanded value is null and property is not @value, continue with the next property</span>
-        <span class='comment val'># from element.</span>
-        <span class='rubyid_if if kw'>if</span> <span class='rubyid_property identifier id'>property</span> <span class='neq op'>!=</span> <span class='string val'>'@value'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+        <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_container identifier id'>container</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@language'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
+          <span class='comment val'># Otherwise, if value is a JSON object and property is not a keyword and its associated term entry in the active context has a @container key associated with a value of @language, process the associated value as a language map:</span>
+          
+          <span class='comment val'># Set multilingual array to an empty array.</span>
+          <span class='rubyid_language_map_values identifier id'>language_map_values</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+          <span class='comment val'># For each key-value in the language map:</span>
+          <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_sort identifier id'>sort</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='bitor op'>|</span>
+            <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span>
+              <span class='comment val'># Create a new JSON Object, referred to as an expanded language object.</span>
+              <span class='rubyid_expanded_language_object identifier id'>expanded_language_object</span> <span class='assign token'>=</span> <span class='rubyid_Hash constant id'>Hash</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+
+              <span class='comment val'># Add a key-value pair to the expanded language object where the key is @value and the value is the value associated with the key in the language map.</span>
+              <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='colon2 op'>::</span><span class='rubyid_LanguageMap constant id'>LanguageMap</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Expected #{vv.inspect} to be a string&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_v identifier id'>v</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
+              <span class='rubyid_expanded_language_object identifier id'>expanded_language_object</span><span class='lbrack token'>[</span><span class='string val'>'@value'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_v identifier id'>v</span>
+
+              <span class='comment val'># Add a key-value pair to the expanded language object where the key is @language, and the value is the key in the language map, transformed to lowercase.</span>
+              <span class='comment val'># FIXME: check for BCP47 conformance</span>
+              <span class='rubyid_expanded_language_object identifier id'>expanded_language_object</span><span class='lbrack token'>[</span><span class='string val'>'@language'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_k identifier id'>k</span><span class='dot token'>.</span><span class='rubyid_downcase identifier id'>downcase</span>
+              <span class='comment val'># Append the expanded language object to the multilingual array.</span>
+              <span class='rubyid_language_map_values identifier id'>language_map_values</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_expanded_language_object identifier id'>expanded_language_object</span>
+            <span class='rubyid_end end kw'>end</span>
+          <span class='rubyid_end end kw'>end</span>
+          <span class='comment val'># Set the value associated with property to the multilingual array.</span>
+          <span class='rubyid_language_map_values identifier id'>language_map_values</span>
+        <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_container identifier id'>container</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@annotation'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
+          <span class='comment val'># Otherwise, if value is a JSON object and property is not a keyword and its associated term entry in the active context has a @container key associated with a value of @annotation, process the associated value as a annotation:</span>
+          
+          <span class='comment val'># Set ary to an empty array.</span>
+          <span class='rubyid_annotation_map_values identifier id'>annotation_map_values</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+
+          <span class='comment val'># For each key-value in the object:</span>
+          <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_sort identifier id'>sort</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='bitor op'>|</span>
+            <span class='lbrack token'>[</span><span class='rubyid_value identifier id'>value</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span>
+              <span class='comment val'># Expand the value, adding an '@annotation' key with value equal to the key</span>
+              <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='rubyid_depth identifier id'>depth</span> <span class='lbrace token'>{</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_v identifier id'>v</span><span class='comma token'>,</span> <span class='rubyid_property identifier id'>property</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+              <span class='rubyid_next next kw'>next</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+              <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='lbrack token'>[</span><span class='string val'>'@annotation'</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='rubyid_k identifier id'>k</span>
+              <span class='rubyid_annotation_map_values identifier id'>annotation_map_values</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+            <span class='rubyid_end end kw'>end</span>
+          <span class='rubyid_end end kw'>end</span>
+          <span class='comment val'># Set the value associated with property to the multilingual array.</span>
+          <span class='rubyid_annotation_map_values identifier id'>annotation_map_values</span>
+        <span class='rubyid_else else kw'>else</span>
+          <span class='comment val'># Otherwise, expand value by recursively using this algorithm, passing copies of the active context and property as active property.</span>
+          <span class='rubyid_depth identifier id'>depth</span> <span class='lbrace token'>{</span> <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_property identifier id'>property</span><span class='comma token'>,</span> <span class='rubyid_context identifier id'>context</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+        <span class='rubyid_end end kw'>end</span>
+
+        <span class='comment val'># Continue to the next property-value pair from element if value is null.</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
           <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; skip nil value&quot;</span><span class='rparen token'>)</span>
           <span class='rubyid_next next kw'>next</span>
         <span class='rubyid_end end kw'>end</span>
 
-        <span class='comment val'># If the expanded value is not null and property is not a keyword</span>
-        <span class='comment val'># and the active property has a @container set to @list,</span>
-        <span class='comment val'># convert value to an object with an @list property whose value is set to value</span>
-        <span class='comment val'># (unless value is already in that form)</span>
-        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_property identifier id'>property</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='neq op'>!=</span> <span class='string val'>'@'</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_container identifier id'>container</span><span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@list'</span> <span class='andop op'>&amp;&amp;</span>
-           <span class='lparen token'>(</span><span class='notop op'>!</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='notop op'>!</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'@list'</span><span class='comma token'>,</span> <span class='rubyid_false false kw'>false</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-           <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; &quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;convert #{expanded_value.inspect} to list&quot;</span><span class='rbrace token'>}</span>
+        <span class='comment val'># If property's container mapping is set to @list and value is not a JSON object or is a JSON object without a @list member, replace value with a JSON object having a @list member whose value is set to value, ensuring that value is an array.</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_container identifier id'>container</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@list'</span> <span class='andop op'>&amp;&amp;</span>
+          <span class='lparen token'>(</span><span class='notop op'>!</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='notop op'>!</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_fetch identifier id'>fetch</span><span class='lparen token'>(</span><span class='string val'>'@list'</span><span class='comma token'>,</span> <span class='rubyid_false false kw'>false</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+
+          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; &quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='dstring node'>&quot;convert #{expanded_value.inspect} to list&quot;</span><span class='rbrace token'>}</span>
           <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='string val'>'@list'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_flatten identifier id'>flatten</span><span class='rbrace token'>}</span>
         <span class='rubyid_end end kw'>end</span>
 
-        <span class='comment val'># Convert value to array form unless value is null or property is @id, @type, @value, or @language.</span>
-        <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='string val'>%(@id @language @type @value)</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
-          <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='dstring node'>&quot; =&gt; make #{expanded_value.inspect} an array&quot;</span><span class='rparen token'>)</span>
-          <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='rbrack token'>]</span>
-        <span class='rubyid_end end kw'>end</span>
+        <span class='comment val'># Convert value to array form</span>
+        <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot; =&gt; &quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;expanded property: #{expanded_property.inspect}&quot;</span><span class='rbrace token'>}</span>
+        <span class='rubyid_expanded_value identifier id'>expanded_value</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='rbrack token'>]</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
 
-        <span class='rubyid_if if kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='rubyid_property identifier id'>property</span><span class='rparen token'>)</span>
-          <span class='comment val'># If element already contains a property property, append value to the existing value.</span>
-          <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_property identifier id'>property</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+        <span class='rubyid_if if kw'>if</span> <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+          <span class='rubyid_label_blanknodes identifier id'>label_blanknodes</span><span class='lparen token'>(</span><span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='rparen token'>)</span>
+          <span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_s</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_prop identifier id'>prop</span><span class='bitor op'>|</span>
+            <span class='comment val'># label all blank nodes in value with blank node identifiers by using the Label Blank Nodes Algorithm.</span>
+            <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_prop identifier id'>prop</span><span class='rbrack token'>]</span> <span class='opasgn op'>||=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+            <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_prop identifier id'>prop</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
+          <span class='rubyid_end end kw'>end</span>
         <span class='rubyid_else else kw'>else</span>
-          <span class='comment val'># Otherwise, create a property property with value as value.</span>
-          <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_property identifier id'>property</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+          <span class='rubyid_if if kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='rparen token'>)</span>
+            <span class='comment val'># If element already contains a expanded_property property, append value to the existing value.</span>
+            <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+          <span class='rubyid_else else kw'>else</span>
+            <span class='comment val'># Otherwise, create a property property with value as value.</span>
+            <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_expanded_property identifier id'>expanded_property</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_expanded_value identifier id'>expanded_value</span>
+          <span class='rubyid_end end kw'>end</span>
         <span class='rubyid_end end kw'>end</span>
         <span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot; =&gt; #{expanded_value.inspect}&quot;</span><span class='rbrace token'>}</span>
       <span class='rubyid_end end kw'>end</span>
 
       <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;output object&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
 
+      <span class='comment val'># If the active property is null or @graph and element has a @value member without an @annotation member, or element consists of only an @id member, set element to null.</span>
+      <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;output object(ap)&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span> <span class='orop op'>||</span> <span class='string val'>'@graph'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@graph'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+      <span class='rubyid_if if kw'>if</span> <span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span> <span class='orop op'>||</span> <span class='string val'>'@graph'</span><span class='rparen token'>)</span> <span class='eq op'>==</span> <span class='string val'>'@graph'</span> <span class='andop op'>&amp;&amp;</span>
+         <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@value'</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@annotation'</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='orop op'>||</span>
+          <span class='lparen token'>(</span><span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='dstring node'>%w(@id)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span><span class='rparen token'>)</span>
+        <span class='rubyid_debug identifier id'>debug</span><span class='lparen token'>(</span><span class='string val'>&quot;empty top-level&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rbrace token'>}</span>
+        <span class='rubyid_return return kw'>return</span> <span class='rubyid_nil nil kw'>nil</span>
+      <span class='rubyid_end end kw'>end</span>
+
       <span class='comment val'># If the processed element has an @value property</span>
       <span class='rubyid_if if kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@value'</span><span class='rparen token'>)</span>
         <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'@language'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='string val'>'@language'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
         <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='string val'>'@type'</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='string val'>'@type'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
-        <span class='rubyid_if if kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>2</span> <span class='orop op'>||</span> <span class='lparen token'>(</span><span class='dstring node'>%w(@language @type)</span> <span class='minus op'>-</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
-          <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='string val'>&quot;element must not have more than one other property, which can either be @language or @type with a string value.&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
+        <span class='rubyid_if if kw'>if</span> <span class='lparen token'>(</span><span class='dstring node'>%w(@annotation @language @type)</span> <span class='minus op'>-</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+          <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='string val'>&quot;element must not have more than one other property other than @annotation, which can either be @language or @type with a string value.&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_String constant id'>String</span><span class='rparen token'>)</span>
         <span class='rubyid_end end kw'>end</span>
 
         <span class='comment val'># if the value of @value equals null, replace element with the value of null.</span>
@@ -583,24 +771,113 @@
         <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='string val'>'@type'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='string val'>'@type'</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span>
       <span class='rubyid_end end kw'>end</span>
 
-      <span class='comment val'># If element has an @set or @list property, it must be the only property. Set element to the value of @set;</span>
+      <span class='comment val'># If element has an @set or @list property, it must be the only property (other tha @annotation). Set element to the value of @set;</span>
       <span class='comment val'># leave @list untouched.</span>
       <span class='rubyid_if if kw'>if</span> <span class='notop op'>!</span><span class='lparen token'>(</span><span class='dstring node'>%w(@set @list)</span> <span class='bitand op'>&amp;</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
-        <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='string val'>&quot;element must have only @set, @list or @graph&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
+        <span class='rubyid_o_keys identifier id'>o_keys</span> <span class='assign token'>=</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='dstring node'>%w(@set @list @annotation)</span>
+        <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ProcessingError constant id'>ProcessingError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;element must have only @set or  @list: #{output_object.keys.inspect}&quot;</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_o_keys identifier id'>o_keys</span><span class='dot token'>.</span><span class='rubyid_length identifier id'>length</span> <span class='gt op'>&gt;</span> <span class='integer val'>1</span>
         
         <span class='rubyid_output_object identifier id'>output_object</span> <span class='assign token'>=</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_values identifier id'>values</span><span class='dot token'>.</span><span class='rubyid_first identifier id'>first</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@list'</span><span class='rparen token'>)</span>
       <span class='rubyid_end end kw'>end</span>
 
-      <span class='comment val'># If element has just a @language property, set element to null.</span>
-      <span class='rubyid_output_object identifier id'>output_object</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span> <span class='eq op'>==</span> <span class='dstring node'>%w(@language)</span>
+      <span class='comment val'># Re-order result keys</span>
+      <span class='rubyid_if if kw'>if</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span> <span class='eq op'>==</span> <span class='dstring node'>%w(@language)</span>
+        <span class='comment val'># If element has just a @language property, set element to null.</span>
+        <span class='rubyid_nil nil kw'>nil</span>
+      <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
+        <span class='rubyid_r identifier id'>r</span> <span class='assign token'>=</span> <span class='rubyid_Hash constant id'>Hash</span><span class='dot token'>.</span><span class='rubyid_ordered identifier id'>ordered</span>
+        <span class='rubyid_output_object identifier id'>output_object</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_kw_sort identifier id'>kw_sort</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='bitor op'>|</span> <span class='rubyid_r identifier id'>r</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_output_object identifier id'>output_object</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span><span class='rbrace token'>}</span>
+        <span class='rubyid_r identifier id'>r</span>
+      <span class='rubyid_else else kw'>else</span>
+        <span class='rubyid_output_object identifier id'>output_object</span>
+      <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_else else kw'>else</span>
     <span class='comment val'># Otherwise, unless the value is a number, expand the value according to the Value Expansion rules, passing active property.</span>
-    <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_value identifier id'>expand_value</span><span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span><span class='comma token'>,</span> <span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_@depth ivar id'>@depth</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_expand_value identifier id'>expand_value</span><span class='lparen token'>(</span><span class='rubyid_active_property identifier id'>active_property</span><span class='comma token'>,</span> <span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span>
+      <span class='symbol val'>:position</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:subject</span><span class='comma token'>,</span> <span class='symbol val'>:namer</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_namer identifier id'>namer</span><span class='comma token'>,</span> <span class='symbol val'>:depth</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_@depth ivar id'>@depth</span>
+    <span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_input identifier id'>input</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='rubyid_active_property identifier id'>active_property</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='rubyid_active_property identifier id'>active_property</span> <span class='eq op'>==</span> <span class='string val'>'@graph'</span>
   <span class='rubyid_end end kw'>end</span>
 
   <span class='rubyid_debug identifier id'>debug</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot; =&gt; #{result.inspect}&quot;</span><span class='rbrace token'>}</span>
   <span class='rubyid_result identifier id'>result</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="label_blanknodes-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>label_blanknodes</strong>(element)  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>input</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></tt>, <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/json-ld-3eb8b24c72e3/lib/json/ld/expand.rb', line 282</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_label_blanknodes identifier id'>label_blanknodes</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Array constant id'>Array</span><span class='rparen token'>)</span>
+    <span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_e identifier id'>e</span><span class='bitor op'>|</span> <span class='rubyid_label_blanknodes identifier id'>label_blanknodes</span><span class='lparen token'>(</span><span class='rubyid_e identifier id'>e</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_list? fid id'>list?</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span>
+    <span class='rubyid_element identifier id'>element</span><span class='lbrack token'>[</span><span class='string val'>'@list'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_e identifier id'>e</span><span class='bitor op'>|</span> <span class='rubyid_label_blanknodes identifier id'>label_blanknodes</span><span class='lparen token'>(</span><span class='rubyid_e identifier id'>e</span><span class='rparen token'>)</span><span class='rbrace token'>}</span>
+  <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
+    <span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_sort identifier id'>sort</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='bitor op'>|</span>
+      <span class='rubyid_label_blanknodes identifier id'>label_blanknodes</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='lbrack token'>[</span><span class='rubyid_k identifier id'>k</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_node? fid id'>node?</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span> <span class='rubyid_and and kw'>and</span> <span class='notop op'>!</span><span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_has_key? fid id'>has_key?</span><span class='lparen token'>(</span><span class='string val'>'@id'</span><span class='rparen token'>)</span>
+      <span class='rubyid_element identifier id'>element</span><span class='lbrack token'>[</span><span class='string val'>'@id'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_namer identifier id'>namer</span><span class='dot token'>.</span><span class='rubyid_get_name identifier id'>get_name</span><span class='lparen token'>(</span><span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -613,7 +890,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Dec  7 14:17:48 2012 by
+  Generated on Mon Jan 21 10:30:03 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.8.7).
 </div>

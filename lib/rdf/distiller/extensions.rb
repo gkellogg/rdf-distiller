@@ -20,7 +20,7 @@ module RDF::Util
       when /^http/
         io_obj = StringIO.new
         c = Curl::Easy.perform(filename_or_url) do |curl|
-          curl.headers['Accept'] = 'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1'
+          curl.headers['Accept'] = 'text/turtle, application/rdf+xml;q=0.8, application/ld+json;q=0.8, text/plain;q=0.4, */*;q=0.1'
           curl.headers['User-Agent'] = "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"
           curl.follow_location = true
           curl.on_body {|body| io_obj.write(body); body.length}

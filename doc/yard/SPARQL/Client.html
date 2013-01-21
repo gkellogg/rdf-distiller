@@ -94,8 +94,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client/repository.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client/version.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client/repository.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client/update.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client/version.rb</span>
 </dd>
   
 </dl>
@@ -103,7 +103,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>A SPARQL client for RDF.rb.</p>
+    <p>A SPARQL 1.0/1.1 client for RDF.rb.</p>
 
 
   </div>
@@ -114,9 +114,11 @@
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><a href="http://www.w3.org/TR/rdf-sparql-protocol/" target="_parent" title="http://www.w3.org/TR/rdf-sparql-protocol/">http://www.w3.org/TR/rdf-sparql-protocol/</a></li>
+      <li><a href="http://www.w3.org/TR/sparql11-query/" target="_parent" title="http://www.w3.org/TR/sparql11-query/">http://www.w3.org/TR/sparql11-query/</a></li>
     
-      <li><a href="http://www.w3.org/TR/rdf-sparql-json-res/" target="_parent" title="http://www.w3.org/TR/rdf-sparql-json-res/">http://www.w3.org/TR/rdf-sparql-json-res/</a></li>
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/">http://www.w3.org/TR/sparql11-protocol/</a></li>
+    
+      <li><a href="http://www.w3.org/TR/sparql11-results-json/" target="_parent" title="http://www.w3.org/TR/sparql11-results-json/">http://www.w3.org/TR/sparql11-results-json/</a></li>
     
   </ul>
 
@@ -124,7 +126,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Client/VERSION.html" title="SPARQL::Client::VERSION (module)">VERSION</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Client/Update.html" title="SPARQL::Client::Update (module)">Update</a></span>, <span class='object_link'><a href="Client/VERSION.html" title="SPARQL::Client::VERSION (module)">VERSION</a></span>
     
   
     
@@ -136,6 +138,18 @@
   <h2>Constant Summary</h2>
   
     <dl class="constants">
+      
+        <dt id="RESULT_JSON-constant" class="">RESULT_JSON =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>'application/sparql-results+json'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
+</pre></dd>
+      
+        <dt id="RESULT_XML-constant" class="">RESULT_XML =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>'application/sparql-results+xml'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
+</pre></dd>
       
         <dt id="RESULT_BOOL-constant" class="">RESULT_BOOL =
           <div class="docstring">
@@ -153,16 +167,20 @@
         <dd><pre class="code"><span class='string val'>'text/boolean'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
 </pre></dd>
       
-        <dt id="RESULT_JSON-constant" class="">RESULT_JSON =
-          
+        <dt id="RESULT_BRTR-constant" class="">RESULT_BRTR =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Sesame-specific</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
-        <dd><pre class="code"><span class='string val'>'application/sparql-results+json'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
-</pre></dd>
-      
-        <dt id="RESULT_XML-constant" class="">RESULT_XML =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>'application/sparql-results+xml'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
+        <dd><pre class="code"><span class='string val'>'application/x-binary-rdf-results-table'</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
 </pre></dd>
       
         <dt id="ACCEPT_JSON-constant" class="">ACCEPT_JSON =
@@ -177,6 +195,24 @@
         <dd><pre class="code"><span class='lbrace token'>{</span><span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RESULT_XML constant id'>RESULT_XML</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
 </pre></dd>
       
+        <dt id="ACCEPT_BRTR-constant" class="">ACCEPT_BRTR =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace token'>{</span><span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_RESULT_BRTR constant id'>RESULT_BRTR</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_freeze identifier id'>freeze</span>
+</pre></dd>
+      
+        <dt id="DEFAULT_PROTOCOL-constant" class="">DEFAULT_PROTOCOL =
+          
+        </dt>
+        <dd><pre class="code"><span class='float val'>1.0</span>
+</pre></dd>
+      
+        <dt id="DEFAULT_METHOD-constant" class="">DEFAULT_METHOD =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol val'>:post</span>
+</pre></dd>
+      
     </dl>
   
 
@@ -189,7 +225,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#options-instance_method" title="#options (instance method)">- (Object) <strong>options</strong> </a>
+      <a href="#headers-instance_method" title="#headers (instance method)">- (Hash{String =&gt; String}) <strong>headers</strong> </a>
     
 
     
@@ -208,7 +244,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute options.</p>
+    <span class="summary_desc"><div class='inline'><p>The HTTP headers that will be sent in requests to the endpoint.</p>
 </div></span>
   
 </li>
@@ -217,7 +253,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#url-instance_method" title="#url (instance method)">- (Object) <strong>url</strong> </a>
+      <a href="#options-instance_method" title="#options (instance method)">- (Hash{Symbol =&gt; Object}) <strong>options</strong> </a>
     
 
     
@@ -236,7 +272,35 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute url.</p>
+    <span class="summary_desc"><div class='inline'><p>Any miscellaneous configuration.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#url-instance_method" title="#url (instance method)">- (RDF::URI) <strong>url</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The SPARQL endpoint URL.</p>
 </div></span>
   
 </li>
@@ -378,6 +442,52 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#clear-instance_method" title="#clear (instance method)">- <strong>clear</strong>(what, *arguments) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Executes a <code>CLEAR</code> operation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clear_graph-instance_method" title="#clear_graph (instance method)">- <strong>clear_graph</strong>(graph_uri, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Executes a <code>CLEAR GRAPH</code> operation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#construct-instance_method" title="#construct (instance method)">- (Query) <strong>construct</strong>(*args) </a>
     
 
@@ -393,6 +503,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Executes a graph <code>CONSTRUCT</code> query.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_data-instance_method" title="#delete_data (instance method)">- <strong>delete_data</strong>(data, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Executes a <code>DELETE DATA</code> operation.</p>
 </div></span>
   
 </li>
@@ -424,29 +557,6 @@
         <li class="protected ">
   <span class="summary_signature">
     
-      <a href="#get-instance_method" title="#get (instance method)">- (Net::HTTPResponse) <strong>get</strong>(query, headers = {}) {|response| ... }</a>
-    
-
-    
-  </span>
-  
-  
-  
-  <span class="note title protected">protected</span>
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Performs an HTTP GET request against the SPARQL endpoint.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="protected ">
-  <span class="summary_signature">
-    
       <a href="#http_klass-instance_method" title="#http_klass (instance method)">- (Net::HTTP::Proxy) <strong>http_klass</strong>(scheme) </a>
     
 
@@ -461,7 +571,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns an HTTP class or HTTP proxy class based on environment http_proxy &amp; https_proxy settings.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns an HTTP class or HTTP proxy class based on the <code>http_proxy</code>
+and <code>https_proxy</code> environment variables.</p>
 </div></span>
   
 </li>
@@ -487,6 +598,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>A new instance of Client.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert_data-instance_method" title="#insert_data (instance method)">- <strong>insert_data</strong>(data, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Executes an <code>INSERT DATA</code> operation.</p>
 </div></span>
   
 </li>
@@ -533,6 +667,52 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Outputs a developer-friendly representation of this object to <code>stderr</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#make_get_request-instance_method" title="#make_get_request (instance method)">- (Net::HTTPRequest) <strong>make_get_request</strong>(query, headers = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Constructs an HTTP GET request according to the SPARQL Protocol.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#make_post_request-instance_method" title="#make_post_request (instance method)">- (Net::HTTPRequest) <strong>make_post_request</strong>(query, headers = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Constructs an HTTP POST request according to the SPARQL Protocol.</p>
 </div></span>
   
 </li>
@@ -599,7 +779,30 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Executes a SPARQL query and returns parsed results.</p>
+    <span class="summary_desc"><div class='inline'><p>Executes a SPARQL query and returns the parsed results.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#request-instance_method" title="#request (instance method)">- (Net::HTTPResponse) <strong>request</strong>(query, headers = {}) {|response| ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Performs an HTTP request against the SPARQL endpoint.</p>
 </div></span>
   
 </li>
@@ -622,7 +825,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Executes a SPARQL query and returns the Net::HTTP::Response of the result.</p>
+    <span class="summary_desc"><div class='inline'><p>Executes a SPARQL query and returns the Net::HTTP::Response of the
+result.</p>
 </div></span>
   
 </li>
@@ -646,6 +850,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Executes a tuple <code>SELECT</code> query.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update-instance_method" title="#update (instance method)">- <strong>update</strong>(query, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Executes a SPARQL update operation.</p>
 </div></span>
   
 </li>
@@ -712,6 +939,30 @@
     <ul class="option">
       
         <li>
+          <span class="name">:method</span>
+          <span class="type">(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>DEFAULT_METHOD</tt>
+            
+          </span>
+          
+        </li>
+      
+        <li>
+          <span class="name">:protocol</span>
+          <span class="type">(<tt>Number</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>DEFAULT_PROTOCOL</tt>
+            
+          </span>
+          
+        </li>
+      
+        <li>
           <span class="name">:headers</span>
           <span class="type">(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
           <span class="default">
@@ -732,31 +983,29 @@
       <pre class="lines">
 
 
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47</pre>
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 57</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_@url ivar id'>@url</span><span class='comma token'>,</span> <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span>
-  <span class='comment val'>#@headers = {'Accept' =&gt; &quot;#{RESULT_JSON}, #{RESULT_XML}, text/plain&quot;}</span>
+  <span class='rubyid_@url ivar id'>@url</span><span class='comma token'>,</span> <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
   <span class='rubyid_@headers ivar id'>@headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span>
     <span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrack token'>[</span><span class='rubyid_RESULT_JSON constant id'>RESULT_JSON</span><span class='comma token'>,</span> <span class='rubyid_RESULT_XML constant id'>RESULT_XML</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Format constant id'>Format</span><span class='dot token'>.</span><span class='rubyid_content_types identifier id'>content_types</span><span class='dot token'>.</span><span class='rubyid_keys identifier id'>keys</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_s</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>', '</span><span class='rparen token'>)</span>
-  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_@options ivar id'>@options</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:headers</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_@http ivar id'>@http</span> <span class='assign token'>=</span> <span class='rubyid_http_klass identifier id'>http_klass</span><span class='lparen token'>(</span><span class='rubyid_@url ivar id'>@url</span><span class='dot token'>.</span><span class='rubyid_scheme identifier id'>scheme</span><span class='rparen token'>)</span>
 
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
@@ -780,9 +1029,9 @@
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="options-instance_method">
+  <h3 class="signature first" id="headers-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>) <strong>headers</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -790,13 +1039,26 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute options</p>
+    <p>The HTTP headers that will be sent in requests to the endpoint.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -804,12 +1066,68 @@
       <pre class="lines">
 
 
-27
-28
-29</pre>
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 43</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_headers identifier id'>headers</span>
+  <span class='rubyid_@headers ivar id'>@headers</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="options-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Any miscellaneous configuration.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 49</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_options identifier id'>options</span>
   <span class='rubyid_@options ivar id'>@options</span>
@@ -825,7 +1143,7 @@
       <div class="method_details ">
   <h3 class="signature " id="url-instance_method">
   
-    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>url</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>url</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -833,13 +1151,26 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute url</p>
+    <p>The SPARQL endpoint URL.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -847,12 +1178,12 @@
       <pre class="lines">
 
 
-26
-27
-28</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 37</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_url identifier id'>url</span>
   <span class='rubyid_@url ivar id'>@url</span>
@@ -929,31 +1260,29 @@
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176</pre>
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 297</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse_json_bindings identifier id'>parse_json_bindings</span><span class='lparen token'>(</span><span class='rubyid_json identifier id'>json</span><span class='comma token'>,</span> <span class='rubyid_nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_require identifier id'>require</span> <span class='string val'>'json'</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_defined? defined kw'>defined?</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='rubyid_JSON constant id'>JSON</span><span class='rparen token'>)</span>
   <span class='rubyid_json identifier id'>json</span> <span class='assign token'>=</span> <span class='rubyid_JSON constant id'>JSON</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_json identifier id'>json</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_json identifier id'>json</span><span class='dot token'>.</span><span class='rubyid_is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='rubyid_Hash constant id'>Hash</span><span class='rparen token'>)</span>
-
   <span class='rubyid_case case kw'>case</span>
     <span class='rubyid_when when kw'>when</span> <span class='rubyid_json identifier id'>json</span><span class='lbrack token'>[</span><span class='string val'>'boolean'</span><span class='rbrack token'>]</span>
       <span class='rubyid_json identifier id'>json</span><span class='lbrack token'>[</span><span class='string val'>'boolean'</span><span class='rbrack token'>]</span>
@@ -1032,22 +1361,22 @@
       <pre class="lines">
 
 
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194</pre>
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 318</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse_json_value identifier id'>parse_json_value</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_value identifier id'>value</span><span class='lbrack token'>[</span><span class='string val'>'type'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
@@ -1127,30 +1456,30 @@
       <pre class="lines">
 
 
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220</pre>
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 336</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse_xml_bindings identifier id'>parse_xml_bindings</span><span class='lparen token'>(</span><span class='rubyid_xml identifier id'>xml</span><span class='comma token'>,</span> <span class='rubyid_nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_xml identifier id'>xml</span><span class='dot token'>.</span><span class='rubyid_force_encoding identifier id'>force_encoding</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='rubyid_Encoding constant id'>Encoding</span><span class='colon2 op'>::</span><span class='rubyid_UTF_8 constant id'>UTF_8</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_xml identifier id'>xml</span><span class='dot token'>.</span><span class='rubyid_respond_to? fid id'>respond_to?</span><span class='lparen token'>(</span><span class='symbol val'>:force_encoding</span><span class='rparen token'>)</span>
@@ -1238,23 +1567,23 @@
       <pre class="lines">
 
 
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239</pre>
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 362</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_parse_xml_value identifier id'>parse_xml_value</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_nodes identifier id'>nodes</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
@@ -1320,15 +1649,240 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 76</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_ask identifier id'>ask</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:ask</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clear-instance_method">
+  
+    - <strong>clear</strong>(what, *arguments) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Executes a <code>CLEAR</code> operation.</p>
+
+<p>This requires that the endpoint support SPARQL 1.1 Update.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>CLEAR GRAPH &lt;http://example.org/&gt;</code></p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='symbol val'>:graph</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='lparen token'>(</span><span class='string val'>&quot;http://example.org/&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>CLEAR DEFAULT</code></p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='symbol val'>:default</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>CLEAR NAMED</code></p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='symbol val'>:named</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>CLEAR ALL</code></p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='symbol val'>:all</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>what</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>#to_sym</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-update/#clear" target="_parent" title="http://www.w3.org/TR/sparql11-update/#clear">http://www.w3.org/TR/sparql11-update/#clear</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 198</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='rubyid_what identifier id'>what</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_arguments identifier id'>arguments</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_Update constant id'>Update</span><span class='colon2 op'>::</span><span class='rubyid_Clear constant id'>Clear</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_what identifier id'>what</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_arguments identifier id'>arguments</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clear_graph-instance_method">
+  
+    - <strong>clear_graph</strong>(graph_uri, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Executes a <code>CLEAR GRAPH</code> operation.</p>
+
+<p>This is a convenience wrapper for the <span class='object_link'><a href="#clear-instance_method" title="SPARQL::Client#clear (method)">#clear</a></span> method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>CLEAR GRAPH &lt;http://example.org/&gt;</code></p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_clear_graph identifier id'>clear_graph</span><span class='lparen token'>(</span><span class='string val'>&quot;http://example.org/&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>graph_uri</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:silent</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-update/#clear" target="_parent" title="http://www.w3.org/TR/sparql11-update/#clear">http://www.w3.org/TR/sparql11-update/#clear</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 172</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_clear_graph identifier id'>clear_graph</span><span class='lparen token'>(</span><span class='rubyid_graph_uri identifier id'>graph_uri</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_clear identifier id'>clear</span><span class='lparen token'>(</span><span class='symbol val'>:graph</span><span class='comma token'>,</span> <span class='rubyid_graph_uri identifier id'>graph_uri</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1389,15 +1943,133 @@
       <pre class="lines">
 
 
-80
-81
-82</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 103</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_construct identifier id'>construct</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:construct</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_data-instance_method">
+  
+    - <strong>delete_data</strong>(data, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Executes a <code>DELETE DATA</code> operation.</p>
+
+<p>This requires that the endpoint support SPARQL 1.1 Update.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Deleting data sourced from a file or URL</p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nt&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_delete_data identifier id'>delete_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Deleting data from a named graph</p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_delete_data identifier id'>delete_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='symbol val'>:graph</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.org/&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:graph</span>
+          <span class="type">(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-update/#deleteData" target="_parent" title="http://www.w3.org/TR/sparql11-update/#deleteData">http://www.w3.org/TR/sparql11-update/#deleteData</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 155</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_delete_data identifier id'>delete_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_Update constant id'>Update</span><span class='colon2 op'>::</span><span class='rubyid_DeleteData constant id'>DeleteData</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1458,145 +2130,15 @@
       <pre class="lines">
 
 
-71
-72
-73</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 94</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_describe identifier id'>describe</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:describe</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="get-instance_method">
-  
-    - (<tt>Net::HTTPResponse</tt>) <strong>get</strong>(query, headers = {}) {|response| ... } <span class="extras">(protected)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Performs an HTTP GET request against the SPARQL endpoint.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>query</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
-      
-      
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>headers</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Yields:</p>
-<ul class="yield">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>response</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Yield Parameters:</p>
-<ul class="yieldparam">
-  
-    <li>
-      
-        <span class='name'>response</span>
-      
-      
-        <span class='type'>(<tt>Net::HTTPResponse</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Net::HTTPResponse</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 294</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_get identifier id'>get</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
-  <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_query_values identifier id'>query_values</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_query_values identifier id'>query_values</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:query</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
-
-  <span class='rubyid_request identifier id'>request</span> <span class='assign token'>=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='rubyid_Get constant id'>Get</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_request_uri identifier id'>request_uri</span><span class='comma token'>,</span> <span class='rubyid_@headers ivar id'>@headers</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='rubyid_request identifier id'>request</span><span class='dot token'>.</span><span class='rubyid_basic_auth identifier id'>basic_auth</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='comma token'>,</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_password identifier id'>password</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
-  <span class='rubyid_response identifier id'>response</span> <span class='assign token'>=</span> <span class='rubyid_@http ivar id'>@http</span><span class='dot token'>.</span><span class='rubyid_request identifier id'>request</span> <span class='rubyid_url identifier id'>url</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span>
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
-  <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='rparen token'>)</span>
-  <span class='rubyid_else else kw'>else</span>
-  <span class='rubyid_response identifier id'>response</span>
-  <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1615,13 +2157,29 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns an HTTP class or HTTP proxy class based on environment http_proxy &amp; https_proxy settings</p>
+    <p>Returns an HTTP class or HTTP proxy class based on the <code>http_proxy</code>
+and <code>https_proxy</code> environment variables.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>scheme</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
@@ -1642,33 +2200,169 @@
       <pre class="lines">
 
 
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284</pre>
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 441</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_http_klass identifier id'>http_klass</span><span class='lparen token'>(</span><span class='rubyid_scheme identifier id'>scheme</span><span class='rparen token'>)</span>
-  <span class='rubyid_proxy_uri identifier id'>proxy_uri</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
+  <span class='rubyid_proxy_url identifier id'>proxy_url</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_scheme identifier id'>scheme</span>
-    <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;http&quot;</span>
-      <span class='rubyid_proxy_uri identifier id'>proxy_uri</span> <span class='assign token'>=</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'http_proxy'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'http_proxy'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
-    <span class='rubyid_when when kw'>when</span> <span class='string val'>&quot;https&quot;</span>
-      <span class='rubyid_proxy_uri identifier id'>proxy_uri</span> <span class='assign token'>=</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'https_proxy'</span><span class='rbrack token'>]</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'https_proxy'</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
+    <span class='rubyid_when when kw'>when</span> <span class='string val'>'http'</span>
+      <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'http_proxy'</span><span class='rbrack token'>]</span>
+      <span class='rubyid_proxy_url identifier id'>proxy_url</span> <span class='assign token'>=</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+    <span class='rubyid_when when kw'>when</span> <span class='string val'>'https'</span>
+      <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_ENV constant id'>ENV</span><span class='lbrack token'>[</span><span class='string val'>'https_proxy'</span><span class='rbrack token'>]</span>
+      <span class='rubyid_proxy_url identifier id'>proxy_url</span> <span class='assign token'>=</span> <span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_parse identifier id'>parse</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span> <span class='orop op'>||</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
   <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='rubyid_Persistent constant id'>Persistent</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='rubyid_proxy_uri identifier id'>proxy_uri</span><span class='rparen token'>)</span>
-  <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_keep_alive identifier id'>keep_alive</span> <span class='assign token'>=</span> <span class='integer val'>120</span>  <span class='comment val'># increase to 2 minutes</span>
+  <span class='rubyid_klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='rubyid_Persistent constant id'>Persistent</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='rubyid_proxy_url identifier id'>proxy_url</span><span class='rparen token'>)</span>
+  <span class='rubyid_klass identifier id'>klass</span><span class='dot token'>.</span><span class='rubyid_keep_alive identifier id'>keep_alive</span> <span class='assign token'>=</span> <span class='integer val'>120</span> <span class='comment val'># increase to 2 minutes</span>
   <span class='rubyid_klass identifier id'>klass</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert_data-instance_method">
+  
+    - <strong>insert_data</strong>(data, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Executes an <code>INSERT DATA</code> operation.</p>
+
+<p>This requires that the endpoint support SPARQL 1.1 Update.</p>
+
+<p>Note that for inserting non-trivial amounts of data, you probably
+ought to consider using the RDF store&#39;s native bulk-loading facilities
+or APIs, as <code>INSERT DATA</code> operations entail comparably higher
+parsing overhead.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Inserting data constructed ad-hoc</p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_insert_data identifier id'>insert_data</span><span class='lparen token'>(</span><span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='rubyid_graph identifier id'>graph</span><span class='bitor op'>|</span>
+  <span class='rubyid_graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='lbrack token'>[</span><span class='symbol val'>:jhacker</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_FOAF constant id'>FOAF</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='string val'>&quot;J. Random Hacker&quot;</span><span class='rbrack token'>]</span>
+<span class='rbrace token'>}</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Inserting data sourced from a file or URL</p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_data identifier id'>data</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='string val'>&quot;http://rdf.rubyforge.org/doap.nt&quot;</span><span class='rparen token'>)</span>
+<span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_insert_data identifier id'>insert_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='rparen token'>)</span>
+</pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Inserting data into a named graph</p>
+</div></p>
+      
+      <pre class="example code"><span class='rubyid_client identifier id'>client</span><span class='dot token'>.</span><span class='rubyid_insert_data identifier id'>insert_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='symbol val'>:graph</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://example.org/&quot;</span><span class='rparen token'>)</span>
+</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:graph</span>
+          <span class="type">(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-update/#insertData" target="_parent" title="http://www.w3.org/TR/sparql11-update/#insertData">http://www.w3.org/TR/sparql11-update/#insertData</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 134</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_insert_data identifier id'>insert_data</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_Update constant id'>Update</span><span class='colon2 op'>::</span><span class='rubyid_InsertData constant id'>InsertData</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_data identifier id'>data</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1714,12 +2408,12 @@
       <pre class="lines">
 
 
-264
-265
-266</pre>
+429
+430
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 429</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
   <span class='rubyid_sprintf identifier id'>sprintf</span><span class='lparen token'>(</span><span class='string val'>&quot;#&lt;%s:%#0x(%s)&gt;&quot;</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_class identifier id'>class</span><span class='dot token'>.</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid___id__ identifier id'>__id__</span><span class='comma token'>,</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
@@ -1755,15 +2449,221 @@
       <pre class="lines">
 
 
-256
-257
-258</pre>
+421
+422
+423</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 421</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect! fid id'>inspect!</span>
   <span class='rubyid_warn identifier id'>warn</span><span class='lparen token'>(</span><span class='rubyid_inspect identifier id'>inspect</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="make_get_request-instance_method">
+  
+    - (<tt>Net::HTTPRequest</tt>) <strong>make_get_request</strong>(query, headers = {})  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Constructs an HTTP GET request according to the SPARQL Protocol.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Net::HTTPRequest</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#query-via-get" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#query-via-get">http://www.w3.org/TR/sparql11-protocol/#query-via-get</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+486
+487
+488
+489
+490
+491</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 486</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_make_get_request identifier id'>make_get_request</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_url identifier id'>url</span> <span class='assign token'>=</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_dup identifier id'>dup</span>
+  <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_query_values identifier id'>query_values</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_query_values identifier id'>query_values</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='symbol val'>:query</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='rubyid_request identifier id'>request</span> <span class='assign token'>=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='rubyid_Get constant id'>Get</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_request_uri identifier id'>request_uri</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_headers identifier id'>headers</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_request identifier id'>request</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="make_post_request-instance_method">
+  
+    - (<tt>Net::HTTPRequest</tt>) <strong>make_post_request</strong>(query, headers = {})  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Constructs an HTTP POST request according to the SPARQL Protocol.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Net::HTTPRequest</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#query-via-post-direct" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#query-via-post-direct">http://www.w3.org/TR/sparql11-protocol/#query-via-post-direct</a></li>
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#query-via-post-urlencoded" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#query-via-post-urlencoded">http://www.w3.org/TR/sparql11-protocol/#query-via-post-urlencoded</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 501</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_make_post_request identifier id'>make_post_request</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_request identifier id'>request</span> <span class='assign token'>=</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTP constant id'>HTTP</span><span class='colon2 op'>::</span><span class='rubyid_Post constant id'>Post</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_request_uri identifier id'>request_uri</span><span class='comma token'>,</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_headers identifier id'>headers</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='rubyid_case case kw'>case</span> <span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:protocol</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_DEFAULT_PROTOCOL constant id'>DEFAULT_PROTOCOL</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+    <span class='rubyid_when when kw'>when</span> <span class='string val'>'1.1'</span>
+      <span class='rubyid_request identifier id'>request</span><span class='lbrack token'>[</span><span class='string val'>'Content-Type'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'application/sparql-'</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='rubyid_@op ivar id'>@op</span> <span class='orop op'>||</span> <span class='symbol val'>:query</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+      <span class='rubyid_request identifier id'>request</span><span class='dot token'>.</span><span class='rubyid_body identifier id'>body</span> <span class='assign token'>=</span> <span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span>
+    <span class='rubyid_when when kw'>when</span> <span class='string val'>'1.0'</span>
+      <span class='rubyid_request identifier id'>request</span><span class='dot token'>.</span><span class='rubyid_set_form_data identifier id'>set_form_data</span><span class='lparen token'>(</span><span class='symbol val'>:query</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_query identifier id'>query</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+    <span class='rubyid_else else kw'>else</span>
+      <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;unknown SPARQL protocol version: #{self.options[:protocol].inspect}&quot;</span>
+  <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_request identifier id'>request</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1836,15 +2736,15 @@
       <pre class="lines">
 
 
-245
-246
-247
-248
-249
-250</pre>
+381
+382
+383
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 381</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_parse_rdf_serialization identifier id'>parse_rdf_serialization</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:content_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_response identifier id'>response</span><span class='dot token'>.</span><span class='rubyid_content_type identifier id'>content_type</span><span class='rbrace token'>}</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -1923,21 +2823,21 @@
       <pre class="lines">
 
 
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154</pre>
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 280</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_parse_response identifier id'>parse_response</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_case case kw'>case</span> <span class='rubyid_content_type identifier id'>content_type</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_response identifier id'>response</span><span class='dot token'>.</span><span class='rubyid_content_type identifier id'>content_type</span>
@@ -1968,7 +2868,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Executes a SPARQL query and returns parsed results.</p>
+    <p>Executes a SPARQL query and returns the parsed results.</p>
 
 
   </div>
@@ -2046,21 +2946,167 @@
   
 </ul>
 
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#query-operation" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#query-operation">http://www.w3.org/TR/sparql11-protocol/#query-operation</a></li>
+    
+  </ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-110
-111
-112</pre>
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 230</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_query identifier id'>query</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_@op ivar id'>@op</span> <span class='assign token'>=</span> <span class='symbol val'>:query</span>
   <span class='rubyid_parse_response identifier id'>parse_response</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="request-instance_method">
+  
+    - (<tt>Net::HTTPResponse</tt>) <strong>request</strong>(query, headers = {}) {|response| ... } <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Performs an HTTP request against the SPARQL endpoint.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>headers</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>response</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>response</span>
+      
+      
+        <span class='type'>(<tt>Net::HTTPResponse</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Net::HTTPResponse</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#query-operation" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#query-operation">http://www.w3.org/TR/sparql11-protocol/#query-operation</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 465</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_request identifier id'>request</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+  <span class='rubyid_method identifier id'>method</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:method</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_DEFAULT_METHOD constant id'>DEFAULT_METHOD</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span>
+  <span class='rubyid_request identifier id'>request</span> <span class='assign token'>=</span> <span class='rubyid_send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;make_#{method}_request&quot;</span><span class='comma token'>,</span> <span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span>
+
+  <span class='rubyid_request identifier id'>request</span><span class='dot token'>.</span><span class='rubyid_basic_auth identifier id'>basic_auth</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='comma token'>,</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_password identifier id'>password</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span> <span class='andop op'>&amp;&amp;</span> <span class='notop op'>!</span><span class='rubyid_url identifier id'>url</span><span class='dot token'>.</span><span class='rubyid_user identifier id'>user</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+
+  <span class='rubyid_response identifier id'>response</span> <span class='assign token'>=</span> <span class='rubyid_@http ivar id'>@http</span><span class='dot token'>.</span><span class='rubyid_request identifier id'>request</span><span class='lparen token'>(</span><span class='rubyid_url identifier id'>url</span><span class='comma token'>,</span> <span class='rubyid_request identifier id'>request</span><span class='rparen token'>)</span>
+  <span class='rubyid_if if kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
+    <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='rparen token'>)</span>
+  <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_response identifier id'>response</span>
+  <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -2079,7 +3125,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Executes a SPARQL query and returns the Net::HTTP::Response of the result.</p>
+    <p>Executes a SPARQL query and returns the Net::HTTP::Response of the
+result.</p>
 
 
   </div>
@@ -2163,29 +3210,30 @@
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137</pre>
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 259</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_response identifier id'>response</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='rubyid_@headers ivar id'>@headers</span><span class='lbrack token'>[</span><span class='string val'>'Accept'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span>
-  <span class='rubyid_get identifier id'>get</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_response identifier id'>response</span><span class='bitor op'>|</span>
+  <span class='rubyid_headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:headers</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='rubyid_headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Accept'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:content_type</span><span class='rbrack token'>]</span>
+  <span class='rubyid_request identifier id'>request</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_headers identifier id'>headers</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_response identifier id'>response</span><span class='bitor op'>|</span>
     <span class='rubyid_case case kw'>case</span> <span class='rubyid_response identifier id'>response</span>
       <span class='rubyid_when when kw'>when</span> <span class='rubyid_Net constant id'>Net</span><span class='colon2 op'>::</span><span class='rubyid_HTTPBadRequest constant id'>HTTPBadRequest</span>  <span class='comment val'># 400 Bad Request</span>
         <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_MalformedQuery constant id'>MalformedQuery</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='dot token'>.</span><span class='rubyid_body identifier id'>body</span><span class='rparen token'>)</span>
@@ -2197,7 +3245,6 @@
         <span class='rubyid_response identifier id'>response</span>
     <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_end end kw'>end</span>
-
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -2258,15 +3305,124 @@
       <pre class="lines">
 
 
-62
-63
-64</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-34a6d6e90758/lib/sparql/client.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 85</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_select identifier id'>select</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='rubyid_call_query_method identifier id'>call_query_method</span><span class='lparen token'>(</span><span class='symbol val'>:select</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='rubyid_args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update-instance_method">
+  
+    - <strong>update</strong>(query, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Executes a SPARQL update operation.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:content_type</span>
+          <span class="type">(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+        <li>
+          <span class="name">:headers</span>
+          <span class="type">(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-protocol/#update-operation" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/#update-operation">http://www.w3.org/TR/sparql11-protocol/#update-operation</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+244
+245
+246
+247
+248</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/sparql-client-48cbe0441e20/lib/sparql/client.rb', line 244</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_update identifier id'>update</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='rubyid_@op ivar id'>@op</span> <span class='assign token'>=</span> <span class='symbol val'>:update</span>
+  <span class='rubyid_parse_response identifier id'>parse_response</span><span class='lparen token'>(</span><span class='rubyid_response identifier id'>response</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='rubyid_self self kw'>self</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -2279,7 +3435,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Dec  7 14:19:04 2012 by
+  Generated on Mon Jan 21 10:31:25 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.8.7).
 </div>

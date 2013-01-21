@@ -100,8 +100,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb<span class="defines">,<br />
-  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader/nokogiri.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader/rexml.rb</span>
+    <dd class="r1 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb<span class="defines">,<br />
+  vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader/nokogiri.rb,<br /> vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader/rexml.rb</span>
 </dd>
   
 </dl>
@@ -348,6 +348,34 @@ $}</span><span class='comma token'>,</span>
 
   
     <span class="summary_desc"><div class='inline'><p>Returns the XML implementation module for this reader instance.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repository-instance_method" title="#repository (instance method)">- (RDF::Repository) <strong>repository</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Repository used for collecting triples.</p>
 </div></span>
   
 </li>
@@ -619,7 +647,7 @@ $}</span><span class='comma token'>,</span>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Expansion.html" title="RDF::RDFa::Expansion (module)">Expansion</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Expansion.html#expand-instance_method" title="RDF::RDFa::Expansion#expand (method)">#expand</a></span>, <span class='object_link'><a href="Expansion.html#rule-instance_method" title="RDF::RDFa::Expansion#rule (method)">#rule</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Expansion.html#copy_properties-instance_method" title="RDF::RDFa::Expansion#copy_properties (method)">#copy_properties</a></span>, <span class='object_link'><a href="Expansion.html#expand-instance_method" title="RDF::RDFa::Expansion#expand (method)">#expand</a></span>, <span class='object_link'><a href="Expansion.html#rule-instance_method" title="RDF::RDFa::Expansion#rule (method)">#rule</a></span></p>
 
   
   
@@ -778,6 +806,21 @@ $}</span><span class='comma token'>,</span>
           </span>
           
             &mdash; <div class='inline'><p>whether to perform OWL2 expansion on the resulting graph</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:reference_folding</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>whether to perform RDFa property copying on the resulting graph</p>
 </div>
           
         </li>
@@ -946,13 +989,6 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-270
-271
-272
-273
-274
-275
-276
 277
 278
 279
@@ -1014,15 +1050,26 @@ Value is an array containing on or both of :output or :processor.</p>
 335
 336
 337
-338</pre>
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 277</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_input identifier id'>input</span> <span class='assign token'>=</span> <span class='rubyid_$stdin gvar id'>$stdin</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_super super kw'>super</span> <span class='rubyid_do do kw'>do</span>
     <span class='rubyid_@debug ivar id'>@debug</span> <span class='assign token'>=</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:debug</span><span class='rbrack token'>]</span>
-    
+    <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:reference_folding</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_true true kw'>true</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_@options ivar id'>@options</span><span class='rparen token'>)</span>
+    <span class='rubyid_@repository ivar id'>@repository</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+
     <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_case case kw'>case</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span>
     <span class='rubyid_when when kw'>when</span> <span class='rubyid_String constant id'>String</span><span class='comma token'>,</span> <span class='rubyid_Symbol constant id'>Symbol</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>','</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:strip</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='symbol val'>:to_sym</span><span class='rparen token'>)</span>
     <span class='rubyid_when when kw'>when</span> <span class='rubyid_Array constant id'>Array</span> <span class='rubyid_then then kw'>then</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_o identifier id'>o</span><span class='bitor op'>|</span> <span class='rubyid_o identifier id'>o</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_to_sym identifier id'>to_sym</span><span class='rbrace token'>}</span>
@@ -1144,7 +1191,7 @@ Value is an array containing on or both of :output or :processor.</p>
 87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 85</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_host_language identifier id'>host_language</span>
   <span class='rubyid_@host_language ivar id'>@host_language</span>
@@ -1195,15 +1242,71 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-239
-240
-241</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 101</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_implementation identifier id'>implementation</span>
   <span class='rubyid_@implementation ivar id'>@implementation</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="repository-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Repository.html" title="RDF::Repository (class)">RDF::Repository</a></span></tt>) <strong>repository</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Repository used for collecting triples.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Repository.html" title="RDF::Repository (class)">RDF::Repository</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 95</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_repository identifier id'>repository</span>
+  <span class='rubyid_@repository ivar id'>@repository</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1256,7 +1359,7 @@ Value is an array containing on or both of :output or :processor.</p>
 92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 90</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_version identifier id'>version</span>
   <span class='rubyid_@version ivar id'>@version</span>
@@ -1299,39 +1402,39 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-1386
-1387
-1388
-1389
-1390
-1391
-1392
-1393
-1394
-1395
-1396
-1397
-1398
-1399
-1400
-1401
-1402
-1403
-1404
-1405
-1406
-1407
-1408
-1409
-1410
-1411
-1412
 1413
 1414
-1415</pre>
+1415
+1416
+1417
+1418
+1419
+1420
+1421
+1422
+1423
+1424
+1425
+1426
+1427
+1428
+1429
+1430
+1431
+1432
+1433
+1434
+1435
+1436
+1437
+1438
+1439
+1440
+1441
+1442</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 1386</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 1413</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_curie_to_resource_or_bnode identifier id'>curie_to_resource_or_bnode</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_curie identifier id'>curie</span><span class='comma token'>,</span> <span class='rubyid_uri_mappings identifier id'>uri_mappings</span><span class='comma token'>,</span> <span class='rubyid_subject identifier id'>subject</span><span class='comma token'>,</span> <span class='rubyid_restrictions identifier id'>restrictions</span><span class='rparen token'>)</span>
   <span class='comment val'># URI mappings for CURIEs default to XHV, rather than the default doc namespace</span>
@@ -1424,15 +1527,6 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-348
-349
-350
-351
-352
-353
-354
-355
-356
 357
 358
 359
@@ -1490,30 +1584,37 @@ Value is an array containing on or both of :output or :processor.</p>
 411
 412
 413
-414</pre>
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 348</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 357</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-
-  <span class='rubyid_if if kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab_expansion</span><span class='rbrack token'>]</span>
-    <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab_expansion</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_false false kw'>false</span>
-    <span class='rubyid_expand identifier id'>expand</span><span class='dot token'>.</span><span class='rubyid_each_statement identifier id'>each_statement</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-    <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab_expansion</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_@callback ivar id'>@callback</span> <span class='assign token'>=</span> <span class='rubyid_block identifier id'>block</span>
-
-    <span class='comment val'># Process any saved callbacks (processor graph issues)</span>
-    <span class='rubyid_@saved_callbacks ivar id'>@saved_callbacks</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_s identifier id'>s</span><span class='bitor op'>|</span> <span class='rubyid_@callback ivar id'>@callback</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_s identifier id'>s</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@saved_callbacks ivar id'>@saved_callbacks</span>
-
+  <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_@processed ivar id'>@processed</span> <span class='orop op'>||</span> <span class='rubyid_@root ivar id'>@root</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
     <span class='comment val'># Add prefix definitions from host defaults</span>
     <span class='rubyid_@host_defaults ivar id'>@host_defaults</span><span class='lbrack token'>[</span><span class='symbol val'>:uri_mappings</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each_pair identifier id'>each_pair</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='bitor op'>|</span>
       <span class='rubyid_prefix identifier id'>prefix</span><span class='lparen token'>(</span><span class='rubyid_prefix identifier id'>prefix</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
     <span class='rubyid_end end kw'>end</span>
 
     <span class='comment val'># parse</span>
-    <span class='rubyid_return return kw'>return</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_@root ivar id'>@root</span>
     <span class='rubyid_parse_whole_document identifier id'>parse_whole_document</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='lparen token'>(</span><span class='rubyid_base_uri identifier id'>base_uri</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
 
     <span class='rubyid_def def kw'>def</span> <span class='rubyid_extract_script identifier id'>extract_script</span><span class='lparen token'>(</span><span class='rubyid_el identifier id'>el</span><span class='comma token'>,</span> <span class='rubyid_input identifier id'>input</span><span class='comma token'>,</span> <span class='rubyid_type identifier id'>type</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
@@ -1537,7 +1638,7 @@ Value is an array containing on or both of :output or :processor.</p>
     <span class='comment val'># Look for Embedded Turtle and RDF/XML</span>
     <span class='rubyid_unless unless kw'>unless</span> <span class='rubyid_@root ivar id'>@root</span><span class='dot token'>.</span><span class='rubyid_xpath identifier id'>xpath</span><span class='lparen token'>(</span><span class='string val'>&quot;//rdf:RDF&quot;</span><span class='comma token'>,</span> <span class='string val'>&quot;xmlns:rdf&quot;</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
       <span class='rubyid_extract_script identifier id'>extract_script</span><span class='lparen token'>(</span><span class='rubyid_@root ivar id'>@root</span><span class='comma token'>,</span> <span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='string val'>&quot;application/rdf+xml&quot;</span><span class='comma token'>,</span> <span class='rubyid_@options ivar id'>@options</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
-        <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+        <span class='rubyid_@repository ivar id'>@repository</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
       <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_end end kw'>end</span>
 
@@ -1546,7 +1647,7 @@ Value is an array containing on or both of :output or :processor.</p>
       <span class='rubyid_type identifier id'>type</span> <span class='assign token'>=</span> <span class='rubyid_el identifier id'>el</span><span class='dot token'>.</span><span class='rubyid_attribute identifier id'>attribute</span><span class='lparen token'>(</span><span class='string val'>&quot;type&quot;</span><span class='rparen token'>)</span>
       
       <span class='rubyid_extract_script identifier id'>extract_script</span><span class='lparen token'>(</span><span class='rubyid_el identifier id'>el</span><span class='comma token'>,</span> <span class='rubyid_el identifier id'>el</span><span class='dot token'>.</span><span class='rubyid_inner_text identifier id'>inner_text</span><span class='comma token'>,</span> <span class='rubyid_type identifier id'>type</span><span class='comma token'>,</span> <span class='rubyid_@options ivar id'>@options</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
-        <span class='rubyid_block identifier id'>block</span><span class='dot token'>.</span><span class='rubyid_call identifier id'>call</span><span class='lparen token'>(</span><span class='rubyid_statement identifier id'>statement</span><span class='rparen token'>)</span>
+        <span class='rubyid_@repository ivar id'>@repository</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_statement identifier id'>statement</span>
       <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_end end kw'>end</span>
     
@@ -1555,10 +1656,30 @@ Value is an array containing on or both of :output or :processor.</p>
       <span class='rubyid_begin begin kw'>begin</span>
         <span class='rubyid_require identifier id'>require</span> <span class='string val'>'rdf/microdata'</span>
         <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='string val'>&quot;process microdata&quot;</span><span class='rparen token'>)</span>
-        <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Microdata constant id'>Microdata</span><span class='colon2 op'>::</span><span class='rubyid_Reader constant id'>Reader</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
+        <span class='rubyid_@repository ivar id'>@repository</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Microdata constant id'>Microdata</span><span class='colon2 op'>::</span><span class='rubyid_Reader constant id'>Reader</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
       <span class='rubyid_rescue rescue kw'>rescue</span>
         <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_@doc ivar id'>@doc</span><span class='comma token'>,</span> <span class='string val'>&quot;microdata detected, not processed&quot;</span><span class='rparen token'>)</span>
       <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_end end kw'>end</span>
+
+    <span class='comment val'># Perform property copying</span>
+    <span class='rubyid_copy_properties identifier id'>copy_properties</span><span class='lparen token'>(</span><span class='rubyid_@repository ivar id'>@repository</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:reference_folding</span><span class='rbrack token'>]</span>
+
+    <span class='comment val'># Perform vocabulary expansion</span>
+    <span class='rubyid_expand identifier id'>expand</span><span class='lparen token'>(</span><span class='rubyid_@repository ivar id'>@repository</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab_expansion</span><span class='rbrack token'>]</span>
+    
+    <span class='rubyid_@processed ivar id'>@processed</span> <span class='assign token'>=</span> <span class='rubyid_true true kw'>true</span>
+  <span class='rubyid_end end kw'>end</span>
+
+  <span class='comment val'># Return statements in the default graph for</span>
+  <span class='comment val'># statements in the associated named or default graph from the</span>
+  <span class='comment val'># processed repository</span>
+  <span class='rubyid_@repository ivar id'>@repository</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
+    <span class='rubyid_case case kw'>case</span> <span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_nil nil kw'>nil</span>
+      <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_statement identifier id'>statement</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:output</span><span class='rparen token'>)</span>
+    <span class='rubyid_when when kw'>when</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFA constant id'>RDFA</span><span class='dot token'>.</span><span class='rubyid_ProcessorGraph constant id'>ProcessorGraph</span>
+      <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Statement constant id'>Statement</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='rubyid_statement identifier id'>statement</span><span class='dot token'>.</span><span class='rubyid_to_triple identifier id'>to_triple</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_@options ivar id'>@options</span><span class='lbrack token'>[</span><span class='symbol val'>:rdfagraph</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:processor</span><span class='rparen token'>)</span>
     <span class='rubyid_end end kw'>end</span>
   <span class='rubyid_end end kw'>end</span>
 <span class='rubyid_end end kw'>end</span>
@@ -1643,14 +1764,14 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-424
-425
-426
-427
-428</pre>
+442
+443
+444
+445
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 424</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 442</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_each_triple identifier id'>each_triple</span><span class='lparen token'>(</span><span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
   <span class='rubyid_each_statement identifier id'>each_statement</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_statement identifier id'>statement</span><span class='bitor op'>|</span>
@@ -1688,27 +1809,27 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-1366
-1367
-1368
-1369
-1370
-1371
-1372
-1373
-1374
-1375
-1376
-1377
-1378
-1379
-1380
-1381
-1382
-1383</pre>
+1393
+1394
+1395
+1396
+1397
+1398
+1399
+1400
+1401
+1402
+1403
+1404
+1405
+1406
+1407
+1408
+1409
+1410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 1366</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 1393</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_process_term identifier id'>process_term</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:vocab</span><span class='rbrack token'>]</span>
@@ -1725,7 +1846,7 @@ Value is an array containing on or both of :output or :processor.</p>
   <span class='rubyid_end end kw'>end</span>
 
   <span class='comment val'># Finally, if there is no local default vocabulary, the term has no associated URI and must be ignored.</span>
-  <span class='rubyid_add_warning identifier id'>add_warning</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Term #{value} is not defined&quot;</span><span class='rparen token'>)</span>
+  <span class='rubyid_add_warning identifier id'>add_warning</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Term #{value} is not defined&quot;</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFA constant id'>RDFA</span><span class='dot token'>.</span><span class='rubyid_UnresolvedTerm constant id'>UnresolvedTerm</span><span class='rparen token'>)</span>
   <span class='rubyid_nil nil kw'>nil</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
@@ -1749,33 +1870,6 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-1304
-1305
-1306
-1307
-1308
-1309
-1310
-1311
-1312
-1313
-1314
-1315
-1316
-1317
-1318
-1319
-1320
-1321
-1322
-1323
-1324
-1325
-1326
-1327
-1328
-1329
-1330
 1331
 1332
 1333
@@ -1808,10 +1902,37 @@ Value is an array containing on or both of :output or :processor.</p>
 1360
 1361
 1362
-1363</pre>
+1363
+1364
+1365
+1366
+1367
+1368
+1369
+1370
+1371
+1372
+1373
+1374
+1375
+1376
+1377
+1378
+1379
+1380
+1381
+1382
+1383
+1384
+1385
+1386
+1387
+1388
+1389
+1390</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 1304</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 1331</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_process_uri identifier id'>process_uri</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='comma token'>,</span> <span class='rubyid_base identifier id'>base</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='rubyid_return return kw'>return</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
@@ -1827,7 +1948,7 @@ Value is an array containing on or both of :output or :processor.</p>
     <span class='rubyid_if if kw'>if</span> <span class='rubyid_uri identifier id'>uri</span>
       <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;process_uri: #{value} =&gt; safeCURIE =&gt; &lt;#{uri}&gt;&quot;</span><span class='rbrace token'>}</span>
     <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_add_warning identifier id'>add_warning</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{value} not matched as a safeCURIE&quot;</span><span class='rparen token'>)</span>
+      <span class='rubyid_add_warning identifier id'>add_warning</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{value} not matched as a safeCURIE&quot;</span><span class='comma token'>,</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_RDFA constant id'>RDFA</span><span class='dot token'>.</span><span class='rubyid_UnresolvedCURIE constant id'>UnresolvedCURIE</span><span class='rparen token'>)</span>
     <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_uri identifier id'>uri</span>
   <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:term_mappings</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_TERM_REGEXP constant id'>TERM_REGEXP</span><span class='dot token'>.</span><span class='rubyid_match identifier id'>match</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_restrictions identifier id'>restrictions</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:term</span><span class='rparen token'>)</span>
@@ -1904,14 +2025,14 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-1298
-1299
-1300
-1301
-1302</pre>
+1325
+1326
+1327
+1328
+1329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 1298</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 1325</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_process_uris identifier id'>process_uris</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='comma token'>,</span> <span class='rubyid_base identifier id'>base</span><span class='comma token'>,</span> <span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
   <span class='rubyid_return return kw'>return</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_value identifier id'>value</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
@@ -1949,18 +2070,6 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-658
-659
-660
-661
-662
-663
-664
-665
-666
-667
-668
-669
 670
 671
 672
@@ -2586,10 +2695,37 @@ Value is an array containing on or both of :output or :processor.</p>
 1292
 1293
 1294
-1295</pre>
+1295
+1296
+1297
+1298
+1299
+1300
+1301
+1302
+1303
+1304
+1305
+1306
+1307
+1308
+1309
+1310
+1311
+1312
+1313
+1314
+1315
+1316
+1317
+1318
+1319
+1320
+1321
+1322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 658</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 670</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_traverse identifier id'>traverse</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='rparen token'>)</span>
   <span class='rubyid_if if kw'>if</span> <span class='rubyid_element identifier id'>element</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span>
@@ -2689,6 +2825,21 @@ Value is an array containing on or both of :output or :processor.</p>
   <span class='rubyid_language identifier id'>language</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_language identifier id'>language</span><span class='dot token'>.</span><span class='rubyid_to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
   <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;HTML5 [3.2.3.3] lang: #{language.inspect}&quot;</span><span class='rbrace token'>}</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_language identifier id'>language</span>
 
+  <span class='comment val'># From HTML5, if the property attribute and the rel and/or rev attribute exists on the same element, the non-CURIE and non-URI rel and rev values are ignored. If, after this, the value of rel and/or rev becomes empty, then the processor must act as if the respective attribute is not present.</span>
+  <span class='rubyid_if if kw'>if</span> <span class='lbrack token'>[</span><span class='symbol val'>:html5</span><span class='comma token'>,</span> <span class='symbol val'>:xhtml5</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_include? fid id'>include?</span><span class='lparen token'>(</span><span class='rubyid_@host_language ivar id'>@host_language</span><span class='rparen token'>)</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:property</span><span class='rbrack token'>]</span> <span class='andop op'>&amp;&amp;</span> <span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rev</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+    <span class='rubyid_old_rel identifier id'>old_rel</span><span class='comma token'>,</span> <span class='rubyid_old_rev identifier id'>old_rev</span> <span class='assign token'>=</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rev</span><span class='rbrack token'>]</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_old_rel identifier id'>old_rel</span>
+      <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/\s+/</span><span class='rubyid_m identifier id'>m</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_r identifier id'>r</span><span class='bitor op'>|</span> <span class='notop op'>!</span><span class='rubyid_r identifier id'>r</span><span class='dot token'>.</span><span class='rubyid_index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
+      <span class='rubyid_attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:rel</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+      <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;HTML5: @rel was #{old_rel}, now #{attrs[:rel]}&quot;</span><span class='rbrace token'>}</span>
+    <span class='rubyid_end end kw'>end</span>
+    <span class='rubyid_if if kw'>if</span> <span class='rubyid_old_rev identifier id'>old_rev</span>
+      <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rev</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rev</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_split identifier id'>split</span><span class='lparen token'>(</span><span class='regexp val'>/\s+/</span><span class='rubyid_m identifier id'>m</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_r identifier id'>r</span><span class='bitor op'>|</span> <span class='notop op'>!</span><span class='rubyid_r identifier id'>r</span><span class='dot token'>.</span><span class='rubyid_index identifier id'>index</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>&quot; &quot;</span><span class='rparen token'>)</span>
+      <span class='rubyid_attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='rubyid_delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:rev</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rev</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_empty? fid id'>empty?</span>
+      <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;HTML5: @rev was #{old_rev}, now #{attrs[:rev]}&quot;</span><span class='rbrace token'>}</span>
+    <span class='rubyid_end end kw'>end</span>
+  <span class='rubyid_end end kw'>end</span>
+
   <span class='comment val'># rels and revs</span>
   <span class='rubyid_rels identifier id'>rels</span> <span class='assign token'>=</span> <span class='rubyid_process_uris identifier id'>process_uris</span><span class='lparen token'>(</span><span class='rubyid_element identifier id'>element</span><span class='comma token'>,</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:rel</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='comma token'>,</span> <span class='rubyid_base identifier id'>base</span><span class='comma token'>,</span>
                       <span class='symbol val'>:uri_mappings</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='rubyid_uri_mappings identifier id'>uri_mappings</span><span class='comma token'>,</span>
@@ -2742,7 +2893,7 @@ Value is an array containing on or both of :output or :processor.</p>
 
       <span class='comment val'># if the @typeof attribute is present, set typed resource to new subject</span>
       <span class='rubyid_typed_resource identifier id'>typed_resource</span> <span class='assign token'>=</span> <span class='rubyid_new_subject identifier id'>new_subject</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:typeof</span><span class='rbrack token'>]</span>
-    <span class='rubyid_else else kw'>else</span>
+    <span class='rubyid_else else kw'>else</span> <span class='comment val'># rdfa1.1</span>
       <span class='comment val'># If the current element contains no @rel or @rev attribute, then the next step is to establish a value for new subject.</span>
       <span class='comment val'># This step has two possible alternatives.</span>
       <span class='comment val'>#  1. If the current element contains the @property attribute, but does not contain the @content or the @datatype attributes, then</span>
@@ -2811,7 +2962,7 @@ Value is an array containing on or both of :output or :processor.</p>
           <span class='comment val'># if no URI is provided, then first check to see if the element is the head or body element.</span>
           <span class='comment val'># If it is, then act as if the new subject is set to the parent object.</span>
           <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='dot token'>.</span><span class='rubyid_parent_object identifier id'>parent_object</span>
-        <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_element identifier id'>element</span> <span class='eq op'>==</span> <span class='rubyid_root identifier id'>root</span> <span class='andop op'>&amp;&amp;</span> <span class='rubyid_base identifier id'>base</span>
+        <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_element identifier id'>element</span> <span class='eq op'>==</span> <span class='rubyid_root identifier id'>root</span>
           <span class='comment val'># if the element is the root element of the document, then act as if there is an empty @about present,</span>
           <span class='comment val'># and process it according to the rule for @about, above;</span>
           <span class='rubyid_uri identifier id'>uri</span><span class='lparen token'>(</span><span class='rubyid_base identifier id'>base</span><span class='rparen token'>)</span>
@@ -2824,8 +2975,8 @@ Value is an array containing on or both of :output or :processor.</p>
           <span class='rubyid_evaluation_context identifier id'>evaluation_context</span><span class='dot token'>.</span><span class='rubyid_parent_object identifier id'>parent_object</span>
         <span class='rubyid_end end kw'>end</span>
 
-        <span class='comment val'># if @typeof is present, set the typed resource to the value of new subject&lt;/code&gt;</span>
-        <span class='rubyid_typed_resource identifier id'>typed_resource</span> <span class='opasgn op'>||=</span> <span class='rubyid_new_subject identifier id'>new_subject</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:typeof</span><span class='rbrack token'>]</span>
+        <span class='comment val'># If @typeof is present then typed resource is set to the resource obtained from the first match from the following rules:</span>
+        <span class='rubyid_typed_resource identifier id'>typed_resource</span> <span class='assign token'>=</span> <span class='rubyid_new_subject identifier id'>new_subject</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_attrs identifier id'>attrs</span><span class='lbrack token'>[</span><span class='symbol val'>:typeof</span><span class='rbrack token'>]</span>
       <span class='rubyid_end end kw'>end</span>
     <span class='rubyid_end end kw'>end</span>
 
@@ -3250,17 +3401,17 @@ Value is an array containing on or both of :output or :processor.</p>
       <pre class="lines">
 
 
-1417
-1418
-1419
-1420
-1421
-1422
-1423
-1424</pre>
+1444
+1445
+1446
+1447
+1448
+1449
+1450
+1451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-be1f67390797/lib/rdf/rdfa/reader.rb', line 1417</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-rdfa-967cd3514d7a/lib/rdf/rdfa/reader.rb', line 1444</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_uri identifier id'>uri</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='comma token'>,</span> <span class='rubyid_append identifier id'>append</span> <span class='assign token'>=</span> <span class='rubyid_nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_URI constant id'>URI</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_value identifier id'>value</span><span class='rparen token'>)</span>
@@ -3281,7 +3432,7 @@ Value is an array containing on or both of :output or :processor.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Dec  7 14:18:29 2012 by
+  Generated on Mon Jan 21 10:30:41 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.8.7).
 </div>
