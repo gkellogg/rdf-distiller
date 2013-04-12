@@ -1,7 +1,9 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Specify your gem's dependencies in github-lod.gemspec
 gemspec :name => ""
+
+gem 'rubygems-bundler'
 
 # Include non-released gems first
 gem 'rdf',              :git => "git://github.com/ruby-rdf/rdf.git"
