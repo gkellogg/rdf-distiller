@@ -10,9 +10,9 @@
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
@@ -83,7 +83,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-6f4f54b8bb07/lib/rdf/microdata/expansion.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/2.0.0/bundler/gems/rdf-microdata-6be295fac722/lib/rdf/microdata/expansion.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -209,13 +209,12 @@ which implementes RDF::Readable.</p>
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><span class='rubyid_scm identifier id'>scm</span><span class='minus op'>-</span><span class='rubyid_spo identifier id'>spo</span>
-<span class='lbrace token'>{</span><span class='rubyid_pq identifier id'>pq</span> <span class='rubyid_rdfs identifier id'>rdfs</span><span class='symbol val'>:subPropertyOf</span> <span class='rubyid_pw identifier id'>pw</span> <span class='dot token'>.</span> <span class='rubyid_pw identifier id'>pw</span> <span class='rubyid_rdfs identifier id'>rdfs</span><span class='symbol val'>:subPropertyOf</span> <span class='rubyid_p3 identifier id'>p3</span><span class='rbrace token'>}</span>
-   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='rubyid_p1 identifier id'>p1</span> <span class='rubyid_rdfs identifier id'>rdfs</span><span class='symbol val'>:subPropertyOf</span> <span class='rubyid_p3 identifier id'>p3</span><span class='rbrace token'>}</span>
+      <pre class="example code"><code>scm-spo
+{pq rdfs:subPropertyOf pw . pw rdfs:subPropertyOf p3}
+   =&gt; {p1 rdfs:subPropertyOf p3}
 
-<span class='rubyid_rdprp identifier id'>rdprp</span><span class='minus op'>-</span><span class='rubyid_spo1fs7 identifier id'>spo1fs7</span>
-<span class='lbrace token'>{</span><span class='rubyid_p1 identifier id'>p1</span> <span class='rubyid_rdfs identifier id'>rdfs</span><span class='symbol val'>:subPropertyOf</span> <span class='rubyid_p2 identifier id'>p2</span> <span class='dot token'>.</span> <span class='rubyid_x identifier id'>x</span> <span class='rubyid_p1 identifier id'>p1</span> <span class='rubyid_y identifier id'>y</span><span class='rbrace token'>}</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span><span class='rubyid_x identifier id'>x</span> <span class='rubyid_p2 identifier id'>p2</span> <span class='rubyid_y identifier id'>y</span><span class='rbrace token'>}</span>
-</pre>
+rdprp-spo1fs7
+{p1 rdfs:subPropertyOf p2 . x p1 y} =&gt; {x p2 y}</code></pre>
     
   </div>
 
@@ -262,23 +261,22 @@ which implementes RDF::Readable.</p>
 38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-6f4f54b8bb07/lib/rdf/microdata/expansion.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-microdata-6be295fac722/lib/rdf/microdata/expansion.rb', line 25</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_expand identifier id'>expand</span>
-  <span class='rubyid_repo identifier id'>repo</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Repository constant id'>Repository</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-  <span class='rubyid_repo identifier id'>repo</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_self self kw'>self</span>  <span class='comment val'># Add default graph</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span>
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Repository</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>  <span class='comment'># Add default graph
+</span>  
+  <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+  <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Loaded </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_content'> triples into default graph</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   
-  <span class='rubyid_count identifier id'>count</span> <span class='assign token'>=</span> <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_count identifier id'>count</span>
-  <span class='rubyid_add_debug identifier id'>add_debug</span><span class='lparen token'>(</span><span class='string val'>&quot;expand&quot;</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='dstring node'>&quot;Loaded #{repo.size} triples into default graph&quot;</span><span class='rbrace token'>}</span>
-  
-  <span class='rubyid_repo identifier id'>repo</span> <span class='assign token'>=</span> <span class='rubyid_owl_entailment identifier id'>owl_entailment</span><span class='lparen token'>(</span><span class='rubyid_repo identifier id'>repo</span><span class='rparen token'>)</span>
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_owl_entailment'>owl_entailment</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
 
-  <span class='comment val'># Return graph with default context</span>
-  <span class='rubyid_graph identifier id'>graph</span> <span class='assign token'>=</span> <span class='rubyid_RDF constant id'>RDF</span><span class='colon2 op'>::</span><span class='rubyid_Graph constant id'>Graph</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
-  <span class='rubyid_repo identifier id'>repo</span><span class='dot token'>.</span><span class='rubyid_statements identifier id'>statements</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='rubyid_st identifier id'>st</span><span class='bitor op'>|</span> <span class='rubyid_graph identifier id'>graph</span> <span class='lshft op'>&lt;&lt;</span> <span class='rubyid_st identifier id'>st</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_st identifier id'>st</span><span class='dot token'>.</span><span class='rubyid_context identifier id'>context</span><span class='dot token'>.</span><span class='rubyid_nil? fid id'>nil?</span><span class='rbrace token'>}</span>
-  <span class='rubyid_graph identifier id'>graph</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+  <span class='comment'># Return graph with default context
+</span>  <span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_st'>st</span> <span class='kw'>if</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_graph'>graph</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -304,12 +302,11 @@ which implementes RDF::Readable.</p>
 42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.8/bundler/gems/rdf-microdata-6f4f54b8bb07/lib/rdf/microdata/expansion.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-microdata-6be295fac722/lib/rdf/microdata/expansion.rb', line 40</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_rule identifier id'>rule</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-  <span class='rubyid_Rule constant id'>Rule</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='comma token'>,</span> <span class='rubyid_block identifier id'>block</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_rule'>rule</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -320,9 +317,9 @@ which implementes RDF::Readable.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Feb  3 13:49:27 2013 by
+  Generated on Sun May 12 13:16:08 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.3 (ruby-1.8.7).
+  0.8.6.1 (ruby-2.0.0).
 </div>
 
   </body>

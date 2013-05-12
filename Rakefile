@@ -67,7 +67,7 @@ task :doap do
   frame = File.open(File.expand_path("../etc/doap-frame.jsonld", __FILE__))
   JSON::LD::API.fromRDF(g.each_statement.to_a) do |expanded|
     puts "expanded"
-    JSON::LD::API.frame(expanded, frame, nil) do |framed|
+    JSON::LD::API.frame(expanded, frame) do |framed|
       puts "frame"
       File.open("etc/doap.jsonld", "w") do |f|
         f.write(framed.to_json(JSON::LD::JSON_STATE))

@@ -1,0 +1,1298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RDF::MergeGraph
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (M)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span>
+     &raquo; 
+    <span class="title">MergeGraph</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: RDF::MergeGraph
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">RDF::MergeGraph</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Countable.html" title="RDF::Countable (module)">Countable</a></span>, <span class='object_link'><a href="Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span>, <span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">Queryable</a></span>, <span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>A Merged graph.</p>
+
+<p>Implements a merged graph, containing statements from one or more source graphs. This is done through lazy evaluation of the sources, so that a copy of each source isn&#39;t required.</p>
+
+<p>This class can also be used to change the context (graph name) of triples from the name used in the source.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Constructing a merge with arguments</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_aggregate'>aggregate</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>AggregateRepo</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_repo1'>repo1</span><span class='comma'>,</span> <span class='id identifier rubyid_repo2'>repo2</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Constructing an aggregate with closure</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_aggregate'>aggregate</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>MergeGraph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_graph1'>graph1</span><span class='comma'>,</span> <span class='id identifier rubyid_context1'>context1</span>
+  <span class='id identifier rubyid_source'>source</span> <span class='id identifier rubyid_graph2'>graph2</span><span class='comma'>,</span> <span class='id identifier rubyid_context2'>context2</span>
+  <span class='id identifier rubyid_name'>name</span> <span class='kw'>false</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/rdf11-mt/#dfn-merge" target="_parent" title="http://www.w3.org/TR/rdf11-mt/#dfn-merge">http://www.w3.org/TR/rdf11-mt/#dfn-merge</a></li>
+    
+  </ul>
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#context-instance_method" title="#context (instance method)">- (Array&lt;RDF::URI, false&gt;) <strong>context</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Name of this graph, used for setting the context on returned <code>Statements</code>.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sources-instance_method" title="#sources (instance method)">- (Array&lt;Array&lt;(RDF::Queryable, RDF::Resource)&gt;&gt;) <strong>sources</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The set of aggregated <code>queryable</code> instances included in this aggregate.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each-instance_method" title="#each (instance method)">- (Object) <strong>each</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each_graph-instance_method" title="#each_graph (instance method)">- (Object) <strong>each_graph</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over each graph, in order, finding named graphs from the most recently added <code>source</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#graph%3F-instance_method" title="#graph? (instance method)">- (Boolean) <strong>graph?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> to indicate that this is a graph.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (MergeGraph) <strong>initialize</strong>(queryable = [], options = {}) {|self| ... }</a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new aggregation instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">- (RDF::MergeGraph) <strong>name</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Set the context for statements in this graph.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#named%3F-instance_method" title="#named? (instance method)">- (Boolean) <strong>named?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this is a named graph.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source-instance_method" title="#source (instance method)">- (RDF::MergeGraph) <strong>source</strong>(queryable, context) </a>
+    
+
+    
+      (also: #add)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Add a queryable to the set of constituent queryable instances.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unnamed%3F-instance_method" title="#unnamed? (instance method)">- (Boolean) <strong>unnamed?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this is a unnamed graph.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#writable%3F-instance_method" title="#writable? (instance method)">- (Boolean) <strong>writable?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>MergeGraph is writable if any source is writable.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">Queryable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Queryable.html#concise_bounded_description-instance_method" title="RDF::Queryable#concise_bounded_description (method)">#concise_bounded_description</a></span>, <span class='object_link'><a href="Queryable.html#first-instance_method" title="RDF::Queryable#first (method)">#first</a></span>, <span class='object_link'><a href="Queryable.html#first_literal-instance_method" title="RDF::Queryable#first_literal (method)">#first_literal</a></span>, <span class='object_link'><a href="Queryable.html#first_object-instance_method" title="RDF::Queryable#first_object (method)">#first_object</a></span>, <span class='object_link'><a href="Queryable.html#first_predicate-instance_method" title="RDF::Queryable#first_predicate (method)">#first_predicate</a></span>, <span class='object_link'><a href="Queryable.html#first_subject-instance_method" title="RDF::Queryable#first_subject (method)">#first_subject</a></span>, <span class='object_link'><a href="Queryable.html#first_value-instance_method" title="RDF::Queryable#first_value (method)">#first_value</a></span>, <span class='object_link'><a href="Queryable.html#query-instance_method" title="RDF::Queryable#query (method)">#query</a></span>, <span class='object_link'><a href="Queryable.html#query_execute-instance_method" title="RDF::Queryable#query_execute (method)">#query_execute</a></span>, <span class='object_link'><a href="Queryable.html#query_without_sparql-instance_method" title="RDF::Queryable#query_without_sparql (method)">#query_without_sparql</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Enumerable.html#contexts-instance_method" title="RDF::Enumerable#contexts (method)">#contexts</a></span>, <span class='object_link'><a href="Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="Enumerable.html#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span>, <span class='object_link'><a href="Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="Enumerable.html#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span>, <span class='object_link'><a href="Enumerable.html#enum_context-instance_method" title="RDF::Enumerable#enum_context (method)">#enum_context</a></span>, <span class='object_link'><a href="Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="Enumerable.html#invalid%3F-instance_method" title="RDF::Enumerable#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">#supports?</a></span>, <span class='object_link'><a href="Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="Enumerable.html#to_hash-instance_method" title="RDF::Enumerable#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span>, <span class='object_link'><a href="Enumerable.html#valid%3F-instance_method" title="RDF::Enumerable#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="Enumerable.html#validate%21-instance_method" title="RDF::Enumerable#validate! (method)">#validate!</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">#alias_method</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Isomorphic.html#bijection_to-instance_method" title="RDF::Isomorphic#bijection_to (method)">#bijection_to</a></span>, <span class='object_link'><a href="Isomorphic.html#isomorphic_with%3F-instance_method" title="RDF::Isomorphic#isomorphic_with? (method)">#isomorphic_with?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Value.html#anonymous%3F-instance_method" title="RDF::Value#anonymous? (method)">#anonymous?</a></span>, <span class='object_link'><a href="Value.html#constant%3F-instance_method" title="RDF::Value#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="Value.html#inspect-instance_method" title="RDF::Value#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Value.html#inspect%21-instance_method" title="RDF::Value#inspect! (method)">#inspect!</a></span>, <span class='object_link'><a href="Value.html#invalid%3F-instance_method" title="RDF::Value#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="Value.html#iri%3F-instance_method" title="RDF::Value#iri? (method)">#iri?</a></span>, <span class='object_link'><a href="Value.html#list%3F-instance_method" title="RDF::Value#list? (method)">#list?</a></span>, <span class='object_link'><a href="Value.html#literal%3F-instance_method" title="RDF::Value#literal? (method)">#literal?</a></span>, <span class='object_link'><a href="Value.html#node%3F-instance_method" title="RDF::Value#node? (method)">#node?</a></span>, <span class='object_link'><a href="Value.html#resource%3F-instance_method" title="RDF::Value#resource? (method)">#resource?</a></span>, <span class='object_link'><a href="Value.html#statement%3F-instance_method" title="RDF::Value#statement? (method)">#statement?</a></span>, <span class='object_link'><a href="Value.html#term%3F-instance_method" title="RDF::Value#term? (method)">#term?</a></span>, <span class='object_link'><a href="Value.html#to_nquads-instance_method" title="RDF::Value#to_nquads (method)">#to_nquads</a></span>, <span class='object_link'><a href="Value.html#to_ntriples-instance_method" title="RDF::Value#to_ntriples (method)">#to_ntriples</a></span>, <span class='object_link'><a href="Value.html#to_rdf-instance_method" title="RDF::Value#to_rdf (method)">#to_rdf</a></span>, <span class='object_link'><a href="Value.html#type_error-instance_method" title="RDF::Value#type_error (method)">#type_error</a></span>, <span class='object_link'><a href="Value.html#uri%3F-instance_method" title="RDF::Value#uri? (method)">#uri?</a></span>, <span class='object_link'><a href="Value.html#valid%3F-instance_method" title="RDF::Value#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="Value.html#validate%21-instance_method" title="RDF::Value#validate! (method)">#validate!</a></span>, <span class='object_link'><a href="Value.html#variable%3F-instance_method" title="RDF::Value#variable? (method)">#variable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">MergeGraph</a></span></tt>) <strong>initialize</strong>(queryable = [], options = {}) {|self| ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new aggregation instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>({})</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:context</span>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+        <li>
+          <span class="name">:name</span>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>alias for :context</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>merger</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>self</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">RDF::MergeGraph</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ignored</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@sources</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
+    <span class='kw'>when</span> <span class='int'>1</span> <span class='kw'>then</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='kw'>else</span> <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice super">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <span class='object_link'><a href="Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">RDF::Enumerable</a></span>
+    
+  </p>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="context-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, false&gt;</tt>) <strong>context</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Name of this graph, used for setting the context on returned <code>Statements</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="URI.html" title="RDF::URI (class)">RDF::URI</a></span>, false&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
+  <span class='ivar'>@context</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="sources-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;(<span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span>, <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>)&gt;&gt;</tt>) <strong>sources</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The set of aggregated <code>queryable</code> instances included in this aggregate</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;(<span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span>, <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>)&gt;&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span>
+  <span class='ivar'>@sources</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="each-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>each</strong>(&amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Enumerable.html#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">Enumerable#each_statement</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+152
+153
+154
+155
+156
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 152</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='comment'># Add everything to a new graph for de-duplication
+</span>  <span class='id identifier rubyid_tmp'>tmp</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@context</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='id identifier rubyid_ctx'>ctx</span><span class='rparen'>)</span><span class='op'>|</span>
+    <span class='id identifier rubyid_tmp'>tmp</span> <span class='op'>&lt;&lt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ctx'>ctx</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:data</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_source'>source</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_tmp'>tmp</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each_graph-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>each_graph</strong>(&amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over each graph, in order, finding named graphs from the most recently added <code>source</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">Enumerable#each_graph</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+183
+184
+185
+186
+187
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 183</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each_graph'>each_graph</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_enum_graph'>enum_graph</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="graph?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>graph?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> to indicate that this is a graph.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_graph?'>graph?</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">RDF::MergeGraph</a></span></tt>) <strong>name</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Set the context for statements in this graph</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>, <tt>false</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">RDF::MergeGraph</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>self</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+111
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 111</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="named?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>named?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The next release, graphs will not be named, this will return false</p>
+</div>
+  </div>
+
+<p>Returns <code>true</code> if this is a named graph.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_named?'>named?</span>
+  <span class='op'>!</span><span class='id identifier rubyid_unnamed?'>unnamed?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="source-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">RDF::MergeGraph</a></span></tt>) <strong>source</strong>(queryable, context) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='add-instance_method'>add</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Add a queryable to the set of constituent queryable instances</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>queryable</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::MergeGraph (class)">RDF::MergeGraph</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>self</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 100</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_source'>source</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+  <span class='ivar'>@sources</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unnamed?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>unnamed?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The next release, graphs will not be named, this will return true</p>
+</div>
+  </div>
+
+<p>Returns <code>true</code> if this is a unnamed graph.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_unnamed?'>unnamed?</span>
+  <span class='ivar'>@context</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="writable?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>writable?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>MergeGraph is writable if any source is writable. Updates go to the last writable source.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/gems/rdf-aggregate-repo-0.1.1/lib/rdf/aggregate_repo/merge_graph.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_writable?'>writable?</span><span class='semicolon'>;</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:writable?</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sun May 12 13:16:41 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.6.1 (ruby-2.0.0).
+</div>
+
+  </body>
+</html>
