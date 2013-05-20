@@ -16,7 +16,7 @@ gem 'rdf-rdfxml',       :git => "git://github.com/ruby-rdf/rdf-rdfxml.git", :req
 gem 'rdf-turtle',       :git => "git://github.com/ruby-rdf/rdf-turtle.git", :require => 'rdf/turtle'
 gem 'rdf-trig',         :git => "git://github.com/ruby-rdf/rdf-trig.git", :require => "rdf/trig"
 gem 'rdf-xsd',          :git => "git://github.com/ruby-rdf/rdf-xsd.git", :require => "rdf/xsd"
-gem 'json-ld',          :git => "git://github.com/gkellogg/json-ld.git", :require => 'json/ld'
+gem 'json-ld',          :git => "git://github.com/ruby-rdf/json-ld.git", :require => 'json/ld'
 gem 'linkeddata',       :git => "git://github.com/ruby-rdf/linkeddata.git"
 gem 'sparql-client',    :git => "git://github.com/ruby-rdf/sparql-client.git"
 gem 'sparql',           :git => "git://github.com/ruby-rdf/sparql.git"
