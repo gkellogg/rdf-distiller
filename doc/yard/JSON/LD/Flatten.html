@@ -87,7 +87,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/json-ld-709e092c07ba/lib/json/ld/flatten.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/json-ld-f85ce4f70be9/lib/json/ld/flatten.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -212,7 +212,41 @@
       
       
         &mdash;
-        <div class='inline'><p>Graph name for results</p>
+        <div class='inline'><p>The name of the currently active graph that the processor should use when processing.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>active_subject</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The currently active subject that the processor should use when processing.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>active_property</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>The currently active property or keyword that the processor should use when processing.</p>
 </div>
       
     </li>
@@ -234,22 +268,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>id</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>(nil)
-Identifier already associated with element</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 
@@ -259,8 +277,6 @@ Identifier already associated with element</p>
       <pre class="lines">
 
 
-18
-19
 20
 21
 22
@@ -416,7 +432,7 @@ Identifier already associated with element</p>
 172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/json-ld-709e092c07ba/lib/json/ld/flatten.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/json-ld-f85ce4f70be9/lib/json/ld/flatten.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_node_map'>generate_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span>
                       <span class='id identifier rubyid_node_map'>node_map</span><span class='comma'>,</span>
@@ -427,7 +443,7 @@ Identifier already associated with element</p>
   <span class='id identifier rubyid_depth'>depth</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node_map</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>active_graph: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_active_graph'>active_graph</span><span class='embexpr_end'>}</span><span class='tstring_content'>, element: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
-      <span class='comment'># If element is an array, process each entry in element recursively, using this algorithm and return
+      <span class='comment'># If element is an array, process each entry in element recursively by passing item for element, node map, active graph, active subject, active property, and list.
 </span>      <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
         <span class='id identifier rubyid_generate_node_map'>generate_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='comma'>,</span>
                           <span class='id identifier rubyid_node_map'>node_map</span><span class='comma'>,</span>
@@ -440,7 +456,7 @@ Identifier already associated with element</p>
       <span class='comment'># Otherwise element is a JSON object. Reference the JSON object which is the value of the active graph member of node map using the variable graph. If the active subject is null, set node to null otherwise reference the active subject member of graph using the variable node.
 </span>      <span class='comment'># Spec FIXME: initializing it to an empty JSON object, if necessary
 </span>      <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected element to be a hash, was </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_active_graph'>active_graph</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_ordered'>ordered</span>
+      <span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_active_graph'>active_graph</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
       <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_active_subject'>active_subject</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_active_subject'>active_subject</span>
 
       <span class='comment'># If element has an @type member, perform for each item the following steps:
@@ -480,7 +496,8 @@ Identifier already associated with element</p>
                           <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
 
         <span class='comment'># Append result to the the value of the active property member of node.
-</span>        <span class='id identifier rubyid_merge_value'>merge_value</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+</span>        <span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node_map</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@list: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_merge_value'>merge_value</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
         <span class='comment'># Otherwise element is a node object, perform the following steps:
 </span>      
@@ -491,14 +508,12 @@ Identifier already associated with element</p>
         <span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node_map</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
         <span class='comment'># If graph does not contain a member id, create one and initialize it to a JSON object consisting of a single member @id whose value is set to id.
-</span>        <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_ordered'>ordered</span>
-        <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_id'>id</span>
+</span>        <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
 
         <span class='comment'># If active property is not null, perform the following steps:
 </span>        <span class='kw'>if</span> <span class='id identifier rubyid_active_property'>active_property</span>
           <span class='comment'># Create a new JSON object reference consisting of a single member @id whose value is id.
-</span>          <span class='id identifier rubyid_reference'>reference</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_ordered'>ordered</span>
-          <span class='id identifier rubyid_reference'>reference</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_id'>id</span>
+</span>          <span class='id identifier rubyid_reference'>reference</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
 
           <span class='comment'># If list is null:
 </span>          <span class='kw'>unless</span> <span class='id identifier rubyid_list'>list</span>
@@ -564,8 +579,7 @@ Identifier already associated with element</p>
                             <span class='id identifier rubyid_node_map'>node_map</span><span class='comma'>,</span>
                             <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
                             <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
-                            <span class='id identifier rubyid_property'>property</span><span class='comma'>,</span>
-                            <span class='id identifier rubyid_list'>list</span><span class='rparen'>)</span>
+                            <span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -583,7 +597,7 @@ Identifier already associated with element</p>
 </div>
 
     <div id="footer">
-  Generated on Sun May 12 13:16:16 2013 by
+  Generated on Mon May 20 13:06:55 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.6.1 (ruby-2.0.0).
 </div>
