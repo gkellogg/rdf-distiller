@@ -94,8 +94,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client/repository.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client/update.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client/version.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client/query.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client/repository.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client/update.rb,<br /> vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client/version.rb</span>
 </dd>
   
 </dl>
@@ -119,6 +119,8 @@
       <li><a href="http://www.w3.org/TR/sparql11-protocol/" target="_parent" title="http://www.w3.org/TR/sparql11-protocol/">http://www.w3.org/TR/sparql11-protocol/</a></li>
     
       <li><a href="http://www.w3.org/TR/sparql11-results-json/" target="_parent" title="http://www.w3.org/TR/sparql11-results-json/">http://www.w3.org/TR/sparql11-results-json/</a></li>
+    
+      <li><a href="http://www.w3.org/TR/sparql11-results-csv-tsv/" target="_parent" title="http://www.w3.org/TR/sparql11-results-csv-tsv/">http://www.w3.org/TR/sparql11-results-csv-tsv/</a></li>
     
   </ul>
 
@@ -148,6 +150,16 @@
           
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>application/sparql-results+xml</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="RESULT_CSV-constant" class="">RESULT_CSV =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/csv</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="RESULT_TSV-constant" class="">RESULT_TSV =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/tab-separated-values</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="RESULT_BOOL-constant" class="">RESULT_BOOL =
           
@@ -179,6 +191,16 @@ Sesame-specific</p>
           
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>RESULT_XML</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="ACCEPT_CSV-constant" class="">ACCEPT_CSV =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>RESULT_CSV</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="ACCEPT_TSV-constant" class="">ACCEPT_TSV =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>RESULT_TSV</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="ACCEPT_BRTR-constant" class="">ACCEPT_BRTR =
           
@@ -263,7 +285,7 @@ Sesame-specific</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#url-instance_method" title="#url (instance method)">- (RDF::URI) <strong>url</strong> </a>
+      <a href="#url-instance_method" title="#url (instance method)">- (RDF::URI, RDF::Queryable) <strong>url</strong> </a>
     
 
     
@@ -282,7 +304,7 @@ Sesame-specific</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The SPARQL endpoint URL.</p>
+    <span class="summary_desc"><div class='inline'><p>The SPARQL endpoint URL, or an RDF::Queryable instance, to use the native SPARQL engine.</p>
 </div></span>
   
 </li>
@@ -300,6 +322,28 @@ Sesame-specific</p>
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_csv_bindings-class_method" title="parse_csv_bindings (class method)">+ (&lt;RDF::Query::Solutions&gt;) <strong>parse_csv_bindings</strong>(csv, nodes = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -327,6 +371,28 @@ Sesame-specific</p>
   <span class="summary_signature">
     
       <a href="#parse_json_value-class_method" title="parse_json_value (class method)">+ (RDF::Value) <strong>parse_json_value</strong>(value, nodes = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_tsv_bindings-class_method" title="parse_tsv_bindings (class method)">+ (&lt;RDF::Query::Solutions&gt;) <strong>parse_tsv_bindings</strong>(tsv, nodes = {}) </a>
     
 
     
@@ -424,7 +490,7 @@ Sesame-specific</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clear-instance_method" title="#clear (instance method)">- <strong>clear</strong>(what, *arguments) </a>
+      <a href="#clear-instance_method" title="#clear (instance method)">- (Object) <strong>clear</strong>(what, *arguments) </a>
     
 
     
@@ -579,7 +645,9 @@ and <code>https_proxy</code> environment variables.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Client.</p>
+    <span class="summary_desc"><div class='inline'><p>Initialize a new sparql client, either using the URL of
+a SPARQL endpoint or an <code>RDF::Queryable</code> instance to use
+the native SPARQL gem.</p>
 </div></span>
   
 </li>
@@ -877,7 +945,9 @@ result.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>A new instance of Client</p>
+    <p>Initialize a new sparql client, either using the URL of
+a SPARQL endpoint or an <code>RDF::Queryable</code> instance to use
+the native SPARQL gem.</p>
 
 
   </div>
@@ -891,9 +961,13 @@ result.</p>
         <span class='name'>url</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>#to_s</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt><span class='object_link'><a href="../RDF/Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span></tt>, <tt>#to_s</tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'><p>URL of endpoint, or queryable object.</p>
+</div>
       
     </li>
   
@@ -965,30 +1039,40 @@ result.</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='ivar'>@url</span><span class='comma'>,</span> <span class='ivar'>@options</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='const'>RESULT_JSON</span><span class='comma'>,</span> <span class='const'>RESULT_XML</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Format</span><span class='period'>.</span><span class='id identifier rubyid_content_types'>content_types</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:headers</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@http</span> <span class='op'>=</span> <span class='id identifier rubyid_http_klass'>http_klass</span><span class='lparen'>(</span><span class='ivar'>@url</span><span class='period'>.</span><span class='id identifier rubyid_scheme'>scheme</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_url'>url</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Queryable</span>
+    <span class='ivar'>@url</span><span class='comma'>,</span> <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@url</span><span class='comma'>,</span> <span class='ivar'>@options</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+    <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='const'>RESULT_JSON</span><span class='comma'>,</span> <span class='const'>RESULT_XML</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>RESULT_TSV</span><span class='embexpr_end'>}</span><span class='tstring_content'>;p=0.8</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>RESULT_CSV</span><span class='embexpr_end'>}</span><span class='tstring_content'>;p=0.2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Format</span><span class='period'>.</span><span class='id identifier rubyid_content_types'>content_types</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:headers</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='ivar'>@http</span> <span class='op'>=</span> <span class='id identifier rubyid_http_klass'>http_klass</span><span class='lparen'>(</span><span class='ivar'>@url</span><span class='period'>.</span><span class='id identifier rubyid_scheme'>scheme</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
@@ -1047,12 +1131,12 @@ result.</p>
       <pre class="lines">
 
 
-43
-44
-45</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='ivar'>@headers</span>
@@ -1102,12 +1186,12 @@ result.</p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1122,7 +1206,7 @@ result.</p>
       <div class="method_details ">
   <h3 class="signature " id="url-instance_method">
   
-    - (<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>) <strong>url</strong>  <span class="extras">(readonly)</span>
+    - (<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../RDF/Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span></tt>) <strong>url</strong>  <span class="extras">(readonly)</span>
   
 
   
@@ -1130,7 +1214,7 @@ result.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>The SPARQL endpoint URL.</p>
+    <p>The SPARQL endpoint URL, or an RDF::Queryable instance, to use the native SPARQL engine.</p>
 
 
   </div>
@@ -1143,7 +1227,7 @@ result.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></tt>, <tt><span class='object_link'><a href="../RDF/Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span></tt>)</span>
       
       
       
@@ -1157,12 +1241,12 @@ result.</p>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span>
   <span class='ivar'>@url</span>
@@ -1180,7 +1264,113 @@ result.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="parse_json_bindings-class_method">
+  <h3 class="signature first" id="parse_csv_bindings-class_method">
+  
+    + (<tt>&lt;<span class='object_link'><a href="../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>&gt;</tt>) <strong>parse_csv_bindings</strong>(csv, nodes = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>csv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>&lt;<span class='object_link'><a href="../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-results-csv-tsv/" target="_parent" title="http://www.w3.org/TR/sparql11-results-csv-tsv/">http://www.w3.org/TR/sparql11-results-csv-tsv/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 376</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_csv_bindings'>parse_csv_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_csv'>csv</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>csv</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>CSV</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_csv'>csv</span> <span class='op'>=</span> <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_vars'>vars</span> <span class='op'>=</span> <span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
+  <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
+    <span class='id identifier rubyid_solution'>solution</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solution</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+      <span class='id identifier rubyid_term'>term</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_v'>v</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^_:(.*)$</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='lbracket'>[</span><span class='backref'>$1</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\w+:.*$</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>else</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_vars'>vars</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_term'>term</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_solution'>solution</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_solutions'>solutions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_json_bindings-class_method">
   
     + (<tt>&lt;<span class='object_link'><a href="../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>&gt;</tt>) <strong>parse_json_bindings</strong>(json, nodes = {}) 
   
@@ -1238,25 +1428,25 @@ result.</p>
       <pre class="lines">
 
 
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312</pre>
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_json_bindings'>parse_json_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>json</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>JSON</span><span class='rparen'>)</span>
@@ -1338,22 +1528,22 @@ result.</p>
       <pre class="lines">
 
 
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330</pre>
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 358</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_json_value'>parse_json_value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1367,6 +1557,116 @@ result.</p>
       <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:datatype</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>datatype</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>else</span> <span class='kw'>nil</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_tsv_bindings-class_method">
+  
+    + (<tt>&lt;<span class='object_link'><a href="../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>&gt;</tt>) <strong>parse_tsv_bindings</strong>(tsv, nodes = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>tsv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>&lt;<span class='object_link'><a href="../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/sparql11-results-csv-tsv/" target="_parent" title="http://www.w3.org/TR/sparql11-results-csv-tsv/">http://www.w3.org/TR/sparql11-results-csv-tsv/</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 400</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_tsv_bindings'>parse_tsv_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_tsv'>tsv</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tsv'>tsv</span> <span class='op'>=</span> <span class='id identifier rubyid_tsv'>tsv</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span> <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_tsv'>tsv</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_vars'>vars</span> <span class='op'>=</span> <span class='id identifier rubyid_tsv'>tsv</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_tsv'>tsv</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
+    <span class='id identifier rubyid_solution'>solution</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solution</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
+      <span class='id identifier rubyid_term'>term</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>NTriples</span><span class='period'>.</span><span class='id identifier rubyid_unserialize'>unserialize</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>case</span> <span class='id identifier rubyid_v'>v</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d+\.\d*[eE][+-]?[0-9]+$</span><span class='regexp_end'>/</span></span>  <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Double</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d*\.\d+[eE][+-]?[0-9]+$</span><span class='regexp_end'>/</span></span>  <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Double</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d*\.\d+$</span><span class='regexp_end'>/</span></span>                 <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Decimal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d+$</span><span class='regexp_end'>/</span></span>                      <span class='kw'>then</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Integer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_vars'>vars</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_term'>term</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_solution'>solution</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_solutions'>solutions</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1432,30 +1732,30 @@ result.</p>
       <pre class="lines">
 
 
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356</pre>
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 336</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_xml_bindings'>parse_xml_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_xml'>xml</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:force_encoding</span><span class='rparen'>)</span>
@@ -1542,23 +1842,23 @@ result.</p>
       <pre class="lines">
 
 
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375</pre>
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 452</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_xml_value'>parse_xml_value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1623,12 +1923,12 @@ result.</p>
       <pre class="lines">
 
 
-76
-77
-78</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ask'>ask</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_call_query_method'>call_query_method</span><span class='lparen'>(</span><span class='symbol'>:ask</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1641,7 +1941,11 @@ result.</p>
       <div class="method_details ">
   <h3 class="signature " id="clear-instance_method">
   
-    - <strong>clear</strong>(what, *arguments) 
+    
+      <span class="overload">- <strong>clear</strong>(what, *arguments) </span>
+    
+      <span class="overload">- <strong>clear</strong>(what, *arguments, options = {}) </span>
+    
   
 
   
@@ -1649,7 +1953,7 @@ result.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Executes a <code>CLEAR</code> operation.</p>
+    <p>Executes a <code>CLEAR</code> operation.</p>
 
 <p>This requires that the endpoint support SPARQL 1.1 Update.</p>
 
@@ -1686,7 +1990,22 @@ result.</p>
       <pre class="example code"><code><span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span><span class='lparen'>(</span><span class='symbol'>:all</span><span class='rparen'>)</span></code></pre>
     
   </div>
-<p class="tag_title">Parameters:</p>
+
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>clear</strong>(what, *arguments) </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -1702,11 +2021,80 @@ result.</p>
   
     <li>
       
+        <span class='name'>arguments</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>splat of other arguments to <span class='object_link'><a href="Client/Update/Clear.html" title="SPARQL::Client::Update::Clear (class)">SPARQL::Client::Update::Clear</a></span>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>clear</strong>(what, *arguments, options = {}) </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p><code>self</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>what</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>#to_sym</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arguments</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>splat of other arguments to <span class='object_link'><a href="Client/Update/Clear.html" title="SPARQL::Client::Update::Clear (class)">SPARQL::Client::Update::Clear</a></span>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>options</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
     </li>
@@ -1718,6 +2106,28 @@ result.</p>
     
     
     
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:silent</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+        </li>
+      
+    </ul>
+  
+
+
+</div>
+      </li>
+    
+  </ul>
 
 
   <p class="tag_title">See Also:</p>
@@ -1733,12 +2143,12 @@ result.</p>
       <pre class="lines">
 
 
-198
-199
-200</pre>
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear'>clear</span><span class='lparen'>(</span><span class='id identifier rubyid_what'>what</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='const'>Update</span><span class='op'>::</span><span class='const'>Clear</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_what'>what</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1841,12 +2251,12 @@ result.</p>
       <pre class="lines">
 
 
-172
-173
-174</pre>
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_graph'>clear_graph</span><span class='lparen'>(</span><span class='id identifier rubyid_graph_uri'>graph_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span><span class='lparen'>(</span><span class='symbol'>:graph</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_uri'>graph_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1909,12 +2319,12 @@ result.</p>
       <pre class="lines">
 
 
-103
-104
-105</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_construct'>construct</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_call_query_method'>call_query_method</span><span class='lparen'>(</span><span class='symbol'>:construct</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -2024,12 +2434,12 @@ result.</p>
       <pre class="lines">
 
 
-155
-156
-157</pre>
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_data'>delete_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='const'>Update</span><span class='op'>::</span><span class='const'>DeleteData</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2092,12 +2502,12 @@ result.</p>
       <pre class="lines">
 
 
-94
-95
-96</pre>
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_describe'>describe</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_call_query_method'>call_query_method</span><span class='lparen'>(</span><span class='symbol'>:describe</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -2161,23 +2571,23 @@ and <code>https_proxy</code> environment variables.</p>
       <pre class="lines">
 
 
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454</pre>
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 531</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_klass'>http_klass</span><span class='lparen'>(</span><span class='id identifier rubyid_scheme'>scheme</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_proxy_url'>proxy_url</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -2311,12 +2721,12 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-134
-135
-136</pre>
+149
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_data'>insert_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='const'>Update</span><span class='op'>::</span><span class='const'>InsertData</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2364,12 +2774,12 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-429
-430
-431</pre>
+519
+520
+521</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 429</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 519</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(%s)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -2404,12 +2814,12 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-421
-422
-423</pre>
+511
+512
+513</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 421</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 511</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect!'>inspect!</span>
   <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rparen'>)</span>
@@ -2492,15 +2902,15 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-486
-487
-488
-489
-490
-491</pre>
+576
+577
+578
+579
+580
+581</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 486</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 576</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_get_request'>make_get_request</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -2588,22 +2998,22 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513</pre>
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 591</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_post_request'>make_post_request</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='op'>::</span><span class='const'>Post</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_request_uri'>request_uri</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2612,7 +3022,7 @@ parsing overhead.</p>
       <span class='id identifier rubyid_request'>request</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>application/sparql-</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='lparen'>(</span><span class='ivar'>@op</span> <span class='op'>||</span> <span class='symbol'>:query</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
       <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0</span><span class='tstring_end'>&#39;</span></span>
-      <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_set_form_data'>set_form_data</span><span class='lparen'>(</span><span class='symbol'>:query</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_set_form_data'>set_form_data</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='ivar'>@op</span> <span class='op'>||</span> <span class='symbol'>:query</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown SPARQL protocol version: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:protocol</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -2688,15 +3098,15 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-381
-382
-383
-384
-385
-386</pre>
+471
+472
+473
+474
+475
+476</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 381</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 471</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_rdf_serialization'>parse_rdf_serialization</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:content_type</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -2774,21 +3184,25 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291</pre>
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:content_type</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span>
@@ -2798,6 +3212,10 @@ parsing overhead.</p>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_parse_json_bindings'>parse_json_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='const'>RESULT_XML</span>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_parse_xml_bindings'>parse_xml_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'>RESULT_CSV</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_parse_csv_bindings'>parse_csv_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'>RESULT_TSV</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_parse_tsv_bindings'>parse_tsv_bindings</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_parse_rdf_serialization'>parse_rdf_serialization</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -2909,17 +3327,29 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-230
-231
-232
-233</pre>
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@op</span> <span class='op'>=</span> <span class='symbol'>:query</span>
-  <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='ivar'>@url</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Queryable</span>
+    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sparql</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>SPARQL</span><span class='op'>::</span><span class='const'>Grammar</span><span class='rparen'>)</span>
+    <span class='const'>SPARQL</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='ivar'>@url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3027,22 +3457,22 @@ parsing overhead.</p>
       <pre class="lines">
 
 
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477</pre>
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 465</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 555</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:method</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>DEFAULT_METHOD</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -3158,25 +3588,25 @@ result.</p>
       <pre class="lines">
 
 
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274</pre>
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 295</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3252,12 +3682,12 @@ result.</p>
       <pre class="lines">
 
 
-85
-86
-87</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_call_query_method'>call_query_method</span><span class='lparen'>(</span><span class='symbol'>:select</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -3356,18 +3786,30 @@ result.</p>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248</pre>
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-1ad968f39751/lib/sparql/client.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-client-344749d7cdb5/lib/sparql/client.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@op</span> <span class='op'>=</span> <span class='symbol'>:update</span>
-  <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='ivar'>@url</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Queryable</span>
+    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sparql</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>SPARQL</span><span class='op'>::</span><span class='const'>Grammar</span><span class='rparen'>)</span>
+    <span class='const'>SPARQL</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='ivar'>@url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_parse_response'>parse_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3380,9 +3822,9 @@ result.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon May 20 13:07:25 2013 by
+  Generated on Wed Jul  3 17:07:53 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.1 (ruby-2.0.0).
+  0.8.6.2 (ruby-2.0.0).
 </div>
 
   </body>

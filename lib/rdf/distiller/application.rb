@@ -118,6 +118,7 @@ module RDF::Distiller
         else
           content
         end
+        @output.force_encoding(Encoding::UTF_8) if @output
         haml :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
       end
     end
@@ -175,6 +176,7 @@ module RDF::Distiller
             $logger.debug "content-type: #{headers['Content-Type'].inspect}"
             SPARQL.serialize_results(content, serialize_options)
           end
+        @output.force_encoding(Encoding::UTF_8) if @output
         rescue RDF::WriterError => e
           @error = "No results generated #{content.class}: #{e.message}"
         end
