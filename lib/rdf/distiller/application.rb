@@ -38,11 +38,11 @@ module RDF::Distiller
       case format
       when :nt
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
-        headers "Content-Type" => "application/n-triples"
+        headers "Content-Type" => "application/n-triples; charset=utf-8"
         body File.read(DOAP_NT)
       when :json, :jsonld
         etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
-        headers "Content-Type" => format == :jsonld ? "application/ld+json" : "application/json"
+        headers "Content-Type" => format == :jsonld ? "application/ld+json; charset=utf-8" : "application/json; charset=utf-8"
         body File.read(DOAP_JSON)
       when :html
         etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
@@ -200,7 +200,7 @@ module RDF::Distiller
     def doap
       @doap ||= begin
         $logger.debug "load #{DOAP_NT}"
-        RDF::Repository.load(DOAP_NT)
+        RDF::Repository.load(DOAP_NT, :encoding => Encoding::UTF_8)
       end
     end
 
@@ -285,7 +285,7 @@ module RDF::Distiller
       raise "No SPARQL query created" unless sparql_expr
 
       if params["fmt"].to_s == "sse"
-        headers = ["Content-Type" => "application/sse+sparql-query"]
+        headers = ["Content-Type" => "application/sse+sparql-query; charset=utf-8"]
         return sparql_expr.to_sse
       end
 
