@@ -37,16 +37,19 @@ module RDF::Distiller
       cache_control :public, :must_revalidate, :max_age => 60
       case format
       when :nt
-        etag Digest::SHA1.hexdigest File.read(DOAP_NT)
+        f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
+        etag f
         headers "Content-Type" => "application/n-triples; charset=utf-8"
-        body File.read(DOAP_NT)
+        body f
       when :json, :jsonld
-        etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
+        f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
+        etag Digest::SHA1.hexdigest f
         headers "Content-Type" => format == :jsonld ? "application/ld+json; charset=utf-8" : "application/json; charset=utf-8"
-        body File.read(DOAP_JSON)
+        body f
       when :html
-        etag Digest::SHA1.hexdigest File.read(DOAP_JSON)
-        projects = ::JSON.parse(File.read(DOAP_JSON))['@graph']
+        f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
+        etag Digest::SHA1.hexdigest f
+        projects = ::JSON.parse(f)['@graph']
         
         # Fix dc:created and doap:helper entries to be normalized
         projects.each do |p|
