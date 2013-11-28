@@ -24,25 +24,24 @@ Gem::Specification.new do |s|
   s.test_files         = %w()
   s.has_rdoc           = false
 
-  s.required_ruby_version      = '>= 1.8.7'
+  s.required_ruby_version      = '>= 1.9.3'
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '>= 1.0'
+  s.add_runtime_dependency      "linkeddata",         '>= 1.1'
   s.add_runtime_dependency      'equivalent-xml',     '>= 0.3.0'
-  s.add_runtime_dependency      'sparql',             '>= 1.0'
-  s.add_runtime_dependency      'curb',               '>= 0.8.3'
+  s.add_runtime_dependency      'sparql',             '>= 1.1.2'
 
-  # Sinatra dependencies        
-  s.add_runtime_dependency      'sinatra',            '>= 1.3.3'
+  # Sinatra dependencies
+  s.add_runtime_dependency      'sinatra',            '>= 1.4.4'
   s.add_runtime_dependency      'erubis',             '>= 2.7.0'
   s.add_runtime_dependency      'haml'
   s.add_runtime_dependency      'maruku'
   s.add_runtime_dependency      "rack",               '>= 1.4.4'
-  s.add_runtime_dependency      'sinatra-respond_to', '>= 0.8.0'
+  s.add_runtime_dependency      'webmock'
   s.add_runtime_dependency      'rack-cache'
 
-  # development dependencies    
+  # development dependencies
   s.add_development_dependency  'yard'
   s.add_development_dependency  'rspec',              '>= 2.12.0'
   s.add_development_dependency  'rack-test',          '>= 0.6.2'

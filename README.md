@@ -1,6 +1,8 @@
 # RDF::Distiller
 
-Ruby-based RDF Distiller and SPARQL servce.
+Ruby-based RDF Distiller and SPARQL service.
+
+[![Build Status](https://travis-ci.org/gkellogg/rdf-distiller.png?branch=master)](http://travis-ci.org/gkellogg/rdf-distiller)
 
 ## DESCRIPTION
 RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
@@ -23,21 +25,21 @@ Distills between formats supported in [Linked Data][].
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 
 ## Dependencies
-* [RDF.rb](http://rubygems.org/gems/rdf) (>= 0.3.11)
-* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 0.3.5)
-* [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 0.3.1)
-* [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 0.3.1)
+* [RDF.rb][] (>= 1.1.0)
+* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 1.1.0)
+* [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 1.1.0)
+* [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 1.1.0)
 * [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.5.5)
-* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 0.3.0)
-* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 0.3.0)
-* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 0.3.6)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 0.3.17)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 0.3.9)
-* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 0.1.4)
-* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 0.3.0)
-* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 0.3.2)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 0.3.1)
-* [SPARQL](http://rubygems.org/gems/sparql) (>= 0.3.1)
+* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 1.1.0)
+* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 1.1.0)
+* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 1.1.0)
+* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 1.1.0)
+* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 1.1.0)
+* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 1.1.0)
+* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 1.1.0)
+* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 1.1.0)
+* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 1.1.0)
+* [SPARQL](http://rubygems.org/gems/sparql) (>= 1.1.0)
 
 ## Documentation
 ### Core libraries
@@ -66,10 +68,10 @@ Distills between formats supported in [Linked Data][].
 * {RDF::DO RDF Dataobjects}
 
 ## Resources
-* [RDF Distiller](http://rdf.kellogg-assoc.com)
+* [RDF Distiller](http://rdf.greggkellogg.net)
 
-## AUTHOR
-* [Gregg Kellogg](http://github.com/gkellogg) - <http://kellogg-assoc.com/>
+## Author
+* [Gregg Kellogg](http://github.com/gkellogg) - <http://greggkellogg.net/>
 
 ## Hosting Notes
 * public/.htaccess set up for installation on RailsPlayground server.
@@ -77,14 +79,29 @@ Distills between formats supported in [Linked Data][].
 
     bundle install --path vendor/bundler
 
+##Contributing
+This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange development and release activity. All submissions _must_ be on a feature branch based on the _develop_ branch to ease staging and integration.
+
+* Do your best to adhere to the existing coding conventions and idioms.
+* Don't use hard tabs, and don't leave trailing whitespace on any line.
+* Do document every method you add using [YARD][] annotations. Read the
+  [tutorial][YARD-GS] or just look at the existing code for examples.
+* Don't touch the `.gemspec`, `VERSION` or `AUTHORS` files. If you need to
+  change them, do so on your private branch only.
+* Do feel free to add yourself to the `CREDITS` file and the corresponding
+  list in the the `README`. Alphabetical order applies.
+* Do note that in order for us to merge any non-trivial changes (as a rule
+  of thumb, additions larger than about 15 lines of code), we need an
+  explicit [public domain dedication][PDD] on record from you.
+
 ## License
 
 This is free and unencumbered public domain software. For more information,
 see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 
-## FEEDBACK
+##Resources
 
-* gregg@kellogg-assoc.com
+* gregg@greggkellogg.net
 * <http://github.com/gkellogg/rdf-distiller>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
@@ -113,3 +130,6 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [TriG]:           http://en.wikipedia.org/wiki/TriG_(syntax)
 [TriX]:           http://en.wikipedia.org/wiki/TriX_(syntax)
 [Turtle]:         http://en.wikipedia.org/wiki/Turtle_(syntax)
+[YARD]:           http://yardoc.org/
+[YARD-GS]:        http://rubydoc.info/docs/yard/file/docs/GettingStarted.md
+[PDD]:            http://unlicense.org/#unlicensing-contributions

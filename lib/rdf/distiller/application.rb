@@ -1,19 +1,22 @@
 require 'sinatra/sparql'
 require 'sinatra/partials'
-require 'sinatra/respond_to'
+require "better_errors"
 require 'erubis'
 require 'linkeddata'
-require 'rdf/distiller/extensions'
 require 'uri'
 
 module RDF::Distiller
   class Application < Sinatra::Base
-    register Sinatra::RespondTo
     register Sinatra::SPARQL
     helpers Sinatra::Partials
     set :views, ::File.expand_path('../views',  __FILE__)
     DOAP_NT = File.expand_path("../../../../etc/doap.nt", __FILE__)
     DOAP_JSON = File.expand_path("../../../../etc/doap.jsonld", __FILE__)
+
+    configure :development do
+      use BetterErrors::Middleware
+      BetterErrors.application_root = File.expand_path("../../../..", __FILE__)
+    end
 
     set :public_folder, File.expand_path("../../../../public", __FILE__)
     mime_type "sse", "application/sse+sparql-query"
@@ -28,15 +31,15 @@ module RDF::Distiller
       result
     end
 
-    get '/about' do
+    get '/about.?:format?' do
       cache_control :public, :must_revalidate, :max_age => 60
       haml :about, :locals => {:title => "About the Ruby Linked Data Service"}
     end
 
-    get '/doap' do
+    get '/doap.?:format?' do
       cache_control :public, :must_revalidate, :max_age => 60
       case format
-      when :nt
+      when :nt, :ntriples
         f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
         etag f
         headers "Content-Type" => "application/n-triples; charset=utf-8"
@@ -46,7 +49,7 @@ module RDF::Distiller
         etag Digest::SHA1.hexdigest f
         headers "Content-Type" => format == :jsonld ? "application/ld+json; charset=utf-8" : "application/json; charset=utf-8"
         body f
-      when :html
+      when :html, :xhtml
         f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
         etag Digest::SHA1.hexdigest f
         projects = ::JSON.parse(f)['@graph']
@@ -63,6 +66,7 @@ module RDF::Distiller
         }
       else
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
+        settings.sparql_options.merge!(:format => format, :content_type => content_type)
         doap
       end
     end
@@ -107,9 +111,11 @@ module RDF::Distiller
         writer_options[:haml] = haml_input
         writer_options[:haml_options] = {:ugly => false}
       end
-      settings.sparql_options.replace(writer_options)
+      settings.sparql_options.replace(writer_options.merge(:content_type => content_type))
 
       if format != :html || params["raw"]
+        format writer_options[:format]
+        settings.sparql_options.merge!(:format => format, :content_type => content_type)
         # Return distilled content as is
         content
       else
@@ -136,8 +142,7 @@ module RDF::Distiller
         }
       }
       # Override output format if the content-type is something like
-      # application/sparql-results, as sinatra-respond_to won't find
-      # the right extension.
+      # application/sparql-results
       if request.accept.first =~ %r(application/sparql-results\+([^,;]+))
         params["fmt"] = (format $1.to_sym)
       end
@@ -149,9 +154,12 @@ module RDF::Distiller
       format params["fmt"] if params["raw"] && params.has_key?("fmt")
       format params["fmt"] if params.has_key?("fmt") && format != :html
       # Make sure we get a format symbol, not an extension
-      params["fmt"] ||= RDF::Format.for(:file_extension => format) unless RDF::Format.for(format)
 
       content = query
+      params["fmt"] ||= format
+
+      # Make sure we're using an appropriate content-type, it might have been set based on an RDF serialization type, rather than a query results type
+      content_type SPARQL::Results::MIME_TYPES[params["fmt"].to_sym] unless content.is_a?(RDF::Queryable)
 
       if params["fmt"].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
@@ -161,6 +169,7 @@ module RDF::Distiller
         writer_options[:haml] = haml
         writer_options[:haml_options] = {:ugly => false}
       end
+      writer_options.merge!(:content_type => content_type)
 
       $logger.info "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
       if format != :html
@@ -191,12 +200,41 @@ module RDF::Distiller
       end
     end
 
-    # Format symbol for RDF formats
+    # Format symbols for RDF formats
     # @param [Symbol] reader_or_writer
     # @return [Array<Symbol>] List of format symbols
     def formats(reader_or_writer = nil)
       # Symbols for different input formats
       RDF::Format.each.to_a.map(&:reader).compact.map(&:to_sym)
+    end
+
+    # Negotiated format
+    # @param [#to_sym] format (nil) allows a format to be specified
+    # @return [Symbol]
+    def format(format = nil)
+      params[:format] = format.to_sym if format
+      case
+      when params[:format]
+        content_type params[:format]
+        params[:format].to_sym
+      when %w(application/xhtml+xml text/html).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
+        content_type env['ORDERED_CONTENT_TYPES'].first
+        :html
+      when !Array(env['ORDERED_CONTENT_TYPES']).empty?
+        content_type env['ORDERED_CONTENT_TYPES'].first
+        case env['ORDERED_CONTENT_TYPES'].first
+        when 'application/sparql-results+json' then :json
+        when 'text/html'                       then :html
+        when 'application/sparql-results+xml'  then :xml
+        when 'text/csv'                        then :csv
+        when 'text/tab-separated-values'       then :tsv
+        else
+          RDF::Format.for(:content_type => env['ORDERED_CONTENT_TYPES'].first).to_sym
+        end
+      else
+        content_type :html
+        :html
+      end
     end
 
     ## Default graph, loaded from DOAP file
@@ -214,6 +252,7 @@ module RDF::Distiller
         :vocab_expansion => params["vocab_expansion"],
         :rdfagraph       => params["rdfagraph"]
       )
+      reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
       reader_opts[:debug] = @debug = [] if params["debug"]
       
