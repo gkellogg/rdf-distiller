@@ -1,6 +1,7 @@
 $:.unshift "."
 require 'spec_helper'
 require 'linkeddata'
+require 'webmock/rspec'
 
 describe RDF::Distiller::Application do
   before(:each) do
@@ -13,24 +14,27 @@ describe RDF::Distiller::Application do
     context "HTML output" do
       context "URL" do
         before(:each) do
-          nt = %(<a> <b> "c" .)
-          io = StringIO.new(nt)
-          io.stub!(:content_type).and_return("text/html")
-          Object.any_instance.stub(:open_file).with("http://example.com/foo").and_yield(io)
+          WebMock.stub_request(:get, 'http://example.com/foo').
+            to_return(:body =>  %(<http://example/a> <http://example/b> "c" .),
+                      :status => 200,
+                      :headers => { 'Content-Type' => 'text/ntriples'})
         end
 
         it "retrieves a graph" do
           get '/distiller', :url => 'http://example.com/foo', :fmt => "ntriples"
-          last_response.status.should == 200
-          last_response.content_type.should include('text/html')
+          expect(last_response.body).to eq "" unless last_response.ok?
+          expect(last_response.content_type).to include('text/html')
         end
       end
 
       context "form data" do
         it "retrieves a graph" do
-          get '/distiller', :content => ::URI.escape(%(<a> <b> "c" .)), :in_fmt => "ntriples", :fmt => "ntriples"
-          last_response.status.should == 200
-          last_response.content_type.should include('text/html')
+          get '/distiller',
+              :content => ::URI.escape(%(<http://example/a> <http://example/b> "c" .)),
+              :in_fmt => "ntriples",
+              :fmt => "ntriples"
+          expect(last_response.body).to eq "" unless last_response.ok?
+          expect(last_response.content_type).to include('text/html')
         end
       end
     end
@@ -39,13 +43,13 @@ describe RDF::Distiller::Application do
       context "form data" do
         it "retrieves a graph" do
           get '/distiller',
-            :content => ::URI.escape(%(<a> <b> "c" .)),
+            :content => ::URI.escape(%(<http://example/a> <http://example/b> "c" .)),
             :in_fmt => "ntriples",
             :fmt => "ntriples",
             :raw => "true"
-          last_response.status.should == 200
-          last_response.content_type.should include('application/n-triples')
-          last_response.body.should == %(<a> <b> "c" .\n)
+          expect(last_response.body).to eq "" unless last_response.ok?
+          expect(last_response.content_type).to include('application/n-triples')
+          expect(last_response.body).to eq %(<http://example/a> <http://example/b> "c" .\n)
         end
       end
     end
@@ -55,12 +59,12 @@ describe RDF::Distiller::Application do
         next unless format.writer
         it "retrieves graph as #{format.to_sym}" do
           get '/distiller',
-            :content => ::URI.escape(%(<a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <C> .)),
+            :content => ::URI.escape(%(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .)),
             :in_fmt => "ntriples",
             :fmt => format.to_sym,
             :raw => "true"
-          last_response.status.should == 200
-          last_response.content_type.should include(format.content_type.first)
+          expect(last_response.body).to eq "" unless last_response.ok?
+          expect(last_response.content_type).to include(format.content_type.first)
         end
       end
     end

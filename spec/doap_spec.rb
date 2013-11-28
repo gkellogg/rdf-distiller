@@ -10,23 +10,19 @@ describe RDF::Distiller::Application do
   end
 
   describe "/doap" do
-    before(:all) {@doap = RDF::Repository.new << [RDF::URI("doap"), RDF.type, RDF::DOAP.to_uri]}
-    before(:each) {RDF::Repository.stub!(:load).and_return(@doap)}
+    let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::DOAP.to_uri]}
+    before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
 
     context "Format symbols" do
       RDF::Format.each do |format|
+        next if format == RDF::Microdata::Format
         sym = format.to_sym
+        ext = format.file_extension.first
         context "#{sym}" do
-          it "gets  with .#{sym} extension" do
-            get "/doap.#{sym}"
-            last_response['Content-Type'].should include(mime_type(sym))
-            last_response.should be_ok
-          end
-
           it "gets  with #{sym} format" do
             get "/doap", :format => sym
-            last_response['Content-Type'].should include(mime_type(sym))
-            last_response.should be_ok
+            expect(last_response.body).to eq "" unless last_response.ok?
+            expect(last_response.content_type).to include(mime_type(sym))
           end
         end
       end
@@ -36,16 +32,10 @@ describe RDF::Distiller::Application do
       RDF::Format.file_extensions.keys.each do |extension|
         next if extension == :xml
         context "#{extension}" do
-          it "gets  with .#{extension} extension" do
+          it "gets with .#{extension} extension" do
             get "/doap.#{extension}"
-            last_response['Content-Type'].should include(mime_type(extension))
-            last_response.should be_ok
-          end
-
-          it "gets  with #{extension} format" do
-            get "/doap", :format => extension
-            last_response['Content-Type'].should include(mime_type(extension))
-            last_response.should be_ok
+            expect(last_response.body).to eq "" unless last_response.ok?
+            expect(last_response.content_type).to include(mime_type(extension))
           end
         end
       end
@@ -53,11 +43,12 @@ describe RDF::Distiller::Application do
 
     context "Content Type" do
       RDF::Format.content_types.keys.each do |content_type|
+        next if %w(text/plain application/x-ld+json).include?(content_type)
         context "#{content_type}" do
           it "gets  with #{content_type}" do
             get "/doap", {}, {"HTTP_ACCEPT" => content_type}
-            last_response['Content-Type'].should include(content_type)
-            last_response.should be_ok
+            expect(last_response.body).to eq "" unless last_response.ok?
+            expect(last_response.content_type).to include(content_type)
           end
         end
       end
