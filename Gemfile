@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in github-lod.gemspec
 gemspec :name => ""
 
+ruby "2.0.0"
+
 # Include non-released gems first
 gem "sinatra-linkeddata", :git => "git://github.com/ruby-rdf/sinatra-linkeddata.git", :branch => "develop"
 gem "rack-linkeddata",    :git => "git://github.com/ruby-rdf/rack-linkeddata.git", :branch => "develop"
