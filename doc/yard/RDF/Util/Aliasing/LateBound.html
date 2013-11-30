@@ -78,12 +78,12 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="../../Countable.html" title="RDF::Countable (module)">Countable</a></span>, <span class='object_link'><a href="../../Durable.html" title="RDF::Durable (module)">Durable</a></span>, <span class='object_link'><a href="../../Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span>, <span class='object_link'><a href="../../Mutable.html" title="RDF::Mutable (module)">Mutable</a></span>, <span class='object_link'><a href="../../Readable.html" title="RDF::Readable (module)">Readable</a></span>, <span class='object_link'><a href="../../Reader.html" title="RDF::Reader (class)">Reader</a></span>, <span class='object_link'><a href="../../Writable.html" title="RDF::Writable (module)">Writable</a></span>, <span class='object_link'><a href="../../Writer.html" title="RDF::Writer (class)">Writer</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="../../Countable.html" title="RDF::Countable (module)">Countable</a></span>, <span class='object_link'><a href="../../Durable.html" title="RDF::Durable (module)">Durable</a></span>, <span class='object_link'><a href="../../Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span>, <span class='object_link'><a href="../../Mutable.html" title="RDF::Mutable (module)">Mutable</a></span>, <span class='object_link'><a href="../../Query/Solutions.html" title="RDF::Query::Solutions (module)">Query::Solutions</a></span>, <span class='object_link'><a href="../../Readable.html" title="RDF::Readable (module)">Readable</a></span>, <span class='object_link'><a href="../../Reader.html" title="RDF::Reader (class)">Reader</a></span>, <span class='object_link'><a href="../../Writable.html" title="RDF::Writable (module)">Writable</a></span>, <span class='object_link'><a href="../../Writer.html" title="RDF::Writer (class)">Writer</a></span></dd>
     
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/util/aliasing.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/util/aliasing.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -293,38 +293,18 @@ class fixes this problem.</p>
 47
 48
 49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/util/aliasing.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/util/aliasing.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_method'>alias_method</span><span class='lparen'>(</span><span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_old_name'>old_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_old_name'>old_name</span> <span class='op'>=</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_old_name'>old_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
 
-  <span class='id identifier rubyid_class_eval'>class_eval</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='rparen'>)</span>
-<span class='tstring_content'>    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_name'>new_name</span><span class='rbrace'>}</span><span class='tstring_content'>(*args, &amp;block)
-      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_name'>old_name</span><span class='rbrace'>}</span><span class='tstring_content'>(*args, &amp;block)
-    end
-</span><span class='heredoc_end'>  EOF
-</span>
-  <span class='comment'># NOTE: the following eval-less (and hence slightly less evil)
-</span>  <span class='comment'># implementation only works on Ruby 1.8.7+ due to the |&amp;block|
-</span>  <span class='comment'># syntax that was introduced in 1.9 and then backported to 1.8.7;
-</span>  <span class='comment'># it is a syntax error in earlier versions of Ruby:
-</span>  <span class='comment'>#self.__send__(:define_method, new_name) do |*args, &amp;block|
-</span>  <span class='comment'>#  __send__(old_name, *args, &amp;block)
-</span>  <span class='comment'>#end
-</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='symbol'>:define_method</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+    <span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>return</span> <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -337,9 +317,9 @@ class fixes this problem.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Oct 12 21:43:53 2013 by
+  Generated on Sat Nov 30 15:14:00 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-1.9.3).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
   </body>

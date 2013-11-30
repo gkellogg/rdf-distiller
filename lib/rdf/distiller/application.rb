@@ -3,6 +3,7 @@ require 'sinatra/partials'
 require 'erubis'
 require 'linkeddata'
 require 'uri'
+require 'haml'
 
 module RDF::Distiller
   class Application < Sinatra::Base
@@ -191,6 +192,7 @@ module RDF::Distiller
         @output.force_encoding(Encoding::UTF_8) if @output
         rescue RDF::WriterError => e
           @error = "No results generated #{content.class}: #{e.message}"
+          $logger.error @error  # to log
         end
         erb :sparql, :locals => {
           :title => "SPARQL Endpoint",
@@ -262,10 +264,9 @@ module RDF::Distiller
       # Load data into graph
       case
       when !params["content"].to_s.empty?
-        raise RDF::ReaderError, "Specify input format" if in_fmt.nil? || in_fmt == :content
         @content = ::URI.unescape(params["content"])
         $logger.info "Open form data with format #{in_fmt} for #{@content.inspect}"
-        reader = RDF::Reader.for(reader_opts[:format] || reader_opts)
+        reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
         reader.new(@content, reader_opts) {|r| graph << r}
       when !params["uri"].to_s.empty?
         $logger.info "Open uri <#{params["uri"]}> with format #{in_fmt}"
@@ -277,12 +278,7 @@ module RDF::Distiller
 
       $logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
       graph
-    rescue RDF::ReaderError => e
-      @error = "RDF::ReaderError: #{e.message}"
-      $logger.error @error  # to log
-      nil
     rescue
-      raise unless settings.environment == :production
       @error = "#{$!.class}: #{$!.message}"
       $logger.error @error  # to log
       nil
@@ -334,10 +330,6 @@ module RDF::Distiller
       $logger.debug "execute query"
       repo ||= doap
       sparql_expr.execute(repo, sparql_opts)
-    rescue SPARQL::Grammar::Parser::Error, SPARQL::MalformedQuery, TypeError
-      @error = "#{$!.class}: #{$!.message}"
-      $logger.error @error  # to log
-      nil
     rescue
       raise unless settings.environment == :production
       @error = "#{$!.class}: #{$!.message}"

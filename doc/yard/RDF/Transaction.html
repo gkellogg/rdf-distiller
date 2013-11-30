@@ -98,7 +98,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -109,6 +109,10 @@
 
 <p>Transactions consist of a sequence of RDF statements to delete from and
 a sequence of RDF statements to insert into a given named graph.</p>
+
+<p>Repository implementations may choose to sub-class this class
+to provide transactional support for repository updates, when
+accessed through <span class='object_link'><a href="Repository.html#begin_transaction-instance_method" title="RDF::Repository#begin_transaction (method)">Repository#begin_transaction</a></span>.</p>
 
 
   </div>
@@ -157,6 +161,34 @@ end</code></pre>
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#context-instance_method" title="#context (instance method)">- (RDF::Resource) <strong>context</strong> </a>
+    
+
+    
+      (also: #graph)
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Name of this graph, if it is part of an <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span>.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#deletes-instance_method" title="#deletes (instance method)">- (RDF::Enumerable) <strong>deletes</strong> </a>
     
 
@@ -177,34 +209,6 @@ end</code></pre>
 
   
     <span class="summary_desc"><div class='inline'><p>RDF statements to delete when executed.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#graph-instance_method" title="#graph (instance method)">- (RDF::Resource) <strong>graph</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>RDF graph to modify when executed.</p>
 </div></span>
   
 </li>
@@ -561,6 +565,22 @@ end</code></pre>
     <ul class="option">
       
         <li>
+          <span class="name">:context</span>
+          <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Name of named graph to be affected if <code>inserts</code> or <code>deletes</code>
+do not have a <code>context</code>.</p>
+</div>
+          
+        </li>
+      
+        <li>
           <span class="name">:graph</span>
           <span class="type">(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
           <span class="default">
@@ -569,6 +589,9 @@ end</code></pre>
               <tt>nil</tt>
             
           </span>
+          
+            &mdash; <div class='inline'><p>Alias for <code>:context</code>.</p>
+</div>
           
         </li>
       
@@ -649,28 +672,28 @@ end</code></pre>
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
 77
 78
-79</pre>
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='ivar'>@graph</span>   <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:graph</span><span class='rparen'>)</span>  <span class='op'>||</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:context</span><span class='rparen'>)</span>
+  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:graph</span><span class='rparen'>)</span>  <span class='op'>||</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:context</span><span class='rparen'>)</span>
   <span class='ivar'>@inserts</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:insert</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@deletes</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@inserts</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Enumerable</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='ivar'>@inserts</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Enumerable</span><span class='rparen'>)</span>
@@ -704,9 +727,83 @@ end</code></pre>
     <h2>Instance Attribute Details</h2>
     
       
-      <span id=""></span>
+      <span id="context=-instance_method"></span>
       <div class="method_details first">
-  <h3 class="signature first" id="deletes-instance_method">
+  <h3 class="signature first" id="context-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>) <strong>context</strong> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='graph-instance_method'>graph</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Name of this graph, if it is part of an <span class='object_link'><a href="Repository.html" title="RDF::Repository (class)">Repository</a></span></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
+  <span class='ivar'>@context</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="deletes-instance_method">
   
     - (<tt><span class='object_link'><a href="Enumerable.html" title="RDF::Enumerable (module)">RDF::Enumerable</a></span></tt>) <strong>deletes</strong>  <span class="extras">(readonly)</span>
   
@@ -758,85 +855,15 @@ end</code></pre>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deletes'>deletes</span>
   <span class='ivar'>@deletes</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="graph-instance_method">
-  
-    - (<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>) <strong>graph</strong>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>RDF graph to modify when executed.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-36
-37
-38</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 36</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_graph'>graph</span>
-  <span class='ivar'>@graph</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -898,12 +925,12 @@ end</code></pre>
       <pre class="lines">
 
 
-48
-49
-50</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inserts'>inserts</span>
   <span class='ivar'>@inserts</span>
@@ -968,12 +995,12 @@ end</code></pre>
       <pre class="lines">
 
 
-54
-55
-56</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1086,12 +1113,12 @@ end</code></pre>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1169,12 +1196,12 @@ end</code></pre>
       <pre class="lines">
 
 
-153
-154
-155</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_statement'>delete_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_deletes'>deletes</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_statement'>statement</span>
@@ -1252,40 +1279,40 @@ end</code></pre>
       <pre class="lines">
 
 
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
 112
 113
 114
 115
 116
-117</pre>
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_before_execute'>before_execute</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:before_execute</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
     <span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span>
+    <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span> <span class='op'>||=</span> <span class='id identifier rubyid_graph'>graph</span>
     <span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
     <span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span>
+    <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span> <span class='op'>||=</span> <span class='id identifier rubyid_graph'>graph</span>
     <span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -1359,12 +1386,12 @@ end</code></pre>
       <pre class="lines">
 
 
-143
-144
-145</pre>
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_statement'>insert_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_inserts'>inserts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_statement'>statement</span>
@@ -1427,17 +1454,17 @@ end</code></pre>
       <pre class="lines">
 
 
-123
-124
-125
-126</pre>
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(graph: %s, deletes: %d, inserts: %d)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span>
-    <span class='id identifier rubyid_graph'>graph</span> <span class='op'>?</span> <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>nil</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='comma'>,</span> <span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_graph'>graph</span> <span class='op'>?</span> <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='comma'>,</span> <span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1485,12 +1512,12 @@ end</code></pre>
       <pre class="lines">
 
 
-133
-134
-135</pre>
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect!'>inspect!</span>
   <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rparen'>)</span>
@@ -1564,12 +1591,12 @@ To enumerate the RDF statements to be inserted or deleted, use the
       <pre class="lines">
 
 
-90
-91
-92</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/rdf-a5f0cecf7e8e/lib/rdf/transaction.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/rdf-87f3f5c3cf4c/lib/rdf/transaction.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_readable?'>readable?</span>
   <span class='kw'>false</span>
@@ -1584,9 +1611,9 @@ To enumerate the RDF statements to be inserted or deleted, use the
 </div>
 
     <div id="footer">
-  Generated on Sat Oct 12 21:44:12 2013 by
+  Generated on Sat Nov 30 15:14:17 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-1.9.3).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
   </body>
