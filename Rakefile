@@ -56,7 +56,7 @@ task :doap do
     begin
       next if path =~ %r(/rdf-\d.*\.(nq|nt)$)
       puts "load #{path}"
-      g.load(path)
+      g.load("file:/" + File.expand_path(path))
     rescue
       puts "#{$!}"
     end

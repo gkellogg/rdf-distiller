@@ -102,7 +102,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/1.9.1/bundler/gems/sparql-aa45a6342d24/lib/sparql/algebra/operator/exists.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/sparql-d24cca503817/lib/sparql/algebra/operator/exists.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -121,10 +121,8 @@
     
       
       <pre class="example code"><code>(prefix ((ex: &lt;http://www.example.org/&gt;))
-  (filter (exists
-             (filter (notexists (bgp (triple ?s ?p ex:o2)))
-               (bgp (triple ?s ?p ex:o1))))
-    (bgp (triple ?s ?p ex:o))))</code></pre>
+  (filter (exists (bgp (triple ?s ?p ex:o)))
+  (bgp (triple ?s ?p ?o))))</code></pre>
     
   </div>
 
@@ -364,19 +362,19 @@ options passed from query</p>
       <pre class="lines">
 
 
+28
+29
 30
 31
 32
 33
-34
-35
-36</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/1.9.1/bundler/gems/sparql-aa45a6342d24/lib/sparql/algebra/operator/exists.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-d24cca503817/lib/sparql/algebra/operator/exists.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_evaluate'>evaluate</span><span class='lparen'>(</span><span class='id identifier rubyid_bindings'>bindings</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_bindings'>bindings</span>
+  <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='op'>::</span><span class='const'>Enumerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_yielder'>yielder</span><span class='op'>|</span> <span class='id identifier rubyid_yielder'>yielder</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_bindings'>bindings</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_queryable'>queryable</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:queryable</span><span class='rbracket'>]</span>
   <span class='op'>!</span><span class='id identifier rubyid_operand'>operand</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
                                   <span class='symbol'>:solutions</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_solutions'>solutions</span><span class='comma'>,</span>
@@ -392,9 +390,9 @@ options passed from query</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Oct 12 21:44:32 2013 by
+  Generated on Sat Nov 30 15:14:39 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.2 (ruby-1.9.3).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
   </body>
