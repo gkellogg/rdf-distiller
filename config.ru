@@ -20,10 +20,10 @@ else
   $logger.formatter = lambda {|severity, datetime, progname, msg| "#{msg}\n"}
 end
 
-#use Rack::Cache,
-#  :verbose     => true,
-#  :metastore   => "file:" + File.expand_path("../cache/meta", __FILE__),
-#  :entitystore => "file:" + File.expand_path("../cache/body", __FILE__)
+use Rack::Cache,
+  :verbose     => true,
+  :metastore   => "file:" + File.expand_path("../cache/meta", __FILE__),
+  :entitystore => "file:" + File.expand_path("../cache/body", __FILE__)
 
 disable :run, :reload
 
