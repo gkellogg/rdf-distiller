@@ -102,7 +102,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/sparql-d24cca503817/lib/sparql/algebra/operator/slice.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.0.0/bundler/gems/sparql-8a96706ec358/lib/sparql/algebra/operator/slice.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -304,7 +304,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="execute-instance_method">
   
-    - (<tt><span class='object_link'><a href="../../../RDF/Query/Solutions.html" title="RDF::Query::Solutions (module)">RDF::Query::Solutions</a></span></tt>) <strong>execute</strong>(queryable, options = {}) {|solution| ... }
+    - (<tt><span class='object_link'><a href="../../../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></tt>) <strong>execute</strong>(queryable, options = {}) {|solution| ... }
   
 
   
@@ -428,7 +428,7 @@ second operand.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../RDF/Query/Solutions.html" title="RDF::Query::Solutions (module)">RDF::Query::Solutions</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../../RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></tt>)</span>
       
       
       
@@ -461,37 +461,19 @@ second operand.</p>
 51
 52
 53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-d24cca503817/lib/sparql/algebra/operator/slice.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-8a96706ec358/lib/sparql/algebra/operator/slice.rb', line 46</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Query</span><span class='op'>::</span><span class='const'>Solutions</span><span class='op'>::</span><span class='const'>Enumerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_yielder'>yielder</span><span class='op'>|</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_y'>y</span><span class='op'>|</span> <span class='id identifier rubyid_yielder'>yielder</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_y'>y</span><span class='rbrace'>}</span>
-  <span class='kw'>end</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
-
+<span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_offset'>offset</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span> <span class='op'>?</span> <span class='int'>0</span> <span class='op'>:</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
   <span class='id identifier rubyid_limit'>limit</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span> <span class='op'>?</span> <span class='op'>-</span><span class='int'>1</span> <span class='op'>:</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-  <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_solution'>solution</span><span class='op'>|</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_offset'>offset</span> <span class='op'>&gt;</span> <span class='int'>0</span>
-      <span class='id identifier rubyid_offset'>offset</span> <span class='op'>-=</span> <span class='int'>1</span>
-      <span class='kw'>next</span>
-    <span class='kw'>end</span>
-
-    <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_limit'>limit</span> <span class='op'>==</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_limit'>limit</span> <span class='op'>-=</span> <span class='int'>1</span>
-    <span class='kw'>yield</span> <span class='id identifier rubyid_solution'>solution</span>
-  <span class='kw'>end</span>
+  <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:depth</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id identifier rubyid_offset'>offset</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span>
+  <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:_</span>
+  <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+  <span class='ivar'>@solutions</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -542,12 +524,12 @@ second operand.</p>
       <pre class="lines">
 
 
-71
-72
-73</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-d24cca503817/lib/sparql/algebra/operator/slice.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.0.0/bundler/gems/sparql-8a96706ec358/lib/sparql/algebra/operator/slice.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optimize'>optimize</span>
   <span class='id identifier rubyid_operands'>operands</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optimize</span><span class='rparen'>)</span>
@@ -562,7 +544,7 @@ second operand.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Nov 30 15:14:42 2013 by
+  Generated on Thu Dec  5 16:05:38 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-2.0.0).
 </div>
