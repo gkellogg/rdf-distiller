@@ -46,6 +46,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency  'rspec',              '>= 2.12.0'
   s.add_development_dependency  'rack-test',          '>= 0.6.2'
   s.add_development_dependency  'bundler'
-  s.add_development_dependency  'rdf-do'
   s.post_install_message        = nil
 end

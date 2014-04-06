@@ -336,7 +336,28 @@ module RDF::Distiller
       $logger.error @error  # to log
       nil
     end
-    
+
+    ##
+    # Lookup extension class version
+    #
+    # @param [String] class_name
+    # @return [String]
+    def class_version(str)
+
+      str = case str
+      when "RDF.rb"       then "RDF"
+      when "SXP for Ruby" then "SXP"
+      when "ebnf"         then "EBNF"
+      else str
+      end
+
+      "#{str.sub('.rb', '')}::VERSION".split('::').inject(Object) do |mod, class_name|
+        mod.const_get(class_name)
+      end.to_s
+    rescue
+      "???"
+    end
+
     private
     def format_version(format)
       if %w(RDF::NTriples::Format RDF::NQuads::Format).include?(format.to_s)

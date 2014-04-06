@@ -74,10 +74,8 @@ Distills between formats supported in [Linked Data][].
 * [Gregg Kellogg](http://github.com/gkellogg) - <http://greggkellogg.net/>
 
 ## Hosting Notes
-* public/.htaccess set up for installation on RailsPlayground server.
-* Bundle installed using:
-
-    bundle install --path vendor/bundler
+* Setup to run on Heroku.
+* To run locally, do the following: `foreman start`
 
 ##Contributing
 This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange development and release activity. All submissions _must_ be on a feature branch based on the _develop_ branch to ease staging and integration.
