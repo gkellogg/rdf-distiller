@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gemspec
+
 ruby "2.1.1"
 
 # Include non-released gems first
