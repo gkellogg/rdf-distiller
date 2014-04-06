@@ -1,9 +1,8 @@
 source 'http://rubygems.org'
 
-# Specify your gem's dependencies in github-lod.gemspec
-gemspec :name => ""
+gemspec
 
-ruby "2.0.0"
+ruby "2.1.1"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", :git => "git://github.com/ruby-rdf/sinatra-linkeddata.git", :branch => "develop"
@@ -40,6 +39,9 @@ group :development, :test do
   gem 'shotgun'
   gem "syntax"
   gem "rake"
+  gem "yard"
+  gem "rack-test"
+  gem "webmock"
 end
 
 group :debug do
