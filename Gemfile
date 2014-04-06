@@ -39,9 +39,6 @@ group :development, :test do
   gem 'shotgun'
   gem "syntax"
   gem "rake"
-  gem "yard"
-  gem "rack-test"
-  gem "webmock"
 end
 
 group :debug do
