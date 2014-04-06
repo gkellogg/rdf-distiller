@@ -18,7 +18,7 @@ describe RDF::Distiller::Application do
         get '/sparql', {}, {'HTTP_ACCEPT' => 'application/turtle'}
         expect(last_response.body).to eq "" unless last_response.ok?
         expect(last_response.body).to match(/^@prefix ssd: <.*> \.$/)
-        expect(last_response.body).to match(/\[ a ssd:Service;/)
+        expect(last_response.body).to match(/\[\s*a ssd:Service;/m)
       end
     end
 
