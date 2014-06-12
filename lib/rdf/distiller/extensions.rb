@@ -18,7 +18,7 @@ module RDF::Util
         path = filename_or_url[5..-1]
         Kernel.open(path.to_s, &block)
       when /^http/
-        remote_document = RemoteDocument.new(response.body, base_uri: filename_or_url, charset: "utf-8")
+        remote_document = RemoteDocument.new("", base_uri: filename_or_url, charset: "utf-8")
 
         c = Curl::Easy.perform(filename_or_url) do |curl|
           curl.headers['Accept'] = 'text/turtle, application/rdf+xml;q=0.8, text/plain;q=0.4, */*;q=0.1'
