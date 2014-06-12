@@ -28,23 +28,24 @@ Gem::Specification.new do |s|
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '>= 1.1'
-  s.add_runtime_dependency      'equivalent-xml',     '>= 0.4.2'
-  s.add_runtime_dependency      'sparql',             '>= 1.1.2'
+  s.add_runtime_dependency      "linkeddata",         '~> 1.1'
+  s.add_runtime_dependency      'curb',               '~> 0.8'
+  s.add_runtime_dependency      'equivalent-xml',     '~> 0.4'
+  s.add_runtime_dependency      'sparql',             '~> 1.1'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '>= 1.4.4'
-  s.add_runtime_dependency      'erubis',             '>= 2.7.0'
+  s.add_runtime_dependency      'sinatra',            '~> 1.4'
+  s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml'
   s.add_runtime_dependency      'maruku'
-  s.add_runtime_dependency      "rack",               '>= 1.5.2'
+  s.add_runtime_dependency      "rack",               '~> 1.5'
   s.add_runtime_dependency      'webmock'
   s.add_runtime_dependency      'rack-cache'
 
   # development dependencies
   s.add_development_dependency  'yard'
-  s.add_development_dependency  'rspec',              '>= 2.12.0'
-  s.add_development_dependency  'rack-test',          '>= 0.6.2'
+  s.add_development_dependency  'rspec',              '~> 3.0'
+  s.add_development_dependency  'rack-test',          '~> 0.6'
   s.add_development_dependency  'bundler'
   s.post_install_message        = nil
 end
