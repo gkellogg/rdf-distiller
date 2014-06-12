@@ -79,7 +79,9 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-b5b2fcc48298/lib/rdf/util/file.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-035550244c06/lib/rdf/util/file.rb<span class="defines">,<br />
+  lib/rdf/distiller/extensions.rb</span>
+</dd>
   
 </dl>
 <div class="clear"></div>
@@ -178,7 +180,7 @@ and interfaces.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#open_file-class_method" title="open_file (class method)">+ (IO, Reader) <strong>open_file</strong>(filename_or_url, options = {}) {|IO, StringIO| ... }</a>
+      <a href="#open_file-class_method" title="open_file (class method)">+ (IO) <strong>open_file</strong>(filename_or_url, options = {}) {|IO| ... }</a>
     
 
     
@@ -192,7 +194,7 @@ and interfaces.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Open the file, returning or yielding an IO stream and mime_type.</p>
+    <span class="summary_desc"><div class='inline'><p>Override to use CURB for http and https, Kernel.open otherwise.</p>
 </div></span>
   
 </li>
@@ -265,7 +267,7 @@ and interfaces.</p>
 24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-b5b2fcc48298/lib/rdf/util/file.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-035550244c06/lib/rdf/util/file.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_content_type'>content_type</span>
   <span class='ivar'>@content_type</span>
@@ -285,7 +287,7 @@ and interfaces.</p>
       <div class="method_details first">
   <h3 class="signature first" id="open_file-class_method">
   
-    + (<tt>IO</tt>, <tt><span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></tt>) <strong>open_file</strong>(filename_or_url, options = {}) {|IO, StringIO| ... }
+    + (<tt>IO</tt>) <strong>open_file</strong>(filename_or_url, options = {}) {|IO| ... }
   
 
   
@@ -293,11 +295,7 @@ and interfaces.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Open the file, returning or yielding an IO stream and mime_type.
-Adds Accept header based on available reader content types to allow
-for content negotiation based on available readers.</p>
-
-<p>When retrieving documents over HTTP(S), use the mechanism described in <a href="http://www.w3.org/2001/tag/awwsw/issue57/latest/">Providing and Discovering URI Documentation</a> to pass the appropriate <code>base_uri</code> to the block or as the return.</p>
+    <p>Override to use CURB for http and https, Kernel.open otherwise.</p>
 
 
   </div>
@@ -332,13 +330,6 @@ for content negotiation based on available readers.</p>
         <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
-        &mdash;
-        <div class='inline'><p>options are ignored in this implementation. Applications are encouraged
-to override this implementation to provide more control over HTTP
-headers and redirect following. If opening as a file,
-options are passed to <code>Kernel.open</code>.</p>
-</div>
-      
     </li>
   
 </ul>
@@ -358,7 +349,7 @@ options are passed to <code>Kernel.open</code>.</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>HTTP Request headers, passed to Kernel.open.</p>
+            &mdash; <div class='inline'><p>HTTP Request headers.</p>
 </div>
           
         </li>
@@ -372,7 +363,7 @@ options are passed to <code>Kernel.open</code>.</p>
     <li>
       
       
-        <span class='type'>(<tt>IO</tt>, <tt>StringIO</tt>)</span>
+        <span class='type'>(<tt>IO</tt>)</span>
       
       
       
@@ -389,12 +380,12 @@ options are passed to <code>Kernel.open</code>.</p>
     <li>
       
       
-        <span class='type'>(<tt>IO</tt>, <tt><span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></tt>)</span>
+        <span class='type'>(<tt>IO</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>File stream with no block, and the block return otherwise</p>
+        <div class='inline'><p>File stream</p>
 </div>
       
     </li>
@@ -488,10 +479,11 @@ options are passed to <code>Kernel.open</code>.</p>
 104
 105
 106
-107</pre>
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-b5b2fcc48298/lib/rdf/util/file.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-035550244c06/lib/rdf/util/file.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open_file'>open_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename_or_url'>filename_or_url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_filename_or_url'>filename_or_url</span> <span class='op'>=</span> <span class='backref'>$1</span> <span class='kw'>if</span> <span class='id identifier rubyid_filename_or_url'>filename_or_url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^file:(.*)$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
@@ -512,8 +504,9 @@ options are passed to <code>Kernel.open</code>.</p>
     <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>nil</span>
     <span class='kw'>until</span> <span class='id identifier rubyid_remote_document'>remote_document</span> <span class='kw'>do</span>
       <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='op'>::</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='id identifier rubyid_parsed_url'>parsed_url</span><span class='period'>.</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_parsed_url'>parsed_url</span><span class='period'>.</span><span class='id identifier rubyid_port'>port</span><span class='comma'>,</span>
-                      <span class='symbol'>:open_timeout</span> <span class='op'>=&gt;</span> <span class='int'>60</span> <span class='op'>*</span> <span class='int'>1000</span><span class='comma'>,</span>
-                      <span class='symbol'>:use_ssl</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_filename_or_url'>filename_or_url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+                      <span class='label'>open_timeout:</span> <span class='int'>60</span> <span class='op'>*</span> <span class='int'>1000</span><span class='comma'>,</span>
+                      <span class='label'>use_ssl:</span> <span class='id identifier rubyid_parsed_url'>parsed_url</span><span class='period'>.</span><span class='id identifier rubyid_scheme'>scheme</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                      <span class='label'>verify_mode:</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>SSL</span><span class='op'>::</span><span class='const'>VERIFY_NONE</span>
       <span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_http'>http</span><span class='op'>|</span>
         <span class='id identifier rubyid_request'>request</span> <span class='op'>=</span> <span class='const'>Net</span><span class='op'>::</span><span class='const'>HTTP</span><span class='op'>::</span><span class='const'>Get</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_parsed_url'>parsed_url</span><span class='period'>.</span><span class='id identifier rubyid_request_uri'>request_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_http'>http</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
@@ -570,9 +563,9 @@ options are passed to <code>Kernel.open</code>.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Apr  6 15:13:15 2014 by
+  Generated on Thu Jun 12 10:33:19 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.1).
+  0.8.7.4 (ruby-2.1.2).
 </div>
 
   </body>
