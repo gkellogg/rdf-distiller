@@ -100,8 +100,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader/nokogiri.rb</span>
+    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader/nokogiri.rb</span>
 </dd>
   
 </dl>
@@ -696,7 +696,7 @@
 259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
@@ -805,7 +805,7 @@
 26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_implementation'>implementation</span>
   <span class='ivar'>@implementation</span>
@@ -888,7 +888,7 @@
 36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
@@ -964,22 +964,28 @@
 277
 278
 279
-280</pre>
+280
+281
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='ivar'>@vocab_expansion</span>
-    <span class='ivar'>@vocab_expansion</span> <span class='op'>=</span> <span class='kw'>false</span>
-    <span class='id identifier rubyid_expand'>expand</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='ivar'>@vocab_expansion</span> <span class='op'>=</span> <span class='kw'>true</span>
-  <span class='kw'>else</span>
-    <span class='ivar'>@callback</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='kw'>if</span> <span class='ivar'>@vocab_expansion</span>
+      <span class='ivar'>@vocab_expansion</span> <span class='op'>=</span> <span class='kw'>false</span>
+      <span class='id identifier rubyid_expand'>expand</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+      <span class='ivar'>@vocab_expansion</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@callback</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
 
-    <span class='comment'># parse
-</span>    <span class='id identifier rubyid_parse_whole_document'>parse_whole_document</span><span class='lparen'>(</span><span class='ivar'>@doc</span><span class='comma'>,</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='rparen'>)</span>
+      <span class='comment'># parse
+</span>      <span class='id identifier rubyid_parse_whole_document'>parse_whole_document</span><span class='lparen'>(</span><span class='ivar'>@doc</span><span class='comma'>,</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
+  <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1061,19 +1067,25 @@
       <pre class="lines">
 
 
-290
-291
-292
 293
-294</pre>
+294
+295
+296
+297
+298
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-c3f75f7caae4/lib/rdf/microdata/reader.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-microdata-a0810f97b751/lib/rdf/microdata/reader.rb', line 293</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
-    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
+  <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_triple</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1085,9 +1097,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Apr  6 15:13:38 2014 by
+  Generated on Thu Jun 12 10:33:37 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.1).
+  0.8.7.4 (ruby-2.1.2).
 </div>
 
   </body>
