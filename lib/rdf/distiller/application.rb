@@ -2,6 +2,7 @@ require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'erubis'
 require 'linkeddata'
+require 'rdf/distiller/extensions'
 require 'uri'
 require 'haml'
 
