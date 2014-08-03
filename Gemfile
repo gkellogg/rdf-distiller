@@ -43,8 +43,6 @@ end
 
 group :debug do
   gem "wirble"
-  gem "redcarpet", :platforms => :ruby
-  gem "debugger", :platforms => :mri_19
-  gem "byebug", :platforms => :mri_20
-  gem "ruby-debug", :platforms => :jruby
+  gem "redcarpet"
+  gem "byebug"
 end

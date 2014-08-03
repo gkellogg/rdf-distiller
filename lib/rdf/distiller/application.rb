@@ -2,7 +2,6 @@ require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'erubis'
 require 'linkeddata'
-require 'rdf/distiller/extensions'
 require 'uri'
 require 'haml'
 
@@ -27,19 +26,19 @@ module RDF::Distiller
     end
 
     get '/' do
-      cache_control :public, :must_revalidate, :max_age => 60
-      result = erb :index, :locals => {:title => "Ruby Linked Data Service"}
+      cache_control :public, :must_revalidate, max_age: 60
+      result = erb :index, locals: {title: "Ruby Linked Data Service"}
       etag result.hash
       result
     end
 
     get '/about.?:format?' do
-      cache_control :public, :must_revalidate, :max_age => 60
-      haml :about, :locals => {:title => "About the Ruby Linked Data Service"}
+      cache_control :public, :must_revalidate, max_age: 60
+      haml :about, locals: {title: "About the Ruby Linked Data Service"}
     end
 
     get '/doap.?:format?' do
-      cache_control :public, :must_revalidate, :max_age => 60
+      cache_control :public, :must_revalidate, max_age: 60
       case format
       when :nt, :ntriples
         f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
@@ -62,19 +61,19 @@ module RDF::Distiller
           p['dc:creator'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
           p['doap:helper'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
         end
-        haml :doap, :locals => {
-          :title => "Project Information on included Gems",
-          :projects => projects
+        haml :doap, locals: {
+          title:    "Project Information on included Gems",
+          projects: projects
         }
       else
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
-        settings.sparql_options.merge!(:format => format, :content_type => content_type)
+        settings.sparql_options.merge!(format: format, content_type: content_type)
         doap
       end
     end
 
     get '/distiller' do
-      cache_control :public, :must_revalidate, :max_age => 60
+      cache_control :public, :must_revalidate, max_age: 60
       distil
     end
 
@@ -83,7 +82,7 @@ module RDF::Distiller
     end
     
     get '/sparql' do
-      cache_control :public, :must_revalidate, :max_age => 60
+      cache_control :public, :must_revalidate, max_age: 60
       sparql
     end
 
@@ -96,9 +95,9 @@ module RDF::Distiller
     # Handle GET/POST /distiller
     def distil
       writer_options = {
-        :standard_prefixes => true,
-        :prefixes => {},
-        :base_uri => params["uri"],
+        standard_prefixes: true,
+        prefixes: {},
+        base_uri: params["uri"],
       }
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"
 
@@ -111,13 +110,13 @@ module RDF::Distiller
         root = request.url[0,request.url.index(request.path)]
         haml_input[:doc] = haml_input[:doc].gsub(/--root--/, root)
         writer_options[:haml] = haml_input
-        writer_options[:haml_options] = {:ugly => false}
+        writer_options[:haml_options] = {ugly: false}
       end
-      settings.sparql_options.replace(writer_options.merge(:content_type => content_type))
+      settings.sparql_options.replace(writer_options.merge(content_type: content_type))
 
       if format != :html || params["raw"]
         format writer_options[:format]
-        settings.sparql_options.merge!(:format => format, :content_type => content_type)
+        settings.sparql_options.merge!(format: format, content_type: content_type)
         # Return distilled content as is
         content
       else
@@ -130,17 +129,17 @@ module RDF::Distiller
           content
         end
         @output.force_encoding(Encoding::UTF_8) if @output
-        haml :distiller, :locals => {:title => "RDF Distiller", :head => :distiller}
+        haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
     
     # Handle GET/POST /sparql
     def sparql
       writer_options = {
-        :standard_prefixes => true,
-        :prefixes => {
-          :ssd => "http://www.w3.org/ns/sparql-service-description#",
-          :void => "http://rdfs.org/ns/void#"
+        standard_prefixes: true,
+        prefixes: {
+          ssd: "http://www.w3.org/ns/sparql-service-description#",
+          void: "http://rdfs.org/ns/void#"
         }
       }
       # Override output format if the content-type is something like
@@ -169,9 +168,9 @@ module RDF::Distiller
         root = request.url[0,request.url.index(request.path)]
         haml[:doc] = haml[:doc].gsub(/--root--/, root)
         writer_options[:haml] = haml
-        writer_options[:haml_options] = {:ugly => false}
+        writer_options[:haml_options] = {ugly: false}
       end
-      writer_options.merge!(:content_type => content_type)
+      writer_options.merge!(content_type: content_type)
 
       $logger.info "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
       if format != :html
@@ -180,8 +179,8 @@ module RDF::Distiller
         content
       else
         serialize_options = {
-          :format => params["fmt"],
-          :content_types => request.accept
+          format: params["fmt"],
+          content_types: request.accept
         }
         begin
           @output = if params["fmt"] == "sse"
@@ -195,10 +194,10 @@ module RDF::Distiller
           @error = "No results generated #{content.class}: #{e.message}"
           $logger.error @error  # to log
         end
-        erb :sparql, :locals => {
-          :title => "SPARQL Endpoint",
-          :head => :distiller,
-          :doap_count => doap.count
+        erb :sparql, locals: {
+          title: "SPARQL Endpoint",
+          head: :distiller,
+          doap_count: doap.count
         }
       end
     end
@@ -232,7 +231,7 @@ module RDF::Distiller
         when 'text/csv'                        then :csv
         when 'text/tab-separated-values'       then :tsv
         else
-          RDF::Format.for(:content_type => env['ORDERED_CONTENT_TYPES'].first).to_sym
+          RDF::Format.for(content_type: env['ORDERED_CONTENT_TYPES'].first).to_sym
         end
       else
         content_type :html
@@ -244,16 +243,17 @@ module RDF::Distiller
     def doap
       @doap ||= begin
         $logger.debug "load #{DOAP_NT}"
-        RDF::Repository.load(DOAP_NT, :encoding => Encoding::UTF_8)
+        RDF::Repository.load(DOAP_NT, encoding: Encoding::UTF_8)
       end
     end
 
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
       reader_opts = options.merge(
-        :validate        => params["validate"],
-        :vocab_expansion => params["vocab_expansion"],
-        :rdfagraph       => params["rdfagraph"]
+        validate:        params["validate"],
+        vocab_expansion: params["vocab_expansion"],
+        rdfagraph:       params["rdfagraph"],
+        headers:         {"User-Agent" => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"}
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
@@ -288,8 +288,8 @@ module RDF::Distiller
     # Perform a SPARQL query, either on the input URI or the form data
     def query
       sparql_opts = {
-        :base_uri => params["uri"],
-        :validate => params["validate"],
+        base_uri: params["uri"],
+        validate: params["validate"],
       }
       sparql_opts[:format] = params["fmt"].to_sym if params["fmt"]
       sparql_opts[:debug] = @debug = [] if params["debug"]
@@ -317,7 +317,7 @@ module RDF::Distiller
           ""  # Done in form
         else
           # Return service description graph
-          service_description(:repository => doap, :endpoint => url("/sparql"))
+          service_description(repository: doap, endpoint: url("/sparql"))
         end
       end
 
