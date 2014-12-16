@@ -45,10 +45,10 @@ module RDF::Distiller
         etag f
         headers "Content-Type" => "application/n-triples; charset=utf-8"
         body f
-      when :json, :jsonld
+      when :jsonld
         f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
         etag Digest::SHA1.hexdigest f
-        headers "Content-Type" => format == :jsonld ? "application/ld+json; charset=utf-8" : "application/json; charset=utf-8"
+        headers "Content-Type" => "application/ld+json; charset=utf-8"
         body f
       when :html, :xhtml
         f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
@@ -217,9 +217,9 @@ module RDF::Distiller
       params[:format] = format.to_sym if format
       case
       when params[:format]
-        content_type params[:format]
+        content_type params[:format] == :json ? 'application/rdf+json' : params[:format]
         params[:format].to_sym
-      when %w(application/xhtml+xml text/html).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
+      when %w(application/xhtml+xml text/html */*).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
         content_type env['ORDERED_CONTENT_TYPES'].first
         :html
       when !Array(env['ORDERED_CONTENT_TYPES']).empty?
@@ -230,6 +230,7 @@ module RDF::Distiller
         when 'application/sparql-results+xml'  then :xml
         when 'text/csv'                        then :csv
         when 'text/tab-separated-values'       then :tsv
+        when 'application/rdf+json'            then :json
         else
           RDF::Format.for(content_type: env['ORDERED_CONTENT_TYPES'].first).to_sym
         end

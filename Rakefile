@@ -45,10 +45,7 @@ end
 desc "Create DOAP links"
 task :doap do
   require 'linkeddata'
-  require 'rdf/trig'
-  require 'json/ld'
   require 'rdf/json'
-  require 'rdf/microdata'
   require 'equivalent-xml'
   require 'yaml'
 

@@ -83,9 +83,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/cc.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/dc.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/doap.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/foaf.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/schema.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/sioc.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/skos.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion/v.rb</span>
-</dd>
+    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ac1baeea7b79/lib/rdf/rdfa/expansion.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -113,25 +111,6 @@ which implementes RDF::Readable.</p>
 </p>
 
   <h2>Constant Summary</h2>
-  
-    <dl class="constants">
-      
-        <dt id="COOKED_VOCAB_STATEMENTS-constant" class="">COOKED_VOCAB_STATEMENTS =
-          <div class="docstring">
-  <div class="discussion">
-    <p>Pre-processed vocabularies used to simplify loading of common vocabularies</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
-        </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span></pre></dd>
-      
-    </dl>
   
 
 
@@ -276,13 +255,13 @@ which implementes RDF::Readable.</p>
       <pre class="lines">
 
 
-79
-80
-81
-82</pre>
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ac1baeea7b79/lib/rdf/rdfa/expansion.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_properties'>copy_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Repository has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_content'> statements</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
@@ -306,40 +285,13 @@ which implementes RDF::Readable.</p>
   <div class="discussion">
     <p>Perform vocabulary expansion on the resulting default graph.</p>
 
-<p>Vocabulary expansion relies on a sub-set of OWL entailment to add
-  triples to the default graph based on rules and property/class relationships
-  described in referenced vocabularies.</p>
-
-<p>For all objects that are the target of an rdfa:usesVocabulary property, load the IRI into
-a repository.</p>
-
-<p>Subsequently, perform OWL expansion using rules prp-spo1, prp-eqp1,
-prp-eqp2, cax-sco, cax-eqc1, and cax-eqc2 placing resulting triples into the default
-graph. Iterate on this step until no more triples are added.</p>
+<p>Vocabulary expansion uses the built-in reasoner using included vocabularies from RDF.rb.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-      <pre class="example code"><code>scm-spo
-{pq rdfs:subPropertyOf pw . pw rdfs:subPropertyOf p3} =&gt; {p1 rdfs:subPropertyOf p3}
-
-rdprp-spo1fs7
-{p1 rdfs:subPropertyOf p2 . x p1 y} =&gt; {x p2 y}
-
-cax-sco
-{c1 rdfs:subClassOf c2 . x rdf:type c1} =&gt; {x rdf:type c2}
-
-scm-sco
-{c1 rdfs:subClassOf c2 . c2 rdfs:subClassOf c3} =&gt; {c1 rdfs:subClassOf c3}</code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
+  <p class="tag_title">Parameters:</p>
 <ul class="param">
   
     <li>
@@ -369,69 +321,51 @@ scm-sco
       <pre class="lines">
 
 
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68</pre>
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ac1baeea7b79/lib/rdf/rdfa/expansion.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
-  <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Repository has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_content'> statements</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-  
-  <span class='comment'># Vocabularies managed in vocab_repo, and copied to repo for processing.
-</span>  <span class='comment'># This allows for persistent storage of vocabularies
-</span>  <span class='cvar'>@@vocab_repo</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:vocab_repository</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:vocab_repository</span><span class='rparen'>)</span>
-  <span class='cvar'>@@vocab_repo</span> <span class='op'>||=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Repository</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>COOKED_VOCAB_STATEMENTS</span><span class='rparen'>)</span>
-  
-  <span class='id identifier rubyid_vocabs'>vocabs</span> <span class='op'>=</span> <span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFA</span><span class='period'>.</span><span class='id identifier rubyid_usesVocabulary'>usesVocabulary</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:object</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_vocabs'>vocabs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_vocab'>vocab</span><span class='op'>|</span>
+  <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Repository has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> statements</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+
+  <span class='comment'># Load missing vocabularies
+</span>  <span class='id identifier rubyid_vocabs'>vocabs</span> <span class='op'>=</span> <span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFA</span><span class='period'>.</span><span class='id identifier rubyid_usesVocabulary'>usesVocabulary</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:object</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_vocabs'>vocabs</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_vocab'>vocab</span><span class='op'>|</span>
     <span class='kw'>begin</span>
-      <span class='kw'>unless</span> <span class='cvar'>@@vocab_repo</span><span class='period'>.</span><span class='id identifier rubyid_has_context?'>has_context?</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Load </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_vocab'>vocab</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-        <span class='cvar'>@@vocab_repo</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='comma'>,</span> <span class='symbol'>:context</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
+      <span class='comment'># Create the name with a predictable name so that it is enumerated and can be found
+</span>      <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Vocabulary</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='rparen'>)</span> <span class='op'>||</span>
+          <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Vocabulary</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='comma'>,</span> <span class='label'>class_name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>D</span><span class='embexpr_beg'>#{</span><span class='const'>Digest</span><span class='op'>::</span><span class='const'>MD5</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='comment'># indicate the warning if the vocabulary fails to laod
 </span>      <span class='id identifier rubyid_add_warning'>add_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error loading vocabulary </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_vocab'>vocab</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFA</span><span class='period'>.</span><span class='const'>UnresolvedVocabulary</span><span class='rparen'>)</span>
+      <span class='kw'>nil</span>
     <span class='kw'>end</span>
-  <span class='kw'>end</span>
-  
-  <span class='cvar'>@@vocab_repo</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_vocabs'>vocabs</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_repository'>repository</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_statement'>statement</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
 
-  <span class='id identifier rubyid_entailment'>entailment</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_entailment'>entailment</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span><span class='comma'>,</span> <span class='id identifier rubyid_vocabs'>vocabs</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_debug'>add_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Repository now has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> statements</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -453,12 +387,12 @@ scm-sco
       <pre class="lines">
 
 
-84
-85
-86</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ccf178bd85f4/lib/rdf/rdfa/expansion.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-ac1baeea7b79/lib/rdf/rdfa/expansion.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rule'>rule</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -473,9 +407,9 @@ scm-sco
 </div>
 
     <div id="footer">
-  Generated on Sat Aug  2 14:38:37 2014 by
+  Generated on Tue Dec 16 10:38:11 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.1.5).
 </div>
 
   </body>

@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gemspec
 
-ruby "2.1.2"
+ruby "2.1.5"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", :git => "git://github.com/ruby-rdf/sinatra-linkeddata.git", :branch => "develop"
@@ -19,6 +19,7 @@ gem 'rdf-microdata',  :git => "git://github.com/ruby-rdf/rdf-microdata.git", :br
 gem 'rdf-n3',         :git => "git://github.com/ruby-rdf/rdf-n3.git", :branch => "develop"
 gem 'rdf-rdfa',       :git => "git://github.com/ruby-rdf/rdf-rdfa.git", :branch => "develop"
 gem 'rdf-rdfxml',     :git => "git://github.com/ruby-rdf/rdf-rdfxml.git", :branch => "develop"
+gem 'rdf-reasoner',   :git => "git://github.com/ruby-rdf/rdf-reasoner.git", :branch => "develop"
 gem 'rdf-trig',       :git => "git://github.com/ruby-rdf/rdf-trig.git", :branch => "develop"
 gem 'rdf-trix',       :git => "git://github.com/ruby-rdf/rdf-trix.git", :branch => "develop"
 gem 'rdf-turtle',     :git => "git://github.com/ruby-rdf/rdf-turtle.git", :branch => "develop"
