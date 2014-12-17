@@ -91,8 +91,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-5caf5dbad65a/lib/rdf/isomorphic.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-5caf5dbad65a/lib/rdf/isomorphic.rb,<br /> vendor/bundler/ruby/2.1.0/gems/rdf-reasoner-0.2.1/lib/rdf/reasoner/extensions.rb</span>
 </dd>
   
 </dl>
@@ -119,12 +119,56 @@
   
 </p>
 
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="entailments-classvariable" class="">@@entailments =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
 
 
 
 
 
 
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_entailment-class_method" title="add_entailment (class method)">+ (Object) <strong>add_entailment</strong>(method, proc) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Add an entailment method.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -358,6 +402,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Iterates the given block for each RDF triple.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#entail-instance_method" title="#entail (instance method)">- (Object) <strong>entail</strong>(*rules, &amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Perform entailments on this enumerable in a single pass, yielding entailed statements.</p>
 </div></span>
   
 </li>
@@ -1161,7 +1228,7 @@ based on the writer symbol.</p>
 695</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 688</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 688</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_meth'>meth</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_writer'>writer</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_meth'>meth</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='int'>3</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_meth'>meth</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span><span class='int'>3</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>to_</span><span class='tstring_end'>&quot;</span></span>
@@ -1178,6 +1245,78 @@ based on the writer symbol.</p>
   
 </div>
 
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_entailment-class_method">
+  
+    + (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>add_entailment</strong>(method, proc) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Add an entailment method. The method accepts no arguments, and returns or yields an array of values associated with the particular entailment method</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>method</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>proc</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/gems/rdf-reasoner-0.2.1/lib/rdf/reasoner/extensions.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_entailment'>add_entailment</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_proc'>proc</span><span class='rparen'>)</span>
+  <span class='cvar'>@@entailments</span><span class='lbracket'>[</span><span class='id identifier rubyid_method'>method</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -1277,7 +1416,7 @@ based on the writer symbol.</p>
 520</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 514</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 514</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_contexts'>contexts</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:unique</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>false</span>
@@ -1411,7 +1550,7 @@ serialization extension for the specified format.</p>
 679</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 674</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 674</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1576,7 +1715,7 @@ serialization extension for the specified format.</p>
 563</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 551</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 551</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_context'>each_context</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1759,7 +1898,7 @@ serialization extension for the specified format.</p>
 603</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 595</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 595</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_graph'>each_graph</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1927,7 +2066,7 @@ serialization extension for the specified format.</p>
 494</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 482</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 482</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_object'>each_object</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='comment'># FIXME: deduplication
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2099,7 +2238,7 @@ serialization extension for the specified format.</p>
 426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_predicate'>each_predicate</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2299,7 +2438,7 @@ serialization extension for the specified format.</p>
 288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_quad'>each_quad</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2460,7 +2599,7 @@ serialization extension for the specified format.</p>
 159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2626,7 +2765,7 @@ serialization extension for the specified format.</p>
 358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 346</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 346</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_subject'>each_subject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2815,7 +2954,7 @@ serialization extension for the specified format.</p>
 225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2824,6 +2963,194 @@ serialization extension for the specified format.</p>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_enum_triple'>enum_triple</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="entail-instance_method">
+  
+    
+      <span class="overload">- <strong>entail</strong> {|statement| ... }</span>
+    
+      <span class="overload">- (<tt><span class='object_link'><a href="Enumerable/Enumerator.html" title="RDF::Enumerable::Enumerator (class)">Enumerator</a></span></tt>) <strong>entail</strong> </span>
+    
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Perform entailments on this enumerable in a single pass, yielding entailed statements.</p>
+
+<p>For best results, either run rules separately expanding the enumberated graph, or run repeatedly until no new statements are added to the enumerable containing both original and entailed statements. As <code>:subClassOf</code> and <code>:subPropertyOf</code> entailments are implicitly recursive, this may not be necessary except for extreme cases.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">- <strong>entail</strong> {|statement| ... }</span>
+        <div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>*rules</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Registered entailment method(s)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>statement</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>statement</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">- (<tt><span class='object_link'><a href="Enumerable/Enumerator.html" title="RDF::Enumerable::Enumerator (class)">Enumerator</a></span></tt>) <strong>entail</strong> </span>
+        <div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>*rules</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Registered entailment method(s)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Enumerable/Enumerator.html" title="RDF::Enumerable::Enumerator (class)">Enumerator</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+  </ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/gems/rdf-reasoner-0.2.1/lib/rdf/reasoner/extensions.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_entail'>entail</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_rules'>rules</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+    <span class='id identifier rubyid_rules'>rules</span> <span class='op'>=</span> <span class='cvar'>@@entailments</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='kw'>if</span> <span class='id identifier rubyid_rules'>rules</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+      <span class='id identifier rubyid_rules'>rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_entail'>entail</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Otherwise, return an Enumerator with the entailed statements
+</span>    <span class='id identifier rubyid_this'>this</span> <span class='op'>=</span> <span class='kw'>self</span>
+    <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Queryable</span><span class='op'>::</span><span class='const'>Enumerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_yielder'>yielder</span><span class='op'>|</span>
+      <span class='id identifier rubyid_this'>this</span><span class='period'>.</span><span class='id identifier rubyid_entail'>entail</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_rules'>rules</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_y'>y</span><span class='op'>|</span> <span class='id identifier rubyid_yielder'>yielder</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_y'>y</span><span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2884,7 +3211,7 @@ serialization extension for the specified format.</p>
 572</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 570</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 570</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_context'>enum_context</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_context</span><span class='rparen'>)</span>
@@ -2963,7 +3290,7 @@ serialization extension for the specified format.</p>
 613</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 611</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 611</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_graph'>enum_graph</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_graph</span><span class='rparen'>)</span>
@@ -3027,7 +3354,7 @@ serialization extension for the specified format.</p>
 503</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 501</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_object'>enum_object</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_object</span><span class='rparen'>)</span>
@@ -3091,7 +3418,7 @@ serialization extension for the specified format.</p>
 435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 433</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 433</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_predicate'>enum_predicate</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_predicate</span><span class='rparen'>)</span>
@@ -3157,7 +3484,7 @@ serialization extension for the specified format.</p>
 299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 295</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_quad'>enum_quad</span>
   <span class='const'>Countable</span><span class='op'>::</span><span class='const'>Enumerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_yielder'>yielder</span><span class='op'>|</span>
@@ -3229,7 +3556,7 @@ in JRuby 1.7, so specs are marked pending</p>
 174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_statement'>enum_statement</span>
   <span class='comment'># Ensure that statements are queryable, countable and enumerable
@@ -3297,7 +3624,7 @@ in JRuby 1.7, so specs are marked pending</p>
 367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 365</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_subject'>enum_subject</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_subject</span><span class='rparen'>)</span>
@@ -3363,7 +3690,7 @@ in JRuby 1.7, so specs are marked pending</p>
 236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_triple'>enum_triple</span>
   <span class='const'>Countable</span><span class='op'>::</span><span class='const'>Enumerator</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_yielder'>yielder</span><span class='op'>|</span>
@@ -3437,7 +3764,7 @@ in JRuby 1.7, so specs are marked pending</p>
 530</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 528</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 528</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_context?'>has_context?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_context'>enum_context</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -3505,7 +3832,7 @@ in JRuby 1.7, so specs are marked pending</p>
 461</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_object?'>has_object?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_object'>enum_object</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -3573,7 +3900,7 @@ in JRuby 1.7, so specs are marked pending</p>
 393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_predicate?'>has_predicate?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_predicate'>enum_predicate</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -3641,7 +3968,7 @@ in JRuby 1.7, so specs are marked pending</p>
 257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_quad?'>has_quad?</span><span class='lparen'>(</span><span class='id identifier rubyid_quad'>quad</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_quads'>quads</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_quad'>quad</span><span class='rparen'>)</span>
@@ -3713,7 +4040,7 @@ in JRuby 1.7, so specs are marked pending</p>
 131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_statement?'>has_statement?</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_enum_statement'>enum_statement</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -3781,7 +4108,7 @@ in JRuby 1.7, so specs are marked pending</p>
 325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 323</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 323</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_subject?'>has_subject?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_subject'>enum_subject</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -3849,7 +4176,7 @@ in JRuby 1.7, so specs are marked pending</p>
 195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_triple?'>has_triple?</span><span class='lparen'>(</span><span class='id identifier rubyid_triple'>triple</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_triples'>triples</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_triple'>triple</span><span class='rparen'>)</span>
@@ -3938,7 +4265,7 @@ in JRuby 1.7, so specs are marked pending</p>
 101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_invalid?'>invalid?</span>
   <span class='op'>!</span><span class='id identifier rubyid_valid?'>valid?</span>
@@ -4042,7 +4369,7 @@ in JRuby 1.7, so specs are marked pending</p>
 452</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 446</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objects'>objects</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:unique</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>false</span>
@@ -4150,7 +4477,7 @@ in JRuby 1.7, so specs are marked pending</p>
 384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_predicates'>predicates</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:unique</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>false</span>
@@ -4233,7 +4560,7 @@ in JRuby 1.7, so specs are marked pending</p>
 248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quads'>quads</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_statement'>enum_statement</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_quad</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_enum'>to_enum</span> <span class='comment'># TODO: optimize
@@ -4312,7 +4639,7 @@ in JRuby 1.7, so specs are marked pending</p>
 122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_statements'>statements</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_statement'>enum_statement</span>
@@ -4416,7 +4743,7 @@ in JRuby 1.7, so specs are marked pending</p>
 316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subjects'>subjects</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:unique</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>false</span>
@@ -4443,10 +4770,13 @@ in JRuby 1.7, so specs are marked pending</p>
   <div class="discussion">
     <p>Returns <code>true</code> if this repository supports the given <code>feature</code>.</p>
 
-<p>Supported features include:
-  * <code>:context</code> supports statements with a context, allowing multiple contexts
-  * <code>:inferrence</code> supports RDFS inferrence of queryable contents.
-  * <code>:validatable</code> allows a concrete Enumerable implementation to indicate that it does or does not support valididty checking. By default implementations are assumed to support validity checking.</p>
+<p>Supported features include:</p>
+
+<ul>
+<li><code>:context</code> supports statements with a context, allowing multiple contexts</li>
+<li><code>:inferrence</code> supports RDFS inferrence of queryable contents.</li>
+<li><code>:validatable</code> allows a concrete Enumerable implementation to indicate that it does or does not support valididty checking. By default implementations are assumed to support validity checking.</li>
+</ul>
 
 
   </div>
@@ -4508,7 +4838,7 @@ in JRuby 1.7, so specs are marked pending</p>
 77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='id identifier rubyid_feature'>feature</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_feature'>feature</span> <span class='op'>==</span> <span class='symbol'>:validity</span>
@@ -4578,7 +4908,7 @@ in JRuby 1.7, so specs are marked pending</p>
 625</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 623</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 623</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Enumerable</span><span class='rparen'>)</span>
@@ -4641,7 +4971,7 @@ terms.</p>
 655</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 647</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 647</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4718,7 +5048,7 @@ terms.</p>
 637</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 634</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 634</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_set'>to_set</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>set</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>Set</span><span class='rparen'>)</span>
@@ -4798,7 +5128,7 @@ terms.</p>
 186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_triples'>triples</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_enum_statement'>enum_statement</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_triple</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_enum'>to_enum</span> <span class='comment'># TODO: optimize
@@ -4891,7 +5221,7 @@ terms.</p>
 91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> does not support validation</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='symbol'>:validity</span><span class='rparen'>)</span>
@@ -4988,7 +5318,7 @@ terms.</p>
 110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-44f2f7987f94/lib/rdf/mixin/enumerable.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-dc6874a9068f/lib/rdf/mixin/enumerable.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span> <span class='kw'>if</span> <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='symbol'>:validity</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_invalid?'>invalid?</span>
@@ -5003,9 +5333,9 @@ terms.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Aug  2 14:38:36 2014 by
+  Generated on Tue Dec 16 10:38:09 2014 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.1.5).
 </div>
 
   </body>

@@ -51,7 +51,7 @@
       and is freely available to be copied and extended with or without attribution.
 
     %dl
-      - RDF::Format.reject{|f| f.content_type.empty?}.each do |format|
+      - RDF::Format.each do |format|
         %dt
           = format.to_s.sub(/::Format$/, '') + "(#{format_version(format)})"
         %dd
@@ -65,10 +65,25 @@
           for
           = format.content_type.join(", ") + "."
       %dt
+        RDF::Reasoner
+        = "(#{RDF::Reasoner::VERSION})"
+      %dd
+        RDF Reasoner
+      %dt
+        RDF::XSD
+        = "(#{RDF::XSD::VERSION})"
+      %dd
+        RDF XSD
+      %dt
         SPARQL
         = "(#{SPARQL::VERSION})"
       %dd
-        SPARQL 1.0 Query
+        SPARQL 1.1 Query
+      %dt
+        SPARQL::Client
+        = "(#{SPARQL::Client::VERSION})"
+      %dd
+        SPARQL Client
 
     :markdown
       The [distiller](/distiller) can be used to read existing web resources, or

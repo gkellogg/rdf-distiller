@@ -3,10 +3,13 @@ require 'spec_helper'
 require 'linkeddata'
 
 describe RDF::Distiller::Application do
-  before(:each) do
-    $debug_output = StringIO.new()
-    $logger = Logger.new($debug_output)
-    $logger.formatter = lambda {|severity, datetime, progname, msg| "#{msg}\n"}
+  after(:each) do |example|
+    if example.exception
+      logdev = last_request.logger.instance_variable_get(:@logdev)
+      dev = logdev.instance_variable_get(:@dev)
+      dev.rewind
+      puts dev.read
+    end
   end
 
   describe "/sparql" do
@@ -48,7 +51,6 @@ describe RDF::Distiller::Application do
           context content_types do
             it "returns serialization" do
               get '/sparql', {:query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o})}, {"HTTP_ACCEPT" => content_types}
-              $logger.debug last_response.inspect
               expect(last_response.body).to eq "" unless last_response.ok?
               expect(last_response.body).to match(expected)
               expect(last_response.content_type).to eq content_types

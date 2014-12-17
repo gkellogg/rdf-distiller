@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'rspec'
 require 'rack/test'
 require 'rdf/distiller'
+require 'restclient/components'
+require 'rack/cache'
 require 'matchers'
 require 'logger'
 

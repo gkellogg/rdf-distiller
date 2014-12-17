@@ -24,23 +24,6 @@ Distills between formats supported in [Linked Data][].
 * Includes [JSON-LD][] support using the [JSON::LD][] gem.
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 
-## Dependencies
-* [RDF.rb][] (>= 1.1.0)
-* [Linked Data](http://rubygems.org/gems/linkeddata) (>= 1.1.0)
-* [Linked Data for Rack](http://rubygems.org/gems/rack-linkeddata) (>= 1.1.0)
-* [Linked Data for Sinatra](http://rubygems.org/gems/sinatra-linkeddata) (>= 1.1.0)
-* [Nokogiri](http://rubygems.org/gems/nokogiri) (>= 1.5.5)
-* [RDF::JSON](http://rubygems.org/gems/rdf-json) (>= 1.1.0)
-* [RDF::Microdata](http://rubygems.org/gems/rdf-microdata) (>= 1.1.0)
-* [RDF::N3](http://rubygems.org/gems/rdf-n3) (>= 1.1.0)
-* [RDF::RDFa](http://rubygems.org/gems/rdf-rdfa) (>= 1.1.0)
-* [RDF::RDFXML](http://rubygems.org/gems/rdf-rdfxml) (>= 1.1.0)
-* [RDF::TriG](http://rubygems.org/gems/rdf-trig) (>= 1.1.0)
-* [RDF::TriX](http://rubygems.org/gems/rdf-trix) (>= 1.1.0)
-* [RDF::Turtle](http://rubygems.org/gems/rdf-turtle) (>= 1.1.0)
-* [JSON::LD](http://rubygems.org/gems/json-ld) (>= 1.1.0)
-* [SPARQL](http://rubygems.org/gems/sparql) (>= 1.1.0)
-
 ## Documentation
 ### Core libraries
 * {RDF RDF.rb}
@@ -49,9 +32,11 @@ Distills between formats supported in [Linked Data][].
   * {RDF::N3}
   * {RDF::RDFa}
   * {RDF::RDFXML}
+  * {RDF::Reasoner}
   * {RDF::TriG}
   * {RDF::TriX}
   * {RDF::Turtle}
+  * {RDF::XSD}
   * {JSON::LD}
 
 ### Rollup libraries

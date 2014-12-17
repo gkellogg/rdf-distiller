@@ -10,5 +10,8 @@ module RDF
     autoload :VERSION,        'rdf/distiller/version'
     autoload :DISTILLER_HAML, 'rdf/distiller/rdfa_template'
     autoload :Application,    'rdf/distiller/application'
+
+    APP_DIR = File.expand_path("../../..", __FILE__)
+    PUB_DIR = File.join(APP_DIR, 'public')
   end
 end

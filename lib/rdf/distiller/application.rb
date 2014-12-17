@@ -7,22 +7,51 @@ require 'haml'
 
 module RDF::Distiller
   class Application < Sinatra::Base
-    register Sinatra::SPARQL
-    helpers Sinatra::Partials
-    set :views, ::File.expand_path('../views',  __FILE__)
-    DOAP_NT = File.expand_path("../../../../etc/doap.nt", __FILE__)
-    DOAP_JSON = File.expand_path("../../../../etc/doap.jsonld", __FILE__)
+    DOAP_NT = File.join(APP_DIR, 'etc/doap.nt')
+    DOAP_JSON = File.join(APP_DIR, 'etc/doap.jsonld')
+
+    configure do
+      register Sinatra::SPARQL
+      helpers Sinatra::Partials
+      set :root, APP_DIR
+      set :public_folder, PUB_DIR
+      set :views, ::File.expand_path('../views',  __FILE__)
+      set :snippets, ::File.expand_path('../snippets',  __FILE__)
+      set :app_name, "Structured Data Linter"
+      enable :logging
+      disable :raise_errors, :show_exceptions if settings.environment == :production
+
+      # Cache client requests
+      RestClient.enable Rack::Cache,
+        verbose:     true,
+        metastore:   "file:" + ::File.join(APP_DIR, "cache/meta"),
+        entitystore: "file:" + ::File.join(APP_DIR, "cache/body")
+
+      mime_type "sse", "application/sse+sparql-query"
+    end
 
     configure :development do
+      set :logging, ::Logger.new($stdout)
       require "better_errors"
       use BetterErrors::Middleware
       BetterErrors.application_root = File.expand_path("../../../..", __FILE__)
     end
 
-    set :public_folder, File.expand_path("../../../../public", __FILE__)
-    mime_type "sse", "application/sse+sparql-query"
+    configure :test do
+      set :logging, ::Logger.new(StringIO.new)
+    end
+
     before do
-      $logger.info "[#{request.path_info}], #{params.inspect}, #{format}, #{request.accept.inspect}"
+      request.logger.level = Logger::DEBUG unless settings.environment == :production
+      request.logger.info "#{request.request_method} [#{request.path_info}], " +
+        params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}"}.join(" ") +
+        "#{params.inspect}"
+    end
+
+    after do
+      msg = "Status: #{response.status} (#{request.request_method} #{request.path_info}), Content-Type: #{response.content_type}"
+      msg += ", Location: #{response.location}" if response.location
+      request.logger.info msg
     end
 
     get '/' do
@@ -45,10 +74,10 @@ module RDF::Distiller
         etag f
         headers "Content-Type" => "application/n-triples; charset=utf-8"
         body f
-      when :json, :jsonld
+      when :jsonld
         f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
         etag Digest::SHA1.hexdigest f
-        headers "Content-Type" => format == :jsonld ? "application/ld+json; charset=utf-8" : "application/json; charset=utf-8"
+        headers "Content-Type" => "application/ld+json; charset=utf-8"
         body f
       when :html, :xhtml
         f = File.read(DOAP_JSON).force_encoding(Encoding::UTF_8)
@@ -102,7 +131,7 @@ module RDF::Distiller
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"
 
       content = parse(writer_options)
-      $logger.debug "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}"
+      request.logger.debug "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}"
 
       if writer_options[:format].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
@@ -172,7 +201,7 @@ module RDF::Distiller
       end
       writer_options.merge!(content_type: content_type)
 
-      $logger.info "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
+      request.logger.info "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
       if format != :html
         writer_options[:format] = params["fmt"]
         settings.sparql_options.replace(writer_options)
@@ -186,13 +215,13 @@ module RDF::Distiller
           @output = if params["fmt"] == "sse"
             content
           else
-            $logger.debug "content-type: #{headers['Content-Type'].inspect}"
+            request.logger.debug "content-type: #{headers['Content-Type'].inspect}"
             SPARQL.serialize_results(content, serialize_options)
           end
         @output.force_encoding(Encoding::UTF_8) if @output
         rescue RDF::WriterError => e
           @error = "No results generated #{content.class}: #{e.message}"
-          $logger.error @error  # to log
+          request.logger.error @error  # to log
         end
         erb :sparql, locals: {
           title: "SPARQL Endpoint",
@@ -217,9 +246,9 @@ module RDF::Distiller
       params[:format] = format.to_sym if format
       case
       when params[:format]
-        content_type params[:format]
+        content_type params[:format] == :json ? 'application/rdf+json' : params[:format]
         params[:format].to_sym
-      when %w(application/xhtml+xml text/html).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
+      when %w(application/xhtml+xml text/html */*).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
         content_type env['ORDERED_CONTENT_TYPES'].first
         :html
       when !Array(env['ORDERED_CONTENT_TYPES']).empty?
@@ -230,6 +259,7 @@ module RDF::Distiller
         when 'application/sparql-results+xml'  then :xml
         when 'text/csv'                        then :csv
         when 'text/tab-separated-values'       then :tsv
+        when 'application/rdf+json'            then :json
         else
           RDF::Format.for(content_type: env['ORDERED_CONTENT_TYPES'].first).to_sym
         end
@@ -242,7 +272,7 @@ module RDF::Distiller
     ## Default graph, loaded from DOAP file
     def doap
       @doap ||= begin
-        $logger.debug "load #{DOAP_NT}"
+        request.logger.debug "load #{DOAP_NT}"
         RDF::Repository.load(DOAP_NT, encoding: Encoding::UTF_8)
       end
     end
@@ -253,7 +283,11 @@ module RDF::Distiller
         validate:        params["validate"],
         vocab_expansion: params["vocab_expansion"],
         rdfagraph:       params["rdfagraph"],
-        headers:         {"User-Agent" => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}"}
+        verify_none:     params["verify_none"],
+        headers:  {
+          "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
+          "Cache-Control" => "no-cache"
+        },
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
@@ -266,22 +300,22 @@ module RDF::Distiller
       case
       when !params["content"].to_s.empty?
         @content = ::URI.unescape(params["content"])
-        $logger.info "Open form data with format #{in_fmt} for #{@content.inspect}"
+        request.logger.info "Open form data with format #{in_fmt} for #{@content.inspect}"
         reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
         reader.new(@content, reader_opts) {|r| graph << r}
       when !params["uri"].to_s.empty?
-        $logger.info "Open uri <#{params["uri"]}> with format #{in_fmt}"
+        request.logger.info "Open uri <#{params["uri"]}> with format #{in_fmt}"
         reader = RDF::Reader.open(params["uri"], reader_opts) {|r| graph << r}
         params["in_fmt"] = reader.class.to_sym if in_fmt.nil? || in_fmt == :content
       else
         graph = ""
       end
 
-      $logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
+      request.logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
       graph
     rescue
       @error = "#{$!.class}: #{$!.message}"
-      $logger.error @error  # to log
+      request.logger.error @error  # to log
       nil
     end
 
@@ -300,18 +334,18 @@ module RDF::Distiller
       case
       when !params["query"].to_s.empty?
         @query = params["query"]
-        $logger.info "Open form data: #{@query.inspect}"
+        request.logger.info "Open form data: #{@query.inspect}"
         # Optimization for RDFa Test suite
         repo = RDF::Repository.new if @query.to_s =~ /ASK FROM/
         sparql_expr = SPARQL.parse(@query, sparql_opts)
       when !params["uri"].to_s.empty?
-        $logger.info "Open uri <#{params["uri"]}>"
+        request.logger.info "Open uri <#{params["uri"]}>"
         RDF::Util::File.open_file(params["uri"]) do |f|
           sparql_expr = SPARQL.parse(f, sparql_opts)
         end
       else
         # Otherwise, return service description
-        $logger.info "Service Description"
+        request.logger.info "Service Description"
         return case format
         when :html
           ""  # Done in form
@@ -328,13 +362,13 @@ module RDF::Distiller
         return sparql_expr.to_sse
       end
 
-      $logger.debug "execute query"
+      request.logger.debug "execute query"
       repo ||= doap
       sparql_expr.execute(repo, sparql_opts)
     rescue
       raise unless settings.environment == :production
       @error = "#{$!.class}: #{$!.message}"
-      $logger.error @error  # to log
+      request.logger.error @error  # to log
       nil
     end
 
