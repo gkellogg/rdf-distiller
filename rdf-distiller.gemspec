@@ -39,6 +39,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'maruku'
   s.add_runtime_dependency      "rack",               '~> 1.5'
   s.add_runtime_dependency      'webmock'
+  s.add_runtime_dependency      'rest-client'
+  s.add_runtime_dependency      'rest-client-components'
   s.add_runtime_dependency      'rack-cache'
 
   # development dependencies
