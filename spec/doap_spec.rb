@@ -17,8 +17,8 @@ describe RDF::Distiller::Application do
     before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
 
     context "Format symbols" do
-      RDF::Format.each do |format|
-        next if format == RDF::Microdata::Format
+      RDF::Writer.each do |writer|
+        format = writer.format
         sym = format.to_sym
         ext = format.file_extension.first
         context "#{sym}" do
@@ -33,7 +33,7 @@ describe RDF::Distiller::Application do
     
     context "File extensions" do
       RDF::Format.file_extensions.keys.each do |extension|
-        next if extension == :xml
+        next unless RDF::Format.for(file_extension: extension).writer
         context "#{extension}" do
           it "gets with .#{extension} extension" do
             get "/doap.#{extension}"
@@ -46,6 +46,7 @@ describe RDF::Distiller::Application do
 
     context "Content Type" do
       RDF::Format.content_types.keys.each do |content_type|
+        next unless RDF::Format.for(content_type: content_type).writer
         next if %w(text/plain application/x-ld+json).include?(content_type)
         context "#{content_type}" do
           it "gets  with #{content_type}" do
