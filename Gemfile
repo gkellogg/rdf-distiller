@@ -31,6 +31,7 @@ gem 'sparql-client',      git: "git://github.com/ruby-rdf/sparql-client.git", br
 gem 'sxp',                git: "git://github.com/gkellogg/sxp-ruby.git"
 
 gem 'unicorn'
+gem 'yard'  # To keep Heroku happy
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
