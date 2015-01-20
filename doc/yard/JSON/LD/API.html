@@ -98,7 +98,7 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -893,10 +893,25 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 112
 113
 114
-115</pre>
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:compactArrays</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -904,16 +919,28 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:documentLoader</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rename_bnodes</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>true</span>
   <span class='ivar'>@namer</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:unique_bnodes</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='const'>BlankNodeUniqer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rename_bnodes</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='const'>BlankNodeNamer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>BlankNodeMapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+
+  <span class='comment'># For context via Link header
+</span>  <span class='id identifier rubyid_context_ref'>context_ref</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_input'>input</span>
   <span class='kw'>when</span> <span class='const'>Array</span><span class='comma'>,</span> <span class='const'>Hash</span> <span class='kw'>then</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
   <span class='kw'>when</span> <span class='const'>IO</span><span class='comma'>,</span> <span class='const'>StringIO</span>
     <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:base</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:base_uri</span><span class='rparen'>)</span>
+
+    <span class='comment'># if input impelements #links, attempt to get a contextUrl from that link
+</span>    <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:content_type</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_context_ref'>context_ref</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:links</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_links'>links</span><span class='period'>.</span><span class='id identifier rubyid_find_link'>find_link</span><span class='lparen'>(</span><span class='qwords_beg'>%w(</span><span class='tstring_content'>rel</span><span class='words_sep'> </span><span class='tstring_content'>http://www.w3.org/ns/json-ld#context</span><span class='words_sep'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_href'>href</span> <span class='kw'>if</span> <span class='id identifier rubyid_link'>link</span>
+    <span class='kw'>end</span>
+
     <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='const'>String</span>
     <span class='id identifier rubyid_remote_doc'>remote_doc</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:documentLoader</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='ivar'>@options</span><span class='rparen'>)</span>
 
     <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:base</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_documentUrl'>documentUrl</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_contextUrl'>contextUrl</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span> <span class='op'>:</span> <span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_contextUrl'>contextUrl</span>
+    <span class='id identifier rubyid_context_ref'>context_ref</span> <span class='op'>=</span> <span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_contextUrl'>contextUrl</span>
 
     <span class='kw'>case</span> <span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_document'>document</span>
     <span class='kw'>when</span> <span class='const'>String</span> <span class='kw'>then</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_doc'>remote_doc</span><span class='period'>.</span><span class='id identifier rubyid_document'>document</span><span class='rparen'>)</span>
@@ -923,6 +950,9 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 
   <span class='comment'># Update calling context :base option, if not defined
 </span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span>
+
+  <span class='comment'># If not provided, first use context from document, or from a Link header
+</span>  <span class='id identifier rubyid_context'>context</span> <span class='op'>||=</span> <span class='lparen'>(</span><span class='ivar'>@value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@context</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_context_ref'>context_ref</span>
   <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='rparen'>)</span>
   <span class='ivar'>@context</span> <span class='op'>=</span> <span class='ivar'>@context</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_context'>context</span>
   
@@ -988,7 +1018,7 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
   <span class='ivar'>@context</span>
@@ -1041,7 +1071,7 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 35</span>
 
 <span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:value</span></pre>
     </td>
@@ -1094,7 +1124,7 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_namer'>namer</span>
   <span class='ivar'>@namer</span>
@@ -1149,7 +1179,7 @@ If not specified, and a base IRI is found from <code>input</code>, options[:base
 37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
   <span class='ivar'>@value</span>
@@ -1321,31 +1351,31 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
 187
 188
 189
 190
 191
 192
-193</pre>
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expanded'>expanded</span> <span class='op'>=</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -1512,21 +1542,6 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
       <pre class="lines">
 
 
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
 478
 479
 480
@@ -1546,10 +1561,25 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
 494
 495
 496
-497</pre>
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 463</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_documentLoader'>documentLoader</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>OPEN_OPTS</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1728,24 +1758,24 @@ if there are no errors. If the expansion fails, an appropriate exception must be
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148</pre>
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -1919,21 +1949,6 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
 229
 230
 231
@@ -1957,10 +1972,25 @@ Other options passed to <span class='object_link'><a href="#expand-class_method"
 249
 250
 251
-252</pre>
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_flattened'>flattened</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2221,21 +2251,6 @@ input should be omitted from the output.</p>
       <pre class="lines">
 
 
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
 299
 300
 301
@@ -2288,10 +2303,25 @@ input should be omitted from the output.</p>
 348
 349
 350
-351</pre>
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 299</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_frame'>frame</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_frame'>frame</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -2482,20 +2512,20 @@ input should be omitted from the output.</p>
       <pre class="lines">
 
 
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451</pre>
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fromRdf'>fromRdf</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:useNativeTypes</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2650,21 +2680,6 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
       <pre class="lines">
 
 
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
 381
 382
 383
@@ -2710,10 +2725,25 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
 423
 424
 425
-426</pre>
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-e3e86f514efd/lib/json/ld/api.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/json-ld-8a8da8ac00a7/lib/json/ld/api.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_toRdf'>toRdf</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2786,7 +2816,7 @@ Options passed to <span class='object_link'><a href="#expand-class_method" title
 </div>
 
     <div id="footer">
-  Generated on Tue Dec 16 10:38:50 2014 by
+  Generated on Mon Jan 19 17:56:16 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>
