@@ -1,0 +1,121 @@
+// Templates for Angular.js rendering
+%div.row
+  %ul.pull-right.list-inline#processor
+    %li.dropdown
+      %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", href: "#", "aria-expanded" => "false"}
+        Processor
+        %b.caret
+      %ul.processors.dropdown-menu{role: "menu"}
+        %li{id: "{{processor.id}}", 'ng-repeat' => 'processor in processors'}
+          %a{"ng-click" => "setProcessor(processor)", "data-value" => "{{processor.endpoint}}"}
+            {{processor.name}}
+    %li
+      %form
+        %input.search-query#processor-url{:type => "text", :placeholder => "Processor URL", "ng-model" => "processorUrl"}
+    %li
+      %button.btn.btn-primary#run-all{"ng-click" => "runTest('All')"}
+        Run All Tests
+%div.row#test-progress{"ng-show" => "autorun"}
+  %div.col-md-10.col-sm-10.col-xs-10.progress
+    %div.progress-bar.progress-bar-success{role: "progressbar", "aria-valuenow" => "{{passed()}}", "aria-valuemin" => 0, "aria-valuemax" => "{{tests.length}}", style: "width: {{passed() / tests.length * 100}}%"}
+      %span{"ng-class" => '{"sr-only": passed() == 0}'}
+        {{(passed() / tests.length * 100) | number:0}}%
+    %div.progress-bar.progress-bar-warning{role: "progressbar", "aria-valuenow" => "{{failed()}}", "aria-valuemin" => 0, "aria-valuemax" => "{{tests.length}}", style: "width: {{failed() / tests.length * 100}}%"}
+      %span{"ng-class" => '{"sr-only": failed() == 0}'}
+        {{(failed() / tests.length * 100) | number:0}}%
+    %div.progress-bar.progress-bar-danger{role: "progressbar", "aria-valuenow" => "{{errored()}}", "aria-valuemin" => 0, "aria-valuemax" => "{{tests.length}}", style: "width: {{errored() / tests.length * 100}}%"}
+      %span{"ng-class" => '{"sr-only": errored() == 0}'}
+        {{(errored() / tests.length * 100) | number:0}}%
+  %div.col-md-2.col-sm-2.col-xs-2.float-right
+    %div.test-status
+      %div
+        Total:
+        %span.test-total
+          {{tests.length}}
+      %div
+        Passed:
+        %span.test-passed
+          {{passed()}}
+      %div
+        Failed:
+        %span.test-failed
+          {{failed()}}
+      %div
+        Errored:
+        %span.test-errored
+          {{errored()}}
+      %div.btn-group#earl
+        %button.btn.btn-info{'ng-click' => 'getEarl()'}
+          EARL Report
+%div.row.earl-report.alert.alert-info{role: 'alert', "ng-show" => "doap"}
+  %button.close{type: "button", 'ng-click' => 'doap = null'}
+    %span{"aria-hidden" => true}
+      &times;
+    %span.sr-only
+      Close
+  %pre.col-md-12.col-sm-12.col-xs-12
+    {{doap}}
+
+    = %(<> foaf:primaryTopic <{{processorDoap()}}> ;)
+    = %(  dc:issued "{{doapDate.toISOString()}}"^^xsd:dateTime .)
+
+    %div{'ng-repeat' => 'test in tests', 'ng-skip' => 'test.date'}<
+      = assertion
+%div.row
+  %h1
+    {{title}}
+  %div
+    {{description}}
+  %ul.tests.container.list-group{"ng-show" => "tests.length"}
+    %li.list-group-item{id: "{{test.id}}", 'ng-repeat' => 'test in tests'}
+      %div.row.test-entry
+        %div.col-md-1.col-sm-1.col-xs-1
+          %button.btn.test{"ng-click" => "runTest(test)", "ng-class" => "{'btn-default': (test.status === 'Running'), 'btn-primary': (test.status === 'Test'), 'btn-success': (test.status === 'Pass'), 'btn-warning': (test.status === 'Fail'), 'btn-danger': (test.status === 'Error')}"}
+            {{test.status}}
+        %div.col-md-9.col-sm-9.col-xs-9
+          %span.test-num
+            Test {{test.id}}:
+          %span.description
+            {{test.comment}}
+        %div.pull-right
+          %button.btn.btn-info.details{'ng-click' => 'test.details = !test.details', 'ng-class' => '{disabled: !test.action_body}'}="details"
+      %div.row.test-detail.alert.alert-info{role: 'alert', "ng-show" => "test.details"}
+        %button.close{type: "button", 'ng-click' => 'test.details = false'}
+          %span{"aria-hidden" => true}
+            &times;
+          %span.sr-only
+            Close
+        %div
+          %h3
+            Type
+            %span.doc-url
+              {{test.type}}
+        %div
+          %h3
+            Source Document
+            %em.doc-url
+              %a.window
+                {{test.action_loc}}
+          %pre<
+            {{test.action_body}}
+        %div
+          %h3
+            Expected Document
+            %em.doc-url
+              %a.window
+                {{test.result_loc}}
+          %pre<
+            {{test.result_body}}
+        %div
+          %h3
+            Extracted
+            %em.doc-url
+              %a.window
+                {{test.extracted_loc}}
+          %pre<
+            {{test.extracted_body}}
+        %div{'ng-show' => "test.error"}
+          %h3
+            Error
+          %pre<
+            {{test.error}}

@@ -8,7 +8,7 @@ Bundler.setup
 require 'restclient/components'
 require 'rack/cache'
 require 'rdf/distiller'
-require 'logger'
+require 'rdf/test'
 
 set :environment, (ENV['RACK_ENV'] || 'production').to_sym
 
@@ -21,4 +21,10 @@ end
 
 disable :run, :reload
 
-run RDF::Distiller::Application
+class TurtleTest < RDF::Test::Application; end
+TurtleTest.set :app_name, "Turtle Test Runner"
+TurtleTest.set :test_uri, "http://www.w3.org/2013/TurtleTests/"
+
+run Rack::URLMap.new \
+  "/"             => RDF::Distiller::Application,
+  "/test/turtle"  => TurtleTest.new

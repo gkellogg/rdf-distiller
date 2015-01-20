@@ -31,21 +31,17 @@ gem 'sparql-client',      git: "git://github.com/ruby-rdf/sparql-client.git", br
 gem 'sxp',                git: "git://github.com/gkellogg/sxp-ruby.git"
 
 gem 'unicorn'
-gem 'yard'  # To keep Heroku happy
+gem "redcarpet"
 
-# Bundle gems for the local environment. Make sure to
-# put test-only gems in this group so their generators
-# and rake tasks are available in development mode:
 group :development, :test do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'shotgun'
   gem "syntax"
   gem "rake"
 end
 
 group :debug do
+  gem 'shotgun'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem "wirble"
-  gem "redcarpet"
   gem "byebug"
 end
