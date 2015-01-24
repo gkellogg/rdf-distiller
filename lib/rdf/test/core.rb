@@ -9,7 +9,6 @@ module RDF::Test
   ##
   # Core utilities used for generating and checking test cases
   module Core
-    MANIFEST_JSON  = File.join(CACHE_DIR, "manifest.jsonld")
     MANIFEST_FRAME = File.join(PUB_DIR, "context.jsonld")
     BASE           = "fix:me/"
 
@@ -63,15 +62,15 @@ module RDF::Test
       def result_loc; test_uri.join(result).to_s; end
 
       def evaluate?
-        Array(attributes['@type']).join(" ").match(/Eval/)
+        Array(attributes['type']).join(" ").match(/Eval/)
       end
 
       def syntax?
-        Array(attributes['@type']).join(" ").match(/Syntax/)
+        Array(attributes['type']).join(" ").match(/Syntax/)
       end
 
       def positive?
-        !Array(attributes['@type']).join(" ").match(/Negative/)
+        !Array(attributes['type']).join(" ").match(/Negative/)
       end
       
       def negative?
@@ -79,11 +78,11 @@ module RDF::Test
       end
 
       def json?
-        !Array(attributes['@type']).join(" ").match(/json/i)
+        !Array(attributes['type']).join(" ").match(/json/i)
       end
 
       def sparql?
-        !Array(attributes['@type']).join(" ").match(/sparql/i)
+        !Array(attributes['type']).join(" ").match(/sparql/i)
       end
 
       def attributes
@@ -207,7 +206,7 @@ module RDF::Test
     #
     # @return [RestClient::Resource]
     def manifest_ttl
-      RestClient.get(settings.test_uri.join("manifest.ttl").to_s)
+      RestClient.get(RDF::URI(settings.test_uri).join("manifest.ttl").to_s)
     end
     module_function :manifest_ttl
 
@@ -216,10 +215,11 @@ module RDF::Test
     #
     # Generate a JSON-LD compatible with framing in MANIFEST_FRAME
     def manifest_json
+      local_manifest = File.join(CACHE_DIR, "#{settings.short_name}-manifest.json")
       ttl_time = Time.parse(manifest_ttl.headers[:last_modified])
-      unless File.exist?(MANIFEST_JSON) && File.mtime(MANIFEST_JSON) >= ttl_time
+      unless File.exist?(local_manifest) && File.mtime(local_manifest) >= ttl_time
         FileUtils.mkdir_p(CACHE_DIR)
-        File.open(MANIFEST_JSON, "w") do |f|
+        File.open(local_manifest, "w") do |f|
           graph = RDF::Graph.new << RDF::Turtle::Reader.new(manifest_ttl)
           JSON::LD::API.fromRDF(graph) do |expanded|
             JSON::LD::API.frame(expanded, MANIFEST_FRAME) do |framed|
@@ -232,9 +232,9 @@ module RDF::Test
           end
         end
       end
-      File.read(MANIFEST_JSON)
+      File.read(local_manifest)
     rescue
-      FileUtils.rm MANIFEST_JSON if File.exist?(MANIFEST_JSON)
+      FileUtils.rm local_manifest if File.exist?(local_manifest)
       raise
     end
     module_function :manifest_json

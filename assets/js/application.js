@@ -8,27 +8,27 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       $logProvider.debugEnabled(true);
       $routeProvider.
         when('/about', {
-          templateUrl: '/partials/about.html',
+          templateUrl: 'partials/about.html',
           controller: 'AboutCtrl'
         }).
         when('/developers', {
-          templateUrl: '/partials/developers.html',
+          templateUrl: 'partials/developers.html',
           controller: 'DevCtrl'
         }).
         when('/tests', {
-          templateUrl: '/partials/tests-view.html',
+          templateUrl: 'partials/tests-view.html',
           controller: 'TestListCtrl'
         }).
         when('/tests/:testId', {
-          templateUrl: '/partials/test-detail.html',
+          templateUrl: 'partials/test-detail.html',
           controller: 'TestDetailCtrl'
         }).
         otherwise({
-          controller: function() {
-              window.location.replace('/');
-          }, 
-          template: "<div></div>"
-          //redirectTo: '/tests'
+        //  controller: function() {
+        //      window.location.replace('/');
+        //  }, 
+          template: "<div></div>",
+          redirectTo: 'tests'
         });
     }
   ])
@@ -165,10 +165,10 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
     function ($scope, $routeParams) {
     }
   ])
-.controller('DevCtrl', ['$scope', '$routeParams',
-  function ($scope, $routeParams) {
-  }
-])
+  .controller('DevCtrl', ['$scope', '$routeParams',
+    function ($scope, $routeParams) {
+    }
+  ])
   .controller('TestDetailCtrl', ['$scope', '$routeParams', '$log', 'Test',
     function ($scope, $routeParams, $log, Test) {
       $scope.test = Test.get({testId: $routeParams.testId});

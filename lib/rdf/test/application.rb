@@ -2,6 +2,16 @@ require 'sinatra'
 require 'sinatra/assetpack'
 require 'digest/sha1'
 
+# From https://github.com/rstacruz/sinatra-assetpack/issues/35#issuecomment-7457048
+# Workaround problem with shared assets in different subclasses
+module Sinatra::AssetPack
+  def assets(&block)
+    @@options ||= Options.new(self, &block)
+    self.assets_initialize!  if block_given?
+    @@options
+  end
+end
+
 module RDF::Test
   class Application < Sinatra::Base
     include Core
@@ -13,11 +23,10 @@ module RDF::Test
       # Set in config.ru
       #set :app_name, "The CSVW Test Harness"
       #set :test_uri, "http://www.w3.org/2013/TurtleTests/"
+      #set :short_name, "turtle"
       set :raise_errors, Proc.new { !settings.production? }
       enable :logging
       disable :raise_errors, :show_exceptions if settings.environment == :production
-
-      STDERR.puts "configure mode = #{settings.environment}"
 
       # Cache client requests
       RestClient.enable Rack::Cache,
@@ -69,12 +78,12 @@ module RDF::Test
 
     before do
       request.logger.level = Logger::DEBUG unless settings.environment == :production
-      request.logger.info "#{request.request_method} #{request.path_info} " +
+      request.logger.info "#{request.request_method} #{request.url} " +
         params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}"}.join(" ")
     end
 
     after do
-      msg = "Status: #{response.status} (#{request.request_method} #{request.path_info}), Content-Type: #{response.content_type}"
+      msg = "Status: #{response.status} (#{request.request_method} #{request.url}), Content-Type: #{response.content_type}"
       msg += ", Location: #{response.location}" if response.location
       request.logger.info msg
     end
@@ -88,7 +97,6 @@ module RDF::Test
     end
 
     get '/tests/' do
-      byebug
       redirect url('/tests')
     end
 
@@ -153,7 +161,7 @@ module RDF::Test
     # @method get_entry
     # @param [String] testId last path component indicating particular test
     get '/tests/:testId.?:ext?' do
-      if entry = settings.manifest.entry(params[:testId])
+      if entry = manifest.entry(params[:testId])
         respond_to(params[:ext]) do |wants|
           wants.jsonld {
             set_cache_header
@@ -181,7 +189,7 @@ module RDF::Test
     post '/tests/:testId' do
       processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
 
-      entry = settings.manifest.entry(params[:testId])
+      entry = manifest.entry(params[:testId])
       raise Sinatra::NotFound, "No test entry found" unless entry
     
       # Run the test, and re-serialize the entry, including test results
@@ -211,7 +219,7 @@ module RDF::Test
       if File.exist?(p = File.join(settings.root, "assets/partials/#{params[:view]}"))
         send_file p, type: 'text/html'
       else
-        haml request.path.sub('.html', '').to_sym,
+        haml request.path_info.sub('.html', '').to_sym,
           layout: false,
           locals: {
             assertion: %([ a earl:Assertion;
@@ -306,7 +314,7 @@ module RDF::Test
     def manifest
       @manifest ||= begin
         manifest_json = JSON.parse(Core.manifest_json)
-        Manifest.new(manifest_json, settings.test_uri)
+        Manifest.new(manifest_json, RDF::URI(settings.test_uri))
       end
     end
   end
