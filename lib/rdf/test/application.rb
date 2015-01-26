@@ -1,16 +1,7 @@
 require 'sinatra'
 require 'sinatra/assetpack'
+require 'sinatra/extensions'
 require 'digest/sha1'
-
-# From https://github.com/rstacruz/sinatra-assetpack/issues/35#issuecomment-7457048
-# Workaround problem with shared assets in different subclasses
-module Sinatra::AssetPack
-  def assets(&block)
-    @@options ||= Options.new(self, &block)
-    self.assets_initialize!  if block_given?
-    @@options
-  end
-end
 
 module RDF::Test
   class Application < Sinatra::Base
@@ -21,9 +12,9 @@ module RDF::Test
       set :public_folder, PUB_DIR
       set :views, ::File.expand_path('../views',  __FILE__)
       # Set in config.ru
-      #set :app_name, "The CSVW Test Harness"
-      #set :test_uri, "http://www.w3.org/2013/TurtleTests/"
-      #set :short_name, "turtle"
+      set :app_name, "RDF Test Runner"
+      set :test_uri, "http://www.w3.org/2013/TurtleTests/"
+      set :short_name, "rdf"
       set :raise_errors, Proc.new { !settings.production? }
       enable :logging
       disable :raise_errors, :show_exceptions if settings.environment == :production
@@ -93,40 +84,11 @@ module RDF::Test
     # @method get_root
     # @overload get "/"
     get '/' do
-      redirect url('/tests')
+      redirect to('/tests')
     end
 
     get '/tests/' do
-      redirect url('/tests')
-    end
-
-    # GET "/tests/" returns test-manifest with representation dependent on content-negotiation. For HTML, load HTML application. Also supports `application/ld+json` and `text/turtle` formats.
-    #
-    # @method get_manifest
-    get '/tests.?:ext?' do
-      set_cache_header
-      respond_to(params[:ext]) do |wants|
-        wants.other {
-          processors = File.read(File.join(settings.root, "processors.json"))
-          content_type :html
-          haml :tests, locals: {
-            processors: processors,
-            angular_app: "testApp",
-            title: "foo",
-            description: "bar"
-          }          
-        }
-        wants.jsonld {
-          etag manifest_json.hash
-          content_type :jsonld
-          body manifest_json
-        }
-        wants.ttl {
-          etag manifest_ttl.to_s.hash
-          content_type :ttl
-          body manifest_ttl.to_s
-        }
-      end
+      redirect to('/tests')
     end
 
     # Other endpoints implemented within the application
@@ -141,6 +103,9 @@ module RDF::Test
         description: "bar"
       }          
     end
+    get '/about/' do
+      redirect url('/about')
+    end
     get '/developers' do
       set_cache_header
       processors = File.read(File.join(settings.root, "processors.json"))
@@ -152,6 +117,43 @@ module RDF::Test
         description: "bar"
       }          
     end
+    get '/developers/' do
+      redirect url('/developers')
+    end
+
+    # GET "/tests" returns test-manifest with representation dependent on content-negotiation. For HTML, load HTML application. Also supports `application/ld+json` and `text/turtle` formats.
+    #
+    # @method get_manifest
+    # @param [Hash(String => String)] options
+    # @option options [String] manifestId identifier or URL of manifest containing test
+    get '/tests.?:ext?' do
+      set_cache_header
+      manifest_id = params.fetch('manifestId', 'default')
+      manifest = Manifest.find(manifest_id)
+      raise Sinatra::NotFound, "No test manifest found for #{manifest_id}" unless manifest
+      
+      respond_to(params[:ext]) do |wants|
+        wants.other {
+          processors = File.read(File.join(settings.root, "processors.json"))
+          content_type :html
+          haml :tests, locals: {
+            processors: processors,
+            angular_app: "testApp",
+            manifest: manifest
+          }          
+        }
+        wants.jsonld {
+          etag manifest.hash
+          content_type :jsonld
+          body manifest.to_json
+        }
+        wants.ttl {
+          etag manifest.hash
+          content_type :ttl
+          body manifest.to_ttl
+        }
+      end
+    end
 
     # GET "/tests/:testId" returns a paritulcar test entry.
     # If no entry is found, it looks for a file in the test directory.
@@ -161,23 +163,23 @@ module RDF::Test
     # @method get_entry
     # @param [String] testId last path component indicating particular test
     get '/tests/:testId.?:ext?' do
-      if entry = manifest.entry(params[:testId])
-        respond_to(params[:ext]) do |wants|
-          wants.jsonld {
-            set_cache_header
-            etag entry.hash
-            content_type :jsonld
-            body entry.to_json
-          }
-        end
-      else
-        # Otherwise, it might be a file
-        #pass
-        raise Sinatra::NotFound, "No test entry found" unless entry
+      manifest_id = params.fetch('manifestId', 'default')
+      manifest = Manifest.find(manifest_id)
+      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestId]}" unless manifest
+      entry = manifest.entry(params[:testId])
+      raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
+
+      respond_to(params[:ext]) do |wants|
+        wants.jsonld {
+          set_cache_header
+          etag entry.hash
+          content_type :jsonld
+          body entry.to_json
+        }
       end
     end
 
-    # POST "/tests/:entry" runs a test with the provided processorUrl.
+    # POST "/tests/:testId" runs a test with the provided processorUrl.
     # the processor should return either JSON or some RDF formatted file
     # which is the result of performing the test.
     #
@@ -188,9 +190,11 @@ module RDF::Test
     #   URL of test endpoint, to which the source and run-time parameters are added.
     post '/tests/:testId' do
       processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
-
+      manifest_id = params.fetch('manifestId', 'default')
+      manifest = Manifest.find(manifest_id)
+      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestId]}" unless manifest
       entry = manifest.entry(params[:testId])
-      raise Sinatra::NotFound, "No test entry found" unless entry
+      raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
     
       # Run the test, and re-serialize the entry, including test results
       entry.run(processor_url, logger: request.logger) do |extracted, status, error|
@@ -225,7 +229,7 @@ module RDF::Test
             assertion: %([ a earl:Assertion;
   earl:assertedBy <>;
   earl:subject <{{processorDoap()}}>;
-  earl:test &lt;#{settings.test_uri}{{test.id}}&gt;;
+  earl:test &lt;{{test.id}}&gt;;
   earl:result [
    a earl:TestResult;
    earl:outcome earl:{{test.status.toLowerCase()}};
@@ -307,15 +311,6 @@ module RDF::Test
         request.preferred_type(*supported_types)
       end
       (wants[pref.to_s] || wants['*/*']).call
-    end
-
-    private
-    # Load manifest
-    def manifest
-      @manifest ||= begin
-        manifest_json = JSON.parse(Core.manifest_json)
-        Manifest.new(manifest_json, RDF::URI(settings.test_uri))
-      end
     end
   end
 end

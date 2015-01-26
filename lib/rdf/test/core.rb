@@ -9,23 +9,73 @@ module RDF::Test
   ##
   # Core utilities used for generating and checking test cases
   module Core
-    MANIFEST_FRAME = File.join(PUB_DIR, "context.jsonld")
+    MANIFEST_FRAME = ::JSON.parse(File.read File.join(PUB_DIR, "context.jsonld")).freeze
     BASE           = "fix:me/"
 
     # Internal representation of manifest
     class Manifest < JSON::LD::Resource
       attr_accessor :options
+      attr_accessor :local_manifest
 
-      def initialize(json, options = {})
+      # Find a (possibly cached) manifest based on it's ID by loading the graph at that location
+      # @param [String] id
+      def self.find(id, options = {})
+        (@manfests ||= {})[id] ||= begin
+          local_manifest = File.join(CACHE_DIR, "#{id.hash}-manifest.json")
+          local_time = File.mtime(local_manifest) rescue Time.new(0)
+
+          remote_manifest = id == 'default' ? File.join(PUB_DIR, "manifest.ttl") : id
+          remote_time = case id
+          when 'default'
+           File.mtime(File.join(PUB_DIR, "manifest.ttl"))
+          else
+            Time.parse(RestClient.get(id).headers[:last_modified])
+          end rescue Time.new(0)
+
+          unless local_time > remote_time
+            # Build JSON-LD version of manifest
+            FileUtils.mkdir_p(CACHE_DIR)
+            File.open(local_manifest, "w") do |f|
+              graph = RDF::Graph.load(remote_manifest)
+              JSON::LD::API.fromRDF(graph) do |expanded|
+                frame = MANIFEST_FRAME.dup
+                # Make relative URIs
+                frame['@context']['@base'] = id unless id == 'default'
+                JSON::LD::API.frame(expanded, frame) do |framed|
+                  # Extract first object in @graph
+                  framed = framed['@graph'].first.merge('@context' => framed['@context'])
+
+                  json = framed.to_json(JSON::LD::JSON_STATE).gsub(BASE, "")
+                  f.write json
+                end
+              end
+            end
+          end
+          Manifest.new(local_manifest, options)
+        rescue
+          FileUtils.rm local_manifest if File.exist?(local_manifest)
+          raise
+        end
+      end
+
+      def title; attributes['rdfs:label']; end
+      def description; attributes['rdfs:comment']; end
+
+      ##
+      # Initialize a Manifest object from its parsed JSON-LD representation
+      # @param [String] local_manifest
+      def initialize(local_manifest, options = {})
+        @local_manifest = local_manifest
+        node = ::JSON.parse(File.read(local_manifest))
         STDERR.puts "Create manifest object"
-        @options = options.merge(context: json['@context'])
-        super
+        @options = options.merge(context: node['@context'])
+        super(node)
       end
 
       def entries
         # Map entries to resources
         STDERR.puts "Load entries" unless @entries
-        @entries ||= attributes['entries'].map {|e| Entry.new(e, options)}
+        @entries ||= Array(attributes['entries']).map {|e| Entry.new(e, options)}
       end
 
       ##
@@ -35,6 +85,20 @@ module RDF::Test
       # @return [Entry]
       def entry(uri)
         entries.detect {|te| te.id == uri}
+      end
+
+      # Return local manifest
+      def to_json
+        File.read(local_manifest)
+      end
+
+      # Create Turtle representation of manifest
+      def to_ttl
+        ::JSON::LD::Reader.new(@attributes) do |reader|
+          reader.dump(:ttl, prefixes: reader.prefixes, standard_prefixes: true)
+        end
+        end
+        ::JSON::LD::API.toRdf(@attributes) do |statement|
       end
     end
 
@@ -200,43 +264,5 @@ module RDF::Test
         end
       end
     end
-
-    ##
-    # Proxy the Manifest resource
-    #
-    # @return [RestClient::Resource]
-    def manifest_ttl
-      RestClient.get(RDF::URI(settings.test_uri).join("manifest.ttl").to_s)
-    end
-    module_function :manifest_ttl
-
-    ##
-    # Return the Manifest source
-    #
-    # Generate a JSON-LD compatible with framing in MANIFEST_FRAME
-    def manifest_json
-      local_manifest = File.join(CACHE_DIR, "#{settings.short_name}-manifest.json")
-      ttl_time = Time.parse(manifest_ttl.headers[:last_modified])
-      unless File.exist?(local_manifest) && File.mtime(local_manifest) >= ttl_time
-        FileUtils.mkdir_p(CACHE_DIR)
-        File.open(local_manifest, "w") do |f|
-          graph = RDF::Graph.new << RDF::Turtle::Reader.new(manifest_ttl)
-          JSON::LD::API.fromRDF(graph) do |expanded|
-            JSON::LD::API.frame(expanded, MANIFEST_FRAME) do |framed|
-              # Extract first object in @graph
-              framed = framed['@graph'].first.merge('@context' => framed['@context'])
-
-              json = framed.to_json(JSON::LD::JSON_STATE).gsub(BASE, "")
-              f.write json
-            end
-          end
-        end
-      end
-      File.read(local_manifest)
-    rescue
-      FileUtils.rm local_manifest if File.exist?(local_manifest)
-      raise
-    end
-    module_function :manifest_json
   end
 end

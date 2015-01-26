@@ -1,5 +1,6 @@
 require 'sinatra/sparql'
 require 'sinatra/partials'
+require 'sinatra/extensions'
 require 'erubis'
 require 'linkeddata'
 require 'rdf/tabular' # experimental
@@ -17,8 +18,7 @@ module RDF::Distiller
       set :root, APP_DIR
       set :public_folder, PUB_DIR
       set :views, ::File.expand_path('../views',  __FILE__)
-      set :snippets, ::File.expand_path('../snippets',  __FILE__)
-      set :app_name, "Structured Data Linter"
+      set :app_name, "RDF Distiller"
       enable :logging
       disable :raise_errors, :show_exceptions if settings.environment == :production
 
@@ -28,7 +28,26 @@ module RDF::Distiller
         metastore:   "file:" + ::File.join(APP_DIR, "cache/meta"),
         entitystore: "file:" + ::File.join(APP_DIR, "cache/body")
 
+      register Sinatra::AssetPack
+
+      mime_type :jsonld, "application/ld+json"
+      mime_type :sparql, "application/sparql-query"
+      mime_type :ttl, "text/turtle"
       mime_type "sse", "application/sse+sparql-query"
+
+      # Asset pipeline
+      assets do
+        serve '/js', from: 'assets/js'
+        serve '/css', from: 'assets/css'
+        #serve '/images', from: 'assets/images'
+
+        css :app, %w(/css/application.css)
+        js :app, %w(/js/application.js)
+
+        # Skip compression
+        #js_compression  :jsmin
+        #css_compression :simple
+      end
     end
 
     configure :development do
@@ -40,6 +59,14 @@ module RDF::Distiller
 
     configure :test do
       set :logging, ::Logger.new(StringIO.new)
+    end
+
+    helpers do
+      # Set cache control
+      def set_cache_header(options = {})
+        options = {:max_age => ENV.fetch('max_age', 60*5)}.merge(options)
+        cache_control(:public, :must_revalidate, options)
+      end
     end
 
     before do

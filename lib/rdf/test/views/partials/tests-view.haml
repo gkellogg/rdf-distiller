@@ -1,5 +1,5 @@
 // Templates for Angular.js rendering
-%div.row
+%div.row{"ng-show" => "tests.length"}
   %ul.pull-right.list-inline#processor
     %li.dropdown
       %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", href: "#", "aria-expanded" => "false"}
@@ -63,11 +63,16 @@
       = assertion
 %div.row
   %h1
-    {{title}}
+    {{manifest.label}}
   %div
-    {{description}}
+    {{manifest.comment}}
+  %ul.manifests.container.list-group{"ng-show" => "manifest.manifests.length"}
+    %li.list-group-item{id: "{{man.id}}", 'ng-repeat' => 'man in manifest.manifests'}
+      %div.row.manifest--entry
+        %a{href: "{{man.href}}"}
+          {{man.label}}
   %ul.tests.container.list-group{"ng-show" => "tests.length"}
-    %li.list-group-item{id: "{{test.id}}", 'ng-repeat' => 'test in tests'}
+    %li.list-group-item{'ng-repeat' => 'test in tests'}
       %div.row.test-entry
         %div.col-md-1.col-sm-1.col-xs-1
           %button.btn.test{"ng-click" => "runTest(test)", "ng-class" => "{'btn-default': (test.status === 'Running'), 'btn-primary': (test.status === 'Test'), 'btn-success': (test.status === 'Pass'), 'btn-warning': (test.status === 'Fail'), 'btn-danger': (test.status === 'Error')}"}

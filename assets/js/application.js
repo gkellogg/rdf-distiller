@@ -19,29 +19,22 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
           templateUrl: 'partials/tests-view.html',
           controller: 'TestListCtrl'
         }).
-        when('/tests/:testId', {
+        when('/:testId', {
           templateUrl: 'partials/test-detail.html',
           controller: 'TestDetailCtrl'
-        }).
-        otherwise({
-        //  controller: function() {
-        //      window.location.replace('/');
-        //  }, 
-          template: "<div></div>",
-          redirectTo: 'tests'
         });
     }
   ])
   // Test factory for returning individual test entries
   .factory('Test', ['$resource', '$log', function($resource, $log) {
-    return $resource('tests/:testId', {}, {
+    return $resource('tests/:testId', {manifestId: "manifestId"}, {
       // Fetches manifest and extracts test entries
       query: {
         method: 'GET',
-        params: {testId: '.jsonld'},
+        params: {manifestId: 'manifest', testId: '.jsonld'},
         headers: {'Accept': 'application/ld+json'},
         transformResponse: function(data) {
-          var jld = angular.fromJson(data)
+          var jld = angular.fromJson(data);
           // extract test entries
           return(_.map(jld.entries, function(test) {
             test.status = "Test";
@@ -50,10 +43,31 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
         },
         isArray: true
       },
+
+      getManifest:  {
+        method: 'GET',
+        params: {manifestId: 'manifest', testId: '.jsonld'},
+        headers: {'Accept': 'application/ld+json'},
+        transformResponse: function(data) {
+          var jld = angular.fromJson(data);
+          if (jld.manifests) {
+            _.each(jld.manifests, function(man) {
+              man.href = "tests?manifestId=" + man.id;
+              if (man.label === undefined) man.label = man.id;
+            })
+            return jld;
+          } else {
+            jld.manifests = [];
+          }
+          // extract test entries
+          return(jld);
+        }
+      },
+
       run: {
         method:'POST',
         headers: {'Accept': 'application/ld+json'},
-        params:{testId: 'tests', processorUrl: 'processorUrl'}
+        params:{manifestId: 'manifestId', testId: 'tests', processorUrl: 'processorUrl'}
       }
     });
   }])
@@ -62,18 +76,20 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
      $scope.$location = $location;
      $scope.$routeParams = $routeParams;
    })
-  .controller('TestListCtrl', ['$scope', '$log', '$http', 'Test',
-    function ($scope, $log, $http, Test) {
+  .controller('TestListCtrl', ['$scope', '$log', '$http', '$routeParams', 'Test',
+    function ($scope, $log, $http, $routeParams, Test) {
       // Processors from script tag
       $scope.processors = angular.fromJson($("script#processors").text());
       $scope.processorUrl = $scope.processors[0].endpoint;
+      $scope.manifestId = $routeParams['manifestId'];
+      $scope.manifest = Test.getManifest({manifestId: $scope.manifestId});
 
       // Automatically run tests?
       $scope.autorun = false;
 
       // Tests retrieved in manifest from service
       $scope.nexts = {};
-      $scope.tests = Test.query({}, function(tests) {
+      $scope.tests = Test.query({manifestId: $scope.manifestId}, function(tests) {
         $log.debug(tests);
 
         // Nexts for each test
@@ -124,7 +140,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       };
       // Retrieve EARL preamble information as Turtle.
       $scope.getEarl = function() {
-        $http.get('/earl', {params: {processorUrl: $scope.processorUrl}})
+        $http.get('/earl', {params: {manifestId: $scope.manifestId, processorUrl: $scope.processorUrl}})
           .success(function(data, status) {
             $log.debug(data);
             $scope.doap = data.doap;
@@ -142,7 +158,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
         } else {
           $log.info("Run " + test.id);
           test.status = "Running";
-          test.$run({testId: test.id, processorUrl: $scope.processorUrl},
+          test.$run({manifestId: $scope.manifestId, testId: test.id, processorUrl: $scope.processorUrl},
             function(response, responseHeaders) {
               test.date = new Date;
               if (autonext && $scope.nexts[test.id]) {

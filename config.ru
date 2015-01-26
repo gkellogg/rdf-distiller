@@ -21,11 +21,6 @@ end
 
 disable :run, :reload
 
-class TurtleTest < RDF::Test::Application; end
-TurtleTest.set :app_name, "Turtle Test Runner"
-TurtleTest.set :test_uri, "http://www.w3.org/2013/TurtleTests/"
-TurtleTest.set :short_name, "turtle"
-
 run Rack::URLMap.new \
   "/"             => RDF::Distiller::Application,
-  "/test/turtle"  => TurtleTest.new
+  "/test/"  => RDF::Test::Application
