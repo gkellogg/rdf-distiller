@@ -27,11 +27,11 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
   ])
   // Test factory for returning individual test entries
   .factory('Test', ['$resource', '$log', function($resource, $log) {
-    return $resource('tests/:testId', {manifestId: "manifestId"}, {
+    return $resource('tests/:testId', {manifestUrl: "manifestUrl"}, {
       // Fetches manifest and extracts test entries
       query: {
         method: 'GET',
-        params: {manifestId: 'manifest', testId: '.jsonld'},
+        params: {manifestUrl: 'manifest', testId: '.jsonld'},
         headers: {'Accept': 'application/ld+json'},
         transformResponse: function(data) {
           var jld = angular.fromJson(data);
@@ -46,13 +46,13 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
 
       getManifest:  {
         method: 'GET',
-        params: {manifestId: 'manifest', testId: '.jsonld'},
+        params: {manifestUrl: 'manifest', testId: '.jsonld'},
         headers: {'Accept': 'application/ld+json'},
         transformResponse: function(data) {
           var jld = angular.fromJson(data);
           if (jld.manifests) {
             _.each(jld.manifests, function(man) {
-              man.href = "tests?manifestId=" + man.id;
+              man.href = "tests?manifestUrl=" + man.id;
               if (man.label === undefined) man.label = man.id;
             })
             return jld;
@@ -67,7 +67,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       run: {
         method:'POST',
         headers: {'Accept': 'application/ld+json'},
-        params:{manifestId: 'manifestId', testId: 'tests', processorUrl: 'processorUrl'}
+        params:{manifestUrl: 'manifestUrl', testId: 'tests', processorUrl: 'processorUrl'}
       }
     });
   }])
@@ -81,15 +81,15 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       // Processors from script tag
       $scope.processors = angular.fromJson($("script#processors").text());
       $scope.processorUrl = $scope.processors[0].endpoint;
-      $scope.manifestId = $routeParams['manifestId'];
-      $scope.manifest = Test.getManifest({manifestId: $scope.manifestId});
+      $scope.manifestUrl = $routeParams['manifestUrl'];
+      $scope.manifest = Test.getManifest({manifestUrl: $scope.manifestUrl});
 
       // Automatically run tests?
       $scope.autorun = false;
 
       // Tests retrieved in manifest from service
       $scope.nexts = {};
-      $scope.tests = Test.query({manifestId: $scope.manifestId}, function(tests) {
+      $scope.tests = Test.query({manifestUrl: $scope.manifestUrl}, function(tests) {
         $log.debug(tests);
 
         // Nexts for each test
@@ -140,7 +140,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       };
       // Retrieve EARL preamble information as Turtle.
       $scope.getEarl = function() {
-        $http.get('/earl', {params: {manifestId: $scope.manifestId, processorUrl: $scope.processorUrl}})
+        $http.get('/earl', {params: {manifestUrl: $scope.manifestUrl, processorUrl: $scope.processorUrl}})
           .success(function(data, status) {
             $log.debug(data);
             $scope.doap = data.doap;
@@ -158,7 +158,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
         } else {
           $log.info("Run " + test.id);
           test.status = "Running";
-          test.$run({manifestId: $scope.manifestId, testId: test.id, processorUrl: $scope.processorUrl},
+          test.$run({manifestUrl: $scope.manifestUrl, testId: test.id, processorUrl: $scope.processorUrl},
             function(response, responseHeaders) {
               test.date = new Date;
               if (autonext && $scope.nexts[test.id]) {

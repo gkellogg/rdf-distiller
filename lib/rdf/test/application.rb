@@ -125,10 +125,10 @@ module RDF::Test
     #
     # @method get_manifest
     # @param [Hash(String => String)] options
-    # @option options [String] manifestId identifier or URL of manifest containing test
+    # @option options [String] manifestUrl identifier or URL of manifest containing test
     get '/tests.?:ext?' do
       set_cache_header
-      manifest_id = params.fetch('manifestId', 'default')
+      manifest_id = params.fetch('manifestUrl', 'default')
       manifest = Manifest.find(manifest_id)
       raise Sinatra::NotFound, "No test manifest found for #{manifest_id}" unless manifest
       
@@ -163,9 +163,9 @@ module RDF::Test
     # @method get_entry
     # @param [String] testId last path component indicating particular test
     get '/tests/:testId.?:ext?' do
-      manifest_id = params.fetch('manifestId', 'default')
+      manifest_id = params.fetch('manifestUrl', 'default')
       manifest = Manifest.find(manifest_id)
-      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestId]}" unless manifest
+      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
       entry = manifest.entry(params[:testId])
       raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
 
@@ -190,9 +190,9 @@ module RDF::Test
     #   URL of test endpoint, to which the source and run-time parameters are added.
     post '/tests/:testId' do
       processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
-      manifest_id = params.fetch('manifestId', 'default')
+      manifest_id = params.fetch('manifestUrl', 'default')
       manifest = Manifest.find(manifest_id)
-      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestId]}" unless manifest
+      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
       entry = manifest.entry(params[:testId])
       raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
     
