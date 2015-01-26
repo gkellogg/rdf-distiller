@@ -180,7 +180,7 @@ module RDF::Distiller
         @output = case content
         when RDF::Enumerable
           # For HTML response, the "fmt" attribute may set the type of serialization
-          fmt = (writer_options[:format] || "turtle").to_sym
+          fmt = (writer_options[:format] || content.contexts.empty? ? "turtle" : "trig").to_sym
           content.dump(fmt, writer_options)
         else
           content

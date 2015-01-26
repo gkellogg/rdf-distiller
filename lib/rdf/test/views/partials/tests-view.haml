@@ -63,13 +63,18 @@
       = assertion
 %div.row
   %h1
-    {{manifest.label}}
-  %p
+    {{manifest.label || manifest.name}}
+  %p{"ng-if" => "manifest.manifests.length+tests.length === 0"}
+    Loading from
+    %a{href: "{{manifestUrl}}"}
+      {{manifestUrl}}
+    = "..."
+  %p{"ng-if" => "manifest.manifests.length+tests.length > 0"}
     Loaded from
     %a{href: "{{manifestUrl}}"}
       {{manifestUrl}}
   %div
-    {{manifest.comment}}
+    {{manifest.comment || manifest.description}}
   %ul.manifests.container.list-group{"ng-show" => "manifest.manifests.length"}
     %li.list-group-item{id: "{{man.id}}", 'ng-repeat' => 'man in manifest.manifests'}
       %div.row.manifest--entry

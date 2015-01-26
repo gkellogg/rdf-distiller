@@ -189,25 +189,40 @@ module RDF::Test
     # @option params [String] :processorUrl
     #   URL of test endpoint, to which the source and run-time parameters are added.
     post '/tests/:testId' do
-      processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
-      manifest_id = params.fetch('manifestUrl', 'default')
-      manifest = Manifest.find(manifest_id)
-      raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
-      entry = manifest.entry(params[:testId])
-      raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
+      begin
+        processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
+        manifest_id = params.fetch('manifestUrl', 'default')
+        manifest = Manifest.find(manifest_id)
+        raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
+        entry = manifest.entry(params[:testId])
+        raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
     
-      # Run the test, and re-serialize the entry, including test results
-      entry.run(processor_url, logger: request.logger) do |extracted, status, error|
+        # Run the test, and re-serialize the entry, including test results
+        entry.run(processor_url, logger: request.logger) do |extracted, status, error|
+          respond_to do |wants|
+            wants.jsonld {
+              content_type :jsonld
+              body entry.attributes.merge(
+                "@context" =>    entry.context,
+                extracted_loc:  (processor_url + entry.action_loc),
+                extracted_body: extracted,
+                status:         status,
+                error:          (error.inspect if error)
+              ).to_json
+            }
+            wants.other {
+              raise "Only JSON-LD request type supported for POST"
+            }
+          end
+        end
+      rescue
+        status 500
         respond_to do |wants|
           wants.jsonld {
-            content_type :jsonld
-            body entry.attributes.merge(
-              "@context" =>    entry.context,
-              extracted_loc:  (processor_url + entry.action_loc),
-              extracted_body: extracted,
-              status:         status,
-              error:          (error.inspect if error)
-            ).to_json
+            body({error: $!.to_s, message: $!.message, backtrace: $!.backtrace}.to_json)
+          }
+          wants.other {
+            $!.message
           }
         end
       end
@@ -248,22 +263,25 @@ module RDF::Test
     #   ID of processor from processors.json, used to find DOAP information.
     get "/earl.?:ext?" do
       processors = JSON.parse(File.read(File.join(settings.root, "processors.json")))
-      info = processors.detect {|p| p['endpoint'] == params['processorUrl']} || processors.last
+      info = processors.detect do |p|
+        p['distiller'] == params['processorUrl'] ||
+        p['sparql'] == params['processorUrl']
+      end || processors.last
 
       # Load DOAP definitions
       doap_url = info["doap_url"] || info["doap"]
       request.logger.info("Load doap info for #{params['processorId']} from #{doap_url}")
-      if doap_url.start_with?('/')
-        doap_doc = File.read(File.join(settings.root, doap_url))
-      else
-        doap_doc = RestClient.get(doap_url)
-      end
+      doap_url = File.join(settings.root, doap_url) if doap_url.start_with?('/')
 
-      reader = RDF::Reader.for(doap_url) {doap_doc}
-      unless reader.class == RDF::Turtle::Reader
-        # Turn it into Turtle
-        graph = RDF::Graph.new << reader.new(doap_doc)
-        doap_doc = graph.dump(:ttl, standard_prefixes: true)
+      doap_doc = begin
+        RDF::Graph.load(doap_url).dump(:ttl, standard_prefixes: true)
+      rescue
+        %(
+        @base         <#{doap_url}> .
+        @prefix doap: <http://usefulinc.com/ns/doap#> .
+
+        <> a doap:Project; doap:name "Unknown" .
+        ).gsub(/^\s+/, '')
       end
 
       # Add EARL prefix, if necessary

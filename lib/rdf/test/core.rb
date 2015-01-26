@@ -19,6 +19,8 @@ module RDF::Test
 
       # Find a (possibly cached) manifest based on it's ID by loading the graph at that location
       # @param [String] id
+      # @param [Hash{Symbol => Object}] options
+      # @option options [Logger] :logger
       def self.find(id, options = {})
         (@manfests ||= {})[id] ||= begin
           local_manifest = File.join(CACHE_DIR, "#{id.hash}-manifest.json")
@@ -31,6 +33,10 @@ module RDF::Test
           else
             Time.parse(RestClient.get(id).headers[:last_modified])
           end rescue Time.new(0)
+
+          if options[:logger]
+            options[:logger].debug "Manifest.find: local: #{local_manifest}(#{local_time}) remote: #{remote_manifest}(#{remote_time})"
+          end
 
           unless local_time > remote_time
             # Build JSON-LD version of manifest
@@ -64,6 +70,8 @@ module RDF::Test
       ##
       # Initialize a Manifest object from its parsed JSON-LD representation
       # @param [String] local_manifest
+      # @param [Hash{Symbol => Object}] options
+      # @option options [Logger] :logger
       def initialize(local_manifest, options = {})
         @local_manifest = local_manifest
         node = ::JSON.parse(File.read(local_manifest))
@@ -187,18 +195,18 @@ module RDF::Test
       # Updates this test with the result and test status of PASS/FAIL
       #
       # @override run(processor_url, options = {}, &block)
-      #   @param [RDF::URI, String] processor_url The CSVW extractor web service.
+      #   @param [RDF::URI, String] processor_url The RDF extractor web service or SPARQL endpoint.
       #   @param [Hash{Symbol => Object}] options
-      #   @option options [Logger] logger
+      #   @option options [Logger] :logger
       #   @yield result_body, status
       #   @yieldparam [String] result_body Returned document
       #   @yieldparam [String] status Pass/Fail/Error result
       #   @return [Object] yield results
       #
       # @override run(processor_url)
-      #   @param [RDF::URI, String] processor_url The CSVW extractor web service.
+      #   @param [RDF::URI, String] processor_url The RDF extractor web service or SPARQL endpoint.
       #   @param [Hash{Symbol => Object}] options
-      #   @option options [Logger] logger
+      #   @option options [Logger] :logger
       #   @return [Boolean] PASS/FAIL result
       def run(processor_url, options = {})
         logger = options.fetch(:logger) {
