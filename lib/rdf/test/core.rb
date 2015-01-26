@@ -256,8 +256,8 @@ module RDF::Test
           status = result ? "Pass" : "Fail"
         rescue RestClient::ResourceNotFound, IOError => e
           logger.error "Extraction error: #{e.message}"
-          extracted, error, status = nil, e, "Error"
-          result = false
+          extracted, error, status = nil, e, negative? ? "Pass" : "Error"
+          result = negative?
         rescue
           logger.error "Extraction exception: #{$!.inspect}"
           error, status = $!, "Error"
