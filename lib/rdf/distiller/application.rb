@@ -188,6 +188,13 @@ module RDF::Distiller
         @output.force_encoding(Encoding::UTF_8) if @output
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
+    rescue
+      if format != :html || params["raw"]
+        status 400
+        body $!.message
+      else
+        html :distiller, locals: {title: "RDF Distiller", head: :distiller}
+      end
     end
     
     # Handle GET/POST /sparql
@@ -256,6 +263,13 @@ module RDF::Distiller
           head: :distiller,
           doap_count: doap.count
         }
+      end
+    rescue
+      if format != :html
+        status 400
+        body $!.message
+      else
+        html :sparql, locals: {title: "SPARQL Endpoint", head: :distiller}
       end
     end
 
@@ -344,6 +358,7 @@ module RDF::Distiller
     rescue
       @error = "#{$!.class}: #{$!.message}"
       request.logger.error @error  # to log
+      raise
       nil
     end
 
