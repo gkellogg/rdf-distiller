@@ -231,8 +231,12 @@ module RDF::Test
         # Use the actual result file if using the reflector
         processor_url = result_loc if processor_url.start_with?('http://example.org/reflector')
         begin
+          headers = {
+            "User-Agent"    => "Ruby-RDF-Test/#{RDF::Test::VERSION}",
+            "Cache-Control" => "no-cache"
+          }
           # Indicate format requested; default uses standard RDF mime-types
-          headers = json? ? {"Accept" => "application/json"} : {}
+          headers['Accept'] = 'application/json' if json?
 
           extracted = RDF::Util::File.open_file(processor_url, use_net_http: true, headers: headers)
           content_type = extracted.content_type

@@ -326,6 +326,7 @@ module RDF::Distiller
         vocab_expansion: params["vocab_expansion"],
         rdfagraph:       params["rdfagraph"],
         verify_none:     params["verify_none"],
+        use_net_http:    true,
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
           "Cache-Control" => "no-cache"
