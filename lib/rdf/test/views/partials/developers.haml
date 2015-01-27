@@ -1,0 +1,53 @@
+// Templates for Angular.js rendering
+%div.row
+  %h2= "Creating a Processor Endpoint"
+
+  :markdown
+    The Test Harness operates by making a call to a _processor endpoint_ with a query parameter that indicates
+    the URL of the test document to be processed. Within the Test Harness, a text box (upper right-hand corner)
+    allows a processor endpoint to be selected or added manually. It is presumed that the endpoint URL ends
+    with a query parameter to which a test input URL can be appended. For example, the _reflector_ endpoint is
+    defined as follows: `http://example.org/reflector?uri=`. When invoked, the URL of an actual
+    test will be appended, such as the following:
+    `http://example.org/reflector?uri=http://w3c.github.io/csvw/tests/test001.csv`.
+
+    Everything required by a processor can be presumed from the content of the document provided, however
+    the test suite will also set a `Content-Type` HTTP header appropriate for the document provided, these include
+    * application/json,
+    * application/ld+json,
+    * text/turtle, and
+    * application/n-triples
+
+    The processor is called with HTTP Accept header indicating appropriate result formats (currently,
+    `text/turtle` (indicating [Turtle](http://www.w3.org/TR/turtle/)),
+    `application/json` (indicating [JSON](http://tools.ietf.org/html/rfc7159)), and
+    `application/n-triples` (indicating [N-Triples](http://www.w3.org/TR/rdf-testcases/#ntriples))).
+    Processors _SHOULD_ set the HTTP `Content-Type` of the resulting document to the associated document Mime Type.
+
+    In some cases, the test suite may add additional query parameters to the endpoint URL to test different
+    required or optional behaviors, ...
+
+    To add a processor to the test suite, add to the object definition in
+    `processors.json` in alphabetical order. This is currently defined as follows:
+
+        [
+          {
+            "id": "reflector",
+            "name": "Reflector",
+            "endpoint": "http://example.org/reflector?uri=",
+            "doap": "http://example.org/reflector#about",
+            "doap_url": "/earl-reports/reflector-doap.ttl"
+          },
+          {
+            "id": "other",
+            "name": "other",
+            "endpoint": null,
+            "doap": "http://example.org/other#about",
+            "doap_url": "/earl-reports/other-doap.ttl"
+          }
+        ]
+
+    The `doap` is the IRI defining the processor. It should be an information resource resulting in a
+    [DOAP](https://github.com/edumbill/doap/wiki) project description, and will be used when formatting reports.
+
+    If the DOAP project description location differs from the identifying IRI, set that location in `doap_url`

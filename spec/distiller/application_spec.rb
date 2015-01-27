@@ -1,4 +1,4 @@
-$:.unshift "."
+$:.unshift ".."
 require 'spec_helper'
 
 describe RDF::Distiller::Application do

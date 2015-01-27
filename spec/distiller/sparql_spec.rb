@@ -1,4 +1,4 @@
-$:.unshift "."
+$:.unshift ".."
 require 'spec_helper'
 require 'linkeddata'
 

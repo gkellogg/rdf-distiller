@@ -1,5 +1,6 @@
 require 'sinatra/sparql'
 require 'sinatra/partials'
+require 'sinatra/extensions'
 require 'erubis'
 require 'linkeddata'
 require 'rdf/tabular' # experimental
@@ -17,8 +18,7 @@ module RDF::Distiller
       set :root, APP_DIR
       set :public_folder, PUB_DIR
       set :views, ::File.expand_path('../views',  __FILE__)
-      set :snippets, ::File.expand_path('../snippets',  __FILE__)
-      set :app_name, "Structured Data Linter"
+      set :app_name, "RDF Distiller"
       enable :logging
       disable :raise_errors, :show_exceptions if settings.environment == :production
 
@@ -28,7 +28,26 @@ module RDF::Distiller
         metastore:   "file:" + ::File.join(APP_DIR, "cache/meta"),
         entitystore: "file:" + ::File.join(APP_DIR, "cache/body")
 
+      register Sinatra::AssetPack
+
+      mime_type :jsonld, "application/ld+json"
+      mime_type :sparql, "application/sparql-query"
+      mime_type :ttl, "text/turtle"
       mime_type "sse", "application/sse+sparql-query"
+
+      # Asset pipeline
+      assets do
+        serve '/js', from: 'assets/js'
+        serve '/css', from: 'assets/css'
+        #serve '/images', from: 'assets/images'
+
+        css :app, %w(/css/application.css)
+        js :app, %w(/js/application.js)
+
+        # Skip compression
+        #js_compression  :jsmin
+        #css_compression :simple
+      end
     end
 
     configure :development do
@@ -40,6 +59,14 @@ module RDF::Distiller
 
     configure :test do
       set :logging, ::Logger.new(StringIO.new)
+    end
+
+    helpers do
+      # Set cache control
+      def set_cache_header(options = {})
+        options = {:max_age => ENV.fetch('max_age', 60*5)}.merge(options)
+        cache_control(:public, :must_revalidate, options)
+      end
     end
 
     before do
@@ -153,13 +180,20 @@ module RDF::Distiller
         @output = case content
         when RDF::Enumerable
           # For HTML response, the "fmt" attribute may set the type of serialization
-          fmt = (writer_options[:format] || "turtle").to_sym
+          fmt = (writer_options[:format] || content.contexts.empty? ? "turtle" : "trig").to_sym
           content.dump(fmt, writer_options)
         else
           content
         end
         @output.force_encoding(Encoding::UTF_8) if @output
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
+      end
+    rescue
+      if format != :html || params["raw"]
+        status 400
+        body $!.message
+      else
+        html :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
     
@@ -230,6 +264,13 @@ module RDF::Distiller
           doap_count: doap.count
         }
       end
+    rescue
+      if format != :html
+        status 400
+        body $!.message
+      else
+        html :sparql, locals: {title: "SPARQL Endpoint", head: :distiller}
+      end
     end
 
     # Format symbols for RDF formats
@@ -285,6 +326,7 @@ module RDF::Distiller
         vocab_expansion: params["vocab_expansion"],
         rdfagraph:       params["rdfagraph"],
         verify_none:     params["verify_none"],
+        use_net_http:    true,
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
           "Cache-Control" => "no-cache"
@@ -317,6 +359,7 @@ module RDF::Distiller
     rescue
       @error = "#{$!.class}: #{$!.message}"
       request.logger.error @error  # to log
+      raise
       nil
     end
 
