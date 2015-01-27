@@ -11,7 +11,7 @@
             {{processor.name}}
     %li
       %form
-        %input.search-query#processor-url{:type => "text", :placeholder => "Processor URL", "ng-model" => "processorUrl"}
+        %input#processor-url{:type => "text", :placeholder => "Processor URL", "ng-model" => "processorUrl"}
     %li
       %button.btn.btn-primary#run-all{"ng-click" => "runTest('All')"}
         Run All Tests
@@ -47,6 +47,8 @@
       %div.btn-group#earl
         %button.btn.btn-info{'ng-click' => 'getEarl()'}
           EARL Report
+      %form
+        %input#doap-url{:type => "text", :placeholder => "DOAP URL", "ng-model" => "doapUrl"}
 %div.row.earl-report.alert.alert-info{role: 'alert', "ng-show" => "doap"}
   %button.close{type: "button", 'ng-click' => 'doap = null'}
     %span{"aria-hidden" => true}
@@ -56,7 +58,7 @@
   %pre.col-md-12.col-sm-12.col-xs-12
     {{doap}}
 
-    = %(<> foaf:primaryTopic <{{processorDoap()}}> ;)
+    = %(<> foaf:primaryTopic <{{doapUrl}}> ;)
     = %(  dc:issued "{{doapDate.toISOString()}}"^^xsd:dateTime .)
 
     %div{'ng-repeat' => 'test in tests', 'ng-skip' => 'test.date'}<

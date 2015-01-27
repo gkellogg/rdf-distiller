@@ -81,6 +81,7 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       // Processors from script tag
       $scope.processors = angular.fromJson($("script#processors").text());
       $scope.processorUrl = $scope.processors[0].distiller;
+      $scope.doapUrl = $scope.processors[0].doapUrl || $scope.processors[0].doap;
       $scope.manifestUrl = $routeParams['manifestUrl'];
       $scope.manifest = Test.getManifest({manifestUrl: $scope.manifestUrl});
 
@@ -130,17 +131,11 @@ var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
       // Set processorUrl from a selected processor
       $scope.setProcessor = function(proc) {
         $scope.processorUrl = proc.distiller;
-      };
-      // Location of DOAP information for _processorUrl_
-      $scope.processorDoap = function() {
-        var proc = _.find($scope.processors, function(proc) {
-          return proc.distiller === $scope.processorUrl;
-        }) || _.last($scope.processors);
-        return proc.doap;
+        $scope.doapUrl = proc.doapUrl || proc.doap;
       };
       // Retrieve EARL preamble information as Turtle.
       $scope.getEarl = function() {
-        $http.get('earl', {params: {manifestUrl: $scope.manifestUrl, processorUrl: $scope.processorUrl}})
+        $http.get('earl', {params: {manifestUrl: $scope.manifestUrl, processorUrl: $scope.processorUrl, doapUrl: $scope.doapUrl}})
           .success(function(data, status) {
             $log.debug(data);
             $scope.doap = data.doap;

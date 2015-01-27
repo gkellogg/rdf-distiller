@@ -243,7 +243,7 @@ module RDF::Test
           locals: {
             assertion: %([ a earl:Assertion;
   earl:assertedBy <>;
-  earl:subject <{{processorDoap()}}>;
+  earl:subject <{{doapUrl}}>;
   earl:test &lt;{{test.id}}&gt;;
   earl:result [
    a earl:TestResult;
@@ -260,27 +260,22 @@ module RDF::Test
     # @overload get "/earl"
     # @param [Hash{String => String}] params
     # @option params [String] :processorUrl
-    #   ID of processor from processors.json, used to find DOAP information.
+    #   endpoint to call, of the form `http://rdf.greggkellogg.net/distiller?validate=true&format=nquads&raw=true&uri=`
+    # @option params [String] :doapUrl
+    #   Location of project DOAP description
     get "/earl.?:ext?" do
-      processors = JSON.parse(File.read(File.join(settings.root, "processors.json")))
-      info = processors.detect do |p|
-        p['distiller'] == params['processorUrl'] ||
-        p['sparql'] == params['processorUrl']
-      end || processors.last
-
       # Load DOAP definitions
-      doap_url = info["doap_url"] || info["doap"]
-      request.logger.info("Load doap info for #{params['processorId']} from #{doap_url}")
+      doap_url = params['doapUrl']
+      request.logger.info("Load doap info for #{params['processorUrl']} from #{doap_url}")
       doap_url = File.join(settings.root, doap_url) if doap_url.start_with?('/')
 
       doap_doc = begin
         RDF::Graph.load(doap_url).dump(:ttl, standard_prefixes: true)
       rescue
         %(
-        @base         <#{doap_url}> .
         @prefix doap: <http://usefulinc.com/ns/doap#> .
 
-        <> a doap:Project; doap:name "Unknown" .
+        <#{doap_url}> a doap:Project; doap:name "Unknown" .
         ).gsub(/^\s+/, '')
       end
 

@@ -22,5 +22,5 @@ end
 disable :run, :reload
 
 run Rack::URLMap.new \
-  "/"             => RDF::Distiller::Application,
+  "/"       => RDF::Distiller::Application,
   "/test/"  => RDF::Test::Application

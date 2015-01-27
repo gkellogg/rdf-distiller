@@ -10,12 +10,14 @@ module RDF::Test
   # Core utilities used for generating and checking test cases
   module Core
     MANIFEST_FRAME = ::JSON.parse(File.read File.join(PUB_DIR, "context.jsonld")).freeze
+    DEFAULT_MANIFEST = File.join(PUB_DIR, "manifest.ttl").freeze
     BASE           = "fix:me/"
 
     # Internal representation of manifest
     class Manifest < JSON::LD::Resource
       attr_accessor :options
       attr_accessor :local_manifest
+      attr_accessor :remote_manifest
 
       # Find a (possibly cached) manifest based on it's ID by loading the graph at that location
       # @param [String] id
@@ -24,43 +26,8 @@ module RDF::Test
       def self.find(id, options = {})
         (@manfests ||= {})[id] ||= begin
           local_manifest = File.join(CACHE_DIR, "#{id.hash}-manifest.json")
-          local_time = File.mtime(local_manifest) rescue Time.new(0)
-
-          remote_manifest = id == 'default' ? File.join(PUB_DIR, "manifest.ttl") : id
-          remote_time = case id
-          when 'default'
-           File.mtime(File.join(PUB_DIR, "manifest.ttl"))
-          else
-            Time.parse(RestClient.get(id).headers[:last_modified])
-          end rescue Time.new(0)
-
-          if options[:logger]
-            options[:logger].debug "Manifest.find: local: #{local_manifest}(#{local_time}) remote: #{remote_manifest}(#{remote_time})"
-          end
-
-          unless local_time > remote_time
-            # Build JSON-LD version of manifest
-            FileUtils.mkdir_p(CACHE_DIR)
-            File.open(local_manifest, "w") do |f|
-              graph = RDF::Graph.load(remote_manifest)
-              JSON::LD::API.fromRDF(graph) do |expanded|
-                frame = MANIFEST_FRAME.dup
-                # Make relative URIs
-                frame['@context']['@base'] = id unless id == 'default'
-                JSON::LD::API.frame(expanded, frame) do |framed|
-                  # Extract first object in @graph
-                  framed = framed['@graph'].first.merge('@context' => framed['@context'])
-
-                  json = framed.to_json(JSON::LD::JSON_STATE).gsub(BASE, "")
-                  f.write json
-                end
-              end
-            end
-          end
-          Manifest.new(local_manifest, options)
-        rescue
-          FileUtils.rm local_manifest if File.exist?(local_manifest)
-          raise
+          remote_manifest = id == 'default' ? DEFAULT_MANIFEST : id
+          Manifest.new(local_manifest, remote_manifest, options)
         end
       end
 
@@ -72,11 +39,13 @@ module RDF::Test
       # @param [String] local_manifest
       # @param [Hash{Symbol => Object}] options
       # @option options [Logger] :logger
-      def initialize(local_manifest, options = {})
+      def initialize(local_manifest, remote_manifest, options = {})
         @local_manifest = local_manifest
-        node = ::JSON.parse(File.read(local_manifest))
+        @remote_manifest = remote_manifest
+        @options = options
+        node = ::JSON.parse(self.to_json)
         STDERR.puts "Create manifest object"
-        @options = options.merge(context: node['@context'])
+        @options[:context] = node['@context']
         super(node)
       end
 
@@ -97,7 +66,42 @@ module RDF::Test
 
       # Return local manifest
       def to_json
+        local_time = File.mtime(local_manifest) rescue Time.new(0)
+
+        remote_time = case remote_manifest
+        when DEFAULT_MANIFEST
+         File.mtime(remote_manifest)
+        else
+          Time.parse(RestClient.get(remote_manifest).headers[:last_modified])
+        end rescue Time.new(0)
+
+        if options[:logger]
+          options[:logger].debug "Manifest.find: local: #{local_manifest}(#{local_time}) remote: #{remote_manifest}(#{remote_time})"
+        end
+
+        unless local_time > remote_time
+          # Build JSON-LD version of manifest
+          FileUtils.mkdir_p(CACHE_DIR)
+          File.open(local_manifest, "w") do |f|
+            graph = RDF::Graph.load(remote_manifest)
+            JSON::LD::API.fromRDF(graph) do |expanded|
+              frame = MANIFEST_FRAME.dup
+              # Make relative URIs
+              frame['@context']['@base'] = remote_manifest unless remote_manifest == DEFAULT_MANIFEST
+              JSON::LD::API.frame(expanded, frame) do |framed|
+                # Extract first object in @graph
+                framed = framed['@graph'].first.merge('@context' => framed['@context'])
+
+                json = framed.to_json(JSON::LD::JSON_STATE).gsub(BASE, "")
+                f.write json
+              end
+            end
+          end
+        end
         File.read(local_manifest)
+      rescue
+        FileUtils.rm local_manifest if File.exist?(local_manifest)
+        raise
       end
 
       # Create Turtle representation of manifest
@@ -150,7 +154,7 @@ module RDF::Test
       end
 
       def json?
-        Array(attributes['type']).join(" ").match(/json/i)
+        Array(attributes['type']).join(" ").match(/(tojson|compacttest|expandtest|flattentest|frametest|fromrdftest)/i)
       end
 
       def sparql?
@@ -237,7 +241,7 @@ module RDF::Test
 
           result = if json?
             # Read both as JSON and compare
-            extracted_object = JSON.parse(extracted.read)
+            extracted_object = JSON.parse(extracted)
             result_object = JSON.parse(result_body)
             ::JsonCompare.get_diff(extracted_object, result_object).empty?
           else
