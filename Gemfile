@@ -32,6 +32,7 @@ gem 'sxp',                git: "git://github.com/gkellogg/sxp-ruby.git"
 
 gem 'unicorn'
 gem "redcarpet"
+gem "yard"
 
 group :development, :test do
   gem "syntax"

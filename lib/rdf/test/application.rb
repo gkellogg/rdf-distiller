@@ -94,28 +94,14 @@ module RDF::Test
     # Other endpoints implemented within the application
     get '/about' do
       set_cache_header
-      processors = File.read(File.join(settings.root, "processors.json"))
-      content_type :html
-      haml :tests, locals: {
-        processors: processors,
-        angular_app: "testApp",
-        title: "foo",
-        description: "bar"
-      }          
+      load_app
     end
     get '/about/' do
       redirect url('/about')
     end
     get '/developers' do
       set_cache_header
-      processors = File.read(File.join(settings.root, "processors.json"))
-      content_type :html
-      haml :tests, locals: {
-        processors: processors,
-        angular_app: "testApp",
-        title: "foo",
-        description: "bar"
-      }          
+      load_app
     end
     get '/developers/' do
       redirect url('/developers')
@@ -129,19 +115,11 @@ module RDF::Test
     get '/tests.?:ext?' do
       set_cache_header
       manifest_id = params.fetch('manifestUrl', 'default')
-      manifest = Manifest.find(manifest_id)
+      manifest = Manifest.find(manifest_id, logger: logger)
       raise Sinatra::NotFound, "No test manifest found for #{manifest_id}" unless manifest
       
       respond_to(params[:ext]) do |wants|
-        wants.other {
-          processors = File.read(File.join(settings.root, "processors.json"))
-          content_type :html
-          haml :tests, locals: {
-            processors: processors,
-            angular_app: "testApp",
-            manifest: manifest
-          }          
-        }
+        wants.other {load_app}
         wants.jsonld {
           etag manifest.hash
           content_type :jsonld
@@ -155,6 +133,18 @@ module RDF::Test
       end
     end
 
+    def load_app
+      manifest_id = params.fetch('manifestUrl', 'default')
+      manifest = Manifest.find(manifest_id, logger: logger)
+      processors = File.read(File.join(settings.root, "processors.json"))
+      content_type :html
+      haml :tests, locals: {
+        processors: processors,
+        angular_app: "testApp",
+        manifest: manifest
+      }          
+    end
+
     # GET "/tests/:testId" returns a paritulcar test entry.
     # If no entry is found, it looks for a file in the test directory.
     #
@@ -164,7 +154,7 @@ module RDF::Test
     # @param [String] testId last path component indicating particular test
     get '/tests/:testId.?:ext?' do
       manifest_id = params.fetch('manifestUrl', 'default')
-      manifest = Manifest.find(manifest_id)
+      manifest = Manifest.find(manifest_id, logger: logger)
       raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
       entry = manifest.entry(params[:testId])
       raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
@@ -175,6 +165,9 @@ module RDF::Test
           etag entry.hash
           content_type :jsonld
           body entry.to_json
+        }
+        wants.other {
+          raise "Only JSON-LD request type supported for Test detail"
         }
       end
     end
@@ -192,7 +185,7 @@ module RDF::Test
       begin
         processor_url = params.fetch("processorUrl", "http://example.org/reflector?uri=")
         manifest_id = params.fetch('manifestUrl', 'default')
-        manifest = Manifest.find(manifest_id)
+        manifest = Manifest.find(manifest_id, logger: logger)
         raise Sinatra::NotFound, "No test manifest found for #{params[:manifestUrl]}" unless manifest
         entry = manifest.entry(params[:testId])
         raise Sinatra::NotFound, "No test entry found for #{params[:testId]}" unless entry
