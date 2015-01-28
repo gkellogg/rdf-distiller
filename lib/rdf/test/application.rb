@@ -167,7 +167,8 @@ module RDF::Test
           body entry.to_json
         }
         wants.other {
-          raise "Only JSON-LD request type supported for Test detail"
+          status 500
+          body "Only JSON-LD request type supported for Test detail"
         }
       end
     end
