@@ -16,6 +16,7 @@ module RDF::Test
     # Internal representation of manifest
     class Manifest < JSON::LD::Resource
       attr_accessor :options
+      attr_accessor :logger
       attr_accessor :local_manifest
       attr_accessor :remote_manifest
 
@@ -40,18 +41,23 @@ module RDF::Test
       # @param [Hash{Symbol => Object}] options
       # @option options [Logger] :logger
       def initialize(local_manifest, remote_manifest, options = {})
+        @logger = options.fetch(:logger) {
+          l = Logger.new(STDOUT)  # In case we're not invoked from rack
+          l.level = Logger::DEBUG
+          l
+        }
         @local_manifest = local_manifest
         @remote_manifest = remote_manifest
         @options = options
         node = ::JSON.parse(self.to_json)
-        STDERR.puts "Create manifest object"
+        logger.debug "Create manifest object"
         @options[:context] = node['@context']
         super(node)
       end
 
       def entries
         # Map entries to resources
-        STDERR.puts "Load entries" unless @entries
+        logger.debug "Load entries" unless @entries
         @entries ||= Array(attributes['entries']).map {|e| Entry.new(e, options)}
       end
 
@@ -106,19 +112,21 @@ module RDF::Test
 
       # Create Turtle representation of manifest
       def to_ttl
-        ::JSON::LD::Reader.new(@attributes) do |reader|
-          reader.dump(:ttl, prefixes: reader.prefixes, standard_prefixes: true)
-        end
-        end
-        ::JSON::LD::API.toRdf(@attributes) do |statement|
+        ::JSON::LD::API.toRdf(@attributes).dump(:ttl, standard_prefixes: true)
       end
     end
 
     class Entry < JSON::LD::Resource
       attr_accessor :base
+      attr_accessor :logger
 
       def initialize(json, options = {})
         @options = options
+        @logger = options.fetch(:logger) {
+          l = Logger.new(STDOUT)  # In case we're not invoked from rack
+          l.level = Logger::DEBUG
+          l
+        }
         @base = RDF::URI(@options.fetch(:context).fetch('@base'))
         super
       end
@@ -213,11 +221,6 @@ module RDF::Test
       #   @option options [Logger] :logger
       #   @return [Boolean] PASS/FAIL result
       def run(processor_url, options = {})
-        logger = options.fetch(:logger) {
-          l = Logger.new(STDOUT)  # In case we're not invoked from rack
-          l.level = Logger::DEBUG
-          l
-        }
         # Build the RDF extractor URL
         # FIXME: include other processor control parameters
         processor_url = ::URI.decode(processor_url) + action_loc.to_s
@@ -229,7 +232,7 @@ module RDF::Test
 
         # Retrieve the remote graph
         # Use the actual result file if using the reflector
-        processor_url = result_loc if processor_url.start_with?('http://example.org/reflector')
+        processor_url = result_loc || action_loc if processor_url.start_with?('http://example.org/reflector')
         begin
           headers = {
             "User-Agent"    => "Ruby-RDF-Test/#{RDF::Test::VERSION}",
@@ -239,7 +242,7 @@ module RDF::Test
           headers['Accept'] = 'application/json' if json?
 
           extracted = RDF::Util::File.open_file(processor_url, use_net_http: true, headers: headers)
-          content_type = extracted.content_type
+          content_type = extracted.content_type rescue nil
           extracted = extracted.read
           logger.debug "extracted:\n#{extracted}, content-type: #{content_type.inspect}"
 

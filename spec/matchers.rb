@@ -1,35 +1,66 @@
 require 'rspec/matchers'
+require 'json'
+require 'jsonpath'
+require 'nokogiri'
 
-RSpec::Matchers.define :have_xpath do |xpath, value, trace|
+RSpec::Matchers.define :have_jsonpath do |path, value, trace|
+  p = JsonPath.new(path)
   match do |actual|
-    @doc = Nokogiri::XML.parse(actual)
-    @doc.should be_a(Nokogiri::XML::Document)
-    @doc.root.should be_a(Nokogiri::XML::Element)
-    @namespaces = @doc.namespaces.merge("xhtml" => "http://www.w3.org/1999/xhtml", "xml" => "http://www.w3.org/XML/1998/namespace")
     case value
-    when false
-      @doc.root.at_xpath(xpath, @namespaces).should be_nil
-    when true
-      @doc.root.at_xpath(xpath, @namespaces).should_not be_nil
-    when Array
-      @doc.root.at_xpath(xpath, @namespaces).to_s.split(" ").should include(*value)
+    when FalseClass
+      p.on(actual).empty?
+    when TrueClass
+      !p.on(actual).empty?
     when Regexp
-      @doc.root.at_xpath(xpath, @namespaces).to_s.should =~ value
+      p.on(actual).to_s =~ value
     else
-      @doc.root.at_xpath(xpath, @namespaces).to_s.should == value
+      p.on(actual) == Array(value)
     end
   end
   
-  failure_message_for_should do |actual|
-    msg = "expected that #{xpath.inspect} would be #{value.inspect} in:\n" + actual.to_s
-    msg += "was: #{@doc.root.at_xpath(xpath, @namespaces)}"
-    msg +=  "\nDebug:#{trace.join("\n")}" if trace
+  failure_message do |actual|
+    msg = "expected that #{path.inspect}\nwould be: #{value.inspect}"
+    msg += "\n     was: #{JsonPath.new(path).on(actual)}"
+    msg += "\nsource:" + actual
     msg
   end
   
-  failure_message_for_should_not do |actual|
-    msg = "expected that #{xpath.inspect} would not be #{value.inspect} in:\n" + actual.to_s
-    msg +=  "\nDebug:#{trace.join("\n")}" if trace
+  failure_message_when_negated do |actual|
+    msg = "expected that #{path.inspect}\nwould not be #{value.inspect}"
+    msg += "\nsource:" + actual
+    msg
+  end
+end
+
+RSpec::Matchers.define :have_xpath do |path, value, trace|
+  match do |actual|
+    @doc = Nokogiri::HTML.parse(actual)
+    return false unless @doc.is_a?(Nokogiri::XML::Document)
+    return false unless @doc.root.is_a?(Nokogiri::XML::Element)
+    case value
+    when FalseClass
+      @doc.root.xpath(path).empty?
+    when TrueClass
+      !@doc.root.xpath(path).empty?
+    when Array
+      @doc.root.xpath(path).map {|f| f.to_s.strip}.sort <=> value.sort
+    when Regexp
+      @doc.root.xpath(path).to_s =~ value
+    else
+      @doc.root.xpath(path).to_s.strip == value
+    end
+  end
+  
+  failure_message do |actual|
+    msg = "expected that #{path.inspect} would be #{value.inspect} in:\n" + actual.to_s
+    msg += "was: #{@doc.root.at_xpath(path)}"
+    msg +=  "\nDebug:#{Array(trace).join("\n")}" if trace
+    msg
+  end
+  
+  failure_message_when_negated do |actual|
+    msg = "expected that #{path.inspect} would not be #{value.inspect} in:\n" + actual.to_s
+    msg +=  "\nDebug:#{Array(trace).join("\n")}" if trace
     msg
   end
 end

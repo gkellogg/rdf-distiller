@@ -2,6 +2,7 @@ $:.unshift File.expand_path("../../lib", __FILE__)
 require 'rubygems'
 require 'bundler/setup'
 require 'rspec'
+require 'rspec/its'
 require 'rack/test'
 require 'webmock/rspec'
 require 'rdf/distiller'
@@ -17,10 +18,6 @@ set :environment, :test
   c.filter_run :focus => true
   c.run_all_when_everything_filtered = true
   c.include ::Rack::Test::Methods
-
-  def app
-   ::RDF::Distiller::Application
-  end
 
   def mime_type(sym)
     ::Sinatra::Base.mime_type(sym)

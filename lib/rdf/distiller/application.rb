@@ -193,7 +193,7 @@ module RDF::Distiller
         status 400
         body $!.message
       else
-        html :distiller, locals: {title: "RDF Distiller", head: :distiller}
+        haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
     

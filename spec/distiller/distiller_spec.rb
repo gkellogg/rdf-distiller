@@ -4,6 +4,10 @@ require 'linkeddata'
 require 'webmock/rspec'
 
 describe RDF::Distiller::Application do
+  def app
+   RDF::Distiller::Application
+  end
+
   after(:each) do |example|
     if example.exception
       logdev = last_request.logger.instance_variable_get(:@logdev)
