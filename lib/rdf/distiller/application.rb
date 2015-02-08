@@ -276,9 +276,9 @@ module RDF::Distiller
     # Format symbols for RDF formats
     # @param [Symbol] reader_or_writer
     # @return [Array<Symbol>] List of format symbols
-    def formats(reader_or_writer = nil)
+    def formats(reader_or_writer = :reader)
       # Symbols for different input formats
-      RDF::Format.each.to_a.map(&:reader).compact.map(&:to_sym)
+      RDF::Format.each.to_a.map {|f| f.send(reader_or_writer)}.uniq.compact.map(&:to_sym)
     end
 
     # Negotiated format
