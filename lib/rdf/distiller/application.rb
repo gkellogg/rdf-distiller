@@ -159,7 +159,9 @@ module RDF::Distiller
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"
 
       content = parse(writer_options)
-      request.logger.debug "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}"
+      # Hack: if the graph size is too big, use streaming writer, if available
+      writer_options[:stream] = true if content.subjects.count > 1000
+      request.logger.info "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}, stream: #{writer_options[:stream]}"
 
       if writer_options[:format].to_s == "rdfa"
         # If the format is RDFa, use specific HAML writer
@@ -193,6 +195,7 @@ module RDF::Distiller
         status 400
         body $!.message
       else
+        @error = $!.message
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
@@ -269,6 +272,7 @@ module RDF::Distiller
         status 400
         body $!.message
       else
+        @error = $!.message
         html :sparql, locals: {title: "SPARQL Endpoint", head: :distiller}
       end
     end
