@@ -17,12 +17,14 @@ Distills between formats supported in [Linked Data][].
 * Includes [RDFa][] support using the [RDF::RDFa][] gem.
 * Includes [RDF/JSON][] support using the [RDF::JSON][] gem.
 * Includes [RDF/XML][] support using the [RDF::RDFXML][] gem.
+* Includes [CSV][] and [TSV][] support using the [RDF::Tabular][] gem.
 * Includes [TriG][] support using the [RDF::TriG][] gem.
 * Includes [TriX][] support using the [RDF::TriX][] gem.
 * Includes [Turtle][] support using the [RDF::Turtle][] gem.
 * Includes [Microdata][] support using the [RDF::Microdata][] gem.
 * Includes [JSON-LD][] support using the [JSON::LD][] gem.
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
+* Includes additional vocabularies using the [RDF::Vocab][] gem.
 
 ## Documentation
 ### Core libraries
@@ -33,9 +35,11 @@ Distills between formats supported in [Linked Data][].
   * {RDF::RDFa}
   * {RDF::RDFXML}
   * {RDF::Reasoner}
+  * {RDF::Tabular}
   * {RDF::TriG}
   * {RDF::TriX}
   * {RDF::Turtle}
+  * {RDF::Vocab}
   * {RDF::XSD}
   * {JSON::LD}
 
@@ -90,15 +94,17 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 
 [RDF.rb]:         http://ruby-rdf.github.com/rdf
 [RDF::JSON]:      http://rdf.rubyforge.org/json/
-[RDF::Microdata]: http://rdoc.info/github/gkellogg/rdf-microdata/master/frames
-[RDF::N3]:        http://rdoc.info/github/gkellogg/rdf-n3/master/frames
-[RDF::RDFa]:      http://rdoc.info/github/gkellogg/rdf-rdfa/master/frames
-[RDF::RDFXML]:    http://rdoc.info/github/gkellogg/rdf-rdfxml/master/frames
-[RDF::TriG]:      http://rdoc.info/github/gkellogg/rdf-trig/master/frames
+[RDF::Microdata]: http://rdoc.info/github/ruby-rdf/rdf-microdata
+[RDF::N3]:        http://rdoc.info/github/ruby-rdf/rdf-n3
+[RDF::RDFa]:      http://rdoc.info/github/ruby-rdf/rdf-rdfa
+[RDF::RDFXML]:    http://rdoc.info/github/ruby-rdf/rdf-rdfxml
+[RDF::Tabular]:   http://rdoc.info/github/ruby-rdf/rdf-tabular
+[RDF::TriG]:      http://rdoc.info/github/ruby-rdf/rdf-trig
 [RDF::TriX]:      http://rdf.rubyforge.org/trix/
-[RDF::Turtle]:    http://rdoc.info/github/gkellogg/rdf-turtle/master/frames
-[JSON::LD]:       http://rdoc.info/github/gkellogg/json-ld/master/frames
-[SPARQL gem]:     http://rdoc.info/github/gkellogg/sparql/master/frames
+[RDF::Turtle]:    http://rdoc.info/github/ruby-rdf/rdf-turtle
+[RDF::Vocab]:     http://rdoc.info/github/ruby-rdf/rdf-vocab
+[JSON::LD]:       http://rdoc.info/github/ruby-rdf/json-ld
+[SPARQL gem]:     http://rdoc.info/github/ruby-rdf/sparql
 [JSON-LD]:        http://json-ld.org/
 [Microdata]:      http://dev.w3.org/html5/md/
 [N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
@@ -113,6 +119,8 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [TriG]:           http://en.wikipedia.org/wiki/TriG_(syntax)
 [TriX]:           http://en.wikipedia.org/wiki/TriX_(syntax)
 [Turtle]:         http://en.wikipedia.org/wiki/Turtle_(syntax)
+[CSV]:            http://en.wikipedia.org/wiki/Comma-separated_values
+[TSV]:            http://en.wikipedia.org/wiki/Tab-separated_values
 [YARD]:           http://yardoc.org/
 [YARD-GS]:        http://rubydoc.info/docs/yard/file/docs/GettingStarted.md
 [PDD]:            http://unlicense.org/#unlicensing-contributions

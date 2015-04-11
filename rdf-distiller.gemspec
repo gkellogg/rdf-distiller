@@ -41,13 +41,13 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'maruku'
   s.add_runtime_dependency      'json-compare'
   s.add_runtime_dependency      "rack",               '~> 1.5'
-  s.add_runtime_dependency      'rest-client'
-  s.add_runtime_dependency      'rest-client-components'
-  s.add_runtime_dependency      'rack-cache'
+  s.add_runtime_dependency      'rest-client',        '~> 1.7', '< 1.8'
+  s.add_runtime_dependency      'rest-client-components', '~> 1.3'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.2'
 
   # development dependencies
   s.add_development_dependency  'rspec',              '~> 3.0'
-  s.add_development_dependency  'rspec-its'
+  s.add_development_dependency  'rspec-its',          '~> 1.0'
   s.add_development_dependency  'rack-test',          '~> 0.6'
   s.add_development_dependency  'bundler'
   s.add_development_dependency  'jsonpath',           '~> 0.5.6'

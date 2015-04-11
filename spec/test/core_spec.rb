@@ -1,6 +1,10 @@
 $:.unshift ".."
 require 'spec_helper'
 
+class RDF::Repository
+  include RDF::Isomorphic
+end
+
 describe ::RDF::Test::Core::Manifest do
   let(:logger) {
     l = Logger.new(StringIO.new)
