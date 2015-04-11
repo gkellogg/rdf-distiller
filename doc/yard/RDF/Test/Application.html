@@ -247,6 +247,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#load_app-instance_method" title="#load_app (instance method)">- (Object) <strong>load_app</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#respond_to-instance_method" title="#respond_to (instance method)">- (Object) <strong>respond_to</strong>(type = nil) {|wants| ... }</a>
     
 
@@ -352,6 +374,12 @@
       <pre class="lines">
 
 
+260
+261
+262
+263
+264
+265
 266
 267
 268
@@ -385,16 +413,10 @@
 296
 297
 298
-299
-300
-301
-302
-303
-304
-305</pre>
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 260</span>
 
 <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/earl.?:ext?</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
   <span class='comment'># Load DOAP definitions
@@ -488,6 +510,16 @@ If no entry is found, it looks for a file in the test directory.</p>
       <pre class="lines">
 
 
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
 165
 166
 167
@@ -497,20 +529,14 @@ If no entry is found, it looks for a file in the test directory.</p>
 171
 172
 173
-174
-175
-176
-177
-178
-179
-180</pre>
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 155</span>
 
 <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/tests/:testId.?:ext?</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_manifest_id'>manifest_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifestUrl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>default</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='comma'>,</span> <span class='label'>logger:</span> <span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Sinatra</span><span class='op'>::</span><span class='const'>NotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No test manifest found for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:manifestUrl</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_manifest'>manifest</span>
   <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='id identifier rubyid_manifest'>manifest</span><span class='period'>.</span><span class='id identifier rubyid_entry'>entry</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:testId</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Sinatra</span><span class='op'>::</span><span class='const'>NotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No test entry found for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:testId</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_entry'>entry</span>
@@ -521,6 +547,10 @@ If no entry is found, it looks for a file in the test directory.</p>
       <span class='id identifier rubyid_etag'>etag</span> <span class='id identifier rubyid_entry'>entry</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
       <span class='id identifier rubyid_content_type'>content_type</span> <span class='symbol'>:jsonld</span>
       <span class='id identifier rubyid_body'>body</span> <span class='id identifier rubyid_entry'>entry</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+    <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_wants'>wants</span><span class='period'>.</span><span class='id identifier rubyid_other'>other</span> <span class='lbrace'>{</span>
+      <span class='id identifier rubyid_status'>status</span> <span class='int'>500</span>
+      <span class='id identifier rubyid_body'>body</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only JSON-LD request type supported for Test detail</span><span class='tstring_end'>&quot;</span></span>
     <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -571,54 +601,38 @@ If no entry is found, it looks for a file in the test directory.</p>
       <pre class="lines">
 
 
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
 129
 130
 131
 132
 133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 115</span>
 
 <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/tests.?:ext?</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_set_cache_header'>set_cache_header</span>
   <span class='id identifier rubyid_manifest_id'>manifest_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifestUrl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>default</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='comma'>,</span> <span class='label'>logger:</span> <span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Sinatra</span><span class='op'>::</span><span class='const'>NotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No test manifest found for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_manifest'>manifest</span>
   
   <span class='id identifier rubyid_respond_to'>respond_to</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:ext</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_wants'>wants</span><span class='op'>|</span>
-    <span class='id identifier rubyid_wants'>wants</span><span class='period'>.</span><span class='id identifier rubyid_other'>other</span> <span class='lbrace'>{</span>
-      <span class='id identifier rubyid_processors'>processors</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_settings'>settings</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>processors.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_content_type'>content_type</span> <span class='symbol'>:html</span>
-      <span class='id identifier rubyid_haml'>haml</span> <span class='symbol'>:tests</span><span class='comma'>,</span> <span class='label'>locals:</span> <span class='lbrace'>{</span>
-        <span class='label'>processors:</span> <span class='id identifier rubyid_processors'>processors</span><span class='comma'>,</span>
-        <span class='label'>angular_app:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testApp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-        <span class='label'>manifest:</span> <span class='id identifier rubyid_manifest'>manifest</span>
-      <span class='rbrace'>}</span>          
-    <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_wants'>wants</span><span class='period'>.</span><span class='id identifier rubyid_other'>other</span> <span class='lbrace'>{</span><span class='id identifier rubyid_load_app'>load_app</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_wants'>wants</span><span class='period'>.</span><span class='id identifier rubyid_jsonld'>jsonld</span> <span class='lbrace'>{</span>
       <span class='id identifier rubyid_etag'>etag</span> <span class='id identifier rubyid_manifest'>manifest</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
       <span class='id identifier rubyid_content_type'>content_type</span> <span class='symbol'>:jsonld</span>
@@ -682,6 +696,12 @@ If no entry is found, it looks for a file in the test directory.</p>
       <pre class="lines">
 
 
+230
+231
+232
+233
+234
+235
 236
 237
 238
@@ -695,16 +715,10 @@ If no entry is found, it looks for a file in the test directory.</p>
 246
 247
 248
-249
-250
-251
-252
-253
-254
-255</pre>
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 230</span>
 
 <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/partials/:view</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
   <span class='comment'># If the file exists in /assets/partials, serve it directly from there
@@ -774,6 +788,52 @@ If no entry is found, it looks for a file in the test directory.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="load_app-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>load_app</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 136</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_app'>load_app</span>
+  <span class='id identifier rubyid_manifest_id'>manifest_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifestUrl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>default</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='comma'>,</span> <span class='label'>logger:</span> <span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_processors'>processors</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_settings'>settings</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>processors.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_content_type'>content_type</span> <span class='symbol'>:html</span>
+  <span class='id identifier rubyid_haml'>haml</span> <span class='symbol'>:tests</span><span class='comma'>,</span> <span class='label'>locals:</span> <span class='lbrace'>{</span>
+    <span class='label'>processors:</span> <span class='id identifier rubyid_processors'>processors</span><span class='comma'>,</span>
+    <span class='label'>angular_app:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testApp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>manifest:</span> <span class='id identifier rubyid_manifest'>manifest</span>
+  <span class='rbrace'>}</span>          
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="respond_to-instance_method">
   
     - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>respond_to</strong>(type = nil) {|wants| ... }
@@ -831,6 +891,12 @@ optional extension to override accept matching</p>
       <pre class="lines">
 
 
+305
+306
+307
+308
+309
+310
 311
 312
 313
@@ -841,16 +907,10 @@ optional extension to override accept matching</p>
 318
 319
 320
-321
-322
-323
-324
-325
-326
-327</pre>
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 311</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to'>respond_to</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_wants'>wants</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>*/*</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No handler for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_accept'>accept</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
@@ -933,6 +993,12 @@ which is the result of performing the test.</p>
       <pre class="lines">
 
 
+185
+186
+187
+188
+189
+190
 191
 192
 193
@@ -965,22 +1031,16 @@ which is the result of performing the test.</p>
 220
 221
 222
-223
-224
-225
-226
-227
-228
-229</pre>
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'lib/rdf/test/application.rb', line 185</span>
 
 <span class='id identifier rubyid_post'>post</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/tests/:testId</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_processor_url'>processor_url</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>processorUrl</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://example.org/reflector?uri=</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_manifest_id'>manifest_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>manifestUrl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>default</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_manifest'>manifest</span> <span class='op'>=</span> <span class='const'>Manifest</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_manifest_id'>manifest_id</span><span class='comma'>,</span> <span class='label'>logger:</span> <span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Sinatra</span><span class='op'>::</span><span class='const'>NotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No test manifest found for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:manifestUrl</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_manifest'>manifest</span>
     <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='id identifier rubyid_manifest'>manifest</span><span class='period'>.</span><span class='id identifier rubyid_entry'>entry</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:testId</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Sinatra</span><span class='op'>::</span><span class='const'>NotFound</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No test entry found for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:testId</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_entry'>entry</span>
@@ -1025,7 +1085,7 @@ which is the result of performing the test.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Jan 26 18:11:14 2015 by
+  Generated on Sat Apr 11 14:20:10 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>

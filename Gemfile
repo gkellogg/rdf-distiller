@@ -24,6 +24,7 @@ gem 'rdf-tabular',        git: "git://github.com/gkellogg/rdf-tabular.git", bran
 gem 'rdf-trig',           git: "git://github.com/ruby-rdf/rdf-trig.git", branch: "develop"
 gem 'rdf-trix',           git: "git://github.com/ruby-rdf/rdf-trix.git", branch: "develop"
 gem 'rdf-turtle',         git: "git://github.com/ruby-rdf/rdf-turtle.git", branch: "develop"
+gem 'rdf-vocab',          git: "git://github.com/ruby-rdf/rdf-vocab.git", branch: "develop"
 gem 'rdf-xsd',            git: "git://github.com/ruby-rdf/rdf-xsd.git", branch: "develop"
 gem 'json-ld',            git: "git://github.com/ruby-rdf/json-ld.git", branch: "develop"
 gem 'sparql',             git: "git://github.com/ruby-rdf/sparql.git", branch: "develop"
