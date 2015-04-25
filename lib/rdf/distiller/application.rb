@@ -326,15 +326,16 @@ module RDF::Distiller
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
       reader_opts = options.merge(
-        validate:        params["validate"],
-        vocab_expansion: params["vocab_expansion"],
-        rdfagraph:       params["rdfagraph"],
-        verify_none:     params["verify_none"],
-        use_net_http:    true,
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
           "Cache-Control" => "no-cache"
         },
+        minimal:         params["minimal"],
+        rdfagraph:       params["rdfagraph"],
+        use_net_http:    true,
+        validate:        params["validate"],
+        verify_none:     params["verify_none"],
+        vocab_expansion: params["vocab_expansion"],
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'

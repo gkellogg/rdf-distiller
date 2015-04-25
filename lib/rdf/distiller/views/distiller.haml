@@ -63,6 +63,10 @@
           - [:output, :processor, :"output,processor"].each do |sym|
             %option{:value => sym, :selected => (:selected if params["rdfagraph"].to_s == sym.to_s)}=sym
         %br
+        %label{:for => :minimal}
+          Minimal Output (Tabular):
+        %input#validate{:name => :minimal, :type => :checkbox, :value => true, :checked => params[:minimal]}
+        %br
         %label{:for => :raw}
           Raw Output:
         %input#raw{:name => :raw, :type => :checkbox, :value => true}
@@ -102,6 +106,7 @@
     - base = params["uri"].to_s.empty? ? 'http://www.example.com/' : params["uri"]
     - url_params = ["format=#{params["fmt"] || ttl}"]
     - url_params << %(in_fmt=#{params["in_fmt"]}) unless params["in_fmt"].nil? || params["in_fmt"] == :content
+    - url_params << %(minimal=true) if params[:minimal]
     - url_params << %(validate=true) if params[:validate]
     - url_params << %(vocab_expansion=true) if params[:vocab_expansion]
     - url_params << %(rdfagraph=#{params[:rdfagraph]}) if params[:rdfagraph].to_s != 'output'
