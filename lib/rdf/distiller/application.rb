@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'sinatra/extensions'
@@ -347,7 +348,12 @@ module RDF::Distiller
       # Load data into graph
       case
       when !params["content"].to_s.empty?
-        @content = ::URI.unescape(params["content"])
+        raw = params["content"]
+        encoding = raw.encoding
+        # Make it UTF-8, if provided in a different character set.
+        encoding = Encoding::UTF_8 unless encoding.to_s.include?("UTF")
+        @content = ::URI.decode(raw.force_encoding(Encoding::ASCII_8BIT)).force_encoding(encoding)
+        STDERR.puts "content encoding: #{@content.encoding}"
         request.logger.info "Open form data with format #{in_fmt} for #{@content.inspect}"
         reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
         reader.new(@content, reader_opts) {|r| graph << r}
