@@ -73,7 +73,7 @@ module RDF::Distiller
     before do
       request.logger.level = Logger::DEBUG unless settings.environment == :production
       request.logger.info "#{request.request_method} [#{request.path_info}], " +
-        params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}"}.join(" ") +
+        params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}" unless k.to_s == "content"}.join(" ") +
         "#{params.inspect}"
     end
 
@@ -351,10 +351,11 @@ module RDF::Distiller
         raw = params["content"]
         encoding = raw.encoding
         # Make it UTF-8, if provided in a different character set.
+        raise "Form data requires input format to be set" unless reader_opts[:format]
         encoding = Encoding::UTF_8 unless encoding.to_s.include?("UTF")
         @content = ::URI.decode(raw.force_encoding(Encoding::ASCII_8BIT)).force_encoding(encoding)
-        STDERR.puts "content encoding: #{@content.encoding}"
-        request.logger.info "Open form data with format #{in_fmt} for #{@content.inspect}"
+        request.logger.info "content encoding: #{@content.encoding}"
+        request.logger.info "Open form data with format #{in_fmt} for form data"
         reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
         reader.new(@content, reader_opts) {|r| graph << r}
       when !params["uri"].to_s.empty?
