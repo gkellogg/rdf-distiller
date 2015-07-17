@@ -96,7 +96,7 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-e317d1ab9470/lib/rdf/util/file.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/util/file.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -249,6 +249,23 @@
     </li>
   
 </ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>IOError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if not found</p>
+</div>
+      
+    </li>
+  
+</ul>
 
   <p class="tag_title">See Also:</p>
   <ul class="see">
@@ -278,10 +295,6 @@
       <pre class="lines">
 
 
-126
-127
-128
-129
 130
 131
 132
@@ -332,12 +345,17 @@
 177
 178
 179
-180</pre>
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-e317d1ab9470/lib/rdf/util/file.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/util/file.rb', line 130</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open_url'>open_url</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open_url'>open_url</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ssl_verify'>ssl_verify</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:verify_none</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>SSL</span><span class='op'>::</span><span class='const'>VERIFY_NONE</span> <span class='op'>:</span> <span class='const'>OpenSSL</span><span class='op'>::</span><span class='const'>SSL</span><span class='op'>::</span><span class='const'>VERIFY_PEER</span>
 
   <span class='id identifier rubyid_redirect_count'>redirect_count</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -381,7 +399,8 @@
           <span class='comment'># Follow redirection
 </span>          <span class='id identifier rubyid_raise'>raise</span> <span class='const'>IOError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Too many redirects</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_redirect_count'>redirect_count</span> <span class='op'>+=</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_max_redirects'>max_redirects</span>
 
-          <span class='id identifier rubyid_parsed_url'>parsed_url</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Location</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+          <span class='comment'># Location may be relative
+</span>          <span class='id identifier rubyid_parsed_url'>parsed_url</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Location</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
           <span class='id identifier rubyid_base_uri'>base_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_parsed_url'>parsed_url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
         <span class='kw'>else</span>
@@ -402,7 +421,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 25 11:40:50 2015 by
+  Generated on Fri Jul 17 11:48:19 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>
