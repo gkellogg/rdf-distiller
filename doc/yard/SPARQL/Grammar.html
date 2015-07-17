@@ -79,8 +79,8 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar/parser11.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar/terminals11.rb</span>
+    <dd class="r1 last">vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar/parser11.rb,<br /> vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar/terminals11.rb</span>
 </dd>
   
 </dl>
@@ -217,6 +217,40 @@ SELECT *
       (bgp (triple ?s ?p ?o)))))
 </code></pre>
 
+<p>SPARQL:</p>
+
+<pre class="code ruby"><code class="ruby">LOAD &lt;etc/doap.ttl&gt;
+</code></pre>
+
+<p>SXP:</p>
+
+<pre class="code ruby"><code class="ruby">(update (load &lt;etc/doap.ttl&gt;))
+</code></pre>
+
+<p>SPARQL:</p>
+
+<pre class="code ruby"><code class="ruby">PREFIX     : &lt;http://example.org/&gt; 
+
+INSERT {
+        ?s ?p &quot;q&quot;
+}
+USING :g1
+USING :g2
+WHERE {
+        ?s ?p ?o
+}
+</code></pre>
+
+<p>SXP:</p>
+
+<pre class="code ruby"><code class="ruby">(prefix ((: &lt;http://example.org/&gt;))
+  (update
+    (modify
+      (using (:g1 :g2)
+        (bgp (triple ?s ?p ?o)))
+      (insert ((triple ?s ?p &quot;q&quot;))))))
+</code></pre>
+
 <h2>Implementation Notes</h2>
 
 <p>The parser is driven through a rules table contained in lib/sparql/grammar/meta.rb. This includes branch rules to indicate productions to be taken based on a current production.</p>
@@ -256,31 +290,6 @@ SELECT *
     
   
 </p>
-
-  <h2>Constant Summary</h2>
-  
-    <dl class="constants">
-      
-        <dt id="METHODS-constant" class="">METHODS =
-          
-        </dt>
-        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>SELECT</span><span class='words_sep'> </span><span class='tstring_content'>CONSTRUCT</span><span class='words_sep'> </span><span class='tstring_content'>DESCRIBE</span><span class='words_sep'> </span><span class='tstring_content'>ASK</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span></pre></dd>
-      
-        <dt id="KEYWORDS-constant" class="">KEYWORDS =
-          
-        </dt>
-        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>BASE</span><span class='words_sep'> </span><span class='tstring_content'>PREFIX</span><span class='words_sep'> </span><span class='tstring_content'>LIMIT</span><span class='words_sep'> </span><span class='tstring_content'>OFFSET</span><span class='words_sep'> </span><span class='tstring_content'>DISTINCT</span><span class='words_sep'> </span><span class='tstring_content'>REDUCED</span><span class='words_sep'>
-</span><span class='tstring_content'>ORDER</span><span class='words_sep'> </span><span class='tstring_content'>BY</span><span class='words_sep'> </span><span class='tstring_content'>ASC</span><span class='words_sep'> </span><span class='tstring_content'>DESC</span><span class='words_sep'> </span><span class='tstring_content'>FROM</span><span class='words_sep'> </span><span class='tstring_content'>NAMED</span><span class='words_sep'> </span><span class='tstring_content'>WHERE</span><span class='words_sep'> </span><span class='tstring_content'>GRAPH</span><span class='words_sep'>
-</span><span class='tstring_content'>OPTIONAL</span><span class='words_sep'> </span><span class='tstring_content'>UNION</span><span class='words_sep'> </span><span class='tstring_content'>FILTER</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>METHODS</span><span class='rparen'>)</span></pre></dd>
-      
-        <dt id="FUNCTIONS-constant" class="">FUNCTIONS =
-          
-        </dt>
-        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>STR</span><span class='words_sep'> </span><span class='tstring_content'>LANGMATCHES</span><span class='words_sep'> </span><span class='tstring_content'>LANG</span><span class='words_sep'> </span><span class='tstring_content'>DATATYPE</span><span class='words_sep'> </span><span class='tstring_content'>BOUND</span><span class='words_sep'> </span><span class='tstring_content'>sameTerm</span><span class='words_sep'>
-</span><span class='tstring_content'>isIRI</span><span class='words_sep'> </span><span class='tstring_content'>isURI</span><span class='words_sep'> </span><span class='tstring_content'>isBLANK</span><span class='words_sep'> </span><span class='tstring_content'>isLITERAL</span><span class='words_sep'> </span><span class='tstring_content'>REGEX</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span></pre></dd>
-      
-    </dl>
-  
 
 
 
@@ -539,14 +548,14 @@ SELECT *
       <pre class="lines">
 
 
-170
-171
-172
-173
-174</pre>
+193
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Util</span><span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open_file'>open_file</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -654,15 +663,15 @@ string or open file.</p>
       <pre class="lines">
 
 
-155
-156
-157</pre>
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+  <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:update</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='symbol'>:UpdateUnit</span> <span class='op'>:</span> <span class='symbol'>:QueryUnit</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -791,12 +800,12 @@ string or open file.</p>
       <pre class="lines">
 
 
-205
-206
-207</pre>
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar.rb', line 205</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tokenize'>tokenize</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>Lexer</span><span class='period'>.</span><span class='id identifier rubyid_tokenize'>tokenize</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -881,12 +890,12 @@ string or open file.</p>
       <pre class="lines">
 
 
-186
-187
-188</pre>
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-ba167b7dc2ab/lib/sparql/grammar.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/sparql-fb1fb1facc64/lib/sparql/grammar.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
@@ -901,7 +910,7 @@ string or open file.</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 25 11:40:42 2015 by
+  Generated on Fri Jul 17 11:48:11 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.5).
 </div>
