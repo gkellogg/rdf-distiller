@@ -353,7 +353,7 @@ module RDF::Distiller
         # Make it UTF-8, if provided in a different character set.
         raise "Form data requires input format to be set" unless reader_opts[:format]
         encoding = Encoding::UTF_8 unless encoding.to_s.include?("UTF")
-        @content = ::URI.decode(raw.force_encoding(Encoding::ASCII_8BIT)).force_encoding(encoding)
+        @content = ::URI.decode(raw.force_encoding(Encoding::ASCII_8BIT)).encode(encoding)
         request.logger.info "content encoding: #{@content.encoding}"
         request.logger.info "Open form data with format #{in_fmt} for form data"
         reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
