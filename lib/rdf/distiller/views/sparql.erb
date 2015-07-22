@@ -79,10 +79,21 @@ params["fmt"] ||= :html
   </fieldset>
 </form>
 
-<% if @error -%>
+<% unless Array(@warnings).empty? -%>
+<div class="warnings">
+  <h2>Warnings</h2>
+  <% Array(@warnings).each do |warning| %>
+    <pre><%= CGI.escapeHTML(warning) %></pre>
+  <% end %>
+</div>
+<% end -%>
+
+<% unless Array(@errors).empty? -%>
 <div class="errors">
   <h2>Errors</h2>
-  <pre><%= CGI.escapeHTML(@error) %></pre>
+  <% Array(@errors).each do |error| %>
+    <pre><%= CGI.escapeHTML(error) %></pre>
+  <% end %>
 </div>
 <% end -%>
 
