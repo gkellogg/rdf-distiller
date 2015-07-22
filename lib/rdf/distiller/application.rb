@@ -196,7 +196,7 @@ module RDF::Distiller
         status 400
         body $!.message
       else
-        @error = $!.message
+        @errors = [$!.message]
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
@@ -259,8 +259,8 @@ module RDF::Distiller
           end
         @output.force_encoding(Encoding::UTF_8) if @output
         rescue RDF::WriterError => e
-          @error = "No results generated #{content.class}: #{e.message}"
-          request.logger.error @error  # to log
+          @errors = Array("No results generated #{content.class}: #{e.message}")
+          request.logger.error @errors.first  # to log
         end
         erb :sparql, locals: {
           title: "SPARQL Endpoint",
@@ -273,7 +273,7 @@ module RDF::Distiller
         status 400
         body $!.message
       else
-        @error = $!.message
+        @errors = [$!.message]
         html :sparql, locals: {title: "SPARQL Endpoint", head: :distiller}
       end
     end
@@ -326,6 +326,7 @@ module RDF::Distiller
 
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
+      @errors, @warnings = [], []
       reader_opts = options.merge(
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
@@ -337,6 +338,8 @@ module RDF::Distiller
         validate:        params["validate"],
         verify_none:     params["verify_none"],
         vocab_expansion: params["vocab_expansion"],
+        errors:          @errors,
+        warnings:        @warnings,
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
@@ -369,8 +372,8 @@ module RDF::Distiller
       request.logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
       graph
     rescue
-      @error = "#{$!.class}: #{$!.message}"
-      request.logger.error @error  # to log
+      @errors = Array("#{$!.class}: #{$!.message}")
+      request.logger.error @errors.first  # to log
       raise
       nil
     end
@@ -423,8 +426,8 @@ module RDF::Distiller
       sparql_expr.execute(repo, sparql_opts)
     rescue
       raise unless settings.environment == :production
-      @error = "#{$!.class}: #{$!.message}"
-      request.logger.error @error  # to log
+      @errors = Array("#{$!.class}: #{$!.message}")
+      request.logger.error @errors.first  # to log
       nil
     end
 

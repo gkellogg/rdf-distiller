@@ -83,7 +83,7 @@ describe RDF::Distiller::Application do
     context "RDF Formats" do
       RDF::Format.each do |format|
         next unless format.writer
-        it "retrieves graph as #{format.to_sym}", focus:true do
+        it "retrieves graph as #{format.to_sym}" do
           get '/distiller',
             :content => %(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .),
             :in_fmt => "ntriples",
