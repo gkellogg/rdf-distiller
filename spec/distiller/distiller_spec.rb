@@ -37,7 +37,7 @@ describe RDF::Distiller::Application do
       context "form data" do
         it "retrieves a graph" do
           get '/distiller',
-              :content => ::URI.escape(%(<http://example/a> <http://example/b> "c" .)),
+              :content => %(<http://example/a> <http://example/b> "c" .),
               :in_fmt => "ntriples",
               :fmt => "ntriples"
           expect(last_response.body).to eq "" unless last_response.ok?
@@ -69,7 +69,7 @@ describe RDF::Distiller::Application do
       context "form data" do
         it "retrieves a graph" do
           get '/distiller',
-            :content => ::URI.escape(%(<http://example/a> <http://example/b> "c" .)),
+            :content => %(<http://example/a> <http://example/b> "c" .),
             :in_fmt => "ntriples",
             :fmt => "ntriples",
             :raw => "true"
@@ -83,9 +83,9 @@ describe RDF::Distiller::Application do
     context "RDF Formats" do
       RDF::Format.each do |format|
         next unless format.writer
-        it "retrieves graph as #{format.to_sym}" do
+        it "retrieves graph as #{format.to_sym}", focus:true do
           get '/distiller',
-            :content => ::URI.escape(%(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .)),
+            :content => %(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .),
             :in_fmt => "ntriples",
             :fmt => format.to_sym,
             :raw => "true"
