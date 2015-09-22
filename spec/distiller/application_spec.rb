@@ -32,4 +32,31 @@ describe RDF::Distiller::Application do
       expect(last_response.body).to match %r{Ruby Linked Data Service}
     end
   end
+  
+  describe "distiller" do
+    it "gets HTML" do
+      get '/distiller'
+      expect(last_response.body).to eq "" unless last_response.ok?
+      expect(last_response.content_type).to match %r{#{mime_type(:html)}}
+      expect(last_response.body).to match %r{RDF Distiller}
+    end
+  end
+  
+  describe "doap" do
+    it "gets HTML" do
+      get '/doap'
+      expect(last_response.body).to eq "" unless last_response.ok?
+      expect(last_response.content_type).to match %r{#{mime_type(:html)}}
+      expect(last_response.body).to match %r{Project Information on included Gems}
+    end
+  end
+  
+  describe "sparql" do
+    it "gets HTML" do
+      get '/sparql'
+      expect(last_response.body).to eq "" unless last_response.ok?
+      expect(last_response.content_type).to match %r{#{mime_type(:html)}}
+      expect(last_response.body).to match %r{SPARQL Endpoint}
+    end
+  end
 end

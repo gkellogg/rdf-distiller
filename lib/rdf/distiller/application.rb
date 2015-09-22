@@ -274,7 +274,11 @@ module RDF::Distiller
         body $!.message
       else
         @errors = [$!.message]
-        html :sparql, locals: {title: "SPARQL Endpoint", head: :distiller}
+        erb(:sparql, locals: {
+          title: "SPARQL Endpoint",
+          head: :distiller,
+          doap_count: doap.count
+        })
       end
     end
 
@@ -320,7 +324,7 @@ module RDF::Distiller
     def doap
       @doap ||= begin
         request.logger.debug "load #{DOAP_NT}"
-        RDF::Repository.load(DOAP_NT, encoding: Encoding::UTF_8)
+        RDF::Repository.load(DOAP_NT)
       end
     end
 
@@ -417,7 +421,7 @@ module RDF::Distiller
       raise "No SPARQL query created" unless sparql_expr
 
       if params["fmt"].to_s == "sse"
-        headers = ["Content-Type" => "application/sse+sparql-query; charset=utf-8"]
+        headers "Content-Type" => "application/sse+sparql-query; charset=utf-8"
         return sparql_expr.to_sse
       end
 
