@@ -31,6 +31,18 @@ gem 'sparql',             git: "git://github.com/ruby-rdf/sparql.git", branch: "
 gem 'sparql-client',      git: "git://github.com/ruby-rdf/sparql-client.git", branch: "develop"
 gem 'sxp',                git: "git://github.com/gkellogg/sxp-ruby.git"
 
+gem 'rest-client',            '~> 1.8'
+gem 'rest-client-components', '~> 1.4'
+gem 'equivalent-xml'
+gem 'sinatra',                '~> 1.4'
+gem 'sinatra-assetpack',  '~> 0.3.3'
+gem 'erubis',                 '~> 2.7'
+gem 'haml',                   '~> 4.0'
+gem 'maruku'
+gem 'nokogiri',               '~> 1.6'
+gem 'rack',                   '~> 1.5'
+gem 'rack-cache',             '~> 1.2'
+
 gem 'unicorn'
 gem "redcarpet"
 gem "yard"
