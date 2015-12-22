@@ -95,14 +95,14 @@
   
     
       <dt class="r1">Includes:</dt>
-      <dd class="r1"><span class='object_link'><a href="Writable.html" title="RDF::Writable (module)">Writable</a></span></dd>
+      <dd class="r1"><span class='object_link'><a href="Util/Logger.html" title="RDF::Util::Logger (module)">Util::Logger</a></span>, <span class='object_link'><a href="Writable.html" title="RDF::Writable (module)">Writable</a></span></dd>
       
     
   
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb</dd>
+    <dd class="r2 last">vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -141,9 +141,9 @@
       
       <pre class="example code"><code><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='symbol'>:ntriples</span><span class='rparen'>)</span>     <span class='comment'>#=&gt; RDF::NTriples::Writer
 </span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec/data/output.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='symbol'>:file_name</span>      <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec/data/output.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='symbol'>:file_extension</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='symbol'>:content_type</span>   <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
+<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='label'>file_name:</span>      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spec/data/output.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='label'>file_extension:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'>RDF</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='label'>content_type:</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/n-triples</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Instantiating an RDF writer class</p>
@@ -170,6 +170,20 @@
     <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_statement'>statement</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Detecting invalid output</p>
+</div></p>
+      
+      <pre class="example code"><code>logger = Logger.new([])
+RDF::Writer.for(:ntriples).buffer(logger: logger) do |writer|
+  statement = RDF::Statement.new(
+    RDF::URI(&quot;http://rubygems.org/gems/rdf&quot;),
+    RDF::URI(&quot;http://purl.org/dc/terms/creator&quot;),
+    nil)
+  writer &lt;&lt; statement
+end # =&gt; RDF::WriterError
+logger.empty? =&gt; false</code></pre>
     
   </div>
 
@@ -500,7 +514,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#flush-instance_method" title="#flush (instance method)">- <strong>flush</strong> </a>
+      <a href="#flush-instance_method" title="#flush (instance method)">- (self) <strong>flush</strong> </a>
     
 
     
@@ -595,8 +609,6 @@
     
 
     
-      (also: #format_value)
-    
   </span>
   
   
@@ -630,6 +642,29 @@
 
   
     <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#format_value-instance_method" title="#format_value (instance method)">- (String) <strong>format_value</strong>(term, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span> instead</p>
+</div></span>
   
 </li>
 
@@ -867,7 +902,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_comment-instance_method" title="#write_comment (instance method)">- <strong>write_comment</strong>(text) </a>
+      <a href="#write_comment-instance_method" title="#write_comment (instance method)">- (self) <strong>write_comment</strong>(text) </a>
     
 
     
@@ -881,8 +916,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -890,7 +924,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_epilogue-instance_method" title="#write_epilogue (instance method)">- <strong>write_epilogue</strong> </a>
+      <a href="#write_epilogue-instance_method" title="#write_epilogue (instance method)">- (self) <strong>write_epilogue</strong> </a>
     
 
     
@@ -904,8 +938,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -927,7 +960,7 @@
   
 
   
-    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>Please use <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">RDF::Writable#insert_graph</a></span> instead</p>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">RDF::Writable#insert_graph</a></span> instead .</p>
 </div></span>
   
 </li>
@@ -936,7 +969,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_prologue-instance_method" title="#write_prologue (instance method)">- <strong>write_prologue</strong> </a>
+      <a href="#write_prologue-instance_method" title="#write_prologue (instance method)">- (self) <strong>write_prologue</strong> </a>
     
 
     
@@ -950,8 +983,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -959,7 +991,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_statement-instance_method" title="#write_statement (instance method)">- <strong>write_statement</strong>(statement) </a>
+      <a href="#write_statement-instance_method" title="#write_statement (instance method)">- (self) <strong>write_statement</strong>(statement) </a>
     
 
     
@@ -975,8 +1007,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -998,7 +1029,7 @@
   
 
   
-    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>replace by <code>RDF::Writable#insert</code></p>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">RDF::Writable#insert</a></span> instead.</p>
 </div></span>
   
 </li>
@@ -1007,7 +1038,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_triple-instance_method" title="#write_triple (instance method)">- <strong>write_triple</strong>(subject, predicate, object) </a>
+      <a href="#write_triple-instance_method" title="#write_triple (instance method)">- (self) <strong>write_triple</strong>(subject, predicate, object) </a>
     
 
     
@@ -1021,8 +1052,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -1030,7 +1060,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_triples-instance_method" title="#write_triples (instance method)">- <strong>write_triples</strong>(*triples) </a>
+      <a href="#write_triples-instance_method" title="#write_triples (instance method)">- (self) <strong>write_triples</strong>(*triples) </a>
     
 
     
@@ -1044,8 +1074,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p><code>self</code>.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -1076,6 +1105,17 @@
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Logger.html" title="RDF::Util::Logger (module)">Util::Logger</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util/Logger.html#log_debug-instance_method" title="RDF::Util::Logger#log_debug (method)">#log_debug</a></span>, <span class='object_link'><a href="Util/Logger.html#log_depth-instance_method" title="RDF::Util::Logger#log_depth (method)">#log_depth</a></span>, <span class='object_link'><a href="Util/Logger.html#log_error-instance_method" title="RDF::Util::Logger#log_error (method)">#log_error</a></span>, <span class='object_link'><a href="Util/Logger.html#log_fatal-instance_method" title="RDF::Util::Logger#log_fatal (method)">#log_fatal</a></span>, <span class='object_link'><a href="Util/Logger.html#log_info-instance_method" title="RDF::Util::Logger#log_info (method)">#log_info</a></span>, <span class='object_link'><a href="Util/Logger.html#log_recover-instance_method" title="RDF::Util::Logger#log_recover (method)">#log_recover</a></span>, <span class='object_link'><a href="Util/Logger.html#log_recovering%3F-instance_method" title="RDF::Util::Logger#log_recovering? (method)">#log_recovering?</a></span>, <span class='object_link'><a href="Util/Logger.html#log_statistics-instance_method" title="RDF::Util::Logger#log_statistics (method)">#log_statistics</a></span>, <span class='object_link'><a href="Util/Logger.html#log_warn-instance_method" title="RDF::Util::Logger#log_warn (method)">#log_warn</a></span>, <span class='object_link'><a href="Util/Logger.html#logger-instance_method" title="RDF::Util::Logger#logger (method)">#logger</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -1227,7 +1267,7 @@ by all writers)</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>Use unique <span class='object_link'><a href="Node.html" title="RDF::Node (class)">Node</a></span> identifiers, defaults to using the identifier which the node was originall initialized with (if any). Implementations should ensure that Nodes are serialized using a unique representation independent of any identifier used when creating the node. See NTriples#format_node</p>
+            &mdash; <div class='inline'><p>Use unique <span class='object_link'><a href="Node.html" title="RDF::Node (class)">Node</a></span> identifiers, defaults to using the identifier which the node was originall initialized with (if any). Implementations should ensure that Nodes are serialized using a unique representation independent of any identifier used when creating the node. See <span class='object_link'><a href="NTriples/Writer.html#format_node-instance_method" title="RDF::NTriples::Writer#format_node (method)">NTriples::Writer#format_node</a></span></p>
 </div>
           
         </li>
@@ -1287,22 +1327,22 @@ by all writers)</p>
       <pre class="lines">
 
 
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225</pre>
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='gvar'>$stdout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@output</span><span class='comma'>,</span> <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -1382,12 +1422,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-232
-233
-234</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1500,20 +1540,20 @@ by all writers)</p>
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156</pre>
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_buffer'>buffer</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1608,18 +1648,6 @@ by all writers)</p>
       <pre class="lines">
 
 
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
 126
 127
 128
@@ -1630,16 +1658,28 @@ by all writers)</p>
 133
 134
 135
-136</pre>
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_io'>io</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_io'>io</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>w</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:external_encoding</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_external_encoding'>external_encoding</span>
-    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:encoding</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_external_encoding'>external_encoding</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>encoding:</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_external_encoding'>external_encoding</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_set_encoding'>set_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:set_encoding</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:each_statement</span> <span class='op'>:</span> <span class='symbol'>:each</span>
@@ -1746,12 +1786,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-51
-52
-53</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='cvar'>@@subclasses</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1989,18 +2029,18 @@ by all writers)</p>
       <pre class="lines">
 
 
-80
-81
-82
-83
-84
-85</pre>
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='kw'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:has_writer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>has_writer:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span> <span class='op'>||</span> <span class='const'>Format</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_writer'>writer</span>
   <span class='kw'>end</span>
@@ -2052,19 +2092,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100</pre>
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2176,17 +2216,17 @@ by all writers)</p>
       <pre class="lines">
 
 
-166
-167
-168
-169
-170
-171
-172
-173</pre>
+178
+179
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -2239,12 +2279,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-178
-179
-180</pre>
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -2321,12 +2361,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-242
-243
-244</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
@@ -2393,12 +2433,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-325
-326
-327</pre>
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 325</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:canonicalize</span><span class='rbracket'>]</span>
@@ -2446,19 +2486,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309</pre>
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 312</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_encoding'>encoding</span>
   <span class='kw'>case</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span>
@@ -2527,18 +2567,18 @@ by all writers)</p>
       <pre class="lines">
 
 
-505
-506
-507
-508
-509
-510
-511
-512
-513</pre>
+539
+540
+541
+542
+543
+544
+545
+546
+547</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 505</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 539</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_escaped'>escaped</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\\\\\\\</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span>
@@ -2557,7 +2597,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="flush-instance_method">
   
-    - <strong>flush</strong> 
+    - (<tt>self</tt>) <strong>flush</strong> 
   
 
   
@@ -2569,13 +2609,26 @@ by all writers)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Flushes the underlying output buffer.</p>
+    <p>Flushes the underlying output buffer.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -2583,13 +2636,13 @@ by all writers)</p>
       <pre class="lines">
 
 
-333
-334
-335
-336</pre>
+345
+346
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 345</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flush'>flush</span>
   <span class='ivar'>@output</span><span class='period'>.</span><span class='id identifier rubyid_flush'>flush</span> <span class='kw'>if</span> <span class='ivar'>@output</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:flush</span><span class='rparen'>)</span>
@@ -2688,12 +2741,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-470
-471
-472</pre>
+504
+505
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 470</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 504</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_list'>format_list</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_format_term'>format_term</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2793,12 +2846,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-460
-461
-462</pre>
+494
+495
+496</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 494</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_literal'>format_literal</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#format_literal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># override in subclasses
@@ -2924,12 +2977,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-440
-441
-442</pre>
+474
+475
+476</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 440</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 474</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_node'>format_node</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#format_node</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># override in subclasses
@@ -2945,10 +2998,6 @@ by all writers)</p>
     - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_term</strong>(term, options = {}) 
   
 
-  
-    <span class="aliases">Also known as:
-    <span class="names"><span id='format_value-instance_method'>format_value</span></span>
-    </span>
   
 
   
@@ -3010,19 +3059,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429</pre>
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 444</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_term'>format_term</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_term'>term</span>
@@ -3129,16 +3178,117 @@ by all writers)</p>
       <pre class="lines">
 
 
-450
-451
-452</pre>
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 450</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 484</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_uri'>format_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#format_uri</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># override in subclasses
 </span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="format_value-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>format_value</strong>(term, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span> instead</p>
+</div></div>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>term</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NoMethodError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+460
+461
+462
+463
+464</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 460</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_format_value'>format_value</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NoMethodError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writer#format_value is deprecated in RDF.rb 2.0, use Writable#format_term instead. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2.0</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] Writer#format_value is being replaced with Writer#format_term in RDF.rb 2.0. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_format_term'>format_term</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -3181,12 +3331,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-498
-499
-500</pre>
+532
+533
+534</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 498</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 532</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node_id'>node_id</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_:n</span><span class='embexpr_beg'>#{</span><span class='ivar'>@node_id</span> <span class='op'>+=</span> <span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3335,13 +3485,13 @@ by all writers)</p>
       <pre class="lines">
 
 
-290
-291
-292
-293</pre>
+302
+303
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 302</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -3413,12 +3563,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-254
-255
-256</pre>
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefixes'>prefixes</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:prefixes</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3451,7 +3601,7 @@ by all writers)</p>
     
       
       <pre class="example code"><code><span class='id identifier rubyid_writer'>writer</span><span class='period'>.</span><span class='id identifier rubyid_prefixes'>prefixes</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-  <span class='symbol'>:dc</span> <span class='op'>=&gt;</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://purl.org/dc/terms/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='label'>dc:</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>http://purl.org/dc/terms/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
 <span class='rbrace'>}</span></code></pre>
     
   </div>
@@ -3506,12 +3656,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-269
-270
-271</pre>
+281
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefixes='>prefixes=</span><span class='lparen'>(</span><span class='id identifier rubyid_prefixes'>prefixes</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:prefixes</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_prefixes'>prefixes</span>
@@ -3545,12 +3695,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-478
-479
-480</pre>
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 512</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@output</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_encode'>encode</span><span class='lparen'>(</span><span class='id identifier rubyid_encoding'>encoding</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -3612,12 +3762,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-518
-519
-520</pre>
+552
+553
+554</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 552</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quoted'>quoted</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_string'>string</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -3665,12 +3815,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-185
-186
-187</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -3732,19 +3882,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494</pre>
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 485</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 519</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uri_for'>uri_for</span><span class='lparen'>(</span><span class='id identifier rubyid_uriref'>uriref</span><span class='rparen'>)</span>
   <span class='kw'>case</span>
@@ -3818,12 +3968,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-316
-317
-318</pre>
+328
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 328</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate?'>validate?</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:validate</span><span class='rbracket'>]</span>
@@ -3836,7 +3986,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_comment-instance_method">
   
-    - <strong>write_comment</strong>(text) 
+    - (<tt>self</tt>) <strong>write_comment</strong>(text) 
   
 
   
@@ -3848,7 +3998,6 @@ by all writers)</p>
   <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
-<p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
 
 
   </div>
@@ -3870,6 +4019,19 @@ by all writers)</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3877,12 +4039,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-357
-358
-359</pre>
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_comment'>write_comment</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
@@ -3895,7 +4057,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_epilogue-instance_method">
   
-    - <strong>write_epilogue</strong> 
+    - (<tt>self</tt>) <strong>write_epilogue</strong> 
   
 
   
@@ -3907,13 +4069,42 @@ by all writers)</p>
   <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
-<p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="WriterError.html" title="RDF::WriterError (class)">RDF::WriterError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if errors logged during processing.</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3921,14 +4112,20 @@ by all writers)</p>
       <pre class="lines">
 
 
-349
-350
-351</pre>
+362
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_epilogue'>write_epilogue</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_log_statistics'>log_statistics</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Errors found during processing</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3947,7 +4144,7 @@ by all writers)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Please use <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">RDF::Writable#insert_graph</a></span> instead</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">RDF::Writable#insert_graph</a></span> instead .</p>
 </div></div>
 <p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
 
@@ -3971,6 +4168,19 @@ by all writers)</p>
   
 </ul>
 
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NoMethodError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3978,17 +4188,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-365
-366
-367
-368
-369</pre>
+381
+382
+383
+384
+385
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_graph'>write_graph</span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] `Writer#graph_write is deprecated. Please use RDF::Writable#insert instead.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NoMethodError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writer#graph_write is deprecated in RDF.rb 2.0, use Writable#insert instead. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2.0</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] `Writer#graph_write is deprecated. Please use RDF::Writable#insert instead. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_each_triple'>each_triple</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='op'>|</span> <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
@@ -4000,7 +4212,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_prologue-instance_method">
   
-    - <strong>write_prologue</strong> 
+    - (<tt>self</tt>) <strong>write_prologue</strong> 
   
 
   
@@ -4012,13 +4224,25 @@ by all writers)</p>
   <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
-<p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -4026,12 +4250,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-342
-343
-344</pre>
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_prologue'>write_prologue</span>
   <span class='kw'>self</span>
@@ -4044,7 +4268,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_statement-instance_method">
   
-    - <strong>write_statement</strong>(statement) 
+    - (<tt>self</tt>) <strong>write_statement</strong>(statement) 
   
 
   
@@ -4056,7 +4280,13 @@ by all writers)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>logs error if attempting to write an invalid <span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span> or if canonicalizing a statement which cannot be canonicalized.</p>
+</div>
+  </div>
+
 
 
   </div>
@@ -4078,19 +4308,15 @@ by all writers)</p>
   
 </ul>
 
-<p class="tag_title">Raises:</p>
-<ul class="raise">
+<p class="tag_title">Returns:</p>
+<ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="WriterError.html" title="RDF::WriterError (class)">RDF::WriterError</a></span></tt>)</span>
+        <span class='type'>(<tt>self</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'><p>if validating and attempting to write an invalid <span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span> or if canonicalizing a statement which cannot be canonicalized.</p>
-</div>
       
     </li>
   
@@ -4102,25 +4328,37 @@ by all writers)</p>
       <pre class="lines">
 
 
-385
-386
-387
-388
-389
-390
-391
-392</pre>
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_statement'>write_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_canonicalize!'>canonicalize!</span> <span class='kw'>if</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Statement </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is invalid</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_validate?'>validate?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_invalid?'>invalid?</span>
-  <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_incomplete?'>incomplete?</span>
+    <span class='id identifier rubyid_log_error'>log_error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Statement </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is incomplete</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_validate?'>validate?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_invalid?'>invalid?</span>
+    <span class='id identifier rubyid_log_error'>log_error</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Statement </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is invalid</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='kw'>self</span>
 <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>WriterError</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
+  <span class='id identifier rubyid_log_error'>log_error</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4138,7 +4376,7 @@ by all writers)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>replace by <code>RDF::Writable#insert</code></p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Use <span class='object_link'><a href="Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">RDF::Writable#insert</a></span> instead.</p>
 </div></div>
 <p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
 
@@ -4162,6 +4400,19 @@ by all writers)</p>
   
 </ul>
 
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NoMethodError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -4169,17 +4420,19 @@ by all writers)</p>
       <pre class="lines">
 
 
-375
-376
-377
-378
-379</pre>
+392
+393
+394
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 392</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_statements'>write_statements</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] `Writer#write_statements is deprecated. Please use RDF::Writable#insert instead.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NoMethodError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writer#write_statements is deprecated in RDF.rb 2.0, use Writable#insert instead. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>VERSION</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2.0</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] `Writer#write_statements is deprecated. Please use RDF::Writable#insert instead. Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_statements'>statements</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_write_statement'>write_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
@@ -4191,7 +4444,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_triple-instance_method">
   
-    - <strong>write_triple</strong>(subject, predicate, object) 
+    - (<tt>self</tt>) <strong>write_triple</strong>(subject, predicate, object) 
   
 
   
@@ -4203,7 +4456,13 @@ by all writers)</p>
   <strong>This method is abstract.</strong>
   <div class='inline'></div>
 </div>
-<p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>logs error if attempting to write an invalid <span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span> or if canonicalizing a statement which cannot be canonicalized.</p>
+</div>
+  </div>
+
 
 
   </div>
@@ -4247,6 +4506,19 @@ by all writers)</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Raises:</p>
 <ul class="raise">
   
@@ -4263,19 +4535,6 @@ by all writers)</p>
       
     </li>
   
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="WriterError.html" title="RDF::WriterError (class)">RDF::WriterError</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>if validating and attempting to write an invalid <span class='object_link'><a href="Term.html" title="RDF::Term (module)">Term</a></span>.</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 </div><table class="source_code">
@@ -4284,12 +4543,12 @@ by all writers)</p>
       <pre class="lines">
 
 
-412
-413
-414</pre>
+436
+437
+438</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 436</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#write_triple</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># override in subclasses
@@ -4302,7 +4561,7 @@ by all writers)</p>
       <div class="method_details ">
   <h3 class="signature " id="write_triples-instance_method">
   
-    - <strong>write_triples</strong>(*triples) 
+    - (<tt>self</tt>) <strong>write_triples</strong>(*triples) 
   
 
   
@@ -4310,7 +4569,13 @@ by all writers)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Returns <code>self</code></p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>logs error if attempting to write an invalid <span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span> or if canonicalizing a statement which cannot be canonicalized.</p>
+</div>
+  </div>
+
 
 
   </div>
@@ -4332,19 +4597,15 @@ by all writers)</p>
   
 </ul>
 
-<p class="tag_title">Raises:</p>
-<ul class="raise">
+<p class="tag_title">Returns:</p>
+<ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="WriterError.html" title="RDF::WriterError (class)">RDF::WriterError</a></span></tt>)</span>
+        <span class='type'>(<tt>self</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'><p>if validating and attempting to write an invalid <span class='object_link'><a href="Term.html" title="RDF::Term (module)">Term</a></span>.</p>
-</div>
       
     </li>
   
@@ -4356,13 +4617,13 @@ by all writers)</p>
       <pre class="lines">
 
 
-399
-400
-401
-402</pre>
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-24bf82278685/lib/rdf/writer.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-b80697f389e5/lib/rdf/writer.rb', line 423</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_triples'>write_triples</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triples'>triples</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_triples'>triples</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_triple'>triple</span><span class='op'>|</span> <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -4378,9 +4639,9 @@ by all writers)</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Jul 17 11:48:20 2015 by
+  Generated on Tue Dec 22 09:33:41 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.5).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>
