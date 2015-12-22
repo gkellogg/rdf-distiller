@@ -24,13 +24,13 @@ Gem::Specification.new do |s|
   s.test_files         = %w()
   s.has_rdoc           = false
 
-  s.required_ruby_version      = '>= 1.9.3'
+  s.required_ruby_version      = '>= 2.2'
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 1.1'
+  s.add_runtime_dependency      "linkeddata",         '~> 1.99'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.4'
-  s.add_runtime_dependency      'sparql',             '~> 1.1'
+  s.add_runtime_dependency      'sparql',             '~> 1.99'
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 1.4'

@@ -92,12 +92,16 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="../Util/Logger.html" title="RDF::Util::Logger (module)">Util::Logger</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer/haml_templates.rb</span>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer/haml_templates.rb</span>
 </dd>
   
 </dl>
@@ -125,10 +129,10 @@
       
       <pre class="example code"><code>RDF::Writer.for(:html)          =&gt; RDF::RDFa::Writer
 RDF::Writer.for(&quot;etc/test.html&quot;)
-RDF::Writer.for(:file_name      =&gt; &quot;etc/test.html&quot;)
-RDF::Writer.for(:file_extension =&gt; &quot;html&quot;)
-RDF::Writer.for(:content_type   =&gt; &quot;application/xhtml+xml&quot;)
-RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
+RDF::Writer.for(file_name:      &quot;etc/test.html&quot;)
+RDF::Writer.for(file_extension: &quot;html&quot;)
+RDF::Writer.for(content_type:   &quot;application/xhtml+xml&quot;)
+RDF::Writer.for(content_type:   &quot;text/html&quot;)</code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Serializing RDF graph into an XHTML+RDFa file</p>
@@ -162,8 +166,8 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
         <p class="example_title"><div class='inline'><p>Creating @base and @prefix definitions in output</p>
 </div></p>
       
-      <pre class="example code"><code><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_buffer'>buffer</span><span class='lparen'>(</span><span class='symbol'>:base_uri</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://example.com/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:prefixes</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:foaf</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://xmlns.com/foaf/0.1/</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+      <pre class="example code"><code><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFa</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_buffer'>buffer</span><span class='lparen'>(</span><span class='label'>base_uri:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://example.com/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>prefixes:</span> <span class='lbrace'>{</span>
+    <span class='label'>foaf:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://xmlns.com/foaf/0.1/</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 <span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span>
   <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
     <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_statement'>statement</span>
@@ -211,18 +215,18 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
 </div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
- <span class='symbol'>:identifier</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>base</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
+ <span class='label'>identifier:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>base</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
   <span class='comment'># Document
 </span>  <span class='comment'># Locals: language, title, prefix, base, subjects
 </span>  <span class='comment'># Yield: subjects.each
-</span>  <span class='symbol'>:doc</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     !!! XML
     !!! 5
-    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :prefix =&gt; prefix}
+    %html{xmlns: &quot;http://www.w3.org/1999/xhtml&quot;, lang: lang, prefix: prefix}
       - if base || title
         %head
           - if base
-            %base{:href =&gt; base}
+            %base{href: base}
           - if title
             %title= title
       %body
@@ -239,15 +243,15 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
 </span>  <span class='comment'>#
 </span>  <span class='comment'># Locals: subject, typeof, predicates, rel, element, inlist
 </span>  <span class='comment'># Yield: predicates.each
-</span>  <span class='symbol'>:subject</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>subject:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     - if element == :li
-      %li{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
+      %li{rel: rel, resource: (about || resource), typeof: typeof, inlist: inlist}
         - if typeof
           %span.type!= typeof
         - predicates.each do |predicate|
           != yield(predicate)
     - else
-      %div{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
+      %div{rel: rel, resource: (about || resource), typeof: typeof, inlist: inlist}
         - if typeof
           %span.type!= typeof
         - predicates.each do |predicate|
@@ -259,9 +263,9 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
 </span>  <span class='comment'># Yields: object
 </span>  <span class='comment'># If nil is returned, render as a leaf
 </span>  <span class='comment'># Otherwise, render result
-</span>  <span class='symbol'>:property_value</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>property_value:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+      %h1{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
     - else
       %div.property
         %span.label
@@ -269,21 +273,21 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
         - if res = yield(object)
           != res
         - elsif get_curie(object) == &#39;rdf:nil&#39;
-          %span{:rel =&gt; get_curie(predicate), :inlist =&gt; &#39;&#39;}
+          %span{rel: get_curie(predicate), inlist: &#39;&#39;}
         - elsif object.node?
-          %span{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+          %span{property: get_curie(predicate), resource: get_curie(object), inlist: inlist}= get_curie(object)
         - elsif object.uri?
-          %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+          %a{property: get_curie(predicate), href: object.to_s, inlist: inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
-          %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
+          %span{property: get_curie(predicate), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}&lt;!= get_value(object)
         - else
-          %span{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+          %span{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
   </span><span class='tstring_end'>)</span></span><span class='comma'>,</span>
 
   <span class='comment'># Output for multi-valued properties
 </span>  <span class='comment'># Locals: predicate, :objects, :inlist
 </span>  <span class='comment'># Yields: object for leaf resource rendering
-</span>  <span class='symbol'>:property_values</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>property_values:</span>  <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     %div.property
       %span.label
         = get_predicate_name(predicate)
@@ -292,14 +296,14 @@ RDF::Writer.for(:content_type   =&gt; &quot;text/html&quot;)</code></pre>
           - if res = yield(object)
             != res
           - elsif object.node?
-            %li{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+            %li{property: get_curie(predicate), resource: get_curie(object), inlist: inlist}= get_curie(object)
           - elsif object.uri?
             %li
-              %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+              %a{property: get_curie(predicate), href: object.to_s, inlist: inlist}= object.to_s
           - elsif object.datatype == RDF.XMLLiteral
-            %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
+            %li{property: get_curie(predicate), lang: get_lang(object), datatype: get_curie(object.datatype), inlist: inlist}&lt;!= get_value(object)
           - else
-            %li{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+            %li{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
   </span><span class='tstring_end'>)</span></span><span class='comma'>,</span>
 <span class='rbrace'>}</span></pre></dd>
       
@@ -319,17 +323,17 @@ to create human readable output.</p>
 </div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:identifier</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>min</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
+  <span class='label'>identifier:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>min</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
   <span class='comment'># Document
 </span>  <span class='comment'># Locals: language, title, prefix, base, subjects
 </span>  <span class='comment'># Yield: subjects.each
-</span>  <span class='symbol'>:doc</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     !!! XML
     !!! 5
-    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :prefix =&gt; prefix}
+    %html{xmlns: &quot;http://www.w3.org/1999/xhtml&quot;, lang: lang, prefix: prefix}
       - if base
         %head
-          %base{:href =&gt; base}
+          %base{href: base}
       %body
         - subjects.each do |subject|
           != yield(subject)
@@ -340,8 +344,8 @@ to create human readable output.</p>
 </span>  <span class='comment'>#
 </span>  <span class='comment'># Locals: about, typeof, predicates, :inlist
 </span>  <span class='comment'># Yield: predicates.each
-</span>  <span class='symbol'>:subject</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
-    %div{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof}
+</span>  <span class='label'>subject:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+    %div{rel: rel, resource: (about || resource), typeof: typeof}
       - predicates.each do |predicate|
         != yield(predicate)
   </span><span class='tstring_end'>)</span></span><span class='comma'>,</span>
@@ -352,19 +356,19 @@ to create human readable output.</p>
 </span>  <span class='comment'># Yields: object
 </span>  <span class='comment'># If nil is returned, render as a leaf
 </span>  <span class='comment'># Otherwise, render result
-</span>  <span class='symbol'>:property_value</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>property_value:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
   - if res = yield(object)
     != res
   - elsif get_curie(object) == &#39;rdf:nil&#39;
-    %span{:rel =&gt; get_curie(predicate), :inlist =&gt; &#39;&#39;}
+    %span{rel: get_curie(predicate), inlist: &#39;&#39;}
   - elsif object.node?
-    %span{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+    %span{property: get_curie(predicate), resource: get_curie(object), inlist: inlist}= get_curie(object)
   - elsif object.uri?
-    %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+    %a{property: get_curie(predicate), href: object.to_s, inlist: inlist}= object.to_s
   - elsif object.datatype == RDF.XMLLiteral
-    %span{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
+    %span{property: get_curie(predicate), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}&lt;!= get_value(object)
   - else
-    %span{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+    %span{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
   </span><span class='tstring_end'>)</span></span>
 <span class='rbrace'>}</span></pre></dd>
       
@@ -372,23 +376,23 @@ to create human readable output.</p>
           
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:identifier</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>distiller</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
+  <span class='label'>identifier:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>distiller</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
   <span class='comment'># Document
 </span>  <span class='comment'># Locals: language, title, prefix, base, subjects
 </span>  <span class='comment'># Yield: subjects.each
-</span>  <span class='symbol'>:doc</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>doc:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     !!! XML
     !!! 5
-    %html{:xmlns =&gt; &quot;http://www.w3.org/1999/xhtml&quot;, :lang =&gt; lang, :prefix =&gt; prefix}
+    %html{xmlns: &quot;http://www.w3.org/1999/xhtml&quot;, lang: lang, prefix: prefix}
       - if base || title
         %head
           - if base
-            %base{:href =&gt; base}
+            %base{href: base}
           - if title
             %title= title
-          %link{:rel =&gt; &quot;stylesheet&quot;, :href =&gt; &quot;http://rdf.kellogg-assoc.com/css/distiller.css&quot;, :type =&gt; &quot;text/css&quot;}
-          %script{:src =&gt; &quot;https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js&quot;, :type =&gt; &quot;text/javascript&quot;}
-          %script{:src =&gt; &quot;http://rdf.kellogg-assoc.com/js/distiller.js&quot;, :type =&gt; &quot;text/javascript&quot;}
+          %link{rel: &quot;stylesheet&quot;, href: &quot;http://rdf.kellogg-assoc.com/css/distiller.css&quot;, type: &quot;text/css&quot;}
+          %script{src: &quot;https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js&quot;, type: &quot;text/javascript&quot;}
+          %script{src: &quot;http://rdf.kellogg-assoc.com/js/distiller.js&quot;, type: &quot;text/javascript&quot;}
       %body
         - if base
           %p= &quot;RDFa serialization URI base: &amp;lt;#{base}&amp;gt;&quot;
@@ -410,16 +414,16 @@ to create human readable output.</p>
 </span>  <span class='comment'>#
 </span>  <span class='comment'># Locals: subject, typeof, predicates, rel, element, inlist
 </span>  <span class='comment'># Yield: predicates.each
-</span>  <span class='symbol'>:subject</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>subject:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     - if element == :li
-      %li{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
+      %li{rel: rel, resource: (about || resource), typeof: typeof, inlist: inlist}
         - if typeof
           %span.type!= typeof
         %table.properties
           - predicates.each do |predicate|
             != yield(predicate)
     - else
-      %td{:rel =&gt; rel, :resource =&gt; (about || resource), :typeof =&gt; typeof, :inlist =&gt; inlist}
+      %td{rel: rel, resource: (about || resource), typeof: typeof, inlist: inlist}
         - if typeof
           %span.type!= typeof
         %table.properties
@@ -432,9 +436,9 @@ to create human readable output.</p>
 </span>  <span class='comment'># Yields: object
 </span>  <span class='comment'># If nil is returned, render as a leaf
 </span>  <span class='comment'># Otherwise, render result
-</span>  <span class='symbol'>:property_value</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>property_value:</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     - if heading_predicates.include?(predicate) &amp;&amp; object.literal?
-      %h1{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+      %h1{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
     - else
       %tr.property
         %td.label
@@ -442,22 +446,22 @@ to create human readable output.</p>
         - if res = yield(object)
           != res
         - elsif get_curie(object) == &#39;rdf:nil&#39;
-          %td{:rel =&gt; get_curie(predicate), :inlist =&gt; &#39;&#39;}= &quot;Empty&quot;
+          %td{rel: get_curie(predicate), inlist: &#39;&#39;}= &quot;Empty&quot;
         - elsif object.node?
-          %td{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+          %td{property: get_curie(predicate), resource: get_curie(object), inlist: inlist}= get_curie(object)
         - elsif object.uri?
           %td
-            %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+            %a{property: get_curie(predicate), href: object.to_s, inlist: inlist}= object.to_s
         - elsif object.datatype == RDF.XMLLiteral
-          %td{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}&lt;!= get_value(object)
+          %td{property: get_curie(predicate), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}&lt;!= get_value(object)
         - else
-          %td{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+          %td{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
   </span><span class='tstring_end'>)</span></span><span class='comma'>,</span>
 
   <span class='comment'># Output for multi-valued properties
 </span>  <span class='comment'># Locals: predicate, objects, inliste
 </span>  <span class='comment'># Yields: object for leaf resource rendering
-</span>  <span class='symbol'>:property_values</span> <span class='op'>=&gt;</span>  <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
+</span>  <span class='label'>property_values:</span>  <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>
     %tr.property
       %td.label
         = get_predicate_name(predicate)
@@ -467,21 +471,21 @@ to create human readable output.</p>
             - if res = yield(object)
               != res
             - elsif object.node?
-              %li{:property =&gt; get_curie(predicate), :resource =&gt; get_curie(object), :inlist =&gt; inlist}= get_curie(object)
+              %li{property: get_curie(predicate), resource: get_curie(object), inlist: inlist}= get_curie(object)
             - elsif object.uri?
               %li
-                %a{:property =&gt; get_curie(predicate), :href =&gt; object.to_s, :inlist =&gt; inlist}= object.to_s
+                %a{property: get_curie(predicate), href: object.to_s, inlist: inlist}= object.to_s
             - elsif object.datatype == RDF.XMLLiteral
-              %li{:property =&gt; get_curie(predicate), :lang =&gt; get_lang(object), :datatype =&gt; get_curie(object.datatype), :inlist =&gt; inlist}&lt;!= get_value(object)
+              %li{property: get_curie(predicate), lang: get_lang(object), datatype: get_curie(object.datatype), inlist: inlist}&lt;!= get_value(object)
             - else
-              %li{:property =&gt; get_curie(predicate), :content =&gt; get_content(object), :lang =&gt; get_lang(object), :datatype =&gt; get_dt_curie(object), :inlist =&gt; inlist}= escape_entities(get_value(object))
+              %li{property: get_curie(predicate), content: get_content(object), lang: get_lang(object), datatype: get_dt_curie(object), inlist: inlist}= escape_entities(get_value(object))
   </span><span class='tstring_end'>)</span></span><span class='comma'>,</span>
 <span class='rbrace'>}</span></pre></dd>
       
         <dt id="HAML_TEMPLATES-constant" class="">HAML_TEMPLATES =
           
         </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span><span class='symbol'>:base</span> <span class='op'>=&gt;</span> <span class='const'>BASE_HAML</span><span class='comma'>,</span> <span class='symbol'>:min</span> <span class='op'>=&gt;</span> <span class='const'>MIN_HAML</span><span class='comma'>,</span> <span class='symbol'>:distiller</span> <span class='op'>=&gt;</span> <span class='const'>DISTILLER_HAML</span><span class='rbrace'>}</span></pre></dd>
+        <dd><pre class="code"><span class='lbrace'>{</span><span class='label'>base:</span> <span class='const'>BASE_HAML</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='const'>MIN_HAML</span><span class='comma'>,</span> <span class='label'>distiller:</span> <span class='const'>DISTILLER_HAML</span><span class='rbrace'>}</span></pre></dd>
       
         <dt id="DEFAULT_HAML-constant" class="">DEFAULT_HAML =
           
@@ -492,7 +496,7 @@ to create human readable output.</p>
           
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='symbol'>:ugly</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='comment'># to preserve whitespace without using entities
+  <span class='label'>ugly:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='comment'># to preserve whitespace without using entities
 </span><span class='rbrace'>}</span></pre></dd>
       
     </dl>
@@ -1166,52 +1170,6 @@ to create human readable output.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#write_graph-instance_method" title="#write_graph (instance method)">- <strong>write_graph</strong>(graph) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Write whole graph.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#write_statement-instance_method" title="#write_statement (instance method)">- <strong>write_statement</strong>(statement) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Addes a statement to be serialized.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#write_triple-instance_method" title="#write_triple (instance method)">- <strong>write_triple</strong>(subject, predicate, object) </a>
     
 
@@ -1244,8 +1202,19 @@ to create human readable output.</p>
   
   
   
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Util/Logger.html" title="RDF::Util::Logger (module)">Util::Logger</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Util/Logger.html#log_debug-instance_method" title="RDF::Util::Logger#log_debug (method)">#log_debug</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_depth-instance_method" title="RDF::Util::Logger#log_depth (method)">#log_depth</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_error-instance_method" title="RDF::Util::Logger#log_error (method)">#log_error</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_fatal-instance_method" title="RDF::Util::Logger#log_fatal (method)">#log_fatal</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_info-instance_method" title="RDF::Util::Logger#log_info (method)">#log_info</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_recover-instance_method" title="RDF::Util::Logger#log_recover (method)">#log_recover</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_recovering%3F-instance_method" title="RDF::Util::Logger#log_recovering? (method)">#log_recovering?</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_statistics-instance_method" title="RDF::Util::Logger#log_statistics (method)">#log_statistics</a></span>, <span class='object_link'><a href="../Util/Logger.html#log_warn-instance_method" title="RDF::Util::Logger#log_warn (method)">#log_warn</a></span>, <span class='object_link'><a href="../Util/Logger.html#logger-instance_method" title="RDF::Util::Logger#logger (method)">#logger</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Writer.html" title="RDF::Writer (class)">Writer</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Writer.html#buffer-class_method" title="RDF::Writer.buffer (method)">buffer</a></span>, <span class='object_link'><a href="../Writer.html#canonicalize%3F-instance_method" title="RDF::Writer#canonicalize? (method)">#canonicalize?</a></span>, <span class='object_link'><a href="../Writer.html#dump-class_method" title="RDF::Writer.dump (method)">dump</a></span>, <span class='object_link'><a href="../Writer.html#each-class_method" title="RDF::Writer.each (method)">each</a></span>, <span class='object_link'><a href="../Writer.html#encoding-instance_method" title="RDF::Writer#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Writer.html#escaped-instance_method" title="RDF::Writer#escaped (method)">#escaped</a></span>, <span class='object_link'><a href="../Writer.html#flush-instance_method" title="RDF::Writer#flush (method)">#flush</a></span>, <span class='object_link'><a href="../Writer.html#for-class_method" title="RDF::Writer.for (method)">for</a></span>, <span class='object_link'><a href="../Writer.html#format-class_method" title="RDF::Writer.format (method)">format</a></span>, <span class='object_link'><a href="../Writer.html#format_list-instance_method" title="RDF::Writer#format_list (method)">#format_list</a></span>, <span class='object_link'><a href="../Writer.html#format_literal-instance_method" title="RDF::Writer#format_literal (method)">#format_literal</a></span>, <span class='object_link'><a href="../Writer.html#format_node-instance_method" title="RDF::Writer#format_node (method)">#format_node</a></span>, <span class='object_link'><a href="../Writer.html#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span>, <span class='object_link'><a href="../Writer.html#format_uri-instance_method" title="RDF::Writer#format_uri (method)">#format_uri</a></span>, <span class='object_link'><a href="../Writer.html#node_id-instance_method" title="RDF::Writer#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="../Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span>, <span class='object_link'><a href="../Writer.html#prefix-instance_method" title="RDF::Writer#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Writer.html#prefixes-instance_method" title="RDF::Writer#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Writer.html#prefixes%3D-instance_method" title="RDF::Writer#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Writer.html#puts-instance_method" title="RDF::Writer#puts (method)">#puts</a></span>, <span class='object_link'><a href="../Writer.html#quoted-instance_method" title="RDF::Writer#quoted (method)">#quoted</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-class_method" title="RDF::Writer.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-instance_method" title="RDF::Writer#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Writer.html#uri_for-instance_method" title="RDF::Writer#uri_for (method)">#uri_for</a></span>, <span class='object_link'><a href="../Writer.html#validate%3F-instance_method" title="RDF::Writer#validate? (method)">#validate?</a></span>, <span class='object_link'><a href="../Writer.html#write_comment-instance_method" title="RDF::Writer#write_comment (method)">#write_comment</a></span>, <span class='object_link'><a href="../Writer.html#write_prologue-instance_method" title="RDF::Writer#write_prologue (method)">#write_prologue</a></span>, <span class='object_link'><a href="../Writer.html#write_statements-instance_method" title="RDF::Writer#write_statements (method)">#write_statements</a></span>, <span class='object_link'><a href="../Writer.html#write_triples-instance_method" title="RDF::Writer#write_triples (method)">#write_triples</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Writer.html#buffer-class_method" title="RDF::Writer.buffer (method)">buffer</a></span>, <span class='object_link'><a href="../Writer.html#canonicalize%3F-instance_method" title="RDF::Writer#canonicalize? (method)">#canonicalize?</a></span>, <span class='object_link'><a href="../Writer.html#dump-class_method" title="RDF::Writer.dump (method)">dump</a></span>, <span class='object_link'><a href="../Writer.html#each-class_method" title="RDF::Writer.each (method)">each</a></span>, <span class='object_link'><a href="../Writer.html#encoding-instance_method" title="RDF::Writer#encoding (method)">#encoding</a></span>, <span class='object_link'><a href="../Writer.html#escaped-instance_method" title="RDF::Writer#escaped (method)">#escaped</a></span>, <span class='object_link'><a href="../Writer.html#flush-instance_method" title="RDF::Writer#flush (method)">#flush</a></span>, <span class='object_link'><a href="../Writer.html#for-class_method" title="RDF::Writer.for (method)">for</a></span>, <span class='object_link'><a href="../Writer.html#format-class_method" title="RDF::Writer.format (method)">format</a></span>, <span class='object_link'><a href="../Writer.html#format_list-instance_method" title="RDF::Writer#format_list (method)">#format_list</a></span>, <span class='object_link'><a href="../Writer.html#format_literal-instance_method" title="RDF::Writer#format_literal (method)">#format_literal</a></span>, <span class='object_link'><a href="../Writer.html#format_node-instance_method" title="RDF::Writer#format_node (method)">#format_node</a></span>, <span class='object_link'><a href="../Writer.html#format_term-instance_method" title="RDF::Writer#format_term (method)">#format_term</a></span>, <span class='object_link'><a href="../Writer.html#format_uri-instance_method" title="RDF::Writer#format_uri (method)">#format_uri</a></span>, <span class='object_link'><a href="../Writer.html#format_value-instance_method" title="RDF::Writer#format_value (method)">#format_value</a></span>, <span class='object_link'><a href="../Writer.html#node_id-instance_method" title="RDF::Writer#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="../Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span>, <span class='object_link'><a href="../Writer.html#prefix-instance_method" title="RDF::Writer#prefix (method)">#prefix</a></span>, <span class='object_link'><a href="../Writer.html#prefixes-instance_method" title="RDF::Writer#prefixes (method)">#prefixes</a></span>, <span class='object_link'><a href="../Writer.html#prefixes%3D-instance_method" title="RDF::Writer#prefixes= (method)">#prefixes=</a></span>, <span class='object_link'><a href="../Writer.html#puts-instance_method" title="RDF::Writer#puts (method)">#puts</a></span>, <span class='object_link'><a href="../Writer.html#quoted-instance_method" title="RDF::Writer#quoted (method)">#quoted</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-instance_method" title="RDF::Writer#to_sym (method)">#to_sym</a></span>, <span class='object_link'><a href="../Writer.html#to_sym-class_method" title="RDF::Writer.to_sym (method)">to_sym</a></span>, <span class='object_link'><a href="../Writer.html#uri_for-instance_method" title="RDF::Writer#uri_for (method)">#uri_for</a></span>, <span class='object_link'><a href="../Writer.html#validate%3F-instance_method" title="RDF::Writer#validate? (method)">#validate?</a></span>, <span class='object_link'><a href="../Writer.html#write_comment-instance_method" title="RDF::Writer#write_comment (method)">#write_comment</a></span>, <span class='object_link'><a href="../Writer.html#write_graph-instance_method" title="RDF::Writer#write_graph (method)">#write_graph</a></span>, <span class='object_link'><a href="../Writer.html#write_prologue-instance_method" title="RDF::Writer#write_prologue (method)">#write_prologue</a></span>, <span class='object_link'><a href="../Writer.html#write_statement-instance_method" title="RDF::Writer#write_statement (method)">#write_statement</a></span>, <span class='object_link'><a href="../Writer.html#write_statements-instance_method" title="RDF::Writer#write_statements (method)">#write_statements</a></span>, <span class='object_link'><a href="../Writer.html#write_triples-instance_method" title="RDF::Writer#write_triples (method)">#write_triples</a></span></p>
 
   
   
@@ -1447,7 +1416,7 @@ to create human readable output.</p>
           <span class="default">
             
               &mdash; default:
-              <tt>[RDF.type</tt>, <tt>RDF::RDFS.label</tt>, <tt>RDF::DC.title]</tt>
+              <tt>[RDF.type</tt>, <tt>RDF::RDFS.label</tt>, <tt>RDF::Vocab::DC.title]</tt>
             
           </span>
           
@@ -1462,7 +1431,7 @@ to create human readable output.</p>
           <span class="default">
             
               &mdash; default:
-              <tt>[RDF::RDFS.label</tt>, <tt>RDF::DC.title]</tt>
+              <tt>[RDF::RDFS.label</tt>, <tt>RDF::Vocab::DC.title]</tt>
             
           </span>
           
@@ -1496,7 +1465,7 @@ to create human readable output.</p>
             
           </span>
           
-            &mdash; <div class='inline'><p>Options to pass to Haml::Engine.new. Default options set <code>:ugly =&gt; false</code> to ensure that whitespace in literals with newlines is properly preserved.</p>
+            &mdash; <div class='inline'><p>Options to pass to Haml::Engine.new. Default options set <code>ugly: false</code> to ensure that whitespace in literals with newlines is properly preserved.</p>
 </div>
           
         </li>
@@ -1539,7 +1508,6 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-105
 106
 107
 108
@@ -1550,18 +1518,19 @@ to create human readable output.</p>
 113
 114
 115
-116</pre>
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='gvar'>$stdout</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
     <span class='ivar'>@uri_to_term_or_curie</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
     <span class='ivar'>@uri_to_prefix</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
     <span class='ivar'>@top_classes</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:top_classes</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='const'>Class</span><span class='rbracket'>]</span>
-    <span class='ivar'>@predicate_order</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:predicate_order</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='rbracket'>]</span>
-    <span class='ivar'>@heading_predicates</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:heading_predicates</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='rbracket'>]</span>
+    <span class='ivar'>@predicate_order</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:predicate_order</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://purl.org/dc/terms/title</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
+    <span class='ivar'>@heading_predicates</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:heading_predicates</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://purl.org/dc/terms/title</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbracket'>]</span>
     <span class='ivar'>@graph</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
     <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1621,12 +1590,12 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-73
 74
-75</pre>
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='ivar'>@base_uri</span>
@@ -1680,12 +1649,12 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-70
 71
-72</pre>
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_graph'>graph</span>
   <span class='ivar'>@graph</span>
@@ -1735,12 +1704,12 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_heading_predicates'>heading_predicates</span>
   <span class='ivar'>@heading_predicates</span>
@@ -1790,12 +1759,12 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-59
 60
-61</pre>
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_predicate_order'>predicate_order</span>
   <span class='ivar'>@predicate_order</span>
@@ -1845,12 +1814,12 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_top_classes'>top_classes</span>
   <span class='ivar'>@top_classes</span>
@@ -1933,22 +1902,28 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-619
-620
-621
-622
-623
-624
-625</pre>
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 619</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 610</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_content'>get_content</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting content for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_literal'>literal</span>
   <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Date</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Time</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>DateTime</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='op'>::</span><span class='const'>Duration</span>
     <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span> <span class='kw'>then</span> <span class='kw'>nil</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting content for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2026,8 +2001,6 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-652
-653
 654
 655
 656
@@ -2063,48 +2036,66 @@ to create human readable output.</p>
 686
 687
 688
-689</pre>
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 652</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 654</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting CURIE for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be an RDF value</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Value</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>unless</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_uri?'>uri?</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_resource'>resource</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
-  <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+      <span class='id identifier rubyid_curie'>curie</span> <span class='op'>=</span> <span class='kw'>case</span>
+      <span class='kw'>when</span> <span class='ivar'>@uri_to_term_or_curie</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): uri_to_term_or_curie </span><span class='embexpr_beg'>#{</span><span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='kw'>return</span> <span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span>
+      <span class='kw'>when</span> <span class='id identifier rubyid_base_uri'>base_uri</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): base_uri (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='ivar'>@vocabulary</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='ivar'>@vocabulary</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): vocabulary</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='ivar'>@vocabulary</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='id identifier rubyid_u'>u</span> <span class='op'>=</span> <span class='ivar'>@uri_to_prefix</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_u'>u</span><span class='op'>|</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): uri_to_prefix</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='comment'># Use a defined prefix
+</span>        <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='ivar'>@uri_to_prefix</span><span class='lbracket'>[</span><span class='id identifier rubyid_u'>u</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_u'>u</span><span class='rparen'>)</span>  <span class='comment'># Define for output
+</span>        <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:standard_prefixes</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_vocab'>vocab</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Vocabulary</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): standard_prefixes</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid___name__'>__name__</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>::</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
+        <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='rparen'>)</span> <span class='comment'># Define for output
+</span>        <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): none</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_uri'>uri</span>
+      <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_curie'>curie</span> <span class='op'>=</span> <span class='kw'>case</span>
-  <span class='kw'>when</span> <span class='ivar'>@uri_to_term_or_curie</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): uri_to_term_or_curie </span><span class='embexpr_beg'>#{</span><span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='kw'>return</span> <span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span>
-  <span class='kw'>when</span> <span class='id identifier rubyid_base_uri'>base_uri</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): base_uri (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>when</span> <span class='ivar'>@vocabulary</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='ivar'>@vocabulary</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): vocabulary</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='ivar'>@vocabulary</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>when</span> <span class='id identifier rubyid_u'>u</span> <span class='op'>=</span> <span class='ivar'>@uri_to_prefix</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_u'>u</span><span class='op'>|</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): uri_to_prefix</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='comment'># Use a defined prefix
-</span>    <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='ivar'>@uri_to_prefix</span><span class='lbracket'>[</span><span class='id identifier rubyid_u'>u</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_u'>u</span><span class='rparen'>)</span>  <span class='comment'># Define for output
-</span>    <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_u'>u</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>when</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:standard_prefixes</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_vocab'>vocab</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Vocabulary</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>0</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): standard_prefixes</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid___name__'>__name__</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>::</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
-    <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='rparen'>)</span> <span class='comment'># Define for output
-</span>    <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_vocab'>vocab</span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get_curie(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>): none</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_uri'>uri</span>
-  <span class='kw'>end</span>
-
-  <span class='comment'>#add_debug {&quot;get_curie(#{resource}) =&gt; #{curie}&quot;}
+      <span class='comment'>#log_debug {&quot;get_curie(#{resource}) =&gt; #{curie}&quot;}
 </span>
-  <span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_curie'>curie</span>
-<span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid URI </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='ivar'>@uri_to_term_or_curie</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_curie'>curie</span>
+    <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid URI </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span> <span class='kw'>then</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>when</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span> <span class='kw'>then</span> <span class='kw'>nil</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting CURIE for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a resource</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2177,17 +2168,25 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-599
-600
-601
-602</pre>
+582
+583
+584
+585
+586
+587
+588
+589</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 599</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 582</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_dt_curie'>get_dt_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting datatype CURIE for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_datatype?'>datatype?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_datatype?'>datatype?</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting datatype CURIE for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2260,17 +2259,25 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-609
-610
-611
-612</pre>
+596
+597
+598
+599
+600
+601
+602
+603</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 609</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 596</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_lang'>get_lang</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting datatype CURIE for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>!=</span> <span class='ivar'>@lang</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>!=</span> <span class='ivar'>@lang</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting language for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2343,17 +2350,25 @@ to create human readable output.</p>
       <pre class="lines">
 
 
+640
+641
 642
 643
 644
-645</pre>
+645
+646
+647</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 642</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 640</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_predicate_name'>get_predicate_name</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting predicate name for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a resource</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Resource</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting predicate name for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a URI</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2426,17 +2441,25 @@ to create human readable output.</p>
       <pre class="lines">
 
 
+626
+627
+628
+629
+630
+631
 632
-633
-634
-635</pre>
+633</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 632</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 626</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_value'>get_value</span><span class='lparen'>(</span><span class='id identifier rubyid_literal'>literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting value for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_humanize'>humanize</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Literal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_humanize'>humanize</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting value for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_literal'>literal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, which must be a literal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2480,17 +2503,17 @@ to create human readable output.</p>
       <pre class="lines">
 
 
-119
 120
 121
 122
 123
 124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_haml_template'>haml_template</span>
   <span class='kw'>return</span> <span class='ivar'>@haml_template</span> <span class='kw'>if</span> <span class='ivar'>@haml_template</span>
@@ -2567,26 +2590,26 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452</pre>
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 436</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 419</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_order_properties'>order_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span>
   <span class='comment'># Make sorted list of properties
@@ -2602,7 +2625,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
     <span class='id identifier rubyid_prop_list'>prop_list</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_prop'>prop</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>order_properties: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prop_list'>prop_list</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>order_properties: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prop_list'>prop_list</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_prop_list'>prop_list</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2654,6 +2677,23 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
 399
 400
 401
@@ -2667,27 +2707,10 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 409
 410
 411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429</pre>
+412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 382</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_order_subjects'>order_subjects</span>
   <span class='id identifier rubyid_seen'>seen</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2703,8 +2726,8 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 </span>  <span class='id identifier rubyid_top_classes'>top_classes</span><span class='period'>.</span>
   <span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_seen'>seen</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='period'>.</span>
   <span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_class_uri'>class_uri</span><span class='op'>|</span>
-    <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='const'>RDF</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='symbol'>:object</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_class_uri'>class_uri</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subject'>subject</span><span class='op'>|</span>
-      <span class='comment'>#add_debug {&quot;order_subjects: #{subject.inspect}&quot;}
+    <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>predicate:</span> <span class='const'>RDF</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>object:</span> <span class='id identifier rubyid_class_uri'>class_uri</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subject'>subject</span><span class='op'>|</span>
+      <span class='comment'>#log_debug {&quot;order_subjects: #{subject.inspect}&quot;}
 </span>      <span class='id identifier rubyid_subjects'>subjects</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_subject'>subject</span>
       <span class='id identifier rubyid_seen'>seen</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -2716,7 +2739,7 @@ Sort the lists of values.  Return a sorted list of properties.</p>
     <span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Node</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='int'>1</span> <span class='op'>:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_ref_count'>ref_count</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='period'>.</span>
     <span class='id identifier rubyid_sort'>sort</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>order_subjects: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_recursable'>recursable</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>order_subjects: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_recursable'>recursable</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_subjects'>subjects</span> <span class='op'>+=</span> <span class='id identifier rubyid_recursable'>recursable</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -2799,32 +2822,32 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592</pre>
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 581</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 564</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_objects'>objects</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>predicate: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, objects: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>predicate: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, objects: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>predicate: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>predicate: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_objects'>objects</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='id identifier rubyid_inlist'>inlist</span><span class='op'>=</span><span class='kw'>nil</span><span class='op'>|</span>
     <span class='comment'># Yields each object, for potential recursive definition.
 </span>    <span class='comment'># If nil is returned, a leaf is produced
-</span>    <span class='id identifier rubyid_depth'>depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_subject'>subject</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='symbol'>:rel</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:inlist</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_inlist'>inlist</span><span class='comma'>,</span> <span class='symbol'>:element</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='symbol'>:li</span> <span class='kw'>if</span> <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>||</span> <span class='id identifier rubyid_inlist'>inlist</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_is_done?'>is_done?</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@subjects</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_log_depth'>log_depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_subject'>subject</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>rel:</span> <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>inlist:</span> <span class='id identifier rubyid_inlist'>inlist</span><span class='comma'>,</span> <span class='label'>element:</span> <span class='lparen'>(</span><span class='symbol'>:li</span> <span class='kw'>if</span> <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>||</span> <span class='id identifier rubyid_inlist'>inlist</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_is_done?'>is_done?</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@subjects</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2870,6 +2893,23 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
 368
 369
 370
@@ -2878,27 +2918,10 @@ Sort the lists of values.  Return a sorted list of properties.</p>
 373
 374
 375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393</pre>
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 368</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 351</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_preprocess'>preprocess</span>
   <span class='comment'># Load initial contexts
@@ -2984,21 +3007,21 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-457
-458
-459
-460
-461
-462
-463
-464
-465</pre>
+440
+441
+442
+443
+444
+445
+446
+447
+448</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 457</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 440</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_preprocess_statement'>preprocess_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
-  <span class='comment'>#add_debug {&quot;preprocess: #{statement.inspect}&quot;}
+  <span class='comment'>#log_debug {&quot;preprocess: #{statement.inspect}&quot;}
 </span>  <span class='id identifier rubyid_bump_reference'>bump_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='ivar'>@subjects</span><span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
@@ -3063,22 +3086,22 @@ Sort the lists of values.  Return a sorted list of properties.</p>
       <pre class="lines">
 
 
-515
-516
-517
-518
-519
-520
-521
-522
-523</pre>
+498
+499
+500
+501
+502
+503
+504
+505
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 515</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 498</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_properties_for_subject'>properties_for_subject</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='symbol'>:subject</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span>
+  <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>subject:</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span>
     <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
     <span class='id identifier rubyid_properties'>properties</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_properties'>properties</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span>
@@ -3302,27 +3325,27 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237</pre>
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_document'>render_document</span><span class='lparen'>(</span><span class='id identifier rubyid_subjects'>subjects</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_template'>template</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:haml</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='symbol'>:doc</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:prefix</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='symbol'>:subjects</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_subjects'>subjects</span><span class='comma'>,</span>
-    <span class='symbol'>:title</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>prefix:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>subjects:</span> <span class='id identifier rubyid_subjects'>subjects</span><span class='comma'>,</span>
+    <span class='label'>title:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hamlify'>hamlify</span><span class='lparen'>(</span><span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subject'>subject</span><span class='op'>|</span>
     <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -3519,6 +3542,23 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
 310
 311
 312
@@ -3556,30 +3596,13 @@ The rendered document is returned as a string</p>
 344
 345
 346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364</pre>
+347</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 293</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_objects'>objects</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>render_property(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='embexpr_end'>}</span><span class='tstring_content'>): </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>render_property(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='embexpr_end'>}</span><span class='tstring_content'>): </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='comment'># If there are multiple objects, and no :property_values is defined, call recursively with
 </span>  <span class='comment'># each object
 </span>
@@ -3593,16 +3616,16 @@ The rendered document is returned as a string</p>
   <span class='kw'>end</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='comment'># Render non-list objects
-</span>    <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties with lists: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list_objects'>list_objects</span><span class='embexpr_end'>}</span><span class='tstring_content'> non-lists: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span> <span class='op'>-</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_nl'>nl</span> <span class='op'>=</span> <span class='id identifier rubyid_depth'>depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_objects'>objects</span> <span class='op'>-</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_objects'>objects</span> <span class='op'>==</span> <span class='id identifier rubyid_list_objects'>list_objects</span>
+</span>    <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties with lists: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list_objects'>list_objects</span><span class='embexpr_end'>}</span><span class='tstring_content'> non-lists: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_objects'>objects</span> <span class='op'>-</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_nl'>nl</span> <span class='op'>=</span> <span class='id identifier rubyid_log_depth'>log_depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_objects'>objects</span> <span class='op'>-</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_objects'>objects</span> <span class='op'>==</span> <span class='id identifier rubyid_list_objects'>list_objects</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_nl'>nl</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='id identifier rubyid_list_objects'>list_objects</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
       <span class='comment'># Render each list as multiple properties and set :inlist to true
 </span>      <span class='id identifier rubyid_list'>list</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>List</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='ivar'>@graph</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_st'>st</span><span class='op'>|</span> <span class='id identifier rubyid_subject_done'>subject_done</span><span class='lparen'>(</span><span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
-      <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>list: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-      <span class='id identifier rubyid_depth'>depth</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:inlist</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
+      <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>list: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_log_depth'>log_depth</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>inlist:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
           <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
@@ -3612,10 +3635,10 @@ The rendered document is returned as a string</p>
   <span class='kw'>if</span> <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_template'>template</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='comment'># If there is no property_values template, render each property using property_value template
 </span>    <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
-      <span class='id identifier rubyid_depth'>depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_log_depth'>log_depth</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render_property'>render_property</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rbrace'>}</span>
     <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing property template</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_template'>template</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_log_fatal'>log_fatal</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing property template</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>exception:</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_template'>template</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
     <span class='id identifier rubyid_template'>template</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:haml</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span>
       <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span>
@@ -3623,12 +3646,12 @@ The rendered document is returned as a string</p>
         <span class='symbol'>:property_values</span> <span class='op'>:</span>
         <span class='symbol'>:property_value</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-      <span class='symbol'>:objects</span>    <span class='op'>=&gt;</span> <span class='id identifier rubyid_objects'>objects</span><span class='comma'>,</span>
-      <span class='symbol'>:object</span>     <span class='op'>=&gt;</span> <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span>
-      <span class='symbol'>:predicate</span>  <span class='op'>=&gt;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span>
-      <span class='symbol'>:property</span>   <span class='op'>=&gt;</span> <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='symbol'>:rel</span>        <span class='op'>=&gt;</span> <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='symbol'>:inlist</span>     <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>objects:</span>    <span class='id identifier rubyid_objects'>objects</span><span class='comma'>,</span>
+      <span class='label'>object:</span>     <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span>
+      <span class='label'>predicate:</span>  <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span>
+      <span class='label'>property:</span>   <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>rel:</span>        <span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>inlist:</span>     <span class='kw'>nil</span><span class='comma'>,</span>
     <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_hamlify'>hamlify</span><span class='lparen'>(</span><span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -3889,39 +3912,39 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288</pre>
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_subject'>render_subject</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicates'>predicates</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_template'>template</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:haml</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='symbol'>:subject</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='symbol'>:about</span>      <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rel</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='symbol'>:base</span>       <span class='op'>=&gt;</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
-    <span class='symbol'>:element</span>    <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='symbol'>:predicates</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_predicates'>predicates</span><span class='comma'>,</span>
-    <span class='symbol'>:rel</span>        <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='symbol'>:inlist</span>     <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='symbol'>:resource</span>   <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rel</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='symbol'>:subject</span>    <span class='op'>=&gt;</span> <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span>
-    <span class='symbol'>:typeof</span>     <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>about:</span>      <span class='lparen'>(</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rel</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>base:</span>       <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
+    <span class='label'>element:</span>    <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>predicates:</span> <span class='id identifier rubyid_predicates'>predicates</span><span class='comma'>,</span>
+    <span class='label'>rel:</span>        <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>inlist:</span>     <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='label'>resource:</span>   <span class='lparen'>(</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rel</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>subject:</span>    <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span>
+    <span class='label'>typeof:</span>     <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hamlify'>hamlify</span><span class='lparen'>(</span><span class='id identifier rubyid_template'>template</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_predicate'>predicate</span><span class='op'>|</span>
     <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -4006,45 +4029,45 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
 552
 553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
-571</pre>
+554</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 535</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_subject_template'>render_subject_template</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_prop_list'>prop_list</span><span class='comma'>,</span> <span class='id identifier rubyid_render_opts'>render_opts</span><span class='rparen'>)</span>
   <span class='comment'># See if there&#39;s a template based on the sorted concatenation of all types of this subject
 </span>  <span class='comment'># or any type of this subject
 </span>  <span class='id identifier rubyid_tmpl'>tmpl</span> <span class='op'>=</span> <span class='id identifier rubyid_find_template'>find_template</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: found template </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tmpl'>tmpl</span><span class='lbracket'>[</span><span class='symbol'>:identifier</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_tmpl'>tmpl</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_tmpl'>tmpl</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: found template </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tmpl'>tmpl</span><span class='lbracket'>[</span><span class='symbol'>:identifier</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_tmpl'>tmpl</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_tmpl'>tmpl</span>
 
   <span class='comment'># Render this subject
 </span>  <span class='comment'># If :rel is specified and :typeof is nil, use @resource instead of @about.
 </span>  <span class='comment'># Pass other options from calling context
 </span>  <span class='id identifier rubyid_with_template'>with_template</span><span class='lparen'>(</span><span class='id identifier rubyid_tmpl'>tmpl</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_render_subject'>render_subject</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_prop_list'>prop_list</span><span class='comma'>,</span> <span class='id identifier rubyid_render_opts'>render_opts</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pred'>pred</span><span class='op'>|</span>
-      <span class='id identifier rubyid_depth'>depth</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_log_depth'>log_depth</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_pred'>pred</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_pred'>pred</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_render_opts'>render_opts</span><span class='lbracket'>[</span><span class='symbol'>:property_values</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_pred'>pred</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, pred: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, values: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, pred: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_get_curie'>get_curie</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>, values: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
         <span class='id identifier rubyid_predicate'>predicate</span><span class='lparen'>(</span><span class='id identifier rubyid_pred'>pred</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -4080,19 +4103,19 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
-468
-469
-470
-471
-472
-473
-474</pre>
+451
+452
+453
+454
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 468</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 451</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
-  <span class='ivar'>@depth</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:log_depth</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
   <span class='id identifier rubyid_prefixes'>prefixes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@references</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@serialized</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4225,24 +4248,24 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511</pre>
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 480</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subject'>subject</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_done?'>is_done?</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
@@ -4253,9 +4276,9 @@ The rendered document is returned as a string</p>
   <span class='id identifier rubyid_typeof'>typeof</span> <span class='op'>=</span> <span class='id identifier rubyid_type_of'>type_of</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_prop_list'>prop_list</span> <span class='op'>=</span> <span class='id identifier rubyid_order_properties'>order_properties</span><span class='lparen'>(</span><span class='id identifier rubyid_properties'>properties</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>props: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prop_list'>prop_list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>props: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prop_list'>prop_list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_render_opts'>render_opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:typeof</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_typeof'>typeof</span><span class='comma'>,</span> <span class='symbol'>:property_values</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_properties'>properties</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_render_opts'>render_opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>typeof:</span> <span class='id identifier rubyid_typeof'>typeof</span><span class='comma'>,</span> <span class='label'>property_values:</span> <span class='id identifier rubyid_properties'>properties</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_render_subject_template'>render_subject_template</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_prop_list'>prop_list</span><span class='comma'>,</span> <span class='id identifier rubyid_render_opts'>render_opts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -4332,28 +4355,28 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
 528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546</pre>
+529</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 528</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 511</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type_of'>type_of</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
   <span class='comment'># Find appropriate template
@@ -4370,7 +4393,7 @@ The rendered document is returned as a string</p>
   <span class='comment'># Nodes without a curie need a blank @typeof to generate a subject
 </span>  <span class='id identifier rubyid_typeof'>typeof</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_curie'>curie</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_curie'>curie</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, typeof: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_typeof'>typeof</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_curie'>curie</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, typeof: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_typeof'>typeof</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_typeof'>typeof</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 <span class='kw'>end</span></pre>
@@ -4404,6 +4427,24 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
 164
 165
 166
@@ -4423,41 +4464,23 @@ The rendered document is returned as a string</p>
 180
 181
 182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200</pre>
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_epilogue'>write_epilogue</span>
   <span class='ivar'>@base_uri</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
   <span class='ivar'>@lang</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:lang</span><span class='rbracket'>]</span>
-  <span class='ivar'>@debug</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:debug</span><span class='rbracket'>]</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
 
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nserialize: graph size: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nserialize: graph size: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_preprocess'>preprocess</span>
 
   <span class='comment'># Prefixes
 </span>  <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_prefixes'>prefixes</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_pk'>pk</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pk'>pk</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefixes'>prefixes</span><span class='lbracket'>[</span><span class='id identifier rubyid_pk'>pk</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_prefixes'>prefixes</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-  <span class='id identifier rubyid_add_debug'>add_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nserialize: prefixes: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_debug'>log_debug</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\nserialize: prefixes: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_subjects'>subjects</span> <span class='op'>=</span> <span class='id identifier rubyid_order_subjects'>order_subjects</span>
 
@@ -4465,7 +4488,7 @@ The rendered document is returned as a string</p>
 </span>  <span class='id identifier rubyid_doc_title'>doc_title</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_titles'>titles</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_heading_predicates'>heading_predicates</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pred'>pred</span><span class='op'>|</span>
-    <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='symbol'>:predicate</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pred'>pred</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+    <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='label'>predicate:</span> <span class='id identifier rubyid_pred'>pred</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
       <span class='id identifier rubyid_titles'>titles</span><span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -4474,142 +4497,15 @@ The rendered document is returned as a string</p>
 
   <span class='comment'># Generate document
 </span>  <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='id identifier rubyid_render_document'>render_document</span><span class='lparen'>(</span><span class='id identifier rubyid_subjects'>subjects</span><span class='comma'>,</span>
-    <span class='symbol'>:lang</span>     <span class='op'>=&gt;</span> <span class='ivar'>@lang</span><span class='comma'>,</span>
-    <span class='symbol'>:base</span>     <span class='op'>=&gt;</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
-    <span class='symbol'>:title</span>    <span class='op'>=&gt;</span> <span class='id identifier rubyid_doc_title'>doc_title</span><span class='comma'>,</span>
-    <span class='symbol'>:prefix</span>   <span class='op'>=&gt;</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
+    <span class='label'>lang:</span>     <span class='ivar'>@lang</span><span class='comma'>,</span>
+    <span class='label'>base:</span>     <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
+    <span class='label'>title:</span>    <span class='id identifier rubyid_doc_title'>doc_title</span><span class='comma'>,</span>
+    <span class='label'>prefix:</span>   <span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
     <span class='id identifier rubyid_subject'>subject</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='ivar'>@output</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_doc'>doc</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="write_graph-instance_method">
-  
-    - <strong>write_graph</strong>(graph) 
-  
 
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Write whole graph</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>graph</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Graph.html" title="RDF::Graph (class)">Graph</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-133
-134
-135</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 133</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_write_graph'>write_graph</span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
-  <span class='ivar'>@graph</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="write_statement-instance_method">
-  
-    - <strong>write_statement</strong>(statement) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Addes a statement to be serialized</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>statement</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../WriterError.html" title="RDF::WriterError (class)">RDF::WriterError</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>if validating and attempting to write an invalid <span class='object_link'><a href="../Term.html" title="RDF::Term (module)">Term</a></span>.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-142
-143
-144
-145</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 142</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_write_statement'>write_statement</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>WriterError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Statement </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is invalid</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_validate?'>validate?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_invalid?'>invalid?</span>
-  <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
+  <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4712,15 +4608,15 @@ The rendered document is returned as a string</p>
       <pre class="lines">
 
 
-156
-157
-158</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-rdfa-33d6cd19a802/lib/rdf/rdfa/writer.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-rdfa-1041df0e3a4b/lib/rdf/rdfa/writer.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_triple'>write_triple</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_write_statement'>write_statement</span> <span class='const'>Statement</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
+  <span class='ivar'>@graph</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Statement</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4732,9 +4628,9 @@ The rendered document is returned as a string</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Jul 17 11:48:24 2015 by
+  Generated on Tue Dec 22 09:33:44 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.5).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

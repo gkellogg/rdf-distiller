@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gemspec
 
-ruby "2.1.5"
+ruby "2.2.4"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "git://github.com/ruby-rdf/sinatra-linkeddata.git", branch: "develop"

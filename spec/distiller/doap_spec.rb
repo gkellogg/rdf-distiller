@@ -17,7 +17,7 @@ describe RDF::Distiller::Application do
   end
 
   describe "/doap" do
-    let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::DOAP.to_uri]}
+    let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::Vocab::DOAP.to_uri]}
     before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
 
     context "Format symbols" do
