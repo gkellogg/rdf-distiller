@@ -83,8 +83,8 @@
   
   
     <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-421df8ead4ec/lib/rdf/isomorphic.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-421df8ead4ec/lib/rdf/isomorphic/version.rb</span>
+    <dd class="r2 last">vendor/bundler/ruby/2.2.0/bundler/gems/rdf-isomorphic-1018e9dfe946/lib/rdf/isomorphic.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.2.0/bundler/gems/rdf-isomorphic-1018e9dfe946/lib/rdf/isomorphic/version.rb</span>
 </dd>
   
 </dl>
@@ -153,7 +153,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns a hash of RDF::Nodes =&gt; RDF::Nodes representing an isomorphic bijection of this RDF::Enumerable&#39;s to another RDF::Enumerable&#39;s blank nodes, or nil if a bijection cannot be found.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns a hash of RDF:Nodes: RDF::Nodes representing an isomorphic bijection of this RDF::Enumerable&#39;s to another RDF::Enumerable&#39;s blank nodes, or nil if a bijection cannot be found.</p>
 </div></span>
   
 </li>
@@ -204,11 +204,11 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a hash of RDF::Nodes =&gt; RDF::Nodes representing an isomorphic
+    <p>Returns a hash of RDF:Nodes: RDF::Nodes representing an isomorphic
 bijection of this RDF::Enumerable&#39;s to another RDF::Enumerable&#39;s blank
 nodes, or nil if a bijection cannot be found.</p>
 
-<p>Takes a :canonicalize =&gt; true argument.  If true, RDF::Literals will be
+<p>Takes a canonicalize: true argument.  If true, RDF::Literals will be
 canonicalized while producing a bijection.  This results in broader
 matches for isomorphism in the case of equivalent literals with different
 representations.</p>
@@ -304,14 +304,14 @@ representations.</p>
 73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-421df8ead4ec/lib/rdf/isomorphic.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-isomorphic-1018e9dfe946/lib/rdf/isomorphic.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bijection_to'>bijection_to</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_grounded_stmts_match'>grounded_stmts_match</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_grounded_stmts_match'>grounded_stmts_match</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='kw'>do</span> <span class='op'>|</span> <span class='id identifier rubyid_stmt'>stmt</span> <span class='op'>|</span>
-    <span class='id identifier rubyid_stmt'>stmt</span><span class='period'>.</span><span class='id identifier rubyid_has_blank_nodes?'>has_blank_nodes?</span> <span class='op'>||</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_has_statement?'>has_statement?</span><span class='lparen'>(</span><span class='id identifier rubyid_stmt'>stmt</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_stmt'>stmt</span><span class='period'>.</span><span class='id identifier rubyid_node?'>node?</span> <span class='op'>||</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_has_statement?'>has_statement?</span><span class='lparen'>(</span><span class='id identifier rubyid_stmt'>stmt</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_grounded_stmts_match'>grounded_stmts_match</span>
@@ -319,8 +319,8 @@ representations.</p>
 </span>    <span class='comment'># consideration--we could just as well pass in self and other.  But we
 </span>    <span class='comment'># will be iterating over this list quite a bit during the algorithm, so
 </span>    <span class='comment'># we break it down to the parts we&#39;re interested in.
-</span>    <span class='id identifier rubyid_blank_stmts'>blank_stmts</span> <span class='op'>=</span> <span class='id identifier rubyid_find_all'>find_all</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_has_blank_nodes?'>has_blank_nodes?</span> <span class='rbrace'>}</span>
-    <span class='id identifier rubyid_other_blank_stmts'>other_blank_stmts</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_find_all'>find_all</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_has_blank_nodes?'>has_blank_nodes?</span> <span class='rbrace'>}</span>
+</span>    <span class='id identifier rubyid_blank_stmts'>blank_stmts</span> <span class='op'>=</span> <span class='id identifier rubyid_find_all'>find_all</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_node?'>node?</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_other_blank_stmts'>other_blank_stmts</span> <span class='op'>=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_find_all'>find_all</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_node?'>node?</span> <span class='rbrace'>}</span>
 
     <span class='id identifier rubyid_nodes'>nodes</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Isomorphic</span><span class='period'>.</span><span class='id identifier rubyid_blank_nodes_in'>blank_nodes_in</span><span class='lparen'>(</span><span class='id identifier rubyid_blank_stmts'>blank_stmts</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_other_nodes'>other_nodes</span> <span class='op'>=</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Isomorphic</span><span class='period'>.</span><span class='id identifier rubyid_blank_nodes_in'>blank_nodes_in</span><span class='lparen'>(</span><span class='id identifier rubyid_other_blank_stmts'>other_blank_stmts</span><span class='rparen'>)</span>
@@ -352,7 +352,7 @@ representations.</p>
   <div class="discussion">
     <p>Returns <code>true</code> if this RDF::Enumerable is isomorphic with another.</p>
 
-<p>Takes a :canonicalize =&gt; true argument.  If true, RDF::Literals will be
+<p>Takes a canonicalize: true argument.  If true, RDF::Literals will be
 canonicalized while producing a bijection.  This results in broader
 matches for isomorphism in the case of equivalent literals with different
 representations.</p>
@@ -427,7 +427,7 @@ representations.</p>
 31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.1.0/bundler/gems/rdf-isomorphic-421df8ead4ec/lib/rdf/isomorphic.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.2.0/bundler/gems/rdf-isomorphic-1018e9dfe946/lib/rdf/isomorphic.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_isomorphic_with?'>isomorphic_with?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_bijection_to'>bijection_to</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span><span class='rparen'>)</span>
@@ -442,9 +442,9 @@ representations.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Jul 17 11:48:05 2015 by
+  Generated on Tue Dec 22 09:33:23 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.5).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

@@ -17,7 +17,7 @@ describe RDF::Distiller::Application do
   end
 
   describe "/sparql" do
-    before(:all) {@doap = RDF::Repository.new << [RDF::URI("http://example/doap"), RDF.type, RDF::DOAP.to_uri]}
+    before(:all) {@doap = RDF::Repository.new << [RDF::URI("http://example/doap"), RDF.type, RDF::Vocab::DOAP.to_uri]}
     before(:each) {allow(RDF::Repository).to receive(:load).and_return(@doap)}
 
     describe "service_description" do
