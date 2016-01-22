@@ -2,6 +2,7 @@
 require 'sinatra/sparql'
 require 'sinatra/partials'
 require 'sinatra/extensions'
+require 'logger'
 require 'erubis'
 require 'linkeddata'
 require 'rdf/tabular' # experimental
@@ -330,8 +331,12 @@ module RDF::Distiller
 
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
-      @errors, @warnings = [], []
-      reader_opts = options.merge(
+      @errors, @warnings, @info, @debug = [], [], [], []
+      log_dev = StringIO.new
+      logger = Logger.new(log_dev)
+      logger.level = Logger::WARN
+      logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity}: #{msg}\n"}
+       reader_opts = options.merge(
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
           "Cache-Control" => "no-cache"
@@ -342,12 +347,11 @@ module RDF::Distiller
         validate:        params["validate"],
         verify_none:     params["verify_none"],
         vocab_expansion: params["vocab_expansion"],
-        errors:          @errors,
-        warnings:        @warnings,
+        logger:          logger
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
-      reader_opts[:debug] = @debug = [] if params["debug"]
+      logger.level = Logger::DEBUG if params["debug"]
       
       graph = RDF::Repository.new
       in_fmt = params["in_fmt"].to_sym if params["in_fmt"]
@@ -372,14 +376,30 @@ module RDF::Distiller
       else
         graph = ""
       end
-
+      
       request.logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
       graph
     rescue
-      @errors = Array("#{$!.class}: #{$!.message}")
+      @errors << "#{$!.class}: #{$!.message}"
       request.logger.error @errors.first  # to log
       raise
       nil
+    ensure
+      # Extract messages from logger
+      log_dev.rewind
+      log_dev.each_line do |line|
+        level, message = line.split(':', 2)
+        case level
+        when "FATAL", "ERROR"
+          @errors << message
+        when "WARN"
+          @warnings << message
+        when "INFO"
+          @info << message
+        when "DEBUG"
+          @debug << message
+        end
+      end
     end
 
     # Perform a SPARQL query, either on the input URI or the form data

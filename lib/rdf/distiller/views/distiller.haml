@@ -76,19 +76,19 @@
       %textarea.input#content{:cols => 128, :name => :content, :rows => 15}= @content
     %input{:name => :commit, :type => :submit, :value => "Submit"}
 
-- unless Array(@warnings).empty?
-  %div.warnings
-    %h2
-      Warnings
-    - Array(@warnings).each do |warning|
-      %pre= CGI.escapeHTML(warning)
-
 - unless Array(@errors).empty?
   %div.errors
     %h2
       Errors
     - Array(@errors).each do |error|
       %pre= CGI.escapeHTML(error)
+
+- unless Array(@warnings).empty?
+  %div.warnings
+    %h2
+      Warnings
+    - Array(@warnings).each do |warning|
+      %pre= CGI.escapeHTML(warning)
 
 %div.results
   - if @output
@@ -98,10 +98,17 @@
       Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.
     %textarea{:class => params["fmt"], :rows => 20, :cols => 128}= CGI.escapeHTML(@output)
 
-- if @debug
+- unless Array(@info).empty?
+  %div.info
+    %h2
+      Parser Information
+    - Array(@info).each do |warning|
+      %pre= CGI.escapeHTML(warning)
+
+- unless Array(@debug).empty?
   %div.debug
     %h2
-      Parser Debug Information:
+      Parser Debug Information
     %textarea{:rows => 20, :cols => 120}= CGI.escapeHTML(@debug.join("\n"))
 
 %div
