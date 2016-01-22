@@ -153,10 +153,17 @@ module RDF::Distiller
 
     # Handle GET/POST /distiller
     def distil
+      @errors, @warnings, @info, @debug = [], [], [], []
+      log_dev = StringIO.new
+      logger = Logger.new(log_dev)
+      logger.level = Logger::WARN
+      logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity}: #{msg}\n"}
+
       writer_options = {
         standard_prefixes: true,
         prefixes: {},
         base_uri: params["uri"],
+        logger:   logger
       }
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"
 
@@ -190,14 +197,45 @@ module RDF::Distiller
           content
         end
         @output.force_encoding(Encoding::UTF_8) if @output
+
+        # Extract messages from logger
+        log_dev.rewind
+        log_dev.each_line do |line|
+          level, message = line.split(':', 2)
+          case level
+          when "FATAL", "ERROR"
+            @errors << message
+          when "WARN"
+            @warnings << message
+          when "INFO"
+            @info << message
+          when "DEBUG"
+            @debug << message
+          end
+        end
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     rescue
+      # Extract messages from logger
+      @errors << $!.message
+      log_dev.rewind
+      log_dev.each_line do |line|
+        level, message = line.split(':', 2)
+        case level
+        when "FATAL", "ERROR"
+          @errors << message
+        when "WARN"
+          @warnings << message
+        when "INFO"
+          @info << message
+        when "DEBUG"
+          @debug << message
+        end
+      end
       if format != :html || params["raw"]
         status 400
-        body $!.message
+        body @errors.join("\n")
       else
-        @errors = [$!.message]
         haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
       end
     end
@@ -331,11 +369,6 @@ module RDF::Distiller
 
     # Parse the an input file and re-serialize based on params and/or content-type/accept headers
     def parse(options)
-      @errors, @warnings, @info, @debug = [], [], [], []
-      log_dev = StringIO.new
-      logger = Logger.new(log_dev)
-      logger.level = Logger::WARN
-      logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity}: #{msg}\n"}
        reader_opts = options.merge(
         headers:  {
           "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
@@ -346,12 +379,11 @@ module RDF::Distiller
         use_net_http:    true,
         validate:        params["validate"],
         verify_none:     params["verify_none"],
-        vocab_expansion: params["vocab_expansion"],
-        logger:          logger
+        vocab_expansion: params["vocab_expansion"]
       )
       reader_opts.reject! {|k, v| k == :format}
       reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
-      logger.level = Logger::DEBUG if params["debug"]
+      options[:logger].level = Logger::DEBUG if params["debug"]
       
       graph = RDF::Repository.new
       in_fmt = params["in_fmt"].to_sym if params["in_fmt"]
@@ -379,27 +411,6 @@ module RDF::Distiller
       
       request.logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
       graph
-    rescue
-      @errors << "#{$!.class}: #{$!.message}"
-      request.logger.error @errors.first  # to log
-      raise
-      nil
-    ensure
-      # Extract messages from logger
-      log_dev.rewind
-      log_dev.each_line do |line|
-        level, message = line.split(':', 2)
-        case level
-        when "FATAL", "ERROR"
-          @errors << message
-        when "WARN"
-          @warnings << message
-        when "INFO"
-          @info << message
-        when "DEBUG"
-          @debug << message
-        end
-      end
     end
 
     # Perform a SPARQL query, either on the input URI or the form data
