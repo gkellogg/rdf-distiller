@@ -53,13 +53,15 @@ task :doap do
   Dir.glob('vendor/bundler/**/etc/doap.*') do |path|
     begin
       next if path =~ %r(/rdf-\d.*\.(nq|nt)$)
+      next if path.end_with?('metadata.json')
       puts "load #{path}"
       g.load("file:/" + File.expand_path(path))
     rescue
       puts "#{$!}"
     end
   end
-  RDF::NTriples::Writer.open("etc/doap.nt") {|w| w << g}
+  l = Logger.new(STDERR)
+  RDF::NTriples::Writer.open("etc/doap.nt", logger: l) {|w| w << g}
   puts "dumped ntriples"
 
   frame = File.open(File.expand_path("../etc/doap-frame.jsonld", __FILE__))
