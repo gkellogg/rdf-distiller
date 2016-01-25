@@ -200,8 +200,14 @@ module RDF::Distiller
 
         # Extract messages from logger
         log_dev.rewind
+        last_level = nil
         log_dev.each_line do |line|
           level, message = line.split(':', 2)
+          unless %w(FATAL ERROR WARN INFO DEBUG).include?(level)
+            message = [("  " + level), message].compact.join(":")
+            level = last_level
+          end
+          last_level = level
           case level
           when "FATAL", "ERROR"
             @errors << message
@@ -219,8 +225,14 @@ module RDF::Distiller
       # Extract messages from logger
       @errors << $!.message
       log_dev.rewind
+      last_level = nil
       log_dev.each_line do |line|
         level, message = line.split(':', 2)
+        unless %w(FATAL ERROR WARN INFO DEBUG).include?(level)
+          message = [("  " + level), message].compact.join(":")
+          level = last_level
+        end
+        last_level = level
         case level
         when "FATAL", "ERROR"
           @errors << message
