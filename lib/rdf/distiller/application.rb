@@ -162,7 +162,7 @@ module RDF::Distiller
       writer_options = {
         standard_prefixes: true,
         prefixes: {},
-        base_uri: params["uri"],
+        base_uri: (params["uri"] unless params["uri"].to_s.empty?),
         logger:   logger
       }
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"

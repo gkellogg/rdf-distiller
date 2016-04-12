@@ -73,10 +73,12 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      <span class="inheritName"><span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></span>
       
         <ul class="fullTree">
           <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></li>
           
             <li class="next">RDF::Repository</li>
           
@@ -91,14 +93,14 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="Countable.html" title="RDF::Countable (module)">Countable</a></span>, <span class='object_link'><a href="Durable.html" title="RDF::Durable (module)">Durable</a></span>, <span class='object_link'><a href="Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span>, <span class='object_link'><a href="Mutable.html" title="RDF::Mutable (module)">Mutable</a></span>, <span class='object_link'><a href="Queryable.html" title="RDF::Queryable (module)">Queryable</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="Mutable.html" title="RDF::Mutable (module)">Mutable</a></span>, <span class='object_link'><a href="Transactable.html" title="RDF::Transactable (module)">Transactable</a></span></dd>
       
     
   
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -106,6 +108,36 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>An RDF repository.</p>
+
+<p>Repositories support transactions with a variety of ACID semantics:</p>
+
+<p>Atomicity is indicated by <code>#supports?(:atomic_write)</code>. When atomicity is
+supported, writes through <code>#transaction</code>, <code>#apply_changeset</code> and 
+<code>#delete_insert</code> are applied atomically.</p>
+
+<p>Consistency should be guaranteed, in general. Repositories that don&#39;t 
+support consistency, or that have specialized definitions of consistency 
+above those declared by the RDF data model, should advertise this fact in
+their documentation.</p>
+
+<p>Isolation may be supported at various levels, indicated by 
+<code>#isolation_level</code>:</p>
+
+<ul>
+<li><code>:read_uncommitted</code>: Inserts &amp; deletes in an uncommitted transaction 
+ scope may be visible to other transactions (or via <code>#each</code>, etc...)</li>
+<li><code>:read_committed</code>: Inserts &amp; deletes may be visible to other 
+ transactions once committed</li>
+<li><code>:repeatable_read</code>: Phantom reads may be possible</li>
+<li><code>:snapshot</code>: A transaction reads a consistent snapshot of the data. 
+ Write skew anomalies may occur (for various definitions of consistency)</li>
+<li><code>:serializable</code>: A transaction reads a consistent snapshot of the data.
+ When two or more transactions attempt conflicting writes, only one of
+ them may succeed.</li>
+</ul>
+
+<p>Durability is noted via <code>RDF::Durable</code> support and <code>#durable?</code>
+/<code>#nondurable?</code>.</p>
 
 
   </div>
@@ -183,12 +215,34 @@
       
       <pre class="example code"><code><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_clear!'>clear!</span></code></pre>
     
+      
+        <p class="example_title"><div class='inline'><p>Transational read from a repository</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tx'>tx</span><span class='op'>|</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_has_statement?'>has_statement?</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='symbol'>:s</span><span class='comma'>,</span> <span class='symbol'>:p</span><span class='comma'>,</span> <span class='symbol'>:o</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Transational read/write of a repository</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span><span class='lparen'>(</span><span class='label'>mutable:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tx'>tx</span><span class='op'>|</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></code></pre>
+    
   </div>
 
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="AggregateRepo.html" title="RDF::AggregateRepo (class)">AggregateRepo</a></span>, <span class='object_link'><a href="DataObjects/Repository.html" title="RDF::DataObjects::Repository (class)">DataObjects::Repository</a></span>, <span class='object_link'><a href="../SPARQL/Client/Repository.html" title="SPARQL::Client::Repository (class)">SPARQL::Client::Repository</a></span></p>
+  <p class="children"><span class='object_link'><a href="DataObjects/Repository.html" title="RDF::DataObjects::Repository (class)">DataObjects::Repository</a></span>, <span class='object_link'><a href="../SPARQL/Client/Repository.html" title="SPARQL::Client::Repository (class)">SPARQL::Client::Repository</a></span></p>
 </div>
 <h2>Defined Under Namespace</h2>
 <p class="children">
@@ -201,7 +255,25 @@
   
 </p>
 
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="DEFAULT_TX_CLASS-constant" class="">DEFAULT_TX_CLASS =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Transaction</span></pre></dd>
+      
+    </dl>
+  
 
+
+
+  
+  
+  <h3 class="inherited">Constants inherited
+     from <span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Dataset.html#ISOLATION_LEVELS-constant" title="RDF::Dataset::ISOLATION_LEVELS (constant)">Dataset::ISOLATION_LEVELS</a></span></p>
 
 
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
@@ -338,10 +410,10 @@
 
     <ul class="summary">
       
-        <li class="protected ">
+        <li class="public ">
   <span class="summary_signature">
     
-      <a href="#begin_transaction-instance_method" title="#begin_transaction (instance method)">- (RDF::Transaction) <strong>begin_transaction</strong>(graph_name) </a>
+      <a href="#delete_insert-instance_method" title="#delete_insert (instance method)">- (Object) <strong>delete_insert</strong>(deletes, inserts) </a>
     
 
     
@@ -349,36 +421,13 @@
   
   
   
-  <span class="note title protected">protected</span>
   
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Begins a new transaction.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="protected ">
-  <span class="summary_signature">
-    
-      <a href="#commit_transaction-instance_method" title="#commit_transaction (instance method)">- <strong>commit_transaction</strong>(tx) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  <span class="note title protected">protected</span>
   
   
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Commits the given transaction.</p>
+    <span class="summary_desc"><div class='inline'><p>Performs a set of deletes and inserts as a combined operation within a  transaction.</p>
 </div></span>
   
 </li>
@@ -387,7 +436,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Repository) <strong>initialize</strong>(url: nil, title: nil, **options) {|repository| ... }</a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Repository) <strong>initialize</strong>(uri: nil, title: nil, **options) {|repository| ... }</a>
     
 
     
@@ -412,7 +461,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#inspect-instance_method" title="#inspect (instance method)">- (String) <strong>inspect</strong> </a>
+      <a href="#isolation_level-instance_method" title="#isolation_level (instance method)">- (Object) <strong>isolation_level</strong> </a>
     
 
     
@@ -426,7 +475,29 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns a developer-friendly representation of this object.</p>
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#snapshot-instance_method" title="#snapshot (instance method)">- (Dataset) <strong>snapshot</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A queryable snapshot of the repository for isolated reads.</p>
 </div></span>
   
 </li>
@@ -435,7 +506,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#inspect%21-instance_method" title="#inspect! (instance method)">- <strong>inspect!</strong> </a>
+      <a href="#supports%3F-instance_method" title="#supports? (instance method)">- (Boolean) <strong>supports?</strong>(feature) </a>
     
 
     
@@ -449,55 +520,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Outputs a developer-friendly representation of this object to <code>stderr</code>.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="protected ">
-  <span class="summary_signature">
-    
-      <a href="#rollback_transaction-instance_method" title="#rollback_transaction (instance method)">- <strong>rollback_transaction</strong>(tx) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  <span class="note title protected">protected</span>
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Rolls back the given transaction.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#transaction-instance_method" title="#transaction (instance method)">- (self) <strong>transaction</strong>(graph_name = nil) {|tx| ... }</a>
-    
-
-    
-      (also: #transact)
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Executes the given block in a transaction.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns <code>true</code> if this respository supports the given <code>feature</code>.</p>
 </div></span>
   
 </li>
@@ -506,6 +529,72 @@
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Transactable.html" title="RDF::Transactable (module)">Transactable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Transactable.html#commit_transaction-instance_method" title="RDF::Transactable#commit_transaction (method)">#commit_transaction</a></span>, <span class='object_link'><a href="Transactable.html#rollback_transaction-instance_method" title="RDF::Transactable#rollback_transaction (method)">#rollback_transaction</a></span>, <span class='object_link'><a href="Transactable.html#transaction-instance_method" title="RDF::Transactable#transaction (method)">#transaction</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Mutable.html" title="RDF::Mutable (module)">Mutable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Mutable.html#%3C%3C-instance_method" title="RDF::Mutable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="Mutable.html#add_entailment-class_method" title="RDF::Mutable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="Mutable.html#apply_changeset-instance_method" title="RDF::Mutable#apply_changeset (method)">#apply_changeset</a></span>, <span class='object_link'><a href="Mutable.html#clear-instance_method" title="RDF::Mutable#clear (method)">#clear</a></span>, <span class='object_link'><a href="Mutable.html#delete-instance_method" title="RDF::Mutable#delete (method)">#delete</a></span>, <span class='object_link'><a href="Mutable.html#delete_statement-instance_method" title="RDF::Mutable#delete_statement (method)">#delete_statement</a></span>, <span class='object_link'><a href="Mutable.html#delete_statements-instance_method" title="RDF::Mutable#delete_statements (method)">#delete_statements</a></span>, <span class='object_link'><a href="Mutable.html#entail-instance_method" title="RDF::Mutable#entail (method)">#entail</a></span>, <span class='object_link'><a href="Mutable.html#entail%21-instance_method" title="RDF::Mutable#entail! (method)">#entail!</a></span>, <span class='object_link'><a href="Mutable.html#immutable%3F-instance_method" title="RDF::Mutable#immutable? (method)">#immutable?</a></span>, <span class='object_link'><a href="Mutable.html#insert-instance_method" title="RDF::Mutable#insert (method)">#insert</a></span>, <span class='object_link'><a href="Mutable.html#load-instance_method" title="RDF::Mutable#load (method)">#load</a></span>, <span class='object_link'><a href="Mutable.html#method_missing-instance_method" title="RDF::Mutable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="Mutable.html#mutable%3F-instance_method" title="RDF::Mutable#mutable? (method)">#mutable?</a></span>, <span class='object_link'><a href="Mutable.html#respond_to_missing%3F-instance_method" title="RDF::Mutable#respond_to_missing? (method)">#respond_to_missing?</a></span>, <span class='object_link'><a href="Mutable.html#update-instance_method" title="RDF::Mutable#update (method)">#update</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">#alias_method</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="Writable.html#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span>, <span class='object_link'><a href="Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Readable.html" title="RDF::Readable (module)">Readable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Readable.html#readable%3F-instance_method" title="RDF::Readable#readable? (method)">#readable?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Dataset.html#inspect-instance_method" title="RDF::Dataset#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Dataset.html#inspect%21-instance_method" title="RDF::Dataset#inspect! (method)">#inspect!</a></span></p>
 
   
   
@@ -538,52 +627,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util/Aliasing/LateBound.html" title="RDF::Util::Aliasing::LateBound (module)">Util::Aliasing::LateBound</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Util/Aliasing/LateBound.html#alias_method-instance_method" title="RDF::Util::Aliasing::LateBound#alias_method (method)">#alias_method</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Mutable.html" title="RDF::Mutable (module)">Mutable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Mutable.html#%3C%3C-instance_method" title="RDF::Mutable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="Mutable.html#add_entailment-class_method" title="RDF::Mutable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="Mutable.html#clear-instance_method" title="RDF::Mutable#clear (method)">#clear</a></span>, <span class='object_link'><a href="Mutable.html#delete-instance_method" title="RDF::Mutable#delete (method)">#delete</a></span>, <span class='object_link'><a href="Mutable.html#delete_insert-instance_method" title="RDF::Mutable#delete_insert (method)">#delete_insert</a></span>, <span class='object_link'><a href="Mutable.html#delete_statement-instance_method" title="RDF::Mutable#delete_statement (method)">#delete_statement</a></span>, <span class='object_link'><a href="Mutable.html#delete_statements-instance_method" title="RDF::Mutable#delete_statements (method)">#delete_statements</a></span>, <span class='object_link'><a href="Mutable.html#entail-instance_method" title="RDF::Mutable#entail (method)">#entail</a></span>, <span class='object_link'><a href="Mutable.html#entail%21-instance_method" title="RDF::Mutable#entail! (method)">#entail!</a></span>, <span class='object_link'><a href="Mutable.html#immutable%3F-instance_method" title="RDF::Mutable#immutable? (method)">#immutable?</a></span>, <span class='object_link'><a href="Mutable.html#insert-instance_method" title="RDF::Mutable#insert (method)">#insert</a></span>, <span class='object_link'><a href="Mutable.html#load-instance_method" title="RDF::Mutable#load (method)">#load</a></span>, <span class='object_link'><a href="Mutable.html#method_missing-instance_method" title="RDF::Mutable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="Mutable.html#mutable%3F-instance_method" title="RDF::Mutable#mutable? (method)">#mutable?</a></span>, <span class='object_link'><a href="Mutable.html#update-instance_method" title="RDF::Mutable#update (method)">#update</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Writable.html" title="RDF::Writable (module)">Writable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Writable.html#%3C%3C-instance_method" title="RDF::Writable#&lt;&lt; (method)">#<<</a></span>, <span class='object_link'><a href="Writable.html#insert-instance_method" title="RDF::Writable#insert (method)">#insert</a></span>, <span class='object_link'><a href="Writable.html#insert_graph-instance_method" title="RDF::Writable#insert_graph (method)">#insert_graph</a></span>, <span class='object_link'><a href="Writable.html#insert_reader-instance_method" title="RDF::Writable#insert_reader (method)">#insert_reader</a></span>, <span class='object_link'><a href="Writable.html#insert_statement-instance_method" title="RDF::Writable#insert_statement (method)">#insert_statement</a></span>, <span class='object_link'><a href="Writable.html#insert_statements-instance_method" title="RDF::Writable#insert_statements (method)">#insert_statements</a></span>, <span class='object_link'><a href="Writable.html#writable%3F-instance_method" title="RDF::Writable#writable? (method)">#writable?</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Readable.html" title="RDF::Readable (module)">Readable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Readable.html#readable%3F-instance_method" title="RDF::Readable#readable? (method)">#readable?</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Enumerable.html#add_entailment-class_method" title="RDF::Enumerable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>, <span class='object_link'><a href="Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="Enumerable.html#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span>, <span class='object_link'><a href="Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="Enumerable.html#each_term-instance_method" title="RDF::Enumerable#each_term (method)">#each_term</a></span>, <span class='object_link'><a href="Enumerable.html#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span>, <span class='object_link'><a href="Enumerable.html#entail-instance_method" title="RDF::Enumerable#entail (method)">#entail</a></span>, <span class='object_link'><a href="Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="Enumerable.html#enum_term-instance_method" title="RDF::Enumerable#enum_term (method)">#enum_term</a></span>, <span class='object_link'><a href="Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="Enumerable.html#graph_names-instance_method" title="RDF::Enumerable#graph_names (method)">#graph_names</a></span>, <span class='object_link'><a href="Enumerable.html#has_graph%3F-instance_method" title="RDF::Enumerable#has_graph? (method)">#has_graph?</a></span>, <span class='object_link'><a href="Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="Enumerable.html#has_statement%3F-instance_method" title="RDF::Enumerable#has_statement? (method)">#has_statement?</a></span>, <span class='object_link'><a href="Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="Enumerable.html#has_term%3F-instance_method" title="RDF::Enumerable#has_term? (method)">#has_term?</a></span>, <span class='object_link'><a href="Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="Enumerable.html#invalid%3F-instance_method" title="RDF::Enumerable#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">#supports?</a></span>, <span class='object_link'><a href="Enumerable.html#terms-instance_method" title="RDF::Enumerable#terms (method)">#terms</a></span>, <span class='object_link'><a href="Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="Enumerable.html#to_hash-instance_method" title="RDF::Enumerable#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span>, <span class='object_link'><a href="Enumerable.html#valid%3F-instance_method" title="RDF::Enumerable#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="Enumerable.html#validate%21-instance_method" title="RDF::Enumerable#validate! (method)">#validate!</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Enumerable.html#add_entailment-class_method" title="RDF::Enumerable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>, <span class='object_link'><a href="Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="Enumerable.html#each_statement-instance_method" title="RDF::Enumerable#each_statement (method)">#each_statement</a></span>, <span class='object_link'><a href="Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="Enumerable.html#each_term-instance_method" title="RDF::Enumerable#each_term (method)">#each_term</a></span>, <span class='object_link'><a href="Enumerable.html#each_triple-instance_method" title="RDF::Enumerable#each_triple (method)">#each_triple</a></span>, <span class='object_link'><a href="Enumerable.html#entail-instance_method" title="RDF::Enumerable#entail (method)">#entail</a></span>, <span class='object_link'><a href="Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="Enumerable.html#enum_term-instance_method" title="RDF::Enumerable#enum_term (method)">#enum_term</a></span>, <span class='object_link'><a href="Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="Enumerable.html#graph_names-instance_method" title="RDF::Enumerable#graph_names (method)">#graph_names</a></span>, <span class='object_link'><a href="Enumerable.html#has_graph%3F-instance_method" title="RDF::Enumerable#has_graph? (method)">#has_graph?</a></span>, <span class='object_link'><a href="Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="Enumerable.html#has_statement%3F-instance_method" title="RDF::Enumerable#has_statement? (method)">#has_statement?</a></span>, <span class='object_link'><a href="Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="Enumerable.html#has_term%3F-instance_method" title="RDF::Enumerable#has_term? (method)">#has_term?</a></span>, <span class='object_link'><a href="Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="Enumerable.html#invalid%3F-instance_method" title="RDF::Enumerable#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="Enumerable.html#respond_to_missing%3F-instance_method" title="RDF::Enumerable#respond_to_missing? (method)">#respond_to_missing?</a></span>, <span class='object_link'><a href="Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="Enumerable.html#terms-instance_method" title="RDF::Enumerable#terms (method)">#terms</a></span>, <span class='object_link'><a href="Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="Enumerable.html#to_hash-instance_method" title="RDF::Enumerable#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span>, <span class='object_link'><a href="Enumerable.html#valid%3F-instance_method" title="RDF::Enumerable#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="Enumerable.html#validate%21-instance_method" title="RDF::Enumerable#validate! (method)">#validate!</a></span></p>
 
   
   
@@ -613,7 +658,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="RDF::Repository (class)">Repository</a></span></tt>) <strong>initialize</strong>(url: nil, title: nil, **options) {|repository| ... }
+    - (<tt><span class='object_link'><a href="" title="RDF::Repository (class)">Repository</a></span></tt>) <strong>initialize</strong>(uri: nil, title: nil, **options) {|repository| ... }
   
 
   
@@ -714,6 +759,21 @@ only the default graph is supported.</p>
           
         </li>
       
+        <li>
+          <span class="name">:transaction_class</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>DEFAULT_TX_CLASS</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Specifies the RDF::Transaction implementation to use in this Repository.</p>
+</div>
+          
+        </li>
+      
     </ul>
   
 
@@ -752,32 +812,36 @@ only the default graph is supported.</p>
       <pre class="lines">
 
 
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120</pre>
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 151</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>url:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>title:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>uri:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>title:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>with_graph_name:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>with_validity:</span> <span class='kw'>true</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='ivar'>@uri</span>     <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uri</span><span class='rparen'>)</span>
-  <span class='ivar'>@title</span>   <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:title</span><span class='rparen'>)</span>
+  <span class='ivar'>@uri</span>     <span class='op'>=</span> <span class='id identifier rubyid_uri'>uri</span>
+  <span class='ivar'>@title</span>   <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span>
 
   <span class='comment'># Provide a default in-memory implementation:
 </span>  <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:extend</span><span class='comma'>,</span> <span class='const'>Implementation</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span><span class='lparen'>(</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>Repository</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@tx_class</span> <span class='op'>||=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:transaction_class</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='const'>DEFAULT_TX_CLASS</span> <span class='rbrace'>}</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
@@ -846,12 +910,12 @@ only the default graph is supported.</p>
       <pre class="lines">
 
 
-54
-55
-56</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -901,12 +965,12 @@ only the default graph is supported.</p>
       <pre class="lines">
 
 
-67
-68
-69</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span>
   <span class='ivar'>@title</span>
@@ -960,12 +1024,12 @@ only the default graph is supported.</p>
       <pre class="lines">
 
 
-60
-61
-62</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uri'>uri</span>
   <span class='ivar'>@uri</span>
@@ -1067,23 +1131,23 @@ only the default graph is supported.</p>
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91</pre>
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_urls'>urls</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_repository'>repository</span><span class='op'>|</span>
@@ -1111,9 +1175,9 @@ only the default graph is supported.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="begin_transaction-instance_method">
+  <h3 class="signature first" id="delete_insert-instance_method">
   
-    - (<tt><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></tt>) <strong>begin_transaction</strong>(graph_name)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>delete_insert</strong>(deletes, inserts) 
   
 
   
@@ -1121,60 +1185,22 @@ only the default graph is supported.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Begins a new transaction.</p>
-
-<p>Subclasses implementing transaction-capable storage adapters may wish
-to override this method in order to begin a transaction against the
-underlying storage.</p>
+    <p>Performs a set of deletes and inserts as a combined operation within a 
+transaction. The Repository&#39;s transaction semantics apply to updates made
+through this method.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>graph_name</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Mutable.html#delete_insert-instance_method" title="RDF::Mutable#delete_insert (method)">Mutable#delete_insert</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -1182,15 +1208,25 @@ underlying storage.</p>
       <pre class="lines">
 
 
-193
-194
-195</pre>
+195
+196
+197
+198
+199
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 195</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_begin_transaction'>begin_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_graph_name'>graph_name</span><span class='rparen'>)</span>
-  <span class='const'>RDF</span><span class='op'>::</span><span class='const'>Transaction</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>graph:</span> <span class='id identifier rubyid_graph_name'>graph_name</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_insert'>delete_insert</span><span class='lparen'>(</span><span class='id identifier rubyid_deletes'>deletes</span><span class='comma'>,</span> <span class='id identifier rubyid_inserts'>inserts</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>super</span> <span class='kw'>unless</span> <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='symbol'>:atomic_write</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_transaction'>transaction</span><span class='lparen'>(</span><span class='label'>mutable:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_deletes'>deletes</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_deletes'>deletes</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_inserts'>inserts</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_inserts'>inserts</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1198,9 +1234,9 @@ underlying storage.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="commit_transaction-instance_method">
+  <h3 class="signature " id="isolation_level-instance_method">
   
-    - <strong>commit_transaction</strong>(tx)  <span class="extras">(protected)</span>
+    - (<tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>) <strong>isolation_level</strong> 
   
 
   
@@ -1208,47 +1244,19 @@ underlying storage.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Commits the given transaction.</p>
-
-<p>Subclasses implementing transaction-capable storage adapters may wish
-to override this method in order to commit the given transaction to
-the underlying storage.</p>
-
+    
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>tx</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Dataset.html#isolation_level-instance_method" title="RDF::Dataset#isolation_level (method)">Dataset#isolation_level</a></span></li>
+    
+  </ul>
 
 </div><table class="source_code">
   <tr>
@@ -1256,15 +1264,15 @@ the underlying storage.</p>
       <pre class="lines">
 
 
-221
-222
-223</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 214</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_commit_transaction'>commit_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_tx'>tx</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_isolation_level'>isolation_level</span>
+  <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='symbol'>:snapshot</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:repeatable_read</span> <span class='op'>:</span> <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1272,9 +1280,9 @@ the underlying storage.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="inspect-instance_method">
+  <h3 class="signature " id="snapshot-instance_method">
   
-    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>inspect</strong> 
+    - (<tt><span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></tt>) <strong>snapshot</strong> 
   
 
   
@@ -1282,7 +1290,7 @@ the underlying storage.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a developer-friendly representation of this object.</p>
+    <p>A queryable snapshot of the repository for isolated reads.</p>
 
 
   </div>
@@ -1295,258 +1303,87 @@ the underlying storage.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-134
-135
-136</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 134</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
-  <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(%s)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="inspect!-instance_method">
-  
-    - <strong>inspect!</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Outputs a developer-friendly representation of this object to
-<code>stderr</code>.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-143
-144
-145
-146</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 143</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_inspect!'>inspect!</span>
-  <span class='id identifier rubyid_each_statement'>each_statement</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect!'>inspect!</span> <span class='rbrace'>}</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="rollback_transaction-instance_method">
-  
-    - <strong>rollback_transaction</strong>(tx)  <span class="extras">(protected)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Rolls back the given transaction.</p>
-
-<p>Subclasses implementing transaction-capable storage adapters may wish
-to override this method in order to roll back the given transaction in
-the underlying storage.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>tx</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-207
-208
-209</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 207</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_rollback_transaction'>rollback_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_tx'>tx</span><span class='rparen'>)</span>
-  <span class='comment'># nothing to do
-</span><span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="transaction-instance_method">
-  
-    - (<tt>self</tt>) <strong>transaction</strong>(graph_name = nil) {|tx| ... }
-  
-
-  
-    <span class="aliases">Also known as:
-    <span class="names"><span id='transact-instance_method'>transact</span></span>
-    </span>
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Executes the given block in a transaction.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-  <div class="examples">
-    <p class="tag_title">Examples:</p>
-    
-      
-      <pre class="example code"><code><span class='id identifier rubyid_repository'>repository</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tx'>tx</span><span class='op'>|</span>
-  <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span> <span class='lbracket'>[</span><span class='const'>RDF</span><span class='op'>::</span><span class='const'>URI</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://rubygems.org/gems/rdf</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'>RDF</span><span class='op'>::</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RDF.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-<span class='kw'>end</span></code></pre>
-    
-  </div>
-<p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>graph_name</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Graph name on which to run the transaction, use <code>false</code> for the default
-graph_name and <code>nil</code> the entire Repository</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Yields:</p>
-<ul class="yield">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>tx</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Yield Parameters:</p>
-<ul class="yieldparam">
-  
-    <li>
-      
-        <span class='name'>tx</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-<p class="tag_title">Yield Returns:</p>
-<ul class="yieldreturn">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>void</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>ignored</p>
+        <div class='inline'><p>an immutable Dataset containing a current snapshot of
+the Repository contents.</p>
 </div>
       
     </li>
   
 </ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NotImplementedError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+223
+224
+225</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 223</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_snapshot'>snapshot</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#snapshot</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="supports?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>supports?</strong>(feature) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns <code>true</code> if this respository supports the given <code>feature</code>.</p>
+
+<p>Supported features include those from <span class='object_link'><a href="Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">Enumerable#supports?</a></span> along 
+ with the following:</p>
+
+<ul>
+<li><code>:atomic_write</code> supports atomic write in transaction scopes</li>
+<li><code>:snapshots</code> supports creation of immutable snapshots of current 
+   contents via #snapshot.</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
 <p class="tag_title">Returns:</p>
 <ul class="return">
   
     <li>
       
       
-        <span class='type'>(<tt>self</tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>)</span>
       
       
       
@@ -1557,24 +1394,9 @@ graph_name and <code>nil</code> the entire Repository</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="Transaction.html" title="RDF::Transaction (class)">Transaction</a></span></li>
+      <li><span class='object_link'><a href="Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">Enumerable#supports?</a></span></li>
     
   </ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1582,37 +1404,29 @@ graph_name and <code>nil</code> the entire Repository</p>
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178</pre>
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 178</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_transaction'>transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_tx'>tx</span> <span class='op'>=</span> <span class='id identifier rubyid_begin_transaction'>begin_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_graph_name'>graph_name</span><span class='rparen'>)</span>
-  <span class='kw'>begin</span>
-    <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
-      <span class='kw'>when</span> <span class='int'>1</span> <span class='kw'>then</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_tx'>tx</span><span class='rparen'>)</span>
-      <span class='kw'>else</span> <span class='id identifier rubyid_tx'>tx</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_error'>error</span>
-    <span class='id identifier rubyid_rollback_transaction'>rollback_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_tx'>tx</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_error'>error</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_supports?'>supports?</span><span class='lparen'>(</span><span class='id identifier rubyid_feature'>feature</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_feature'>feature</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='kw'>when</span> <span class='symbol'>:graph_name</span>   <span class='kw'>then</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:with_graph_name</span><span class='rbracket'>]</span>
+  <span class='kw'>when</span> <span class='symbol'>:inference</span>    <span class='kw'>then</span> <span class='kw'>false</span>  <span class='comment'># forward-chaining inference
+</span>  <span class='kw'>when</span> <span class='symbol'>:validity</span>     <span class='kw'>then</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:with_validity</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='symbol'>:atomic_write</span> <span class='kw'>then</span> <span class='kw'>false</span>
+  <span class='kw'>when</span> <span class='symbol'>:snapshots</span>    <span class='kw'>then</span> <span class='kw'>false</span>
+  <span class='kw'>else</span> <span class='kw'>false</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_commit_transaction'>commit_transaction</span><span class='lparen'>(</span><span class='id identifier rubyid_tx'>tx</span><span class='rparen'>)</span>
-  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1624,7 +1438,7 @@ graph_name and <code>nil</code> the entire Repository</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Jan 21 18:50:13 2016 by
+  Generated on Mon Apr 11 17:11:43 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>

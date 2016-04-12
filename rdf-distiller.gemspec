@@ -28,9 +28,8 @@ Gem::Specification.new do |s|
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 1.99'
+  s.add_runtime_dependency      "linkeddata",         '~> 2.0'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.4'
-  s.add_runtime_dependency      'sparql',             '~> 1.99'
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 1.4'
@@ -40,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'haml'
   s.add_runtime_dependency      'maruku'
   s.add_runtime_dependency      'json-compare'
-  s.add_runtime_dependency      "rack",               '~> 1.5'
+  s.add_runtime_dependency      "rack",               '~> 1.6'
   s.add_runtime_dependency      'rest-client',        '~> 1.8'
   s.add_runtime_dependency      'rest-client-components', '~> 1.4'
   s.add_runtime_dependency      'rack-cache',         '~> 1.2'
