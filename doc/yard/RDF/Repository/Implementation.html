@@ -79,14 +79,16 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">vendor/bundler/ruby/2.3.0/bundler/gems/rdf-f8c812fad31f/lib/rdf/repository.rb</dd>
+    <dd class="r1 last">vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
+    <p>A default Repository implementation supporting atomic writes and 
+serializable transactions.</p>
+
 
   </div>
 </div>
@@ -100,7 +102,17 @@
     
   </ul>
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Implementation/SerializedTransaction.html" title="RDF::Repository::Implementation::SerializedTransaction (class)">SerializedTransaction</a></span>
+    
+  
+</p>
+
   <h2>Constant Summary</h2>
   
     <dl class="constants">
@@ -119,12 +131,259 @@
 
 
 
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
 
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_changeset-instance_method" title="#apply_changeset (instance method)">- (Object) <strong>apply_changeset</strong>(changeset) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#isolation_level-instance_method" title="#isolation_level (instance method)">- (Object) <strong>isolation_level</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#snapshot-instance_method" title="#snapshot (instance method)">- (Dataset) <strong>snapshot</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A readable &amp; queryable snapshot of the repository for isolated reads.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="apply_changeset-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>apply_changeset</strong>(changeset) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Mutable.html#apply_changeset-instance_method" title="RDF::Mutable#apply_changeset (method)">Mutable#apply_changeset</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+345
+346
+347
+348
+349
+350</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 345</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_changeset'>apply_changeset</span><span class='lparen'>(</span><span class='id identifier rubyid_changeset'>changeset</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='ivar'>@data</span>
+  <span class='id identifier rubyid_changeset'>changeset</span><span class='period'>.</span><span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_del'>del</span><span class='op'>|</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_from'>delete_from</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_del'>del</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_changeset'>changeset</span><span class='period'>.</span><span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ins'>ins</span><span class='op'>|</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_insert_to'>insert_to</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_ins'>ins</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@data</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="isolation_level-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span></tt>) <strong>isolation_level</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Dataset.html#isolation_level-instance_method" title="RDF::Dataset#isolation_level (method)">Dataset#isolation_level</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+354
+355
+356</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 354</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_isolation_level'>isolation_level</span>
+  <span class='symbol'>:serializable</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="snapshot-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></tt>) <strong>snapshot</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A readable &amp; queryable snapshot of the repository for isolated reads.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Dataset.html" title="RDF::Dataset (class)">Dataset</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>an immutable Dataset containing a current snapshot of
+the Repository contents.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../Mutable.html#snapshot-instance_method" title="RDF::Mutable#snapshot (method)">Mutable#snapshot</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+365
+366
+367</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-b402cf35c1d8/lib/rdf/repository.rb', line 365</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_snapshot'>snapshot</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>data:</span> <span class='ivar'>@data</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
     <div id="footer">
-  Generated on Thu Jan 21 18:49:59 2016 by
+  Generated on Mon Apr 11 17:11:28 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.3.0).
 </div>

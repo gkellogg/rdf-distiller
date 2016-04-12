@@ -162,7 +162,7 @@ module RDF::Distiller
       writer_options = {
         standard_prefixes: true,
         prefixes: {},
-        base_uri: (params["uri"] unless params["uri"].empty?),
+        base_uri: (params["uri"] unless params["uri"].to_s.empty?),
         logger:   logger
       }
       writer_options[:format] = params["fmt"] || params["format"] || "turtle"
@@ -192,7 +192,6 @@ module RDF::Distiller
         when RDF::Enumerable
           # For HTML response, the "fmt" attribute may set the type of serialization
           fmt = (writer_options[:format] || (content.contexts.empty? ? "turtle" : "trig")).to_sym
-          require 'byebug'; byebug
           content.dump(fmt, writer_options)
         else
           content
