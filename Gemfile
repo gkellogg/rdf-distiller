@@ -32,22 +32,6 @@ gem 'sparql',             github: "ruby-rdf/sparql", branch: "develop"
 gem 'sparql-client',      github: "ruby-rdf/sparql-client", branch: "develop"
 gem 'sxp',                github: "gkellogg/sxp-ruby"
 
-gem 'rest-client',            '~> 1.8'
-gem 'rest-client-components', '~> 1.4'
-gem 'equivalent-xml'
-gem 'sinatra',                '~> 1.4'
-gem 'sinatra-assetpack',  '~> 0.3.3'
-gem 'erubis',                 '~> 2.7'
-gem 'haml',                   '~> 4.0'
-gem 'maruku'
-gem 'nokogiri',               '~> 1.6'
-gem 'rack',                   '~> 1.5'
-gem 'rack-cache',             '~> 1.2'
-
-gem 'unicorn'
-gem "redcarpet"
-gem "yard"
-
 group :development, :test do
   gem "syntax"
   gem "rake"
