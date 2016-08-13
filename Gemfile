@@ -41,6 +41,5 @@ group :debug do
   gem 'shotgun'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem "wirble"
   gem "byebug"
 end
