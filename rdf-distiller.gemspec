@@ -44,9 +44,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rest-client-components', '~> 1.4'
   s.add_runtime_dependency      'rack-cache',         '~> 1.6'
   s.add_runtime_dependency      'redcarpet',          '~> 3.3'
-  s.add_runtime_dependency      'unicorn',            '~> 5.1'
+  s.add_runtime_dependency      'puma',               '~> 3.6'
 
   # development dependencies
+  s.add_development_dependency  'foreman'
   s.add_development_dependency  'rspec',              '~> 3.5'
   s.add_development_dependency  'rspec-its',          '~> 1.2'
   s.add_development_dependency  'rack-test',          '~> 0.6'
