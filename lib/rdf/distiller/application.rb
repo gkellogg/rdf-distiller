@@ -5,7 +5,7 @@ require 'sinatra/extensions'
 require 'logger'
 require 'erubis'
 require 'linkeddata'
-require 'rdf/tabular' # experimental
+require 'json/ld/preloaded' # Preload certain contexts
 require 'uri'
 require 'haml'
 
