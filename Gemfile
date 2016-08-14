@@ -27,26 +27,11 @@ gem 'rdf-turtle',         github: "ruby-rdf/rdf-turtle", branch: "develop"
 gem 'rdf-vocab',          github: "ruby-rdf/rdf-vocab", branch: "develop"
 gem 'rdf-xsd',            github: "ruby-rdf/rdf-xsd", branch: "develop"
 gem 'json-ld',            github: "ruby-rdf/json-ld", branch: "develop"
+gem 'json-ld-preloaded',  github: "ruby-rdf/json-ld-preloaded", branch: "develop"
 gem 'ld-patch',           github: "ruby-rdf/ld-patch",            branch: "develop"
 gem 'sparql',             github: "ruby-rdf/sparql", branch: "develop"
 gem 'sparql-client',      github: "ruby-rdf/sparql-client", branch: "develop"
-gem 'sxp',                github: "gkellogg/sxp-ruby"
-
-gem 'rest-client',            '~> 1.8'
-gem 'rest-client-components', '~> 1.4'
-gem 'equivalent-xml'
-gem 'sinatra',                '~> 1.4'
-gem 'sinatra-assetpack',  '~> 0.3.3'
-gem 'erubis',                 '~> 2.7'
-gem 'haml',                   '~> 4.0'
-gem 'maruku'
-gem 'nokogiri',               '~> 1.6'
-gem 'rack',                   '~> 1.5'
-gem 'rack-cache',             '~> 1.2'
-
-gem 'unicorn'
-gem "redcarpet"
-gem "yard"
+gem 'sxp',                github: "dryruby/sxp.rb", branch: "develop"
 
 group :development, :test do
   gem "syntax"
@@ -57,6 +42,5 @@ group :debug do
   gem 'shotgun'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem "wirble"
   gem "byebug"
 end

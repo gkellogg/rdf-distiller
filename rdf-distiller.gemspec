@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.test_files         = %w()
   s.has_rdoc           = false
 
-  s.required_ruby_version      = '>= 2.2'
+  s.required_ruby_version      = '= 2.3.1'
   s.requirements               = []
 
   # RDF dependencies
@@ -36,22 +36,24 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'sinatra-assetpack',  '~> 0.3.3'
   
   s.add_runtime_dependency      'erubis',             '~> 2.7'
-  s.add_runtime_dependency      'haml'
-  s.add_runtime_dependency      'maruku'
-  s.add_runtime_dependency      'json-compare'
+  s.add_runtime_dependency      'haml',               '~> 4.0'
+  s.add_runtime_dependency      'maruku',             '~> 0.7'
+  s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      "rack",               '~> 1.6'
   s.add_runtime_dependency      'rest-client',        '~> 1.8'
   s.add_runtime_dependency      'rest-client-components', '~> 1.4'
-  s.add_runtime_dependency      'rack-cache',         '~> 1.2'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.6'
+  s.add_runtime_dependency      'redcarpet',          '~> 3.3'
+  s.add_runtime_dependency      'unicorn',            '~> 5.1'
 
   # development dependencies
-  s.add_development_dependency  'rspec',              '~> 3.0'
-  s.add_development_dependency  'rspec-its',          '~> 1.0'
+  s.add_development_dependency  'rspec',              '~> 3.5'
+  s.add_development_dependency  'rspec-its',          '~> 1.2'
   s.add_development_dependency  'rack-test',          '~> 0.6'
-  s.add_development_dependency  'bundler'
-  s.add_development_dependency  'jsonpath',           '~> 0.5.6'
-  s.add_development_dependency  'nokogiri'
-  s.add_development_dependency  'webmock'
+  s.add_development_dependency  'jsonpath',           '~> 0.5'
+  s.add_development_dependency  'nokogiri',           '~> 1.6'
+  s.add_development_dependency  'webmock',            '~> 1.17'
+  s.add_development_dependency  'yard' ,              '~> 0.9'
 
   s.post_install_message        = nil
 end
