@@ -24,16 +24,16 @@ Gem::Specification.new do |s|
   s.test_files         = %w()
   s.has_rdoc           = false
 
-  s.required_ruby_version      = '= 2.3.1'
+  s.required_ruby_version      = '>= 2.3.1'
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 2.0'
-  s.add_runtime_dependency      'equivalent-xml',     '~> 0.4'
+  s.add_runtime_dependency      "linkeddata",         '~> 2.2'
+  s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 1.4'
-  s.add_runtime_dependency      'sinatra-assetpack',  '~> 0.3.3'
+  s.add_runtime_dependency      'sinatra-assetpack',  '~> 0.3.5'
   
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 4.0'
@@ -52,8 +52,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency  'rspec-its',          '~> 1.2'
   s.add_development_dependency  'rack-test',          '~> 0.6'
   s.add_development_dependency  'jsonpath',           '~> 0.5'
-  s.add_development_dependency  'nokogiri',           '~> 1.6'
-  s.add_development_dependency  'webmock',            '~> 1.17'
+  s.add_development_dependency  'nokogiri',           '~> 1.7'
+  s.add_development_dependency  'webmock',            '~> 2.3'
   s.add_development_dependency  'yard' ,              '~> 0.9'
 
   s.post_install_message        = nil
