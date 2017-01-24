@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="nav_wrap">
-      <iframe id="nav" src="../class_list.html"></iframe>
+      <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
     </div>
 
@@ -58,8 +58,6 @@
 </div>
         <div class="clear"></div>
       </div>
-
-      <iframe id="search_frame" src="../class_list.html"></iframe>
 
       <div id="content"><h1>Exception: RDF::ReaderError
   
@@ -98,7 +96,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.3.0/bundler/gems/rdf-2eb18cc04ec4/lib/rdf/reader.rb</dd>
+    <dd>vendor/bundler/ruby/2.4.0/bundler/gems/rdf-186dd2d04bcb/lib/rdf/reader.rb</dd>
   </dl>
   
 </div>
@@ -196,7 +194,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(message, options = {})  &#x21d2; ReaderError </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(message, token: nil, lineno: nil)  &#x21d2; ReaderError </a>
     
 
     
@@ -228,7 +226,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(message, options = {})  &#x21d2; <tt><span class='object_link'><a href="" title="RDF::ReaderError (class)">ReaderError</a></span></tt> 
+    #<strong>initialize</strong>(message, token: nil, lineno: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="RDF::ReaderError (class)">ReaderError</a></span></tt> 
   
 
   
@@ -258,53 +256,35 @@
   
     <li>
       
-        <span class='name'>options</span>
+        <span class='name'>token</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
       
+        &mdash;
+        <div class='inline'><p>(nil)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>lineno</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>(nil)</p>
+</div>
       
     </li>
   
 </ul>
-
-  
-    
-    
-    
-    
-    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
-    <ul class="option">
-      
-        <li>
-          <span class="name">:token</span>
-          <span class="type">(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
-          <span class="default">
-            
-              &mdash; default:
-              <tt>nil</tt>
-            
-          </span>
-          
-        </li>
-      
-        <li>
-          <span class="name">:lineno</span>
-          <span class="type">(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>)</span>
-          <span class="default">
-            
-              &mdash; default:
-              <tt>nil</tt>
-            
-          </span>
-          
-        </li>
-      
-    </ul>
-  
 
 
 </div><table class="source_code">
@@ -313,18 +293,18 @@
       <pre class="lines">
 
 
-626
-627
-628
-629
-630</pre>
+637
+638
+639
+640
+641</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-2eb18cc04ec4/lib/rdf/reader.rb', line 626</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-186dd2d04bcb/lib/rdf/reader.rb', line 637</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@token</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:token</span><span class='rbracket'>]</span>
-  <span class='ivar'>@lineno</span>     <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:lineno</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='ivar'>@token</span><span class='period'>.</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='kw'>if</span> <span class='ivar'>@token</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:lineno</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>token:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>lineno:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@token</span>      <span class='op'>=</span> <span class='id identifier rubyid_token'>token</span>
+  <span class='ivar'>@lineno</span>     <span class='op'>=</span> <span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='kw'>if</span> <span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:lineno</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -377,12 +357,12 @@
       <pre class="lines">
 
 
-617
-618
-619</pre>
+629
+630
+631</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-2eb18cc04ec4/lib/rdf/reader.rb', line 617</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-186dd2d04bcb/lib/rdf/reader.rb', line 629</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lineno'>lineno</span>
   <span class='ivar'>@lineno</span>
@@ -432,12 +412,12 @@
       <pre class="lines">
 
 
-611
-612
-613</pre>
+623
+624
+625</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.3.0/bundler/gems/rdf-2eb18cc04ec4/lib/rdf/reader.rb', line 611</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-186dd2d04bcb/lib/rdf/reader.rb', line 623</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_token'>token</span>
   <span class='ivar'>@token</span>
@@ -453,9 +433,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Aug 14 13:03:54 2016 by
+  Generated on Tue Jan 24 12:02:09 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.5 (ruby-2.3.1).
+  0.9.8 (ruby-2.4.0).
 </div>
 
     </div>
