@@ -3,33 +3,33 @@
   %p
     Description of a Project information about RDF gems used for the distiller.
   - projects.sort_by {|p| p['doap:name'].to_s}.each do |project|
-    %article{:typeof => "doap:Project", :resource => project['@id']}
-      %h3{:property => "doap:name"}= project['doap:name']
-      %p{:property => "doap:description"}= project['doap:description']
+    %article{typeof: "doap:Project", resource: project['@id']}
+      %h3{property: "doap:name"}= project['doap:name']
+      %p{property: "doap:description"}= project['doap:description']
       - if project["doap:created"]
         %p
           Created:
-          %span{:property => "doap:created", :datatype => "xsd:date"}= project['doap:created']
-      %p{:property => "doap:release", :typeof => "doap:Version"}
+          %span{property: "doap:created", datatype: "xsd:date"}= project['doap:created']
+      %p{property: "doap:release", typeof: "doap:Version"}
         Version:
-        %span{:property => "doap:revision"}
+        %span{property: "doap:revision"}
           = class_version(project['doap:name'])
 
       - if project["doap:homepage"]
         %p
           Project Homepage:
-          %a{:property => "doap:homepage", :href => project['doap:homepage']}
+          %a{property: "doap:homepage", href: project['doap:homepage']}
             = project['doap:homepage']
       - {"dc:creator" => "Creator", "doap:developer" => "Developer", "doap:helper" => "Helper", "doap:implements" => "Specifications Implemented"}.each do |prop, who|
         - next if project[prop].to_a.empty?
         %p
           = "#{who}:"
-        %ul{:rel => prop}
+        %ul{rel: prop}
           - project[prop].each do |el|
             %li
               - if el.is_a?(Hash)
-                %a{:href => el['@id'], :typeof => el['@type']}<
-                  %span{:property => "foaf:name"}= el['foaf:name']
+                %a{href: el['@id'], typeof: el['@type']}<
+                  %span{property: "foaf:name"}= el['foaf:name']
               - else
-                %a{:href => el}= el
+                %a{href: el}= el
                 

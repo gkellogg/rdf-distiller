@@ -32,12 +32,12 @@ describe RDF::Distiller::Application do
     context "serializes graphs" do
       context "with format" do
         {
-          :ntriples => "<http://example/doap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://usefulinc.com/ns/doap#> .",
-          :ttl => %r(<http://example/doap> a doap: .)
+          ntriples: "<http://example/doap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://usefulinc.com/ns/doap#> .",
+          ttl: %r(<http://example/doap> a doap: .)
         }.each do |fmt, expected|
           context fmt do
             it "returns serialization" do
-              get '/sparql', :query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}), :fmt => fmt, :raw => true
+              get '/sparql', query: %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}), fmt: fmt, raw: true
               expect(last_response.body).to eq "" unless last_response.ok?
               expect(last_response.body).to match(expected)
               expect(last_response.content_type).to eq RDF::Format.for(fmt).content_type.first
@@ -54,7 +54,7 @@ describe RDF::Distiller::Application do
         }.each do |content_types, expected|
           context content_types do
             it "returns serialization" do
-              get '/sparql', {:query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o})}, {"HTTP_ACCEPT" => content_types}
+              get '/sparql', {query: %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o})}, {"HTTP_ACCEPT" => content_types}
               expect(last_response.body).to eq "" unless last_response.ok?
               expect(last_response.body).to match(expected)
               expect(last_response.content_type).to eq content_types
@@ -67,13 +67,13 @@ describe RDF::Distiller::Application do
     context "serializes solutions" do
       context "with format" do
         {
-          :json => /\s*"head"/,
-          :html => /<table class="sparql"/,
-          :xml => /<\?xml version/,
+          json: /\s*"head"/,
+          html: /<table class="sparql"/,
+          xml: /<\?xml version/,
         }.each do |fmt, expected|
           context fmt do
             it "returns serialization" do
-              get '/sparql', :query => %(SELECT ?s ?p ?o WHERE {?s ?p ?o}), :fmt => fmt, :raw => true
+              get '/sparql', query: %(SELECT ?s ?p ?o WHERE {?s ?p ?o}), fmt: fmt, raw: true
               expect(last_response.body).to eq "" unless last_response.ok?
               expect(last_response.body).to match(expected)
               expect(last_response.content_type).to include(SPARQL::Results::MIME_TYPES[fmt])
@@ -91,7 +91,7 @@ describe RDF::Distiller::Application do
         }.each do |content_types, expected|
           context content_types do
             it "returns serialization" do
-              get '/sparql', {:query => %(SELECT ?s ?p ?o WHERE {?s ?p ?o}), :raw => true}, {"HTTP_ACCEPT" => content_types}
+              get '/sparql', {query: %(SELECT ?s ?p ?o WHERE {?s ?p ?o}), raw: true}, {"HTTP_ACCEPT" => content_types}
               expect(last_response.body).to match(expected)
               expect(last_response.content_type).to include(content_types)
               expect(last_response.content_length).not_to eq 0
@@ -102,7 +102,7 @@ describe RDF::Distiller::Application do
     end
 
     it "returns sse" do
-      get '/sparql', :query => %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}), :fmt => "sse", :raw => true
+      get '/sparql', query: %(CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}), fmt: "sse", raw: true
       expect(last_response.body).to eq "" unless last_response.ok?
       expect(last_response.body).to eq %((construct ((triple ?s ?p ?o)) (bgp (triple ?s ?p ?o)))\n)
       expect(last_response.content_type).to include("application/sse+sparql-query")

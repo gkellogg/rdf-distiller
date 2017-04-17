@@ -15,7 +15,7 @@ require 'logger'
 set :environment, :test
 
 ::RSpec.configure do |c|
-  c.filter_run :focus => true
+  c.filter_run focus: true
   c.run_all_when_everything_filtered = true
   c.include ::Rack::Test::Methods
 

@@ -62,7 +62,7 @@ module RDF::Test
     helpers do
       # Set cache control
       def set_cache_header(options = {})
-        options = {:max_age => ENV.fetch('max_age', 60*5)}.merge(options)
+        options = {max_age: ENV.fetch('max_age', 60*5)}.merge(options)
         cache_control(:public, :must_revalidate, options)
       end
     end
