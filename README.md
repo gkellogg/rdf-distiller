@@ -66,7 +66,7 @@ Distills between formats supported in [Linked Data][].
 * Setup to run on Heroku.
 * To run locally, do the following: `foreman start`
 
-##Contributing
+## Contributing
 This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange development and release activity. All submissions _must_ be on a feature branch based on the _develop_ branch to ease staging and integration.
 
 * Do your best to adhere to the existing coding conventions and idioms.
@@ -86,7 +86,7 @@ This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange develo
 This is free and unencumbered public domain software. For more information,
 see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 
-##Resources
+## Resources
 
 * gregg@greggkellogg.net
 * <http://github.com/gkellogg/rdf-distiller>
