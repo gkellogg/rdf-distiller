@@ -3,7 +3,11 @@ require 'bundler/setup'
 require 'fileutils'
 require 'yard'
 
-task :yard => [:clean_doc, :readme]
+desc "Build DOAP files and documentation"
+task default: [:doap, :yard]
+
+desc "Build documentation"
+task yard: [:clean_doc, :readme]
 
 YARD::Rake::YardocTask.new do |y|
   y.files = Dir.glob("lib/**/*.rb") +

@@ -11,70 +11,70 @@
 %nav.distiller
   %ul
     %li
-      %a.url{:href => "#url"}
+      %a.url{href: "#url"}
         From URL
     %li
-      %a.input{:href => "#input"}
+      %a.input{href: "#input"}
         From Form Input
-%form{:action => "/distiller", :method => :post, :enctype => "multipart/form-data"}
+%form{action: "/distiller", method: :post, enctype: "multipart/form-data"}
   %fieldset.url.upload.input
     %legend
       Distill RDF Information
     %fieldset.url.upload.input
-      %label{:for => :uri}
+      %label{for: :uri}
         URI
-      %input#uri{:name => :uri, :size => 80, :type => :text, :value => params['uri']}
+      %input#uri{name: :uri, size: 80, type: :text, value: params['uri']}
     %fieldset.url.upload.input
       %legend
         Options
       %p
-        %label{:for => :in_fmt}
+        %label{for: :in_fmt}
           Input Format:
-        %select#in_fmt{:name => :in_fmt}
-          %option.content{:value => :content, :selected => (:selected if params["in_fmt"].to_s == "content")}
+        %select#in_fmt{name: :in_fmt}
+          %option.content{value: :content, selected: (:selected if params["in_fmt"].to_s == "content")}
             Content Detect
           - formats(:reader).map(&:to_s).sort.uniq.each do |sym|
-            %option{:value => sym, :selected => (:selected if params["in_fmt"].to_s == sym.to_s && !@content.to_s.empty?)}=sym
-        %label{:for => :fmt}
+            %option{value: sym, selected: (:selected if params["in_fmt"].to_s == sym.to_s && !@content.to_s.empty?)}=sym
+        %label{for: :fmt}
           Output Format:
-        %select#out_fmt{:name => :fmt}
+        %select#out_fmt{name: :fmt}
           - formats(:writer).map(&:to_s).sort.uniq.each do |sym|
-            %option{:value => sym, :selected => (:selected if params["fmt"].to_s == sym.to_s)}=sym
+            %option{value: sym, selected: (:selected if params["fmt"].to_s == sym.to_s)}=sym
       %p
-        %label{:for => :debug}
+        %label{for: :debug}
           Show Parser debug information:
-        %input#debug{:name => :debug, :type => :checkbox, :value => :true, :checked => params[:debug]}
+        %input#debug{name: :debug, type: :checkbox, value: :true, checked: params[:debug]}
         %br
-        %label{:for => :validate}
+        %label{for: :validate}
           Validate Input:
-        %input#validate{:name => :validate, :type => :checkbox, :value => true, :checked => params[:validate]}
+        %input#validate{name: :validate, type: :checkbox, value: true, checked: params[:validate]}
         %br
-        %label{:for => :vocab_expnsion}
+        %label{for: :vocab_expnsion}
           Expand graph (RDFa only):
-        %input#vocab_expansion{:name => :vocab_expansion, :type => :checkbox, :value => true, :checked => params[:vocab_expansion]}
+        %input#vocab_expansion{name: :vocab_expansion, type: :checkbox, value: true, checked: params[:vocab_expansion]}
         %br
-        %label{:for => :vocab_expnsion}
+        %label{for: :vocab_expnsion}
           Don't Verify SSL:
-        %input#verify_ssl{:name => :verify_none, :type => :checkbox, :value => true, :checked => params["verify_none"]}
+        %input#verify_ssl{name: :verify_none, type: :checkbox, value: true, checked: params["verify_none"]}
         %br
-        %label{:for => :rdfagraph}
+        %label{for: :rdfagraph}
           Output Graph (RDFa only):
-        %select#rdfagraph{:name => :rdfagraph}
+        %select#rdfagraph{name: :rdfagraph}
           - [:output, :processor, :"output,processor"].each do |sym|
-            %option{:value => sym, :selected => (:selected if params["rdfagraph"].to_s == sym.to_s)}=sym
+            %option{value: sym, selected: (:selected if params["rdfagraph"].to_s == sym.to_s)}=sym
         %br
-        %label{:for => :minimal}
+        %label{for: :minimal}
           Minimal Output (Tabular):
-        %input#validate{:name => :minimal, :type => :checkbox, :value => true, :checked => params[:minimal]}
+        %input#validate{name: :minimal, type: :checkbox, value: true, checked: params[:minimal]}
         %br
-        %label{:for => :raw}
+        %label{for: :raw}
           Raw Output:
-        %input#raw{:name => :raw, :type => :checkbox, :value => true}
+        %input#raw{name: :raw, type: :checkbox, value: true}
     %fieldset.input
       %legend
         Markup
-      %textarea.input#content{:cols => 128, :name => :content, :rows => 15}= @content
-    %input{:name => :commit, :type => :submit, :value => "Submit"}
+      %textarea.input#content{cols: 128, name: :content, rows: 15}= @content
+    %input{name: :commit, type: :submit, value: "Submit"}
 
 - unless Array(@errors).empty?
   %div.errors
@@ -96,19 +96,19 @@
       Result
     %p
       Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.
-    %textarea{:class => params["fmt"], :rows => 20, :cols => 128}= CGI.escapeHTML(@output)
+    %textarea{class: params["fmt"], rows: 20, cols: 128}= CGI.escapeHTML(@output)
 
 - unless Array(@info).empty?
   %div.info
     %h2
       Parser Information
-    %textarea{:rows => 20, :cols => 120}= CGI.escapeHTML(@info.join("\n"))
+    %textarea{rows: 20, cols: 120}= CGI.escapeHTML(@info.join("\n"))
 
 - unless Array(@debug).empty?
   %div.debug
     %h2
       Parser Debug Information
-    %textarea{:rows => 20, :cols => 120}= CGI.escapeHTML(@debug.join("\n"))
+    %textarea{rows: 20, cols: 120}= CGI.escapeHTML(@debug.join("\n"))
 
 %div
   %h2
@@ -126,5 +126,5 @@
     - url_params << %(rdfagraph=#{params[:rdfagraph]}) if params[:rdfagraph].to_s != 'output'
     - url_params << %(uri=#{base})
     - url += "?#{url_params.join('&')}" unless url_params.empty?
-    %a{:target => :_blank, :href => url}&=url
+    %a{target: :_blank, href: url}&=url
 

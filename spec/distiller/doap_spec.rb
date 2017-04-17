@@ -27,7 +27,7 @@ describe RDF::Distiller::Application do
         ext = format.file_extension.first
         context "#{sym}" do
           it "gets  with #{sym} format" do
-            get "/doap", :format => sym
+            get "/doap", format: sym
             expect(last_response.body).to eq "" unless last_response.ok?
             expect(last_response.content_type).to include(mime_type(sym))
           end

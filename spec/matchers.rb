@@ -69,11 +69,11 @@ require 'linkeddata'
 
 RSpec::Matchers.define :have_format do |format|
   match do |actual|
-    RDF::Format.for(:sample => actual).should == RDF::Format.for(format)
+    RDF::Format.for(sample: actual).should == RDF::Format.for(format)
   end
 
   failure_message_for_should do |actual|
-    msg = "expected expected format #{format.inspect}, found #{RDF::Format.for(:sample => actual).to_sym.inspect}" +
+    msg = "expected expected format #{format.inspect}, found #{RDF::Format.for(sample: actual).to_sym.inspect}" +
     "\nResult: #{actual}"
   end
 end
