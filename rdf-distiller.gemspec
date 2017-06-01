@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'sinatra-assetpack',  '~> 0.3.5'
   
   s.add_runtime_dependency      'erubis',             '~> 2.7'
-  s.add_runtime_dependency      'haml',               '~> 4.0'
+  s.add_runtime_dependency      'haml',               '~> 5.0'
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      "rack",               '~> 1.6'
@@ -45,6 +45,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rack-cache',         '~> 1.6'
   s.add_runtime_dependency      'redcarpet',          '~> 3.3'
   s.add_runtime_dependency      'puma',               '~> 3.6'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.7'
+  s.add_runtime_dependency      'nokogumbo',          '~> 1.4'
 
   # development dependencies
   s.add_development_dependency  'foreman'
@@ -52,8 +54,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency  'rspec-its',          '~> 1.2'
   s.add_development_dependency  'rack-test',          '~> 0.6'
   s.add_development_dependency  'jsonpath',           '~> 0.5'
-  s.add_development_dependency  'nokogiri',           '~> 1.7'
-  s.add_development_dependency  'nokogumbo',          '~> 1.4'
   s.add_development_dependency  'webmock',            '~> 2.3'
   s.add_development_dependency  'yard' ,              '~> 0.9'
 
