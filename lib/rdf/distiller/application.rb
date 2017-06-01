@@ -178,7 +178,7 @@ module RDF::Distiller
         root = request.url[0,request.url.index(request.path)]
         haml_input[:doc] = haml_input[:doc].gsub(/--root--/, root)
         writer_options[:haml] = haml_input
-        writer_options[:haml_options] = {ugly: false}
+        writer_options[:haml_options] = {}
       end
       settings.sparql_options.replace(writer_options.merge(content_type: content_type))
 
@@ -287,7 +287,7 @@ module RDF::Distiller
         root = request.url[0,request.url.index(request.path)]
         haml[:doc] = haml[:doc].gsub(/--root--/, root)
         writer_options[:haml] = haml
-        writer_options[:haml_options] = {ugly: false}
+        writer_options[:haml_options] = {}
       end
       writer_options.merge!(content_type: content_type)
 
