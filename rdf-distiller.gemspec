@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'redcarpet',          '~> 3.3'
   s.add_runtime_dependency      'puma',               '~> 3.6'
   s.add_runtime_dependency      'nokogiri',           '~> 1.7'
-  s.add_runtime_dependency      'nokogumbo',          '~> 1.4'
+  s.add_runtime_dependency      'nokogumbo',          '= 1.4.11'
 
   # development dependencies
   s.add_development_dependency  'foreman'
