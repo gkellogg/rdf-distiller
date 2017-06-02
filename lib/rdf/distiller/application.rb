@@ -501,7 +501,7 @@ module RDF::Distiller
 
     private
     def format_version(format)
-      if %w(RDF::NTriples::Format RDF::NQuads::Format).include?(format.to_s)
+      if %w(RDF::NTriples::Format RDF::NQuads::Format RDF::Vocabulary).include?(format.to_s)
         return RDF::VERSION
       else
         format.to_s.split('::')[0..-2].inject(Kernel) {|mod, name| mod.const_get(name)}.const_get('VERSION')
