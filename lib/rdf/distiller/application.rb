@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
-require 'sinatra/partials'
 require 'sinatra/asset_pipeline'
 require 'sprockets-helpers'
 require 'uglifier'
@@ -19,7 +18,6 @@ module RDF::Distiller
 
     configure do
       register Sinatra::SPARQL
-      helpers Sinatra::Partials
       set :root, APP_DIR
       set :public_folder, PUB_DIR
       set :views, ::File.expand_path('../views',  __FILE__)
