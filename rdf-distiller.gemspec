@@ -33,18 +33,22 @@ Gem::Specification.new do |s|
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 1.4'
-  s.add_runtime_dependency      'sinatra-assetpack',  '~> 0.3.5'
-  
+  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 1.0'
+  s.add_runtime_dependency      'sass',               '~> 3.4'
+  s.add_runtime_dependency      'sprockets-helpers',  '~> 1.2'
+  s.add_runtime_dependency      'uglifier',           '~> 3.2'
+
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 5.0'
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
+  s.add_runtime_dependency      'json-ld-preloaded',  '~> 2.0'
   s.add_runtime_dependency      "rack",               '~> 1.6'
   s.add_runtime_dependency      'rest-client',        '~> 1.8'
   s.add_runtime_dependency      'rest-client-components', '~> 1.4'
   s.add_runtime_dependency      'rack-cache',         '~> 1.6'
   s.add_runtime_dependency      'redcarpet',          '~> 3.3'
-  s.add_runtime_dependency      'puma',               '~> 3.6'
+  s.add_runtime_dependency      'puma',               '~> 3.7'
   s.add_runtime_dependency      'nokogiri',           '~> 1.7'
   s.add_runtime_dependency      'nokogumbo',          '= 1.4.11'
 

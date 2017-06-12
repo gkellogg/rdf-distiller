@@ -1,7 +1,13 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'sinatra/asset_pipeline/task'
+require 'restclient/components'
+require 'rack/cache'
+require 'rdf/distiller'
 require 'fileutils'
 require 'yard'
+
+Sinatra::AssetPipeline::Task.define! RDF::Distiller::Application
 
 desc "Build DOAP files and documentation"
 task default: [:doap, :yard]
