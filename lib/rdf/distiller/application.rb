@@ -96,6 +96,7 @@ module RDF::Distiller
     end
 
     after do
+      headers 'Access-Control-Allow-Origin' => '*'
       msg = "Status: #{response.status} (#{request.request_method} #{request.path_info}), Content-Type: #{response.content_type}"
       msg += ", Location: #{response.location}" if response.location
       request.logger.info msg
