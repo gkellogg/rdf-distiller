@@ -3,7 +3,7 @@
   %head
     %meta{"http-equiv" => "Content-Type", content: "text/html;charset=utf-8"}
     %title= title
-    %link{rel: "stylesheet", href: "/css/main.css", type: "text/css"}
+    %link{rel: "stylesheet", href: stylesheet_path('application'), type: "text/css"}
     %script{type: 'text/javascript', charset: "utf-8", src: "https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -22,17 +22,8 @@
         $('nav.main a').removeClass('selected');
         $('nav.main a[href="' + href + '"]').addClass('selected');
       });
-    = partial "#{head}_head".to_sym rescue nil
+    = erb "_#{head}_head".to_sym, layout: false rescue nil
   %body
-    <!-- Google Tag Manager -->
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NZ49TR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-NZ49TR');</script>
-    <!-- End Google Tag Manager -->
-    = partial :header
+    = erb :_header, layout: false
     = yield
-    = partial :footer
+    = erb :_footer, layout: false

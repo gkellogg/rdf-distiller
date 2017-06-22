@@ -1,6 +1,4 @@
 require 'sinatra'
-require 'sinatra/assetpack'
-require 'sinatra/extensions'
 require 'digest/sha1'
 
 module RDF::Test
@@ -25,27 +23,9 @@ module RDF::Test
         metastore:   "file:" + ::File.join(APP_DIR, "cache/meta"),
         entitystore: "file:" + ::File.join(APP_DIR, "cache/body")
 
-      register Sinatra::AssetPack
-
       mime_type :jsonld, "application/ld+json"
       mime_type :sparql, "application/sparql-query"
       mime_type :ttl, "text/turtle"
-
-      # Asset pipeline
-      assets do
-        serve '/js', from: 'assets/js'
-        serve '/css', from: 'assets/css'
-        #serve '/images', from: 'assets/images'
-
-        css :app, %w(/css/application.css)
-        js :app, %w(
-          /js/application.js
-        )
-
-        # Skip compression
-        #js_compression  :jsmin
-        #css_compression :simple
-      end
     end
 
     configure :development do
