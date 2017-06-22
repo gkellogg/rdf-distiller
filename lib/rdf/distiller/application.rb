@@ -32,9 +32,10 @@ module RDF::Distiller
         entitystore: "file:" + ::File.join(APP_DIR, "cache/body")
 
       mime_type :jsonld, "application/ld+json"
+      mime_type :normalize, "application/normalized+n-quads"
       mime_type :sparql, "application/sparql-query"
       mime_type :ttl, "text/turtle"
-      mime_type "sse", "application/sse+sparql-query"
+      mime_type :sse, "application/sse+sparql-query"
 
       # Asset pipeline
       set :digest_assets, false
