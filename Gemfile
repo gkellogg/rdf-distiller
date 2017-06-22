@@ -28,18 +28,16 @@ gem 'rdf-xsd',            github: "ruby-rdf/rdf-xsd", branch: "develop"
 gem 'json-ld',            github: "ruby-rdf/json-ld", branch: "develop"
 gem 'json-ld-preloaded',  github: "ruby-rdf/json-ld-preloaded", branch: "develop"
 gem 'ld-patch',           github: "ruby-rdf/ld-patch",            branch: "develop"
-gem 'sparql',             github: "ruby-rdf/sparql", branch: "develop"
+gem 'sparql', path: '../sparql'
+#gem 'sparql',             github: "ruby-rdf/sparql", branch: "develop"
 gem 'sparql-client',      github: "ruby-rdf/sparql-client", branch: "develop"
 gem 'sxp',                github: "dryruby/sxp.rb", branch: "develop"
-
-group :development, :test do
-  gem "syntax"
-  gem "rake"
-end
+gem "syntax"
+gem "rake"
+gem 'better_errors'
+gem 'binding_of_caller'
 
 group :debug do
   gem 'shotgun'
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem "byebug"
 end
