@@ -1,0 +1,196 @@
+<%- params['fmt'] = :trig -%>
+<div ng-controller="DistillerController" class="container-fluid">
+  <div class="lighter">
+    <p>RDF.rb is a <span property="doap:programming-language">Ruby</span> Gem
+      implementing RDF graphs, readers and writers to help integrate semantic technologies into Ruby projects.</p>
+    <p>The distiller implements different commands, accepting different file inputs and options.</p>
+    <p class="bg-danger">
+      This is an experminental update to the distiller; there are likely bugs. This version now supports JSON-LD specific commands for performing expansion, compaction and framing. Please file bugs on <a href="https://github.com/gkellogg/rdf-distiller/issues" target="_blank">GitHub</a>.
+    </p>
+    <ul class="nav nav-tabs distiller" id="distillerNav">
+      <li role="presentation"
+          ng-repeat="cmd in commands">
+        <a href=""
+           ng-class="{url: true, active: cmd === options.command}"
+           aria-controls="distil"
+           role="tab"
+           data-toggle="tab"
+           ng-click="update(cmd)">
+         {{cmd}}
+        </a>
+      </li>
+    </ul>
+    <form id="distiller_input" aria-describedby="#form-desc">
+      <p id="form-desc" class="form-text" ng-model="options.description">{{description}}.</p>
+      <div class="row">
+        <fieldset ng-class="useAlt ? 'col-md-6' : 'col-md-12'">
+          <div class="row">
+            <legend class="col-md-7">Input</legend>
+            <div class="pull-right col-md-5">
+              <button type="button" class="btn btn-default"
+                      title="Load remote document"
+                      area-label="Remote Resource"
+                      ng-click="load(options.url, 'input')">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+              </button>
+              <input type="url" placeholder="Document URL" ng-model="options.url"/>
+            </div>
+          </div>
+          <div class="row">
+            <textarea id="urlInput" class="col-md-12"
+                      ng-model="options.input"
+                      placeholder="Enter your markup here..." rows="10"></textarea>
+          </div>
+        </fieldset>
+        <span ng-repeat="opt in orderedOpts | filter: {control: 'url2'}">
+          <button class="btn btn-default btn-disappear {{opt.use}}" type="button"
+                  data-toggle="collapse"
+                  data-target="#{{opt.symbol}}Fieldset"
+                  aria-expanded="false"
+                  aria-controls="{{opt.symbol}}Fieldset"
+                  ng-show="!options[opt.symbol] && !options[opt.symbol + 'Input'] && opt.use !== 'removed'">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            {{opt.symbol}}
+          </button>
+          <fieldset id="{{opt.symbol}}Fieldset" class="col-md-6"
+                    ng-class="{collapse: !options[opt.symbol] && !options[opt.symbol + 'Input']}"
+                    ng-show="opt.use !== 'removed'">
+            <div class="row">
+              <legend class="col-md-7 {{opt.use}}" title="{{opt.description}}">
+                {{opt.symbol}}
+                <a data-toggle="collapse"
+                   href="#{{opt.symbol}}Fieldset"
+                   aria-expanded="true"
+                   aria-controls="{{opt.symbol}}Fieldset"
+                   ng-show="!options[opt.symbol] && !options[opt.symbol + 'Input']">
+                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                </a>
+              </legend>
+              <div class="pull-right col-md-5">
+                <button type="button" class="btn btn-default {{opt.use}}"
+                        title="Load {{opt.symbol}} document"
+                        area-label="Additional Resource"
+                        ng-click="load(options[opt.symbol], opt.symbol + 'Input')"
+                        ng-disabled="opt.use == 'disabled'">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                </button>
+                <input type="url" class="{{opt.use}}"
+                       placeholder="{{opt.label}} URL"
+                       ng-model="options[opt.symbol]"/
+                       ng-disabled="opt.use == 'disabled'">
+              </div>
+            </div>
+            <div class="row">
+              <textarea id="{{opt.symbol}}Input" class="col-md-12 {{opt.use}}"
+                        ng-model="options[opt.symbol + 'Input']"
+                        placeholder="Enter your markup here..."
+                        rows="10"
+                        ng-disabled="opt.use == 'disabled'"></textarea>
+            </div>
+          </fieldset>
+        </span>
+      </div>
+      <button type="button" class="row btn btn-primary" ng-click="distil()" area-label="Submit">Submit</button>
+      <div class="row">
+        <legend>Options</legend>
+        <fieldset class="col-md-12">
+          <!-- select -->
+          <div class="col-md-4 form-inline"
+               ng-repeat="opt in orderedOpts | filter: {control: 'select'}"
+               ng-show="opt.use !== 'removed'">
+            <label class="{{opt.use}}" for="{{opt.symbol}}" title="{{opt.description}}">{{opt.symbol}}</label>
+            <select class="{{opt.use}} form-control form-control-sm"
+                    name="{{opt.symbol}}"
+                    ng-model="options[opt.symbol]"
+                    ng-change="update(options.command)"
+                    ng-disabled="opt.use == 'disabled'">
+              <option value="" ng-selected="{{opt.symbol}} === ''"></option>
+              <option ng-repeat="o in opt.datatype"
+                      ng-value="o"
+                      ng-selected="{{opt.symbol}} === {{o}}">{{o}}</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset class="col-md-12">
+          <!-- text -->
+          <div class="col-md-4 form-inline"
+               ng-repeat="opt in orderedOpts | filter: {control: 'text'}"
+               ng-show="opt.use !== 'removed'">
+            <label class="{{opt.use}}" for="{{opt.symbol}}" title="{{opt.description}}">{{opt.symbol}}</label>
+            <input class="{{opt.use}} form-control form-control-sm"
+                   type="text"
+                   name="{{opt.symbol}}"
+                   ng-model="options[opt.symbol]"
+                   ng-disabled="opt.use == 'disabled'"/>
+          </div>
+        </fieldset>
+        <fieldset class="col-md-12">
+          <!-- checkbox -->
+          <div class="col-md-3 form-check form-check-inline"
+               ng-repeat="opt in orderedOpts | filter: {control: 'checkbox'}"
+               ng-show="opt.use !== 'removed'">
+            <label class="{{opt.use}} form-check-label" for="{{opt.symbol}}" title="{{opt.description}}">
+              <input class="{{opt.use}} form-check"
+                     type="checkbox"
+                     name="{{opt.symbol}}"
+                     ng-model="options[opt.symbol]"
+                     ng-disabled="opt.use == 'disabled'"/>
+              {{opt.symbol}}
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  </div>
+
+  <div ng-show="loading">
+    Loading results...
+  </div>
+
+  <div class="results" ng-show="result">
+    <h2>Results:</h2>
+    <p>Note, to see result directly, such as formatted HTML for RDFa output, choose the 'Raw Output' option above.</p>
+    <p ng-show="!result.serialized">No RDF data detected.</p>
+    <pre contenteditable="true" ng-bind="result.serialized"></pre>
+  </div>
+
+  <div class="statistics" ng-show="result.statistics">
+    <h2>Parser statistics</h2>
+    <table class="stats table table-condensed">
+      <tbody>
+        <tr><td>Reader</td><td>{{result.statistics.reader}}</td></tr>
+        <tr><td>Statements</td><td>{{result.statistics.count}}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="messages" ng-show="result.messages">
+    <h2>Distiller Messages</h2>
+    <div class="sect" ng-repeat="(sect, subsects) in result.messages">
+      <h3>{{sect}}</h3>
+      <div class="subsect" ng-repeat="(subsect, messages) in subsects">
+        <h4>{{subsect}}</h4>
+        <div class="content" contenteditable="true">
+          <div class="message" ng-repeat="message in messages track by $index">
+            {{message}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="result.debug">
+    <h2>Debug Information</h2>
+  <textarea rows="20" cols="120">
+    {{result.debug}}
+  </textarea>
+  </div>
+
+  <div class="alternate" ng-show="alternate">
+    <h2>Alternative access to the Distiller</h2>
+    <p>The distiller URI may be used directly with an HTML GET by passing the source URI and other options as parameters:</p>
+    <pre class="alt_access">
+      <a href="{{alternate}}" target: "_blank">{{alternate}}</a>
+    </pre>
+  </div>
+</div>

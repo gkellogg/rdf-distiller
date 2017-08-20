@@ -37,6 +37,15 @@ gem "rake"
 gem 'better_errors'
 gem 'binding_of_caller'
 
+# Becuase rest-client-commonents doesn't seem like it's going to be updated:
+gem 'rest-client-components', github: "amatriain/rest-client-components", branch: "rest-client-2-compatibility"
+
+# Until Tilt is updated to remove (issue #316)
+gem 'tilt',               github: "rtomayko/tilt"
+
+# Until sinatra-asset-pipline is updated for Sinatra 2.0
+gem 'sinatra-asset-pipeline', github: "gkellogg/sinatra-asset-pipeline", branch: "sinatra-2"
+
 group :debug do
   gem 'shotgun'
   gem "byebug"

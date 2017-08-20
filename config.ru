@@ -13,8 +13,8 @@ set :environment, (ENV['RACK_ENV'] || 'production').to_sym
 
 if ENV['RACK_ENV'] == 'production'
   use Rack::Cache,
-    :verbose     => true,
-    :metastore   => "file:" + File.expand_path("../cache/meta", __FILE__),
+    verbose:    true,
+    metastore:   "file:" + File.expand_path("../cache/meta", __FILE__),
     entitystore: "file:" + File.expand_path("../cache/body", __FILE__)
 end
 

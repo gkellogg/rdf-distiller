@@ -1,12 +1,14 @@
 # -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
 require 'sinatra/asset_pipeline'
+require 'rack/protection'
 require 'sprockets-helpers'
 require 'uglifier'
 require 'sass'
 require 'logger'
 require 'erubis'
 require 'linkeddata'
+require 'rdf/cli'
 require 'json/ld/preloaded' # Preload certain contexts
 require 'uri'
 require 'haml'
@@ -18,12 +20,17 @@ module RDF::Distiller
 
     configure do
       register Sinatra::SPARQL
+      unless test?
+        enable :sessions
+        set :session_secret, ENV.fetch('SESSION_SECRET', "rdf-distiller")
+        use Rack::Protection
+      end
       set :root, APP_DIR
       set :public_folder, PUB_DIR
       set :views, ::File.expand_path('../views',  __FILE__)
       set :app_name, "RDF Distiller"
       enable :logging
-      disable :raise_errors, :show_exceptions if settings.environment == :production
+      disable :raise_errors, :show_exceptions if settings.production?
 
       # Cache client requests
       RestClient.enable Rack::Cache,
@@ -72,7 +79,7 @@ module RDF::Distiller
       set :logging, ::Logger.new($stdout)
       require "better_errors"
       use BetterErrors::Middleware
-      BetterErrors.application_root = File.expand_path("../../../..", __FILE__)
+      BetterErrors.application_root = APP_DIR
     end
 
     configure :test do
@@ -87,13 +94,37 @@ module RDF::Distiller
         options = {max_age: ENV.fetch('max_age', 60*5)}.merge(options)
         cache_control(:public, :must_revalidate, options)
       end
+
+      def active_page?(path='')
+        request.path_info.start_with?("/#{path}") ? 'active': nil
+      end
+
+      ##
+      # Lookup extension class version
+      #
+      # @param [String] class_name
+      # @return [String]
+      def class_version(str)
+
+        str = case str
+        when "RDF.rb"       then "RDF"
+        when "SXP for Ruby" then "SXP"
+        when "ebnf"         then "EBNF"
+        else str
+        end
+
+        "#{str.sub('.rb', '')}::VERSION".split('::').inject(Object) do |mod, class_name|
+          mod.const_get(class_name)
+        end.to_s
+      rescue
+        "???"
+      end
     end
 
     before do
       request.logger.level = Logger::DEBUG unless settings.environment == :production
       request.logger.info "#{request.request_method} [#{request.path_info}], " +
-        params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}" unless k.to_s == "content"}.join(" ") +
-        "#{params.inspect}"
+        params.merge(Accept: request.accept.map(&:to_s)).map {|k,v| "#{k}=#{v}" unless k.to_s == "content"}.join(" ")
     end
 
     after do
@@ -103,6 +134,11 @@ module RDF::Distiller
       request.logger.info msg
     end
 
+    # Get "/" either returns the main linter page or linted markup
+    #
+    # @method get_root
+    # @overload get "/", params
+    # @see {#distil}
     get '/' do
       cache_control :public, :must_revalidate, max_age: 60
       result = erb :index, locals: {title: "Ruby Linked Data Service"}
@@ -110,13 +146,16 @@ module RDF::Distiller
       result
     end
 
-    get '/about.?:format?' do
-      cache_control :public, :must_revalidate, max_age: 60
-      haml :about, locals: {title: "About the Ruby Linked Data Service"}
+    get '/about' do
+      set_cache_header
+      erb :about, locals: {title: "About the Ruby Linked Data Service"}
+    end
+    get '/about/' do
+      redirect '/about'
     end
 
     get '/doap.?:format?' do
-      cache_control :public, :must_revalidate, max_age: 60
+      set_cache_header
       case format
       when :nt, :ntriples
         f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
@@ -139,7 +178,7 @@ module RDF::Distiller
           p['dc:creator'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
           p['doap:helper'].map! {|u| u.is_a?(String) && devs.has_key?(u) ? devs[u] : u}
         end
-        haml :doap, locals: {
+        erb :doap, locals: {
           title:    "Project Information on included Gems",
           projects: projects
         }
@@ -150,99 +189,149 @@ module RDF::Distiller
       end
     end
 
+    # Get "/distiller" either returns the main distiller page or distilled markup.
+    #
+    # When JSON is requested, returns data intended for the single-page application.
+    #
+    # @method get_distil
+    # @overload get "/distiller", params
+    # @see {#distil}
     get '/distiller' do
-      cache_control :public, :must_revalidate, max_age: 60
-      distil
+      set_cache_header
+      if request.accept?('text/html') && !params.has_key?('raw')
+        raw_opt = {
+          symbol: :raw,
+          control: :checkbox,
+          description: "Return raw results directly through the browser."
+        }
+        # Return application
+        erb :distiller, locals: {
+          head: :distiller,
+          root: url("/"),
+          title: "Ruby Distiller",
+          command_data: RDF::CLI.commands(format: :json).to_json,
+          option_data:  RDF::CLI.options([], format: :json).unshift(raw_opt).to_json,
+          input_format_option_data: RDF::Reader.each.inject({}) {|memo, r| memo.merge(r.to_sym => r.options.map(&:to_hash))}.to_json,
+          output_format_option_data: RDF::Writer.each.inject({}) {|memo, w| memo.merge(w.to_sym => w.options.map(&:to_hash))}.to_json
+        }
+      elsif request.accept?('application/json') && request.xhr? && !params.has_key?('raw')
+        # Return distilled input
+        content_type :json
+        distil(params).to_json
+      else
+        # Return raw content
+        hash = distil(params)
+        if hash[:format]
+          format hash[:format]
+          hash[:serialized]
+        else
+          content_type :txt
+          hash[:messages][:error].join("\n")
+        end
+      end
     end
 
+    # POST "/distiller" returns distilled markup as JSON
+    #
+    # @method post_distil
+    # @overload post "/distiller", params
+    # @see {#distil}
     post '/distiller' do
-      distil
-    end
-    
-    get '/sparql' do
-      cache_control :public, :must_revalidate, max_age: 60
-      sparql
+      payload = Sinatra::IndifferentHash.new.merge(::JSON.parse(request.body.read))
+      content_type :json
+      distil(payload).to_json
     end
 
-    post '/sparql' do
-      sparql
+    # GET "/distiller/load" retrieves and returns a remote document
+    get '/distiller/load' do
+      begin
+        set_cache_header
+        content_type :text
+        remote_doc = RDF::Util::File.open_file(params[:url])
+        remote_doc.read
+      rescue
+        "Failed to load file '#{params[:url]}': #{$!.message}"
+      end
     end
 
     private
 
-    # Handle GET/POST /distiller
-    def distil
-      @errors, @warnings, @info, @debug = [], [], [], []
+    # Handle GET/POST /distiller returning either a raw RDF format, or JSON
+    # @param {Hash} params
+    # @option params [String] :base_uri
+    #   Base URI for decoding markup, defaluts to `:url` if present
+    # @option params [String] :content
+    #   Markup specified inline
+    # @option params [String] :datafile
+    #   Location of uploaded file containing markup
+    # @option params [Boolean] :debug
+    #   Return verbose debug output
+    # @option params [String] :format
+    #   Format to use when parsing file
+    # @option params [String] :url
+    #   Location of resource containing markup
+    # @option params [Boolean] :validate
+    #   Perform strict validation of markup
+    def distil(params)
+      messages, json_result, statistics = {}, {}, {}
       log_dev = StringIO.new
       logger = Logger.new(log_dev)
       logger.level = Logger::WARN
       logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity}: #{msg}\n"}
 
-      writer_options = {
-        standard_prefixes: true,
-        prefixes: {},
-        base_uri: (params["uri"] unless params["uri"].to_s.empty?),
-        logger:   logger
-      }
-      writer_options[:format] = params["fmt"] || params["format"] || "turtle"
+      command = params.delete('command') || 'serialize'
+      url = params.delete('url')
+      params['base_uri'] ||= url
+      params['evaluate'] ||= params.delete('input')
 
-      content = parse(writer_options)
-      # Hack: if the graph size is too big, use streaming writer, if available
-      writer_options[:stream] = true if content.subjects.count > 1000
-      request.logger.info "distil content: #{content.class}, as type #{(writer_options[:format] || format).inspect}, stream: #{writer_options[:stream]}"
-
-      if writer_options[:format].to_s == "rdfa"
-        # If the format is RDFa, use specific HAML writer
-        haml_input = DISTILLER_HAML.dup
-        root = request.url[0,request.url.index(request.path)]
-        haml_input[:doc] = haml_input[:doc].gsub(/--root--/, root)
-        writer_options[:haml] = haml_input
-        writer_options[:haml_options] = {}
+      # Transform other properties ending with Input to the base version, wrapping in a StringIO.
+      params.keys.select {|k| k.end_with?('Input')}.each do |input_key|
+        key = input_key[0..-6]
+        params[key] = StringIO.new(params.delete(input_key))
       end
-      settings.sparql_options.replace(writer_options.merge(content_type: content_type))
 
-      if format != :html || params["raw"]
-        format writer_options[:format]
-        settings.sparql_options.merge!(format: format, content_type: content_type)
-        # Return distilled content as is
-        content
-      else
-        @output = case content
-        when RDF::Enumerable
-          # For HTML response, the "fmt" attribute may set the type of serialization
-          fmt = (writer_options[:format] || (content.contexts.empty? ? "turtle" : "trig")).to_sym
-          content.dump(fmt, writer_options)
-        else
-          content
-        end
-        @output.force_encoding(Encoding::UTF_8) if @output
-
-        # Extract messages from logger
-        log_dev.rewind
-        last_level = nil
-        log_dev.each_line do |line|
-          level, message = line.split(':', 2)
-          unless %w(FATAL ERROR WARN INFO DEBUG).include?(level)
-            message = [("  " + level), message].compact.join(":")
-            level = last_level
-          end
-          last_level = level
-          case level
-          when "FATAL", "ERROR"
-            @errors << message
-          when "WARN"
-            @warnings << message
-          when "INFO"
-            @info << message
-          when "DEBUG"
-            @debug << message
-          end
-        end
-        haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
-      end
+      output = StringIO.new
+      args = [command]
+      args << url if url && !params[:evaluate]
+      cli_opts = params.
+        inject({}) {|memo, (k,v)| memo.merge(k.to_sym => v)}.
+        merge(logger: logger, output: output, statistics: statistics, messages: messages)
+      RDF::CLI.exec(args, **cli_opts)
+      output.rewind
+      output.set_encoding(Encoding::UTF_8)
+      result = output.read
+      content_type :json
+      json_result = {
+        serialized: result,
+        format: params.fetch(:output_format, :ntriples)
+      }.merge(statistics: statistics, messages: messages)
+    rescue RDF::ReaderError, ArgumentError => e
+      request.logger.error "#{e.class}: #{e.message}"
+      request.logger.debug e.backtrace.join("\n")
+      content_type :json
+      status 400
+      messages[:error] = {"#{e.class}" => [e.message]}
+      json_result = {format: :txt, messages: messages}
+    rescue IOError => e
+      request.logger.error "Failed to open #{reader_opts[:base_uri]}: #{e.message}"
+      request.logger.debug e.backtrace.join("\n")
+      content_type :json
+      status 502
+      messages[:error] = {"IOError" => ["Failed to open #{reader_opts[:base_uri]}: #{e.message}"]}
+      json_result = {format: :txt, messages: messages}
     rescue
+      raise unless settings.production?
+      request.logger.error "#{$!.class}: #{$!.message}"
+      content_type :json
+      status 400
+      messages[:error] ||= {}
+      messages[:error][$!.class] = [$!.message]
+      messages[:error] = {$!.class.to_s => [$!.message]}
+      json_result = {
+        format: :txt
+      }
+    ensure
       # Extract messages from logger
-      @errors << $!.message
       log_dev.rewind
       last_level = nil
       log_dev.each_line do |line|
@@ -252,103 +341,8 @@ module RDF::Distiller
           level = last_level
         end
         last_level = level
-        case level
-        when "FATAL", "ERROR"
-          @errors << message
-        when "WARN"
-          @warnings << message
-        when "INFO"
-          @info << message
-        when "DEBUG"
-          @debug << message
-        end
-      end
-      if format != :html || params["raw"]
-        status 400
-        body @errors.join("\n")
-      else
-        haml :distiller, locals: {title: "RDF Distiller", head: :distiller}
-      end
-    end
-    
-    # Handle GET/POST /sparql
-    def sparql
-      writer_options = {
-        standard_prefixes: true,
-        prefixes: {
-          ssd: "http://www.w3.org/ns/sparql-service-description#",
-          void: "http://rdfs.org/ns/void#"
-        }
-      }
-      # Override output format if the content-type is something like
-      # application/sparql-results
-      if request.accept.first =~ %r(application/sparql-results\+([^,;]+))
-        params["fmt"] = (format $1.to_sym)
-      end
-
-      # Override output format if returning something that is raw, or if
-      # the "fmt" argument is used and the output format isn't HTML
-      params["fmt"] ||= params["format"] if params.has_key?("format") # likely alias
-      format :xml if format == :xsl # Problem with content detection
-      format params["fmt"] if params["raw"] && params.has_key?("fmt")
-      format params["fmt"] if params.has_key?("fmt") && format != :html
-      # Make sure we get a format symbol, not an extension
-
-      content = query
-      params["fmt"] ||= format
-
-      # Make sure we're using an appropriate content-type, it might have been set based on an RDF serialization type, rather than a query results type
-      content_type SPARQL::Results::MIME_TYPES[params["fmt"].to_sym] unless content.is_a?(RDF::Queryable)
-
-      if params["fmt"].to_s == "rdfa"
-        # If the format is RDFa, use specific HAML writer
-        haml = DISTILLER_HAML.dup
-        root = request.url[0,request.url.index(request.path)]
-        haml[:doc] = haml[:doc].gsub(/--root--/, root)
-        writer_options[:haml] = haml
-        writer_options[:haml_options] = {}
-      end
-      writer_options.merge!(content_type: content_type)
-
-      request.logger.info "sparql content: #{content.class}, as type #{format.inspect} with options #{writer_options.inspect}"
-      if format != :html
-        writer_options[:format] = params["fmt"]
-        settings.sparql_options.replace(writer_options)
-        content
-      else
-        serialize_options = {
-          format: params["fmt"],
-          content_types: request.accept
-        }
-        begin
-          @output = if params["fmt"] == "sse"
-            content
-          else
-            request.logger.debug "content-type: #{headers['Content-Type'].inspect}"
-            SPARQL.serialize_results(content, serialize_options)
-          end
-        @output.force_encoding(Encoding::UTF_8) if @output
-        rescue RDF::WriterError => e
-          @errors = Array("No results generated #{content.class}: #{e.message}")
-          request.logger.error @errors.first  # to log
-        end
-        erb :sparql, locals: {
-          title: "SPARQL Endpoint",
-          head: :distiller,
-          doap_count: doap.count
-        }
-      end
-    rescue
-      if format != :html
-        status 400
-        body $!.message
-      else
-        @errors = [$!.message]
-        erb(:sparql, locals: {
-          title: "SPARQL Endpoint",
-          head: :distiller,
-          doap_count: doap.count
-        })
+        messages[level.to_sym] ||= {}
+        (messages[level.to_sym][:reader] ||= []) << message
       end
     end
 
@@ -367,7 +361,7 @@ module RDF::Distiller
       params[:format] = format.to_sym if format
       case
       when params[:format]
-        content_type params[:format] == :json ? 'application/rdf+json' : params[:format]
+        content_type params[:format]
         params[:format].to_sym
       when %w(application/xhtml+xml text/html */*).include?(Array(env['ORDERED_CONTENT_TYPES']).first)
         content_type env['ORDERED_CONTENT_TYPES'].first
@@ -398,129 +392,9 @@ module RDF::Distiller
       end
     end
 
-    # Parse the an input file and re-serialize based on params and/or content-type/accept headers
-    def parse(options)
-       reader_opts = options.merge(
-        headers:  {
-          "User-Agent"    => "Ruby-RDF-Distiller/#{RDF::Distiller::VERSION}",
-          "Cache-Control" => "no-cache"
-        },
-        minimal:         params["minimal"],
-        rdfagraph:       params["rdfagraph"],
-        use_net_http:    true,
-        validate:        params["validate"],
-        verify_none:     params["verify_none"],
-        vocab_expansion: params["vocab_expansion"]
-      )
-      reader_opts.reject! {|k, v| k == :format}
-      reader_opts[:format] = params["in_fmt"].to_sym unless (params["in_fmt"] || 'content') == 'content'
-      options[:logger].level = Logger::DEBUG if params["debug"]
-      
-      graph = RDF::Repository.new
-      in_fmt = params["in_fmt"].to_sym if params["in_fmt"]
-
-      # Load data into graph
-      case
-      when !params["content"].to_s.empty?
-        raw = params["content"]
-        encoding = raw.encoding
-        # Make it UTF-8, if provided in a different character set.
-        raise "Form data requires input format to be set" unless reader_opts[:format]
-        encoding = Encoding::UTF_8 unless encoding.to_s.include?("UTF")
-        @content = raw.encode(encoding)
-        request.logger.info "content encoding: #{@content.encoding}"
-        request.logger.info "Open form data with format #{in_fmt} for form data"
-        reader = RDF::Reader.for(reader_opts[:format] || reader_opts) {@content}
-        reader.new(@content, reader_opts) {|r| graph << r}
-      when !params["uri"].to_s.empty?
-        request.logger.info "Open uri <#{params["uri"]}> with format #{in_fmt}"
-        reader = RDF::Reader.open(params["uri"], reader_opts) {|r| graph << r}
-        params["in_fmt"] = reader.class.to_sym if in_fmt.nil? || in_fmt == :content
-      else
-        graph = ""
-      end
-      
-      request.logger.info "parsed #{graph.count} statements" if graph.is_a?(RDF::Graph)
-      graph
-    end
-
-    # Perform a SPARQL query, either on the input URI or the form data
-    def query
-      sparql_opts = {
-        base_uri: params["uri"],
-        validate: params["validate"],
-      }
-      sparql_opts[:format] = params["fmt"].to_sym if params["fmt"]
-      sparql_opts[:debug] = @debug = [] if params["debug"]
-
-      sparql_expr = nil
-      repo = nil
-
-      case
-      when !params["query"].to_s.empty?
-        @query = params["query"]
-        request.logger.info "Open form data: #{@query.inspect}"
-        # Optimization for RDFa Test suite
-        repo = RDF::Repository.new if @query.to_s =~ /ASK FROM/
-        sparql_expr = SPARQL.parse(@query, sparql_opts)
-      when !params["uri"].to_s.empty?
-        request.logger.info "Open uri <#{params["uri"]}>"
-        RDF::Util::File.open_file(params["uri"]) do |f|
-          sparql_expr = SPARQL.parse(f, sparql_opts)
-        end
-      else
-        # Otherwise, return service description
-        request.logger.info "Service Description"
-        return case format
-        when :html
-          ""  # Done in form
-        else
-          # Return service description graph
-          service_description(repository: doap, endpoint: url("/sparql"))
-        end
-      end
-
-      raise "No SPARQL query created" unless sparql_expr
-
-      if params["fmt"].to_s == "sse"
-        headers "Content-Type" => "application/sse+sparql-query; charset=utf-8"
-        return sparql_expr.to_sse
-      end
-
-      request.logger.debug "execute query"
-      repo ||= doap
-      sparql_expr.execute(repo, sparql_opts)
-    rescue
-      raise unless settings.environment == :production
-      @errors = Array("#{$!.class}: #{$!.message}")
-      request.logger.error @errors.first  # to log
-      nil
-    end
-
-    ##
-    # Lookup extension class version
-    #
-    # @param [String] class_name
-    # @return [String]
-    def class_version(str)
-
-      str = case str
-      when "RDF.rb"       then "RDF"
-      when "SXP for Ruby" then "SXP"
-      when "ebnf"         then "EBNF"
-      else str
-      end
-
-      "#{str.sub('.rb', '')}::VERSION".split('::').inject(Object) do |mod, class_name|
-        mod.const_get(class_name)
-      end.to_s
-    rescue
-      "???"
-    end
-
     private
     def format_version(format)
-      if %w(RDF::NTriples::Format RDF::NQuads::Format RDF::Vocabulary).include?(format.to_s)
+      if %w(RDF::NTriples::Format RDF::NQuads::Format RDF::Vocabulary::Format).include?(format.to_s)
         return RDF::VERSION
       else
         format.to_s.split('::')[0..-2].inject(Kernel) {|mod, name| mod.const_get(name)}.const_get('VERSION')
