@@ -96,7 +96,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-4118197a964a/lib/json/ld/format.rb</dd>
+    <dd>vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-fbd7493e3be5/lib/json/ld/format.rb</dd>
   </dl>
   
 </div>
@@ -454,10 +454,34 @@
 187
 188
 189
-190</pre>
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-4118197a964a/lib/json/ld/format.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-fbd7493e3be5/lib/json/ld/format.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cli_commands'>cli_commands</span>
   <span class='lbrace'>{</span>
@@ -465,7 +489,8 @@
       <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expand JSON-LD or parsed RDF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='label'>parse:</span> <span class='kw'>false</span><span class='comma'>,</span>
       <span class='label'>help:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand [--context &lt;context-file&gt;] files ...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='label'>filter:</span> <span class='lbrace'>{</span><span class='label'>output_format:</span> <span class='symbol'>:jsonld</span><span class='rbrace'>}</span><span class='comma'>,</span>  <span class='comment'># Only shows output format set
+</span>      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='gvar'>$stdout</span>
         <span class='id identifier rubyid_out'>out</span><span class='period'>.</span><span class='id identifier rubyid_set_encoding'>set_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>RUBY_PLATFORM</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>expandContext:</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:context</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:context</span><span class='rparen'>)</span>
@@ -492,12 +517,14 @@
             <span class='kw'>end</span>
           <span class='kw'>end</span>
         <span class='kw'>end</span>
-      <span class='kw'>end</span>
+      <span class='kw'>end</span><span class='comma'>,</span>
+      <span class='label'>option_use:</span> <span class='lbrace'>{</span><span class='label'>context:</span> <span class='symbol'>:removed</span><span class='rbrace'>}</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='label'>compact:</span> <span class='lbrace'>{</span>
       <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Compact JSON-LD or parsed RDF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='label'>parse:</span> <span class='kw'>false</span><span class='comma'>,</span>
-      <span class='label'>help:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>compact --context &lt;context-file&gt; files ...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>filter:</span> <span class='lbrace'>{</span><span class='label'>output_format:</span> <span class='symbol'>:jsonld</span><span class='rbrace'>}</span><span class='comma'>,</span>  <span class='comment'># Only shows output format set
+</span>      <span class='label'>help:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>compact --context &lt;context-file&gt; files ...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Compacting requires a context</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='gvar'>$stdout</span>
@@ -527,13 +554,23 @@
             <span class='kw'>end</span>
           <span class='kw'>end</span>
         <span class='kw'>end</span>
-      <span class='kw'>end</span>
+      <span class='kw'>end</span><span class='comma'>,</span>
+      <span class='label'>options:</span> <span class='lbracket'>[</span>
+        <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../RDF/CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+          <span class='label'>symbol:</span> <span class='symbol'>:context</span><span class='comma'>,</span>
+          <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='comma'>,</span>
+          <span class='label'>control:</span> <span class='symbol'>:url2</span><span class='comma'>,</span>
+          <span class='label'>use:</span> <span class='symbol'>:required</span><span class='comma'>,</span>
+          <span class='label'>on:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--context CONTEXT</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Context to use when compacting.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='rbracket'>]</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='label'>flatten:</span> <span class='lbrace'>{</span>
       <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Flatten JSON-LD or parsed RDF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='label'>parse:</span> <span class='kw'>false</span><span class='comma'>,</span>
       <span class='label'>help:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>flatten [--context &lt;context-file&gt;] files ...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='label'>filter:</span> <span class='lbrace'>{</span><span class='label'>output_format:</span> <span class='symbol'>:jsonld</span><span class='rbrace'>}</span><span class='comma'>,</span>  <span class='comment'># Only shows output format set
+</span>      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='gvar'>$stdout</span>
         <span class='id identifier rubyid_out'>out</span><span class='period'>.</span><span class='id identifier rubyid_set_encoding'>set_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>RUBY_PLATFORM</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:format</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:jsonld</span>
@@ -567,7 +604,8 @@
       <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Frame JSON-LD or parsed RDF</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='label'>parse:</span> <span class='kw'>false</span><span class='comma'>,</span>
       <span class='label'>help:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>frame --frame &lt;frame-file&gt;  files ...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='label'>filter:</span> <span class='lbrace'>{</span><span class='label'>output_format:</span> <span class='symbol'>:jsonld</span><span class='rbrace'>}</span><span class='comma'>,</span>  <span class='comment'># Only shows output format set
+</span>      <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Framing requires a frame</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:frame</span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='gvar'>$stdout</span>
         <span class='id identifier rubyid_out'>out</span><span class='period'>.</span><span class='id identifier rubyid_set_encoding'>set_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>RUBY_PLATFORM</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>java</span><span class='tstring_end'>&quot;</span></span>
@@ -596,7 +634,17 @@
             <span class='kw'>end</span>
           <span class='kw'>end</span>
         <span class='kw'>end</span>
-      <span class='kw'>end</span>
+      <span class='kw'>end</span><span class='comma'>,</span>
+      <span class='label'>option_use:</span> <span class='lbrace'>{</span><span class='label'>context:</span> <span class='symbol'>:removed</span><span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>options:</span> <span class='lbracket'>[</span>
+        <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../RDF/CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+          <span class='label'>symbol:</span> <span class='symbol'>:frame</span><span class='comma'>,</span>
+          <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='comma'>,</span>
+          <span class='label'>control:</span> <span class='symbol'>:url2</span><span class='comma'>,</span>
+          <span class='label'>use:</span> <span class='symbol'>:required</span><span class='comma'>,</span>
+          <span class='label'>on:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--frame FRAME</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Frame to use when serializing.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+      <span class='rbracket'>]</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -673,7 +721,7 @@ between other similar formats.</p>
 45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-4118197a964a/lib/json/ld/format.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-fbd7493e3be5/lib/json/ld/format.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span><span class='lparen'>(</span><span class='id identifier rubyid_sample'>sample</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_sample'>sample</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\{\s*&quot;@(id|context|type)&quot;</span><span class='regexp_end'>/m</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
@@ -710,12 +758,12 @@ between other similar formats.</p>
       <pre class="lines">
 
 
-200
-201
-202</pre>
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-4118197a964a/lib/json/ld/format.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-fbd7493e3be5/lib/json/ld/format.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON-LD</span><span class='tstring_end'>&quot;</span></span>
@@ -750,12 +798,12 @@ between other similar formats.</p>
       <pre class="lines">
 
 
-194
-195
-196</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-4118197a964a/lib/json/ld/format.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/json-ld-fbd7493e3be5/lib/json/ld/format.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='symbol'>:jsonld</span>
@@ -770,7 +818,7 @@ between other similar formats.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 22 14:37:42 2017 by
+  Generated on Sun Aug 20 17:18:40 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.1).
 </div>
