@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 1.4'
+  s.add_runtime_dependency      'sinatra',            '~> 2.0'
   s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 1.0'
   s.add_runtime_dependency      'sass',               '~> 3.4'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.2'
@@ -43,8 +43,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 2.0'
-  s.add_runtime_dependency      "rack",               '~> 1.6'
-  s.add_runtime_dependency      'rest-client',        '~> 1.8'
+  s.add_runtime_dependency      "rack",               '~> 2.0'
+  s.add_runtime_dependency      'rest-client',        '~> 2.0'
   s.add_runtime_dependency      'rest-client-components', '~> 1.4'
   s.add_runtime_dependency      'rack-cache',         '~> 1.6'
   s.add_runtime_dependency      'redcarpet',          '~> 3.3'

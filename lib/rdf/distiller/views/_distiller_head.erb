@@ -1,52 +1,11 @@
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="<%= javascript_path 'application' %>"></script>
 <script type="text/javascript">
-// Navigation
-$(function () {
-  // Display field sets having class of
-  // Clicking on a tab hides fieldsets not having that hash element as a class
-  $('nav.distiller a').click(function() {
-    var cls = this.hash.substr(1);
-    $('fieldset').hide();
-    $('fieldset.' + cls).show();
-    $('nav.distiller a').removeClass('selected');
-    $(this).addClass('selected');
-
-    // If cls is "input", disable content-detect selection option
-    $('option.content').attr('disabled', cls === 'input');
-    $('option.content').text(cls == 'input' ? '' : 'Content Detect');
-    return(false); // No bubbling, leave history alone.
-  });
-
-  // Hide fieldsets
-  $('fieldset').hide();
-
-  // Select appropriate nav tab
-  var cls = window.location.hash.substr(1);
-  $('nav.distiller a:first').each(function(){
-    $('fieldset.' + this.className).show();
-    $(this).addClass('selected');
-  });
-  
-  // If the output format is rdfa, re-write the result text area
-  // as an iFrame and add results
-  $('div.results textarea.rdfa').each(function() {
-    var content = $(this).val();
-    $(this).after($('<iframe width="100%"/>'));
-    setTimeout(function() {
-      var iframe = $('div.results iframe')[0];
-      var iframe_doc = iframe.contentWindow.document;
-      iframe_doc.open(); iframe_doc.close(); // must open and close document object to start using it!
-      iframe_doc.write(content);
-      setTimeout(function() {
-        var innerDoc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
-        var height = innerDoc.body.offsetHeight;
-        if (height === null && iframe.Document && iframe.Document.body.scrollHeight) {
-          height = iframe.Document.body.scrollHeight;
-        }
-        $(iframe).attr('height', height);
-      }, 10);
-    }, 1);
-  }).hide();
-
-});
-
+  distilApp.value('CommandData', <%= command_data %>);
+  distilApp.value('OptionData', <%= option_data %>);
+  distilApp.value('InputFormatOptionData', <%= input_format_option_data %>);
+  distilApp.value('OutputFormatOptionData', <%= output_format_option_data %>);
 </script>
+<base href="/">

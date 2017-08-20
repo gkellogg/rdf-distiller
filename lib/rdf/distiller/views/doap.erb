@@ -1,0 +1,55 @@
+<section class="container-fluid">
+  <h1><%= title %></h1>
+  <p>Description of a Project information about RDF gems used for the distiller.</p>
+  <% projects.sort_by {|p| p['doap:name'].to_s}.each do |project| %>
+    <article resource="<%= project['@id'] %>" typeof="doap:Project">
+      <h3 property="doap:name"><%= project['doap:name'] %></h3>
+      <p property="doap:description"><%= project['doap:description'] %></p>
+      <% if project["doap:created"] %>
+        <p>
+          Created:
+          <span datatype="xsd:date" property="doap:created">
+            <%= project['doap:created'] %>
+          </span>
+        </p>
+      <% end %>
+      <p property="doap:release" typeof="doap:Version">
+        Version:
+        <span property="doap:revision">
+          <%= class_version(project['doap:name']) %>
+        </span>
+      </p>
+      <% if project["doap:homepage"] %>
+        <p>
+          Project Homepage:
+          <a href="<%= project['doap:homepage'] %>" property="doap:homepage">
+            <%= project['doap:homepage'] %>
+          </a>
+        </p>
+      <% end %>
+      <% {"dc:creator" => "Creator", "doap:developer" => "Developer", "doap:helper" => "Helper", "doap:implements" => "Specifications Implemented"}.each do |prop, who| %>
+        <% next if project[prop].to_a.empty? %>
+        <p>
+          <%= "#{who}:" %>
+        </p>
+        <ul rel="<%= prop %>">
+          <% project[prop].each do |el| %>
+            <li>
+              <% if el.is_a?(Hash) %>
+                <a href="<%= el['@id'] %>" typeof="<%= el['@type'] %>"><
+                  <span property="foaf:name">
+                    <%= el['foaf:name'] %>
+                  </span>
+                </a>
+              <% else %>
+                <a href="<%= el %>">
+                  <%= el %>
+                </a>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </article>
+  <% end %>
+</section>

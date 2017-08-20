@@ -1,187 +1,165 @@
-/*global $, _, angular*/
+/*global $, angular*/
+/*jshint unused:false*/
 
-var testApp = angular.module('testApp', ['ngRoute', 'ngResource'])
-  .config(['$routeProvider', '$locationProvider', '$logProvider',
-    function($routeProvider, $locationProvider, $logProvider) {
+var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
+  .config(['$routeProvider', '$locationProvider', '$logProvider', '$httpProvider',
+    function($routeProvider, $locationProvider, $logProvider, $httpProvider) {
+      /*jshint unused:true*/
 
-      $locationProvider.html5Mode(true);
+      $locationProvider.html5Mode({enabled: true, rewriteLinks: false});
       $logProvider.debugEnabled(true);
       $routeProvider.
-        when('/about', {
-          templateUrl: 'partials/about.html',
-          controller: 'AboutCtrl'
-        }).
-        when('/developers', {
-          templateUrl: 'partials/developers.html',
-          controller: 'DevCtrl'
-        }).
-        when('/tests', {
-          templateUrl: 'partials/tests-view.html',
-          controller: 'TestListCtrl'
-        }).
-        when('/:testId', {
-          templateUrl: 'partials/test-detail.html',
-          controller: 'TestDetailCtrl'
+        when('/distiller', {
+          controller: 'DistillerController'
         });
+        $httpProvider.defaults.headers.common.Accept = "application/json, text/plain&q=0.1";
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     }
   ])
-  // Test factory for returning individual test entries
-  .factory('Test', ['$resource', '$log', function($resource, $log) {
-    return $resource('tests/:testId', {manifestUrl: "manifestUrl"}, {
-      // Fetches manifest and extracts test entries
-      query: {
-        method: 'GET',
-        params: {manifestUrl: 'manifest', testId: '.jsonld'},
-        headers: {'Accept': 'application/ld+json'},
-        transformResponse: function(data) {
-          var jld = angular.fromJson(data);
-          // extract test entries
-          return(_.map(jld.entries || jld['mf:entries'], function(test) {
-            test.status = "Test";
-            return test;
-          }));
-        },
-        isArray: true
-      },
+  .controller('DistillerController', ['$scope', '$http', '$location',
+              'CommandData', 'OptionData', 'InputFormatOptionData', 'OutputFormatOptionData',
+    function ($scope, $http, $location,
+              commandData, optionData, inputFormatOptionData, outputFormatOptionData) {
+      $scope.loading = null;      // show page loading symbol
+      $scope.useAlt = false;      // Use alternate input
+      $scope.alternate = null;    // Alternate URL to directly access distiller
 
-      getManifest:  {
-        method: 'GET',
-        params: {manifestUrl: 'manifest', testId: '.jsonld'},
-        headers: {'Accept': 'application/ld+json'},
-        transformResponse: function(data) {
-          var jld = angular.fromJson(data);
-          if (jld.manifests) {
-            _.each(jld.manifests, function(man) {
-              man.href = "tests?manifestUrl=" + man.id;
-              if (man.label === undefined) man.label = man.id;
-            })
-            return jld;
-          } else {
-            jld.manifests = [];
+      // Initialized from HTML
+      $scope.orderedOpts = optionData;
+
+      // Clear out nonuseful options
+      var removeEmpty = function(obj) { 
+        return Object.keys(obj)
+          .filter(function(f) {return obj[f] && obj[f] !== "";})
+          .reduce(function(r, i) { 
+            r[i] = obj[i];
+            return r;
+          }, {});
+      };
+
+      // Clear out input-like options
+      var removeInput = function(obj) { 
+        return Object.keys(obj)
+          .filter(function(f) {return !f.match(/input$/i);})
+          .reduce(function(r, i) { 
+            r[i] = obj[i];
+            return r;
+          }, {});
+      };
+
+      // Called when a select field or command menu item is updated, which can change displayed commands and options
+      $scope.update = function(command) {
+        // Update command with associated options and determine appropriate commands and options to display
+        $scope.options.command = command;
+
+        // Set options to the default, plus those for the command, minus those that have no datatype.
+        var cmd = commandData.find(function(c) {return c.symbol === command;});
+        $scope.description = cmd.description;
+
+        // Update commands based on input/output formats
+        var cmds = commandData
+          .filter(function(c) {
+            var useCmd = true;
+            $.each((c.filter || {}), function(opt, value) {
+              if ($scope.options[opt] !== value) {
+                useCmd = false;
+              }
+            });
+            // Use the command, unless it's excluded
+            return useCmd;
+          })
+        .map(function(c) {return c.symbol;})
+        .sort();
+
+        // jshint camelcase: false
+        // Set available command based on selected format and output_format
+        $scope.commands = cmds;
+
+        // Update options based on input/output formats
+        // Iterate over options in order of precidence to exclude repetition
+        var optMap = (cmd.options || []).concat(
+          (inputFormatOptionData[$scope.options.format] || []),
+          (outputFormatOptionData[$scope.options.output_format] || []),
+          optionData)
+        .map(function(opt) {
+          // Update usage from command
+          if ((cmd.option_use || {})[opt.symbol]){
+            opt = $.extend({}, opt, {use: cmd.option_use[opt.symbol]});
           }
-          // extract test entries
-          return(jld);
+          return opt;
+        })
+        .reduce(function(result, opt) {
+          // Only add the option if not already in the map (result)
+          result[opt.symbol] = result[opt.symbol] || opt;
+          return result;
+        }, {});
+        // jshint camelcase: true
+
+        // Set options from optMap, excluding those with no control
+        $scope.orderedOpts = Object.values(optMap)
+          .filter(function(opt) {return opt.control;}) // opts with no control
+          .sort(function(a, b) {
+            return (a.symbol > b.symbol) ? 1 : ((b.symbol > a.symbol) ? -1 : 0); 
+          });
+
+        // Show second input if any option using control url2
+        $scope.useAlt = $scope.orderedOpts.some(function(opt) {
+          return opt.control === 'url2';
+        });
+      };
+
+      // Use options to run distiller command and display results
+      $scope.distil = function() {
+        $scope.loading = true;
+        $scope.result = null;
+        if ($scope.options.input) {
+          $http.post("/distiller", removeEmpty($scope.options), {
+            'Content-Type': 'application/json',
+            cache: false
+          })
+            .then(function(response) {
+              $scope.result = response.data;
+              $scope.loading = false;
+            }, function(response) {
+              $scope.result = response.data;
+              $scope.loading = false;
+            });
+        } else {
+          $http.get("/distiller", {params: removeInput(removeEmpty($scope.options)), cache: false})
+            .then(function(response) {
+              $scope.result = response.data;
+              $scope.loading = false;
+            }, function(response) {
+              $scope.result = response.data;
+              $scope.loading = false;
+            });
         }
-      },
+      };
 
-      run: {
-        method:'POST',
-        headers: {'Accept': 'application/ld+json'},
-        params:{manifestUrl: 'manifestUrl', testId: 'tests', processorUrl: 'processorUrl'}
-      }
-    });
-  }])
-  .controller('DebugController', function($scope, $route, $routeParams, $location) {
-     $scope.$route = $route;
-     $scope.$location = $location;
-     $scope.$routeParams = $routeParams;
-   })
-  .controller('TestListCtrl', ['$scope', '$log', '$http', '$routeParams', 'Test',
-    function ($scope, $log, $http, $routeParams, Test) {
-      // Processors from script tag
-      $scope.processors = angular.fromJson($("script#processors").text());
-      $scope.processorUrl = $scope.processors[0].distiller;
-      $scope.doapUrl = $scope.processors[0].doapUrl || $scope.processors[0].doap;
-      $scope.manifestUrl = $routeParams['manifestUrl'];
-      $scope.manifest = Test.getManifest({manifestUrl: $scope.manifestUrl});
+      // Update textarea by loading associated URL
+      $scope.load = function(url, opt) {
+        $http.get("/distiller/load", {params: {url: url}, cache: false})
+          .then(function(response) {
+            $scope.options[opt] = response.data;
+          })
+          .catch(function(response) {
+            // Indicate load error
+          });
+      };
 
-      // Automatically run tests?
-      $scope.autorun = false;
-
-      // Tests retrieved in manifest from service
-      $scope.nexts = {};
-      $scope.tests = Test.query({manifestUrl: $scope.manifestUrl}, function(tests) {
-        $log.debug(tests);
-
-        // Nexts for each test
-        for (i = 0; i < tests.length - 1; i++) {
-          $scope.nexts[tests[i].id] = tests[i+1];
-        }
+      $scope.$watch("options | json", function() {
+        // Update URI parameters and alternate access
+        $location.url($location.path()); // Clear parameters
+        $location.search(removeInput(removeEmpty($scope.options)));  // Add scope
+        $scope.alternate = $location.absUrl();
       });
 
-      // Watch changes to tests
-      //$scope.$watch('tests', function(newVal) {
-      //  $log.debug("test changed: " + _.map(newVal, function(test) {return test.status}));
-      //}, true)
+      $scope.options = $location.search();
+      $scope.update($scope.options.command || 'serialize');
 
-      // Number of passing tests
-      $scope.passed = function() {
-        return _.reduce($scope.tests, function(memo, test) {
-          return memo + (test.status === "Pass" ? 1 : 0);
-        }, 0);
-      };
-      // Number of failing tests
-      $scope.failed = function() {
-        return _.reduce($scope.tests, function(memo, test) {
-          return memo + (test.status === "Fail" ? 1 : 0);  // XXX: Errored?
-        }, 0);
-      };
-      // Number of errored tests
-      $scope.errored = function() {
-        return _.reduce($scope.tests, function(memo, test) {
-          return memo + (test.status === "Error" ? 1 : 0);
-        }, 0);
-      };
-      // Have all tests been run?
-      $scope.completed = function() {
-        return _.reduce($scope.tests, function(memo, test) {
-          return memo + (test.status === "Test" ? 0 : 1);
-        }, 0);
-      };
-      // Set processorUrl from a selected processor
-      $scope.setProcessor = function(proc) {
-        $scope.processorUrl = proc.distiller;
-        $scope.doapUrl = proc.doapUrl || proc.doap;
-      };
-      // Retrieve EARL preamble information as Turtle.
-      $scope.getEarl = function() {
-        $http.get('earl', {params: {manifestUrl: $scope.manifestUrl, processorUrl: $scope.processorUrl, doapUrl: $scope.doapUrl}})
-          .success(function(data, status) {
-            $log.debug(data);
-            $scope.doap = data.doap;
-          });
-        $scope.doapDate = new Date;
-      };
-      // Run all tests, or an individual test
-      // On completion, optionally invoke subsequent test
-      $scope.runTest = function(test, autonext) {
-        if (test === "All") {
-          $log.info("Run all tests");
-          _.each($scope.tests, function(test) { test.status = "Test"; });
-          $scope.autorun = true;
-          $scope.runTest($scope.tests[0], true);
-        } else {
-          $log.info("Run " + test.id);
-          test.status = "Running";
-          test.$run({manifestUrl: $scope.manifestUrl, testId: test.id, processorUrl: $scope.processorUrl},
-            function(response, responseHeaders) {
-              test.date = new Date;
-              if (autonext && $scope.nexts[test.id]) {
-                $scope.runTest($scope.nexts[test.id], true);
-              }
-            },
-            function(responseHeaders) {
-              test.status = "Error";
-              test.date = new Date;
-              if (autonext && $scope.nexts[test.id]) {
-                $scope.runTest($scope.nexts[test.id], true);
-              }
-            }
-          );
-        }
-      };
-    }
-  ])
-  .controller('AboutCtrl', ['$scope', '$routeParams',
-    function ($scope, $routeParams) {
-    }
-  ])
-  .controller('DevCtrl', ['$scope', '$routeParams',
-    function ($scope, $routeParams) {
-    }
-  ])
-  .controller('TestDetailCtrl', ['$scope', '$routeParams', '$log', 'Test',
-    function ($scope, $routeParams, $log, Test) {
-      $scope.test = Test.get({testId: $routeParams.testId});
+      // If there are routeParams, use them to initialize the controller
+      if ($location.search().url) {
+        $scope.distil();
+      }
     }
   ]);

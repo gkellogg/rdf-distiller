@@ -19,21 +19,6 @@ describe RDF::Distiller::Application do
   describe "/doap" do
     let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::Vocab::DOAP.to_uri]}
     before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
-
-    context "Format symbols" do
-      RDF::Writer.each do |writer|
-        format = writer.format
-        sym = format.to_sym
-        ext = format.file_extension.first
-        context "#{sym}" do
-          it "gets  with #{sym} format" do
-            get "/doap", format: sym
-            expect(last_response.body).to eq "" unless last_response.ok?
-            expect(last_response.content_type).to include(mime_type(sym))
-          end
-        end
-      end
-    end
     
     context "File extensions" do
       RDF::Format.file_extensions.keys.each do |extension|

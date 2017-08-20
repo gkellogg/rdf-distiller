@@ -24,7 +24,7 @@ describe RDF::Distiller::Application do
           WebMock.stub_request(:get, 'http://example.com/foo').
             to_return(body:  %(<http://example/a> <http://example/b> "c" .),
                       status: 200,
-                      headers: { 'Content-Type' => 'text/ntriples'})
+                      headers: { 'Content-Type' => 'text/ntriples' })
         end
 
         it "retrieves a graph" do
@@ -50,14 +50,13 @@ describe RDF::Distiller::Application do
             turtle: %q(@prefix ex: <http://example/> . ex:a ex:b "c" .),
           }.each do |format, input|
             context format do
-              it "requires format to be set explicitly" do
+              it "detects #{format}" do
                 get '/distiller',
-                    content: input,
-                    in_fmt: "content",
-                    fmt: "ntriples",
+                    input: input,
+                    output_format: "ntriples",
                     raw: true
-                expect(last_response.body).to include "Form data requires input format to be set"
-                expect(last_response).to be_bad_request
+                expect(last_response.body).to_not be_empty
+                expect(last_response).to be_ok
               end
             end
           end
@@ -69,9 +68,9 @@ describe RDF::Distiller::Application do
       context "form data" do
         it "retrieves a graph" do
           get '/distiller',
-            content: %(<http://example/a> <http://example/b> "c" .),
-            in_fmt: "ntriples",
-            fmt: "ntriples",
+            input: %(<http://example/a> <http://example/b> "c" .),
+            format: "ntriples",
+            output_format: "ntriples",
             raw: "true"
           expect(last_response.body).to eq "" unless last_response.ok?
           expect(last_response.content_type).to include('application/n-triples')
@@ -82,12 +81,12 @@ describe RDF::Distiller::Application do
 
     context "RDF Formats" do
       RDF::Format.each do |format|
-        next unless format.writer
+        next if format.writer.nil? || format == RDF::Vocabulary::Format
         it "retrieves graph as #{format.to_sym}" do
           get '/distiller',
-            content: %(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .),
-            in_fmt: "ntriples",
-            fmt: format.to_sym,
+            input: %(<http://example/a> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example/C> .),
+            format: "ntriples",
+            output_format: format.to_sym,
             raw: "true"
           expect(last_response.body).to eq "" unless last_response.ok?
           expect(last_response.content_type).to include(format.content_type.first)
