@@ -93,14 +93,14 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
 [RDF.rb]:         http://ruby-rdf.github.com/rdf
-[RDF::JSON]:      http://rdf.rubyforge.org/json/
+[RDF::JSON]:      http://rdoc.info/github/ruby-rdf/rdf-json/
 [RDF::Microdata]: http://rdoc.info/github/ruby-rdf/rdf-microdata
 [RDF::N3]:        http://rdoc.info/github/ruby-rdf/rdf-n3
 [RDF::RDFa]:      http://rdoc.info/github/ruby-rdf/rdf-rdfa
 [RDF::RDFXML]:    http://rdoc.info/github/ruby-rdf/rdf-rdfxml
 [RDF::Tabular]:   http://rdoc.info/github/ruby-rdf/rdf-tabular
 [RDF::TriG]:      http://rdoc.info/github/ruby-rdf/rdf-trig
-[RDF::TriX]:      http://rdf.rubyforge.org/trix/
+[RDF::TriX]:      http://rdoc.info/github/ruby-rdf/rdf-trix/
 [RDF::Turtle]:    http://rdoc.info/github/ruby-rdf/rdf-turtle
 [RDF::Vocab]:     http://rdoc.info/github/ruby-rdf/rdf-vocab
 [JSON::LD]:       http://rdoc.info/github/ruby-rdf/json-ld
