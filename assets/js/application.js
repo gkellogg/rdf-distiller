@@ -83,7 +83,7 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
           optionData)
         .map(function(opt) {
           // Update usage from command
-          if ((cmd.option_use || {})[opt.symbol]){
+          if ((cmd.option_use || {})[opt.symbol]) {
             opt = $.extend({}, opt, {use: cmd.option_use[opt.symbol]});
           }
           return opt;
