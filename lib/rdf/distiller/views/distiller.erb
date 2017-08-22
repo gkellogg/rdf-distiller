@@ -90,7 +90,31 @@
           </fieldset>
         </span>
       </div>
-      <button type="button" class="row btn btn-primary" ng-click="distil()" area-label="Submit">Submit</button>
+      <div class="row">
+        <button type="button" class="row btn btn-primary" ng-click="distil()" area-label="Submit">Submit</button>
+      </div>
+      <div class="row">
+        <legend>Modifiers</legend>
+        <fieldset class="col-md-12">
+          <!-- select -->
+          <div class="col-md-4 form-inline"
+               ng-repeat="opt in modifiers">
+            <button type="button" class="btn"
+                    title="{{opt.description}}"
+                    data-toggle="button"
+                    autocomplete="off"
+                    ng-class="{active: options[opt.symbol], 'btn-default': !options[opt.symbol], 'btn-success': options[opt.symbol]}"
+                    ng-model="options[opt.symbol]"
+                    ng-click="options[opt.symbol] = !options[opt.symbol]; update(options.command)"
+                    aria-pressed="{{!!options[opt.symbol]}}"
+                    area-label="{{opt.symbol}}">
+              {{opt.symbol}}
+            </button>
+          </div>
+        </fieldset>
+        <span ng-repeat="opt in orderedOpts | filter: {control: 'url2'}">
+        </span>
+      </div>
       <div class="row">
         <legend>Options</legend>
         <fieldset class="col-md-12">

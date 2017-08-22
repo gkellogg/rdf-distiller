@@ -54,12 +54,17 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
 
         // Set options to the default, plus those for the command, minus those that have no datatype.
         var cmd = commandData.find(function(c) {return c.symbol === command;});
+        var cmdOptions = cmd.options || [];
+
         $scope.description = cmd.description;
 
+        // Set of commnads used for options
+
         // Update commands based on input/output formats
-        var cmds = commandData
+        // Set available command based on selected format and output_format
+        $scope.commands = commandData
           .filter(function(c) {
-            var useCmd = true;
+            var useCmd = c.control !== 'button'; // buttons come elsewhere
             $.each((c.filter || {}), function(opt, value) {
               if ($scope.options[opt] !== value) {
                 useCmd = false;
@@ -71,13 +76,29 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
         .map(function(c) {return c.symbol;})
         .sort();
 
-        // jshint camelcase: false
-        // Set available command based on selected format and output_format
-        $scope.commands = cmds;
+        // Command modifiers, also based on formats
+        $scope.modifiers = commandData
+          // buttons come elsewhere
+          .filter(function(c) {return c.control === 'button';})
+          // Indicate use/disuse rather than filter out if not appropriate
+          .map(function(c) {
+            var use = true;
+            $.each((c.filter || {}), function(opt, value) {
+              if ($scope.options[opt] !== value) {use = false;}
+            });
+            // Add command options from modifiers for enabled commands
+            if ($scope.options[c.symbol]) {
+              cmdOptions = cmdOptions.concat(c.options || []);
+            }
+
+            return $.extend({}, c, {use: use})
+          })
+          .sort(function(obj) {return obj.symbol});
 
         // Update options based on input/output formats
         // Iterate over options in order of precidence to exclude repetition
-        var optMap = (cmd.options || []).concat(
+        // jshint camelcase: false
+        var optMap = cmdOptions.concat(
           (inputFormatOptionData[$scope.options.format] || []),
           (outputFormatOptionData[$scope.options.output_format] || []),
           optionData)

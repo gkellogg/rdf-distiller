@@ -279,10 +279,16 @@ module RDF::Distiller
       logger.level = Logger::WARN
       logger.formatter = lambda {|severity, datetime, progname, msg| "#{severity}: #{msg}\n"}
 
-      command = params.delete('command') || 'serialize'
+      # Main argument is specified command
+      args = [params.delete('command') || 'serialize']
       url = params.delete('url')
       params['base_uri'] ||= url
       params['evaluate'] ||= params.delete('input')
+
+      # Prepend any options which are commands
+      command_names = RDF::CLI.commands(format: :json).map {|c| c[:symbol].to_s}
+      modifiers = params.keys.map(&:to_s) & command_names
+      args = modifiers + args
 
       # Transform other properties ending with Input to the base version, wrapping in a StringIO.
       params.keys.select {|k| k.end_with?('Input')}.each do |input_key|
@@ -291,7 +297,6 @@ module RDF::Distiller
       end
 
       output = StringIO.new
-      args = [command]
       args << url if url && !params[:evaluate]
       cli_opts = params.
         inject({}) {|memo, (k,v)| memo.merge(k.to_sym => v)}.
