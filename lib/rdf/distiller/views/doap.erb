@@ -33,10 +33,12 @@
           <%= "#{who}:" %>
         </p>
         <ul rel="<%= prop %>">
-          <% project[prop].each do |el| %>
+          <%- devs = project[prop].sort_by {|e| e.is_a?(Hash) ? e['foaf:name'].to_s : e.to_s} -%>
+          <%- devs = devs.uniq {|e| e.is_a?(Hash) ? e['foaf:name'].to_s : e.to_s} -%>
+          <% devs.each do |el| %>
             <li>
               <% if el.is_a?(Hash) %>
-                <a href="<%= el['@id'] %>" typeof="<%= el['@type'] %>"><
+                <a href="<%= el['@id'] %>" typeof="<%= el['@type'] %>">
                   <span property="foaf:name">
                     <%= el['foaf:name'] %>
                   </span>
