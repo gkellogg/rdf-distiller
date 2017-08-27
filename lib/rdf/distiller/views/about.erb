@@ -44,13 +44,15 @@
     <dl>
       <% RDF::Format.each do |format| %>
         <dt><%= format.to_s.sub(/::Format$/, '') + "(#{format_version(format)})" %></dt>
-        <dd>This format has a 
+        <dd>This format has
           <% if format.reader && format.writer %>
-            reader and a writer
+            a reader and a writer
           <% elsif format.reader %>
-            reader
+            a reader
+          <% elsif format.writer %>
+            a writer
           <% else %>
-            writer
+            neither a reader nor a writer
           <% end %>
           <% unless format.content_type.empty? %>
             for
@@ -59,7 +61,6 @@
           <%= "." %>
         </dd>
       <% end %>
-      <dd>RDF Reasoner</dd>
       <dt>RDF::XSD <%= "(#{RDF::XSD::VERSION})" %></dt>
       <dd>RDF XSD</dd>
       <dt>SPARQL <%= "(#{SPARQL::VERSION})" %></dt>
