@@ -91,9 +91,9 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
               cmdOptions = cmdOptions.concat(c.options || []);
             }
 
-            return $.extend({}, c, {use: use})
+            return $.extend({}, c, {use: use});
           })
-          .sort(function(obj) {return obj.symbol});
+          .sort(function(obj) {return obj.symbol;});
 
         // Update options based on input/output formats
         // Iterate over options in order of precidence to exclude repetition
@@ -133,28 +133,18 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
       $scope.distil = function() {
         $scope.loading = true;
         $scope.result = null;
-        if ($scope.options.input) {
-          $http.post("/distiller", removeEmpty($scope.options), {
-            'Content-Type': 'application/json',
-            cache: false
-          })
-            .then(function(response) {
-              $scope.result = response.data;
-              $scope.loading = false;
-            }, function(response) {
-              $scope.result = response.data;
-              $scope.loading = false;
-            });
-        } else {
-          $http.get("/distiller", {params: removeInput(removeEmpty($scope.options)), cache: false})
-            .then(function(response) {
-              $scope.result = response.data;
-              $scope.loading = false;
-            }, function(response) {
-              $scope.result = response.data;
-              $scope.loading = false;
-            });
-        }
+        $http({
+          method: "POST",
+          url: "/distiller",
+          data: removeEmpty($scope.options),
+          cache: false
+        }).then(function(response) {
+          $scope.result = response.data;
+          $scope.loading = false;
+        }, function(response) {
+          $scope.result = response.data;
+          $scope.loading = false;
+        });
       };
 
       // Update textarea by loading associated URL

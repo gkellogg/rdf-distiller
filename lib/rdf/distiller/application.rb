@@ -316,25 +316,20 @@ module RDF::Distiller
       content_type :json
       status 400
       messages[:error] = {"#{e.class}" => [e.message]}
-      json_result = {format: :txt, messages: messages}
+      {format: :txt, messages: messages}
     rescue IOError => e
       request.logger.error "Failed to open #{reader_opts[:base_uri]}: #{e.message}"
       request.logger.debug e.backtrace.join("\n")
       content_type :json
       status 502
       messages[:error] = {"IOError" => ["Failed to open #{reader_opts[:base_uri]}: #{e.message}"]}
-      json_result = {format: :txt, messages: messages}
+      {format: :txt, messages: messages}
     rescue
-      raise unless settings.production?
       request.logger.error "#{$!.class}: #{$!.message}"
       content_type :json
       status 400
-      messages[:error] ||= {}
-      messages[:error][$!.class] = [$!.message]
-      messages[:error] = {$!.class.to_s => [$!.message]}
-      json_result = {
-        format: :txt
-      }
+      messages[:error] = {"#{$!.class}" => [$!.message]}
+      {format: :txt, messages: messages}
     ensure
       # Extract messages from logger
       log_dev.rewind
