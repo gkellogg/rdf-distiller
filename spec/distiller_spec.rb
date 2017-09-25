@@ -77,6 +77,21 @@ describe RDF::Distiller::Application do
           expect(last_response.body).to eq %(<http://example/a> <http://example/b> "c" .\n)
         end
       end
+
+      it "requires url to be absolute" do
+        get '/distiller', url: 'relative-foo', fmt: "ntriples", raw: "true"
+        expect(last_response).not_to be_ok
+      end
+
+      it "requires base_uri to be absolute" do
+        get '/distiller',
+          input: %(<http://example/a> <http://example/b> "c" .),
+          format: "ntriples",
+          base_uri: "relative-foo",
+          output_format: "ntriples",
+          raw: "true"
+        expect(last_response).not_to be_ok
+      end
     end
 
     context "RDF Formats" do

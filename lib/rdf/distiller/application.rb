@@ -283,6 +283,11 @@ module RDF::Distiller
       args = [params.delete('command') || 'serialize']
       url = params.delete('url')
       params['base_uri'] ||= url
+
+      unless params['base_uri'].nil? || RDF::URI(params['base_uri']).absolute?
+        raise ArgumentError, "Base URI must be an absolute IRI"
+      end
+
       params['evaluate'] ||= params.delete('input')
 
       # Prepend any options which are commands
