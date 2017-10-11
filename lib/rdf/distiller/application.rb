@@ -323,11 +323,11 @@ module RDF::Distiller
       messages[:error] = {"#{e.class}" => [e.message]}
       {format: :txt, messages: messages}
     rescue IOError => e
-      request.logger.error "Failed to open #{reader_opts[:base_uri]}: #{e.message}"
+      request.logger.error "Failed to open #{params['base_uri']}: #{e.message}"
       request.logger.debug e.backtrace.join("\n")
       content_type :json
       status 502
-      messages[:error] = {"IOError" => ["Failed to open #{reader_opts[:base_uri]}: #{e.message}"]}
+      messages[:error] = {"IOError" => ["Failed to open #{params['base_uri']}: #{e.message}"]}
       {format: :txt, messages: messages}
     rescue
       request.logger.error "#{$!.class}: #{$!.message}"
