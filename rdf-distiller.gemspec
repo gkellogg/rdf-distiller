@@ -28,12 +28,12 @@ Gem::Specification.new do |s|
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 2.2'
+  s.add_runtime_dependency      "linkeddata",         '~> 3.0'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 2.0'
-  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 1.0'
+  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.0'
   s.add_runtime_dependency      'sass',               '~> 3.5'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.2'
   s.add_runtime_dependency      'uglifier',           '~> 3.2'

@@ -99,8 +99,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/boolean.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/date.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/datetime.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/decimal.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/double.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/integer.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/numeric.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/time.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal/token.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-spec-7e186ad0cd77/lib/rdf/spec/inspects.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/any_uri.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/binary.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/date.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/double.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/duration.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/integer.rb,<br /> vendor/bundler/ruby/2.4.0/bundler/gems/rdf-xsd-ec78ebe10f85/lib/rdf/xsd/xml.rb</span>
+    <dd>vendor/bundler/ruby/2.5.0/bundler/gems/rdf-spec-9aa20fb58f9a/lib/rdf/spec/inspects.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/date.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/double.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/datetime.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/numeric.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/integer.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/decimal.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/boolean.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/token.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal/time.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/date.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/double.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/integer.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/xml.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/any_uri.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/duration.rb,<br /> vendor/bundler/ruby/2.5.0/bundler/gems/rdf-xsd-0489489cebb4/lib/rdf/xsd/binary.rb</span>
 </dd>
   </dl>
   
@@ -108,13 +108,97 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>override several inspect functions to improve output for what we&#39;re doing</p>
+    <p>An RDF literal.</p>
+
+<p>Subclasses of <span class='object_link'><a href="" title="RDF::Literal (class)">Literal</a></span> should define DATATYPE and GRAMMAR constants, which are used for identifying the appropriate class to use for a datatype URI and to perform lexical matching on the value.</p>
+
+<p>Literal comparison with other <span class='object_link'><a href="Value.html" title="RDF::Value (module)">Value</a></span> instances call <span class='object_link'><a href="Value.html#type_error-instance_method" title="RDF::Value#type_error (method)">Value#type_error</a></span>, which, returns false. Implementations wishing to have TypeError raised should mix-in <span class='object_link'><a href="TypeCheck.html" title="RDF::TypeCheck (module)">TypeCheck</a></span>. This is required for strict SPARQL conformance.</p>
+
+<p>Specific typed literals may have behavior different from the default implementation. See the following defined sub-classes for specific documentation. Additional sub-classes may be defined, and will interoperate by defining <code>DATATYPE</code> and <code>GRAMMAR</code> constants, in addition other required overrides of RDF::Literal behavior.</p>
+
+<p>In RDF 1.1, all literals are typed, including plain literals and language tagged literals. Internally, plain literals are given the <code>xsd:string</code> datatype and language tagged literals are given the <code>rdf:langString</code> datatype. Creating a plain literal, without a datatype or language, will automatically provide the <code>xsd:string</code> datatype; similar for language tagged literals. Note that most serialization formats will remove this datatype. Code which depends on a literal having the <code>xsd:string</code> datatype being different from a plain literal (formally, without a datatype) may break. However note that the <code>#has\_datatype?</code> will continue to return <code>false</code> for plain or language-tagged literals.</p>
+
+<ul>
+<li><span class='object_link'><a href="Literal/Boolean.html" title="RDF::Literal::Boolean (class)">Boolean</a></span></li>
+<li><span class='object_link'><a href="Literal/Date.html" title="RDF::Literal::Date (class)">Date</a></span></li>
+<li><span class='object_link'><a href="Literal/DateTime.html" title="RDF::Literal::DateTime (class)">DateTime</a></span></li>
+<li><span class='object_link'><a href="Literal/Decimal.html" title="RDF::Literal::Decimal (class)">Decimal</a></span></li>
+<li><span class='object_link'><a href="Literal/Double.html" title="RDF::Literal::Double (class)">Double</a></span></li>
+<li><span class='object_link'><a href="Literal/Integer.html" title="RDF::Literal::Integer (class)">Integer</a></span></li>
+<li><span class='object_link'><a href="Literal/Time.html" title="RDF::Literal::Time (class)">Time</a></span></li>
+</ul>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating a plain literal</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_plain?'>plain?</span>                                   <span class='comment'>#=&gt; true`</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating a language-tagged literal (1)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>language:</span> <span class='symbol'>:en</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_has_language?'>has_language?</span>                            <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span>                                 <span class='comment'>#=&gt; :en</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating a language-tagged literal (2)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Wazup?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>language:</span> <span class='symbol'>:en-US</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hej!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>   <span class='label'>language:</span> <span class='symbol'>:sv</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>¡Hola!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>language:</span> <span class='symbol'>:es</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating an explicitly datatyped literal</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2009-12-31</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_has_datatype?'>has_datatype?</span>                            <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>                                 <span class='comment'>#=&gt; RDF::XSD.date</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating an implicitly datatyped literal</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Literal/Date.html" title="RDF::Literal::Date (class)">Date</a></span></span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_has_datatype?'>has_datatype?</span>                            <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>                                 <span class='comment'>#=&gt; RDF::XSD.date</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating implicitly datatyped literals</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>               <span class='comment'>#=&gt; XSD.boolean
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>                <span class='comment'>#=&gt; XSD.boolean
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>123</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>                 <span class='comment'>#=&gt; XSD.integer
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>9223372036854775807</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span> <span class='comment'>#=&gt; XSD.integer
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='float'>3.1415</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>              <span class='comment'>#=&gt; XSD.double
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Literal/Time.html" title="RDF::Literal::Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>            <span class='comment'>#=&gt; XSD.time
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Literal/Date.html" title="RDF::Literal::Date (class)">Date</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2010</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>      <span class='comment'>#=&gt; XSD.date
+</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>Literal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Literal/DateTime.html" title="RDF::Literal::DateTime (class)">DateTime</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2010</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>  <span class='comment'>#=&gt; XSD.dateTime</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal" target="_parent" title="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal</a></li>
+    
+      <li><a href="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes" target="_parent" title="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes">http://www.w3.org/TR/rdf11-concepts/#section-Datatypes</a></li>
+    
+  </ul>
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
@@ -1005,7 +1089,7 @@ or datatype is rdf:langString and there is no language</p>
 175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>language:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>lexical:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@object</span>   <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -1090,7 +1174,7 @@ or datatype is rdf:langString and there is no language</p>
 493</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 487</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 487</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_name'>name</span>
@@ -1158,7 +1242,7 @@ or datatype is rdf:langString and there is no language</p>
 145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_datatype'>datatype</span>
   <span class='ivar'>@datatype</span>
@@ -1217,7 +1301,7 @@ or datatype is rdf:langString and there is no language</p>
 142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_language'>language</span>
   <span class='ivar'>@language</span>
@@ -1337,7 +1421,7 @@ or datatype is rdf:langString and there is no language</p>
 308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 286</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_other'>other</span>
@@ -1431,7 +1515,7 @@ or datatype is rdf:langString and there is no language</p>
 409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalize!'>canonicalize!</span>
   <span class='kw'>self</span>
@@ -1539,7 +1623,7 @@ compatible?(&quot;abc&quot;^^xsd:string	&quot;b&quot;@en)          #=&gt; false<
 231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compatible?'>compatible?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_plain?'>plain?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_plain?'>plain?</span>
@@ -1612,7 +1696,7 @@ return false instead of raise a type error.</p>
 398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 386</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_comperable_datatype?'>comperable_datatype?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_plain?'>plain?</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_has_language?'>has_language?</span>
@@ -1707,7 +1791,7 @@ return false instead of raise a type error.</p>
 273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='op'>||</span>
@@ -1803,7 +1887,7 @@ return false instead of raise a type error.</p>
 454</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 445</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 445</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\\\</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span>
@@ -1880,7 +1964,7 @@ return false instead of raise a type error.</p>
 352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_datatype?'>has_datatype?</span>
   <span class='op'>!</span><span class='id identifier rubyid_plain?'>plain?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_language?'>language?</span>
@@ -1948,7 +2032,7 @@ return false instead of raise a type error.</p>
 340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 338</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_language?'>has_language?</span>
   <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_langString'>langString</span>
@@ -2001,7 +2085,7 @@ return false instead of raise a type error.</p>
 239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='ivar'>@hash</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_datatype'>datatype</span><span class='comma'>,</span> <span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -2069,7 +2153,7 @@ return false instead of raise a type error.</p>
 471</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 469</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 469</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_humanize'>humanize</span><span class='lparen'>(</span><span class='id identifier rubyid_lang'>lang</span> <span class='op'>=</span> <span class='symbol'>:en</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -2122,10 +2206,10 @@ return false instead of raise a type error.</p>
 479</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 477</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 477</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
-  <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(%s)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='period'>.</span><span class='id identifier rubyid_serialize'><span class='object_link'><a href="NTriples.html#serialize-class_method" title="RDF::NTriples.serialize (method)">serialize</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; R:L:(</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>([^:]*)$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2179,7 +2263,7 @@ return false instead of raise a type error.</p>
 197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 195</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_literal?'>literal?</span>
   <span class='kw'>true</span>
@@ -2231,7 +2315,7 @@ return false instead of raise a type error.</p>
 189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object'>object</span>
   <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@object</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='ivar'>@object</span> <span class='op'>:</span> <span class='id identifier rubyid_value'>value</span>
@@ -2298,7 +2382,7 @@ too.</p>
 321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plain?'>plain?</span>
   <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_langString'>langString</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_datatype'>datatype</span><span class='rparen'>)</span>
@@ -2354,7 +2438,7 @@ too.</p>
 501</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 495</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 495</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to_missing?'>respond_to_missing?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_include_private'>include_private</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_name'>name</span>
@@ -2423,7 +2507,7 @@ A simple literal has no datatype or language.</p>
 331</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 329</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 329</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simple?'>simple?</span>
   <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span>
@@ -2489,7 +2573,7 @@ A simple literal has no datatype or language.</p>
 420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 418</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 418</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_squish'>squish</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_other_string'>other_string</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_squish!'>squish!</span>
@@ -2557,7 +2641,7 @@ A simple literal has no datatype or language.</p>
 433</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 427</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 427</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_squish!'>squish!</span>
   <span class='ivar'>@string</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span>
@@ -2614,7 +2698,7 @@ A simple literal has no datatype or language.</p>
 462</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 460</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='ivar'>@object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -2688,7 +2772,7 @@ datatype.</p>
 366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 363</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='id identifier rubyid_grammar'>grammar</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:GRAMMAR</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='kw'>nil</span>
@@ -2780,7 +2864,7 @@ invalid.</p>
 378</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a valid &lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_datatype'>datatype</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt; literal</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_invalid?'>invalid?</span>
@@ -2834,7 +2918,7 @@ invalid.</p>
 183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
   <span class='ivar'>@string</span> <span class='op'>||</span> <span class='id identifier rubyid_to_s'>to_s</span>
@@ -2887,7 +2971,7 @@ invalid.</p>
 248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.4.0/bundler/gems/rdf-da525ad24ff7/lib/rdf/model/literal.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/rdf-1b20f426c35b/lib/rdf/model/literal.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value_hash'>value_hash</span>
   <span class='ivar'>@value_hash</span> <span class='op'>||=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -2902,9 +2986,9 @@ invalid.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 10 16:59:15 2017 by
+  Generated on Tue Jan 23 14:39:11 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.4.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gemspec
-ruby "2.4.2"
+ruby "2.5.0"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
@@ -43,9 +43,6 @@ gem 'rest-client-components', git: "https://github.com/amatriain/rest-client-com
 
 # Until Tilt is updated to remove (issue #316)
 #gem 'tilt',               git: "https://github.com/rtomayko/tilt"
-
-# Until sinatra-asset-pipline is updated for Sinatra 2.0
-gem 'sinatra-asset-pipeline', git: "https://github.com/gkellogg/sinatra-asset-pipeline", branch: "sinatra-2"
 
 group :debug do
   gem 'shotgun'
