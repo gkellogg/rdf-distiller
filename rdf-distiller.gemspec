@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'redcarpet',          '~> 3.4'
   s.add_runtime_dependency      'puma',               '~> 3.11'
   s.add_runtime_dependency      'nokogiri',           '~> 1.8'
-  s.add_runtime_dependency      'nokogumbo',          '= 1.4.11'
+  s.add_runtime_dependency      'nokogumbo',          '~> 1.5'
   s.add_runtime_dependency      'yard' ,              '~> 0.9.12'
 
   # development dependencies
