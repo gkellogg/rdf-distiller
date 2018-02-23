@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.5.0/bundler/gems/json-ld-0bc174a663ae/lib/json/ld/expand.rb</dd>
+    <dd>vendor/bundler/ruby/2.5.0/bundler/gems/json-ld-10f0d539c024/lib/json/ld/expand.rb</dd>
   </dl>
   
 </div>
@@ -121,7 +121,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#expand-instance_method" title="#expand (instance method)">#<strong>expand</strong>(input, active_property, context, ordered: true)  &#x21d2; Array&lt;Hash{String =&gt; Object}&gt; </a>
+      <a href="#expand-instance_method" title="#expand (instance method)">#<strong>expand</strong>(input, active_property, context, ordered: true, framing: false)  &#x21d2; Array&lt;Hash{String =&gt; Object}&gt; </a>
     
 
     
@@ -164,7 +164,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="expand-instance_method">
   
-    #<strong>expand</strong>(input, active_property, context, ordered: true)  &#x21d2; <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}&gt;</tt> 
+    #<strong>expand</strong>(input, active_property, context, ordered: true, framing: false)  &#x21d2; <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}&gt;</tt> 
   
 
   
@@ -230,6 +230,22 @@ Ensure output objects have keys ordered properly</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>framing</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>(false)
+Special rules for expanding a frame</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -252,8 +268,6 @@ Ensure output objects have keys ordered properly</p>
       <pre class="lines">
 
 
-20
-21
 22
 23
 24
@@ -364,21 +378,23 @@ Ensure output objects have keys ordered properly</p>
 129
 130
 131
-132</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/json-ld-0bc174a663ae/lib/json/ld/expand.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.5.0/bundler/gems/json-ld-10f0d539c024/lib/json/ld/expand.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_framing'>framing</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:processingMode</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expand-frame</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>framing:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='comment'>#log_debug(&quot;expand&quot;) {&quot;input: #{input.inspect}, active_property: #{active_property.inspect}, context: #{context.inspect}&quot;}
-</span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_input'>input</span>
+</span>  <span class='id identifier rubyid_framing'>framing</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@default</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_input'>input</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span>
     <span class='comment'># If element is an array,
 </span>    <span class='id identifier rubyid_is_list'>is_list</span> <span class='op'>=</span> <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_container'>container</span><span class='lparen'>(</span><span class='id identifier rubyid_active_property'>active_property</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>@list</span><span class='tstring_end'>)</span></span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
       <span class='comment'># Initialize expanded item to the result of using this algorithm recursively, passing active context, active property, and item as element.
-</span>      <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='id identifier rubyid_ordered'>ordered</span><span class='rparen'>)</span>
+</span>      <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='id identifier rubyid_ordered'>ordered</span><span class='comma'>,</span> <span class='label'>framing:</span> <span class='id identifier rubyid_framing'>framing</span><span class='rparen'>)</span>
 
       <span class='comment'># If the active property is @list or its container mapping is set to @list, the expanded item must not be an array or a list object, otherwise a list of lists error has been detected and processing is aborted.
 </span>      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="JsonLdError.html" title="JSON::LD::JsonLdError (class)">JsonLdError</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JsonLdError/ListOfLists.html" title="JSON::LD::JsonLdError::ListOfLists (class)">ListOfLists</a></span></span><span class='comma'>,</span>
@@ -411,7 +427,7 @@ Ensure output objects have keys ordered properly</p>
     <span class='kw'>end</span>
 
     <span class='comment'># Process each key and value in element. Ignores @nesting content
-</span>    <span class='id identifier rubyid_expand_object'>expand_object</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_output_object'>output_object</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='id identifier rubyid_ordered'>ordered</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_expand_object'>expand_object</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_output_object'>output_object</span><span class='comma'>,</span> <span class='label'>ordered:</span> <span class='id identifier rubyid_ordered'>ordered</span><span class='comma'>,</span> <span class='label'>framing:</span> <span class='id identifier rubyid_framing'>framing</span><span class='rparen'>)</span>
 
     <span class='comment'>#log_debug(&quot;output object&quot;) {output_object.inspect}
 </span>
@@ -435,8 +451,8 @@ Ensure output objects have keys ordered properly</p>
         <span class='comment'># Otherwise, if the value of result&#39;s @value member is not a string and result contains the key @language, an invalid language-tagged value error has been detected (only strings can be language-tagged) and processing is aborted.
 </span>        <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="JsonLdError.html" title="JSON::LD::JsonLdError (class)">JsonLdError</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JsonLdError/InvalidLanguageTaggedValue.html" title="JSON::LD::JsonLdError::InvalidLanguageTaggedValue (class)">InvalidLanguageTaggedValue</a></span></span><span class='comma'>,</span>
               <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>when @language is used, @value must be a string: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_output_object'>output_object</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>elsif</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_output_object'>output_object</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
-              <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_expand_iri'>expand_iri</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='comma'>,</span> <span class='label'>vocab:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>log_depth:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:log_depth</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='rparen'>)</span> <span class='op'>||</span>
+      <span class='kw'>elsif</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_output_object'>output_object</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
+              <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_absolute?'><span class='object_link'><a href="../../RDF/URI.html#absolute%3F-instance_method" title="RDF::URI#absolute? (method)">absolute?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>||</span>
               <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span><span class='rbrace'>}</span>
         <span class='comment'># Otherwise, if the result has a @type member and its value is not an IRI, an invalid typed value error has been detected and processing is aborted.
 </span>        <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="JsonLdError.html" title="JSON::LD::JsonLdError (class)">JsonLdError</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JsonLdError/InvalidTypedValue.html" title="JSON::LD::JsonLdError::InvalidTypedValue (class)">InvalidTypedValue</a></span></span><span class='comma'>,</span>
@@ -469,7 +485,7 @@ Ensure output objects have keys ordered properly</p>
 
     <span class='comment'># Re-order result keys if ordering
 </span>    <span class='kw'>if</span> <span class='id identifier rubyid_ordered'>ordered</span>
-      <span class='id identifier rubyid_output_object'>output_object</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_kw_sort'>kw_sort</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_kk'>kk</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span> <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_kk'>kk</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_output_object'>output_object</span><span class='lbracket'>[</span><span class='id identifier rubyid_kk'>kk</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_output_object'>output_object</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_kk'>kk</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span> <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_kk'>kk</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_output_object'>output_object</span><span class='lbracket'>[</span><span class='id identifier rubyid_kk'>kk</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_output_object'>output_object</span>
     <span class='kw'>end</span>
@@ -492,7 +508,7 @@ Ensure output objects have keys ordered properly</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 23 14:39:05 2018 by
+  Generated on Fri Feb 23 15:52:01 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.5.0).
 </div>
