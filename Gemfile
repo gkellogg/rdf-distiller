@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gemspec
-ruby "2.5.0"
+ruby "2.5.1"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
@@ -26,7 +26,8 @@ gem 'rdf-trix',           git: "https://github.com/ruby-rdf/rdf-trix", branch: "
 gem 'rdf-turtle',         git: "https://github.com/ruby-rdf/rdf-turtle", branch: "develop"
 gem 'rdf-vocab',          git: "https://github.com/ruby-rdf/rdf-vocab", branch: "develop"
 gem 'rdf-xsd',            git: "https://github.com/ruby-rdf/rdf-xsd", branch: "develop"
-gem 'json-ld',            git: "https://github.com/ruby-rdf/json-ld", branch: "develop"
+#gem 'json-ld',            git: "https://github.com/ruby-rdf/json-ld", branch: "develop"
+gem 'json-ld',            path: "../json-ld"
 gem 'json-ld-preloaded',  git: "https://github.com/ruby-rdf/json-ld-preloaded", branch: "develop"
 gem 'ld-patch',           git: "https://github.com/ruby-rdf/ld-patch", branch: "develop"
 gem 'shex',               git: "https://github.com/ruby-rdf/shex", branch: "develop"
@@ -37,9 +38,6 @@ gem "syntax"
 gem "rake"
 gem 'better_errors'
 gem 'binding_of_caller'
-
-# Becuase rest-client-commonents doesn't seem like it's going to be updated:
-gem 'rest-client-components', git: "https://github.com/amatriain/rest-client-components", branch: "rest-client-2-compatibility"
 
 # Until Tilt is updated to remove (issue #316)
 #gem 'tilt',               git: "https://github.com/rtomayko/tilt"
