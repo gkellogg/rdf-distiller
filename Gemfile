@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gemspec
-ruby "2.5.0"
+ruby "2.5.1"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
@@ -37,9 +37,6 @@ gem "syntax"
 gem "rake"
 gem 'better_errors'
 gem 'binding_of_caller'
-
-# Becuase rest-client-commonents doesn't seem like it's going to be updated:
-gem 'rest-client-components', git: "https://github.com/amatriain/rest-client-components", branch: "rest-client-2-compatibility"
 
 # Until Tilt is updated to remove (issue #316)
 #gem 'tilt',               git: "https://github.com/rtomayko/tilt"
