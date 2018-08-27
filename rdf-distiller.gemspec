@@ -16,13 +16,7 @@ Gem::Specification.new do |s|
 
   s.platform           = Gem::Platform::RUBY
   s.files              = %w(AUTHORS README.md UNLICENSE VERSION) + Dir.glob('lib/**/*.rb')
-  s.bindir             = %q(bin)
-  s.executables        = %w()
-  s.default_executable = s.executables.first
   s.require_paths      = %w(lib)
-  s.extensions         = %w()
-  s.test_files         = %w()
-  s.has_rdoc           = false
 
   s.required_ruby_version      = '>= 2.3.1'
   s.requirements               = []
