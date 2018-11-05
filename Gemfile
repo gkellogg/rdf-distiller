@@ -7,7 +7,8 @@ ruby "2.5.1"
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
 gem "rack-linkeddata",    git: "https://github.com/ruby-rdf/rack-linkeddata", branch: "develop"
 gem "linkeddata",         git: "https://github.com/ruby-rdf/linkeddata", branch: "develop"
-gem "rdf",                git: "https://github.com/ruby-rdf/rdf", branch: "develop"
+#gem "rdf",                git: "https://github.com/ruby-rdf/rdf", branch: "develop"
+gem "rdf", path: '../rdf'
 gem "rdf-spec",           git: "https://github.com/ruby-rdf/rdf-spec", branch: "develop"
 
 gem 'rdf-aggregate-repo', git: "https://github.com/ruby-rdf/rdf-aggregate-repo", branch: "develop"
