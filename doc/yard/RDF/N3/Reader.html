@@ -101,7 +101,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb</dd>
+    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb</dd>
   </dl>
   
 </div>
@@ -118,6 +118,8 @@
 
 <p>N3 Parser, based in librdf version of predictiveParser.py
 Separate pass to create branch_table from n3-selectors.n3</p>
+
+<p>This implementation uses distinguished variables for both universal and explicit existential variables (defined with <code>@forSome</code>). Variables created from blank nodes are non-distinguished. Distinguished existential variables are tracked using <code>$</code>, internally, as the RDF <code>query_pattern</code> logic looses details of the variable definition in solutions, where the variable is represented using a symbol.</p>
 
 <ul>
 <li>Formulae as RDF::Query representations</li>
@@ -192,12 +194,50 @@ Separate pass to create branch_table from n3-selectors.n3</p>
   <p class="inherited"><span class='object_link'><a href="../Util/Logger.html#IOWrapper-constant" title="RDF::Util::Logger::IOWrapper (constant)">Util::Logger::IOWrapper</a></span></p>
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#formulae-instance_method" title="#formulae (instance method)">#<strong>formulae</strong>  &#x21d2; Array&lt;RDF::Node&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The Blank nodes allocated for formula.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
 
 
-  <h2>Instance Attribute Summary</h2>
+
+  
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Reader.html" title="RDF::Reader (class)">Reader</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Reader.html#options-instance_method" title="RDF::Reader#options (method)">#options</a></span></p>
+
+  
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="../Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Enumerable.html#existentials-instance_method" title="RDF::Enumerable#existentials (method)">#existentials</a></span>, <span class='object_link'><a href="../Enumerable.html#universals-instance_method" title="RDF::Enumerable#universals (method)">#universals</a></span></p>
 
 
   
@@ -1158,7 +1198,7 @@ Separate pass to create branch_table from n3-selectors.n3</p>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Parser.html" title="RDF::N3::Parser (module)">Parser</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Parser.html#abbr-instance_method" title="RDF::N3::Parser#abbr (method)">#abbr</a></span>, <span class='object_link'><a href="Parser.html#buffer-instance_method" title="RDF::N3::Parser#buffer (method)">#buffer</a></span>, <span class='object_link'><a href="Parser.html#consume-instance_method" title="RDF::N3::Parser#consume (method)">#consume</a></span>, <span class='object_link'><a href="Parser.html#dump_stack-instance_method" title="RDF::N3::Parser#dump_stack (method)">#dump_stack</a></span>, <span class='object_link'><a href="Parser.html#error-instance_method" title="RDF::N3::Parser#error (method)">#error</a></span>, <span class='object_link'><a href="Parser.html#get_token-instance_method" title="RDF::N3::Parser#get_token (method)">#get_token</a></span>, <span class='object_link'><a href="Parser.html#parse-instance_method" title="RDF::N3::Parser#parse (method)">#parse</a></span>, <span class='object_link'><a href="Parser.html#readline-instance_method" title="RDF::N3::Parser#readline (method)">#readline</a></span>, <span class='object_link'><a href="Parser.html#test-instance_method" title="RDF::N3::Parser#test (method)">#test</a></span>, <span class='object_link'><a href="Parser.html#token-instance_method" title="RDF::N3::Parser#token (method)">#token</a></span>, <span class='object_link'><a href="Parser.html#whitespace-instance_method" title="RDF::N3::Parser#whitespace (method)">#whitespace</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Parser.html#abbr-instance_method" title="RDF::N3::Parser#abbr (method)">#abbr</a></span>, <span class='object_link'><a href="Parser.html#buffer-instance_method" title="RDF::N3::Parser#buffer (method)">#buffer</a></span>, <span class='object_link'><a href="Parser.html#consume-instance_method" title="RDF::N3::Parser#consume (method)">#consume</a></span>, <span class='object_link'><a href="Parser.html#depth-instance_method" title="RDF::N3::Parser#depth (method)">#depth</a></span>, <span class='object_link'><a href="Parser.html#dump_stack-instance_method" title="RDF::N3::Parser#dump_stack (method)">#dump_stack</a></span>, <span class='object_link'><a href="Parser.html#error-instance_method" title="RDF::N3::Parser#error (method)">#error</a></span>, <span class='object_link'><a href="Parser.html#get_token-instance_method" title="RDF::N3::Parser#get_token (method)">#get_token</a></span>, <span class='object_link'><a href="Parser.html#parse-instance_method" title="RDF::N3::Parser#parse (method)">#parse</a></span>, <span class='object_link'><a href="Parser.html#readline-instance_method" title="RDF::N3::Parser#readline (method)">#readline</a></span>, <span class='object_link'><a href="Parser.html#test-instance_method" title="RDF::N3::Parser#test (method)">#test</a></span>, <span class='object_link'><a href="Parser.html#token-instance_method" title="RDF::N3::Parser#token (method)">#token</a></span>, <span class='object_link'><a href="Parser.html#whitespace-instance_method" title="RDF::N3::Parser#whitespace (method)">#whitespace</a></span></p>
 
   
   
@@ -1209,7 +1249,18 @@ Separate pass to create branch_table from n3-selectors.n3</p>
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Enumerable.html" title="RDF::Enumerable (module)">Enumerable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Enumerable.html#add_entailment-class_method" title="RDF::Enumerable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="../Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="../Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="../Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#each_term-instance_method" title="RDF::Enumerable#each_term (method)">#each_term</a></span>, <span class='object_link'><a href="../Enumerable.html#entail-instance_method" title="RDF::Enumerable#entail (method)">#entail</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_term-instance_method" title="RDF::Enumerable#enum_term (method)">#enum_term</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="../Enumerable.html#graph_names-instance_method" title="RDF::Enumerable#graph_names (method)">#graph_names</a></span>, <span class='object_link'><a href="../Enumerable.html#has_graph%3F-instance_method" title="RDF::Enumerable#has_graph? (method)">#has_graph?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_statement%3F-instance_method" title="RDF::Enumerable#has_statement? (method)">#has_statement?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_term%3F-instance_method" title="RDF::Enumerable#has_term? (method)">#has_term?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="../Enumerable.html#invalid%3F-instance_method" title="RDF::Enumerable#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="../Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="../Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="../Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="../Enumerable.html#project_graph-instance_method" title="RDF::Enumerable#project_graph (method)">#project_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="../Enumerable.html#respond_to_missing%3F-instance_method" title="RDF::Enumerable#respond_to_missing? (method)">#respond_to_missing?</a></span>, <span class='object_link'><a href="../Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="../Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="../Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">#supports?</a></span>, <span class='object_link'><a href="../Enumerable.html#terms-instance_method" title="RDF::Enumerable#terms (method)">#terms</a></span>, <span class='object_link'><a href="../Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="../Enumerable.html#to_h-instance_method" title="RDF::Enumerable#to_h (method)">#to_h</a></span>, <span class='object_link'><a href="../Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="../Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span>, <span class='object_link'><a href="../Enumerable.html#valid%3F-instance_method" title="RDF::Enumerable#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="../Enumerable.html#validate!-instance_method" title="RDF::Enumerable#validate! (method)">#validate!</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Enumerable.html#add_entailment-class_method" title="RDF::Enumerable.add_entailment (method)">add_entailment</a></span>, <span class='object_link'><a href="../Enumerable.html#contain%3F-instance_method" title="RDF::Enumerable#contain? (method)">#contain?</a></span>, <span class='object_link'><a href="../Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">#dump</a></span>, <span class='object_link'><a href="../Enumerable.html#each_graph-instance_method" title="RDF::Enumerable#each_graph (method)">#each_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#each_object-instance_method" title="RDF::Enumerable#each_object (method)">#each_object</a></span>, <span class='object_link'><a href="../Enumerable.html#each_predicate-instance_method" title="RDF::Enumerable#each_predicate (method)">#each_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#each_quad-instance_method" title="RDF::Enumerable#each_quad (method)">#each_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#each_subject-instance_method" title="RDF::Enumerable#each_subject (method)">#each_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#each_term-instance_method" title="RDF::Enumerable#each_term (method)">#each_term</a></span>, <span class='object_link'><a href="../Enumerable.html#entail-instance_method" title="RDF::Enumerable#entail (method)">#entail</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_graph-instance_method" title="RDF::Enumerable#enum_graph (method)">#enum_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_object-instance_method" title="RDF::Enumerable#enum_object (method)">#enum_object</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_predicate-instance_method" title="RDF::Enumerable#enum_predicate (method)">#enum_predicate</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_quad-instance_method" title="RDF::Enumerable#enum_quad (method)">#enum_quad</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_statement-instance_method" title="RDF::Enumerable#enum_statement (method)">#enum_statement</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_subject-instance_method" title="RDF::Enumerable#enum_subject (method)">#enum_subject</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_term-instance_method" title="RDF::Enumerable#enum_term (method)">#enum_term</a></span>, <span class='object_link'><a href="../Enumerable.html#enum_triple-instance_method" title="RDF::Enumerable#enum_triple (method)">#enum_triple</a></span>, <span class='object_link'><a href="../Enumerable.html#graph_names-instance_method" title="RDF::Enumerable#graph_names (method)">#graph_names</a></span>, <span class='object_link'><a href="../Enumerable.html#has_graph%3F-instance_method" title="RDF::Enumerable#has_graph? (method)">#has_graph?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_object%3F-instance_method" title="RDF::Enumerable#has_object? (method)">#has_object?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_predicate%3F-instance_method" title="RDF::Enumerable#has_predicate? (method)">#has_predicate?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_quad%3F-instance_method" title="RDF::Enumerable#has_quad? (method)">#has_quad?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_statement%3F-instance_method" title="RDF::Enumerable#has_statement? (method)">#has_statement?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_subject%3F-instance_method" title="RDF::Enumerable#has_subject? (method)">#has_subject?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_term%3F-instance_method" title="RDF::Enumerable#has_term? (method)">#has_term?</a></span>, <span class='object_link'><a href="../Enumerable.html#has_triple%3F-instance_method" title="RDF::Enumerable#has_triple? (method)">#has_triple?</a></span>, <span class='object_link'><a href="../Enumerable.html#invalid%3F-instance_method" title="RDF::Enumerable#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="../Enumerable.html#method_missing-instance_method" title="RDF::Enumerable#method_missing (method)">#method_missing</a></span>, <span class='object_link'><a href="../Enumerable.html#objects-instance_method" title="RDF::Enumerable#objects (method)">#objects</a></span>, <span class='object_link'><a href="../Enumerable.html#predicates-instance_method" title="RDF::Enumerable#predicates (method)">#predicates</a></span>, <span class='object_link'><a href="../Enumerable.html#project_graph-instance_method" title="RDF::Enumerable#project_graph (method)">#project_graph</a></span>, <span class='object_link'><a href="../Enumerable.html#quads-instance_method" title="RDF::Enumerable#quads (method)">#quads</a></span>, <span class='object_link'><a href="../Enumerable.html#respond_to_missing%3F-instance_method" title="RDF::Enumerable#respond_to_missing? (method)">#respond_to_missing?</a></span>, <span class='object_link'><a href="../Enumerable.html#statements-instance_method" title="RDF::Enumerable#statements (method)">#statements</a></span>, <span class='object_link'><a href="../Enumerable.html#subjects-instance_method" title="RDF::Enumerable#subjects (method)">#subjects</a></span>, <span class='object_link'><a href="../Enumerable.html#supports%3F-instance_method" title="RDF::Enumerable#supports? (method)">#supports?</a></span>, <span class='object_link'><a href="../Enumerable.html#terms-instance_method" title="RDF::Enumerable#terms (method)">#terms</a></span>, <span class='object_link'><a href="../Enumerable.html#to_a-instance_method" title="RDF::Enumerable#to_a (method)">#to_a</a></span>, <span class='object_link'><a href="../Enumerable.html#to_h-instance_method" title="RDF::Enumerable#to_h (method)">#to_h</a></span>, <span class='object_link'><a href="../Enumerable.html#to_set-instance_method" title="RDF::Enumerable#to_set (method)">#to_set</a></span>, <span class='object_link'><a href="../Enumerable.html#triples-instance_method" title="RDF::Enumerable#triples (method)">#triples</a></span>, <span class='object_link'><a href="../Enumerable.html#valid%3F-instance_method" title="RDF::Enumerable#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="../Enumerable.html#validate!-instance_method" title="RDF::Enumerable#validate! (method)">#validate!</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Isomorphic.html#bijection_to-instance_method" title="RDF::Isomorphic#bijection_to (method)">#bijection_to</a></span>, <span class='object_link'><a href="../Isomorphic.html#isomorphic_with%3F-instance_method" title="RDF::Isomorphic#isomorphic_with? (method)">#isomorphic_with?</a></span></p>
 
   
   
@@ -1223,17 +1274,6 @@ Separate pass to create branch_table from n3-selectors.n3</p>
   <p class="inherited"><span class='object_link'><a href="../Countable.html#count-instance_method" title="RDF::Countable#count (method)">#count</a></span>, <span class='object_link'><a href="../Countable.html#empty%3F-instance_method" title="RDF::Countable#empty? (method)">#empty?</a></span></p>
 
   
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Isomorphic.html" title="RDF::Isomorphic (module)">Isomorphic</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Isomorphic.html#bijection_to-instance_method" title="RDF::Isomorphic#bijection_to (method)">#bijection_to</a></span>, <span class='object_link'><a href="../Isomorphic.html#isomorphic_with%3F-instance_method" title="RDF::Isomorphic#isomorphic_with? (method)">#isomorphic_with?</a></span></p>
-
   
   
   
@@ -1463,12 +1503,6 @@ all readers)</p>
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
 53
 54
 55
@@ -1498,10 +1532,29 @@ all readers)</p>
 79
 80
 81
-82</pre>
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
@@ -1509,27 +1562,40 @@ all readers)</p>
     <span class='ivar'>@input</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:read</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_input'>input</span> <span class='op'>:</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
     <span class='ivar'>@lineno</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_readline'>readline</span>  <span class='comment'># Prime the pump
-</span>    
+</span>
     <span class='ivar'>@memo</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
     <span class='ivar'>@keyword_mode</span> <span class='op'>=</span> <span class='kw'>false</span>
-    <span class='ivar'>@keywords</span> <span class='op'>=</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>is</span><span class='words_sep'> </span><span class='tstring_content'>of</span><span class='words_sep'> </span><span class='tstring_content'>this</span><span class='words_sep'> </span><span class='tstring_content'>has</span><span class='tstring_end'>)</span></span>
+    <span class='ivar'>@keywords</span> <span class='op'>=</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>is</span><span class='words_sep'> </span><span class='tstring_content'>of</span><span class='words_sep'> </span><span class='tstring_content'>this</span><span class='words_sep'> </span><span class='tstring_content'>has</span><span class='tstring_end'>)</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:freeze</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
     <span class='ivar'>@productions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='ivar'>@prod_data</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
     <span class='ivar'>@branches</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Meta.html#BRANCHES-constant" title="RDF::N3::Meta::BRANCHES (constant)">BRANCHES</a></span></span> <span class='comment'># Get from meta class
 </span>    <span class='ivar'>@regexps</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Meta.html#REGEXPS-constant" title="RDF::N3::Meta::REGEXPS (constant)">REGEXPS</a></span></span> <span class='comment'># Get from meta class
 </span>
-    <span class='ivar'>@formulae</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>      <span class='comment'># Nodes used as Formluae graph names
+    <span class='ivar'>@formulae</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>      <span class='comment'># Nodes used as Formulae graph names
 </span>    <span class='ivar'>@formulae_nodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='ivar'>@variables</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>    <span class='comment'># variable definitions along with defining formula
+    <span class='ivar'>@label_uniquifier</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Random</span><span class='period'>.</span><span class='id identifier rubyid_new_seed'>new_seed</span><span class='embexpr_end'>}</span><span class='tstring_content'>_000000</span><span class='tstring_end'>&quot;</span></span>
+    <span class='ivar'>@bnodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>  <span class='comment'># allocated bnodes by formula
+</span>    <span class='ivar'>@variables</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>  <span class='comment'># allocated variables by formula
 </span>
     <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@uri</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@uri</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
       <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>validate</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_validate?'>validate?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>canonicalize</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>intern</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_intern?'>intern?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
+
+    <span class='comment'># Prepopulate operator namespaces unless validating
+</span>    <span class='kw'>unless</span> <span class='id identifier rubyid_validate?'>validate?</span>
+      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:crypto</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Crypto.html" title="RDF::N3::Crypto (class)">Crypto</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:list</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="List.html" title="RDF::N3::List (class)">List</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:log</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Log.html" title="RDF::N3::Log (class)">Log</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:math</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Math.html" title="RDF::N3::Math (class)">Math</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:rei</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rei.html" title="RDF::N3::Rei (class)">Rei</a></span></span><span class='rparen'>)</span>
+      <span class='comment'>#namespace(:string, RDF::N3::String)
+</span>      <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='symbol'>:time</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Time.html" title="RDF::N3::Time (class)">Time</a></span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>validate</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_validate?'>validate?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>canonicalize</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>intern</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_intern?'>intern?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_arity'>arity</span>
@@ -1556,6 +1622,66 @@ all readers)</p>
   
 </div>
 
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="formulae-instance_method">
+  
+    #<strong>formulae</strong>  &#x21d2; <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Node.html" title="RDF::Node (class)">RDF::Node</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The Blank nodes allocated for formula</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Node.html" title="RDF::Node (class)">RDF::Node</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_formulae'>formulae</span>
+  <span class='ivar'>@formulae</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -1576,13 +1702,13 @@ all readers)</p>
       <pre class="lines">
 
 
-153
-154
-155
-156</pre>
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_booleanToken'>booleanToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_tok'>tok</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_boolean'>boolean</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='id identifier rubyid_validate?'>validate?</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='rparen'>)</span>
@@ -1608,25 +1734,6 @@ all readers)</p>
       <pre class="lines">
 
 
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
 194
 195
 196
@@ -1637,10 +1744,29 @@ all readers)</p>
 201
 202
 203
-204</pre>
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_declarationFinish'>declarationFinish</span>
   <span class='id identifier rubyid_decl'>decl</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -1652,17 +1778,17 @@ all readers)</p>
     <span class='comment'># Base, set or update document URI
 </span>    <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_decl'>decl</span><span class='lbracket'>[</span><span class='symbol'>:explicituri</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_process_uri'>process_uri</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
-    
+
     <span class='comment'># The empty prefix &quot;&quot; is by default , bound to &quot;#&quot; -- the local namespace of the file.
 </span>    <span class='comment'># The parser behaves as though there were a
 </span>    <span class='comment'>#   @prefix : &lt;#&gt;.
 </span>    <span class='comment'># just before the file.
 </span>    <span class='comment'># This means that &lt;#foo&gt; can be written :foo and using @keywords one can reduce that to foo.
-</span>    
+</span>
     <span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[\/\#]$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_base_uri'>base_uri</span> <span class='op'>:</span> <span class='id identifier rubyid_process_uri'>process_uri</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>declarationFinish[@base]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@base=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>declarationFinish[@base]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@base=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_uri'>base_uri</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@keywords</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>declarationFinish[@keywords]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='ivar'>@keywords</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>declarationFinish[@keywords]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='ivar'>@keywords</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span>
     <span class='comment'># Keywords are handled in tokenizer and maintained in @keywords array
 </span>    <span class='kw'>if</span> <span class='lparen'>(</span><span class='ivar'>@keywords</span> <span class='op'>&amp;</span> <span class='const'><span class='object_link'><a href="#N3_KEYWORDS-constant" title="RDF::N3::Reader::N3_KEYWORDS (constant)">N3_KEYWORDS</a></span></span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='ivar'>@keywords</span>
       <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Undefined keywords used: </span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='ivar'>@keywords</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="#N3_KEYWORDS-constant" title="RDF::N3::Reader::N3_KEYWORDS (constant)">N3_KEYWORDS</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_validate?'>validate?</span>
@@ -1692,12 +1818,12 @@ all readers)</p>
       <pre class="lines">
 
 
-158
-159
-160</pre>
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_declarationStart'>declarationStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1722,21 +1848,21 @@ all readers)</p>
       <pre class="lines">
 
 
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173</pre>
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_declarationToken'>declarationToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_prod'>prod</span>
@@ -1780,13 +1906,13 @@ all readers)</p>
       <pre class="lines">
 
 
-207
-208
-209
-210</pre>
+226
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_documentStart'>documentStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
@@ -1812,12 +1938,12 @@ all readers)</p>
       <pre class="lines">
 
 
-212
-213
-214</pre>
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 231</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dtlangToken'>dtlangToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:langcode</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_prod'>prod</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>langcode</span><span class='tstring_end'>&quot;</span></span>
@@ -1880,21 +2006,21 @@ all readers)</p>
       <pre class="lines">
 
 
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105</pre>
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1906,7 +2032,7 @@ all readers)</p>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../ReaderError.html" title="RDF::ReaderError (class)">ReaderError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Errors found during processing</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_triple</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_statement</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1988,22 +2114,22 @@ all readers)</p>
       <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122</pre>
+133
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 133</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
+      <span class='kw'>yield</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_to_triple'>to_triple</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='symbol'>:each_triple</span><span class='rparen'>)</span>
@@ -2043,22 +2169,24 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-226
-227
-228
-229
-230
-231
-232</pre>
+245
+246
+247
+248
+249
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_existentialFinish'>existentialFinish</span>
   <span class='id identifier rubyid_pd'>pd</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
   <span class='id identifier rubyid_forSome'>forSome</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_pd'>pd</span><span class='lbracket'>[</span><span class='symbol'>:symbol</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_forSome'>forSome</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_term'>term</span><span class='op'>|</span>
-    <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>formula:</span> <span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='label'>var:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[\/#]</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='id identifier rubyid_univar'>univar</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_var_to_formula'>add_var_to_formula</span><span class='lparen'>(</span><span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2081,12 +2209,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-216
-217
-218</pre>
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_existentialStart'>existentialStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2121,37 +2249,37 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258</pre>
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expressionFinish'>expressionFinish</span>
   <span class='id identifier rubyid_expression'>expression</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
-  
+
   <span class='comment'># If we&#39;re in teh middle of a pathtail, append
 </span>  <span class='kw'>if</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='lbracket'>[</span><span class='symbol'>:pathtail</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:pathitem</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:pathtail</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_path_list'>path_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:pathitem</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:pathtail</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expressionFinish(pathtail)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set pathtail to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path_list'>path_list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expressionFinish(pathtail)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set pathtail to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path_list'>path_list</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
     <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='lbracket'>[</span><span class='symbol'>:pathtail</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_path_list'>path_list</span>
 
     <span class='id identifier rubyid_dir_list'>dir_list</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:direction</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_expression'>expression</span><span class='lbracket'>[</span><span class='symbol'>:direction</span><span class='rbracket'>]</span>
@@ -2185,12 +2313,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-234
-235
-236</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expressionStart'>expressionStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2215,12 +2343,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(%s)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -2245,19 +2373,19 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278</pre>
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_literalFinish'>literalFinish</span>
   <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2265,7 +2393,7 @@ when the formula is completed against all in-scope variables</p>
   <span class='id identifier rubyid_language'>language</span> <span class='op'>=</span> <span class='id identifier rubyid_lit'>lit</span><span class='lbracket'>[</span><span class='symbol'>:langcode</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_lit'>lit</span><span class='lbracket'>[</span><span class='symbol'>:langcode</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_language'>language</span> <span class='op'>=</span> <span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='kw'>if</span> <span class='id identifier rubyid_language'>language</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span>
   <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>=</span> <span class='id identifier rubyid_lit'>lit</span><span class='lbracket'>[</span><span class='symbol'>:symbol</span><span class='rbracket'>]</span>
-  
+
   <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='label'>language:</span> <span class='id identifier rubyid_language'>language</span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='id identifier rubyid_datatype'>datatype</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='id identifier rubyid_validate?'>validate?</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:literal</span><span class='comma'>,</span> <span class='id identifier rubyid_lit'>lit</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -2289,12 +2417,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-260
-261
-262</pre>
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 280</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_literalStart'>literalStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2319,13 +2447,13 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-264
-265
-266
-267</pre>
+284
+285
+286
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_literalToken'>literalToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tok'>tok</span> <span class='op'>=</span> <span class='id identifier rubyid_tok'>tok</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>3</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&quot;&quot;&quot;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>?</span> <span class='id identifier rubyid_tok'>tok</span><span class='lbracket'>[</span><span class='int'>3</span><span class='op'>..</span><span class='op'>-</span><span class='int'>4</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_tok'>tok</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span>
@@ -2351,17 +2479,17 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-284
-285
-286
-287
-288
-289
-290
-291</pre>
+304
+305
+306
+307
+308
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 304</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objectFinish'>objectFinish</span>
   <span class='id identifier rubyid_object'>object</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2391,12 +2519,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-280
-281
-282</pre>
+300
+301
+302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 300</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_objectStart'>objectStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2431,20 +2559,20 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139</pre>
+153
+154
+155
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_onFinish'>onFinish</span>
   <span class='id identifier rubyid_prod'>prod</span> <span class='op'>=</span> <span class='ivar'>@productions</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span><span class='lparen'>(</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>Finish</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2477,21 +2605,23 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
-131</pre>
+144
+145
+146
+147
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_onStart'>onStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>Start</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span>
   <span class='ivar'>@productions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_prod'>prod</span>
   <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2523,25 +2653,25 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151</pre>
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_onToken'>onToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='ivar'>@productions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_parentProd'>parentProd</span> <span class='op'>=</span> <span class='ivar'>@productions</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
     <span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_parentProd'>parentProd</span><span class='embexpr_end'>}</span><span class='tstring_content'>Token</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tok'>tok</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_handler'>handler</span><span class='embexpr_end'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tok'>tok</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Token has no parent production</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2567,21 +2697,21 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351</pre>
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathitemFinish'>pathitemFinish</span>
   <span class='id identifier rubyid_pathitem'>pathitem</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2615,12 +2745,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-293
-294
-295</pre>
+313
+314
+315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 293</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 313</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathitemStart'>pathitemStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2645,26 +2775,6 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
 317
 318
 319
@@ -2686,10 +2796,39 @@ when the formula is completed against all in-scope variables</p>
 335
 336
 337
-338</pre>
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 317</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathitemToken'>pathitemToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_prod'>prod</span>
@@ -2700,15 +2839,19 @@ when the formula is completed against all in-scope variables</p>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_decimal'>decimal</span>
     <span class='kw'>else</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_integer'>integer</span>
     <span class='kw'>end</span>
-    
+
     <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_nl'>nl</span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='id identifier rubyid_datatype'>datatype</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='id identifier rubyid_validate?'>validate?</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:literal</span><span class='comma'>,</span> <span class='id identifier rubyid_lit'>lit</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>quickvariable</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># There is a also a shorthand syntax ?x which is the same as :x except that it implies that x is
 </span>    <span class='comment'># universally quantified not in the formula but in its parent formula
 </span>    <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_process_qname'>process_qname</span><span class='lparen'>(</span><span class='id identifier rubyid_tok'>tok</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>?</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>formula:</span> <span class='ivar'>@formulae</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>var:</span> <span class='id identifier rubyid_univar'>univar</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_variable?'>variable?</span> <span class='op'>?</span> <span class='id identifier rubyid_uri'>uri</span> <span class='op'>:</span> <span class='id identifier rubyid_univar'>univar</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_var_to_formula'>add_var_to_formula</span><span class='lparen'>(</span><span class='ivar'>@formulae</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
+    <span class='comment'># Also add var to this formula
+</span>    <span class='id identifier rubyid_add_var_to_formula'>add_var_to_formula</span><span class='lparen'>(</span><span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>boolean</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_tok'>tok</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_boolean'>boolean</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='id identifier rubyid_validate?'>validate?</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:literal</span><span class='comma'>,</span> <span class='id identifier rubyid_lit'>lit</span><span class='rparen'>)</span>
@@ -2721,13 +2864,18 @@ when the formula is completed against all in-scope variables</p>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_symbol'>symbol</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># A new formula, push on a node as a named graph
-</span>    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span>
+</span>    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.form_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unique_label'>unique_label</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='ivar'>@formulae</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_node'>node</span>
     <span class='ivar'>@formulae_nodes</span><span class='lbracket'>[</span><span class='id identifier rubyid_node'>node</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+    <span class='comment'># Promote variables defined on the earlier formula to this formula
+</span>    <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='id identifier rubyid_node'>node</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='ivar'>@formulae</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_var'>var</span><span class='op'>|</span>
+      <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='id identifier rubyid_node'>node</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_var'>var</span>
+    <span class='kw'>end</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='comment'># Pop off the formula, and remove any variables defined in this graph
+    <span class='comment'># Pop off the formula
 </span>    <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_formula'>formula</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pathitemToken(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tok'>tok</span><span class='embexpr_end'>}</span><span class='tstring_content'>): FIXME</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2753,16 +2901,16 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-357
-358
-359
-360
-361
-362
-363</pre>
+386
+387
+388
+389
+390
+391
+392</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 386</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathlistFinish'>pathlistFinish</span>
   <span class='id identifier rubyid_pathlist'>pathlist</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2791,12 +2939,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-353
-354
-355</pre>
+382
+383
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 382</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathlistStart'>pathlistStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='label'>pathlist:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
@@ -2821,15 +2969,15 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-378
-379
-380
-381
-382
-383</pre>
+407
+408
+409
+410
+411
+412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathtailFinish'>pathtailFinish</span>
   <span class='id identifier rubyid_pathtail'>pathtail</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2857,12 +3005,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-365
-366
-367</pre>
+394
+395
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathtailStart'>pathtailStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='label'>pathtail:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
@@ -2887,17 +3035,17 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-369
-370
-371
-372
-373
-374
-375
-376</pre>
+398
+399
+400
+401
+402
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pathtailToken'>pathtailToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_tok'>tok</span>
@@ -2927,15 +3075,15 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-389
-390
-391
-392
-393
-394</pre>
+418
+419
+420
+421
+422
+423</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 418</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_propertylistFinish'>propertylistFinish</span>
   <span class='id identifier rubyid_propertylist'>propertylist</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -2963,12 +3111,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-385
-386
-387</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_propertylistStart'>propertylistStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3003,46 +3151,46 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420</pre>
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 401</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 430</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simpleStatementFinish'>simpleStatementFinish</span>
   <span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
-  
+
   <span class='id identifier rubyid_subject'>subject</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='lbracket'>[</span><span class='symbol'>:subject</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_properties'>properties</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='lbracket'>[</span><span class='symbol'>:propertylist</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_properties'>properties</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='lbracket'>[</span><span class='symbol'>:verb</span><span class='rbracket'>]</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_predicate'>predicate</span>
-    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish(pred)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish(pred)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>depth:</span> <span class='id identifier rubyid_depth'>depth</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>Illegal statment: &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; missing object</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='symbol'>:object</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_objects'>objects</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='lbracket'>[</span><span class='symbol'>:object</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_objects'>objects</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='lbracket'>[</span><span class='symbol'>:invert</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_add_triple'>add_triple</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_add_statement'>add_statement</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
-        <span class='id identifier rubyid_add_triple'>add_triple</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_add_statement'>add_statement</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simpleStatementFinish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -3067,12 +3215,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-396
-397
-398</pre>
+425
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 425</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simpleStatementStart'>simpleStatementStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3097,22 +3245,22 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-426
-427
-428
-429
-430
-431
-432
-433
-434</pre>
+455
+456
+457
+458
+459
+460
+461
+462
+463</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 455</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subjectFinish'>subjectFinish</span>
   <span class='id identifier rubyid_subject'>subject</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
-  
+
   <span class='kw'>if</span> <span class='id identifier rubyid_subject'>subject</span><span class='lbracket'>[</span><span class='symbol'>:expression</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:subject</span><span class='comma'>,</span> <span class='id identifier rubyid_subject'>subject</span><span class='lbracket'>[</span><span class='symbol'>:expression</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
@@ -3139,12 +3287,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-422
-423
-424</pre>
+451
+452
+453</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 451</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subjectStart'>subjectStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3169,21 +3317,21 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447</pre>
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 436</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 465</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_symbolToken'>symbolToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_term'>term</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_prod'>prod</span>
@@ -3194,7 +3342,7 @@ when the formula is completed against all in-scope variables</p>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>symbolToken(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tok'>tok</span><span class='embexpr_end'>}</span><span class='tstring_content'>): FIXME </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  
+
   <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_term'>term</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3232,22 +3380,22 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-459
-460
-461
-462
-463
-464
-465</pre>
+488
+489
+490
+491
+492
+493
+494</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_universalFinish'>universalFinish</span>
   <span class='id identifier rubyid_pd'>pd</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
   <span class='id identifier rubyid_forAll'>forAll</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_pd'>pd</span><span class='lbracket'>[</span><span class='symbol'>:symbol</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_forAll'>forAll</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_term'>term</span><span class='op'>|</span>
-    <span class='ivar'>@variables</span><span class='lbracket'>[</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>formula:</span> <span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='label'>var:</span> <span class='id identifier rubyid_univar'>univar</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_add_var_to_formula'>add_var_to_formula</span><span class='lparen'>(</span><span class='ivar'>@formulae</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_univar'>univar</span><span class='lparen'>(</span><span class='id identifier rubyid_term'>term</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3270,12 +3418,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-449
-450
-451</pre>
+478
+479
+480</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 449</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_universalStart'>universalStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3300,20 +3448,20 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503</pre>
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 493</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 522</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbFinish'>verbFinish</span>
   <span class='id identifier rubyid_verb'>verb</span> <span class='op'>=</span> <span class='ivar'>@prod_data</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
@@ -3346,12 +3494,12 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-467
-468
-469</pre>
+496
+497
+498</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 467</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 496</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbStart'>verbStart</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='rparen'>)</span>
   <span class='ivar'>@prod_data</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3376,38 +3524,38 @@ when the formula is completed against all in-scope variables</p>
       <pre class="lines">
 
 
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491</pre>
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-aedfbb9cdfc9/lib/rdf/n3/reader.rb', line 471</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-n3-234f7b2304d3/lib/rdf/n3/reader.rb', line 500</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbToken'>verbToken</span><span class='lparen'>(</span><span class='id identifier rubyid_prod'>prod</span><span class='comma'>,</span> <span class='id identifier rubyid_tok'>tok</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_term'>term</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_prod'>prod</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;=</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../LOG.html" title="RDF::LOG (class)">LOG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_implies'>implies</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Log.html" title="RDF::N3::Log (class)">Log</a></span></span><span class='period'>.</span><span class='id identifier rubyid_implies'>implies</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:invert</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>=&gt;</span><span class='tstring_end'>&#39;</span></span>
-    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../LOG.html" title="RDF::LOG (class)">LOG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_implies'>implies</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Log.html" title="RDF::N3::Log (class)">Log</a></span></span><span class='period'>.</span><span class='id identifier rubyid_implies'>implies</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>=</span><span class='tstring_end'>&#39;</span></span>
     <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../OWL.html" title="RDF::OWL (class)">OWL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sameAs'>sameAs</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@a</span><span class='tstring_end'>&#39;</span></span>
@@ -3419,7 +3567,7 @@ when the formula is completed against all in-scope variables</p>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verbToken(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prod'>prod</span><span class='embexpr_end'>}</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tok'>tok</span><span class='embexpr_end'>}</span><span class='tstring_content'>): FIXME </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  
+
   <span class='id identifier rubyid_add_prod_data'>add_prod_data</span><span class='lparen'>(</span><span class='symbol'>:symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_term'>term</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3432,9 +3580,9 @@ when the formula is completed against all in-scope variables</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 23 12:48:16 2019 by
+  Generated on Wed May  1 14:48:58 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.6.0).
+  0.9.19 (ruby-2.6.2).
 </div>
 
     </div>

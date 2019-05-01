@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-afe7b3b10547/lib/json/ld/to_rdf.rb</dd>
+    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-74a05a9f623c/lib/json/ld/to_rdf.rb</dd>
   </dl>
   
 </div>
@@ -297,7 +297,6 @@
       <pre class="lines">
 
 
-16
 17
 18
 19
@@ -385,15 +384,29 @@
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-afe7b3b10547/lib/json/ld/to_rdf.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-74a05a9f623c/lib/json/ld/to_rdf.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_item_to_rdf'>item_to_rdf</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='comment'># Just return value object as Term
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_value?'>value?</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@value</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@json</span><span class='tstring_end'>&#39;</span></span>
 
     <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../FalseClass.html" title="FalseClass (class)">FalseClass</a></span></span>
@@ -402,9 +415,18 @@
       <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_boolean'>boolean</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
     <span class='kw'>when</span> <span class='const'>Numeric</span>
       <span class='comment'># Otherwise, if value is a number, then set value to its canonical lexical form as defined in the section Data Round Tripping. If datatype is null, set it to either xsd:integer or xsd:double, depending on if the value contains a fractional and/or an exponential component.
-</span>      <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_lit'>lit</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-      <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>||=</span> <span class='id identifier rubyid_lit'>lit</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>
+</span>      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_json_c14n'>to_json_c14n</span>
+      <span class='kw'>else</span>
+        <span class='comment'># Don&#39;t serialize as double if there are no fractional bits
+</span>        <span class='id identifier rubyid_as_double'>as_double</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ceil'>ceil</span> <span class='op'>!=</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>&gt;=</span> <span class='float'>1e21</span>
+        <span class='id identifier rubyid_lit'>lit</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_as_double'>as_double</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>:</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_numerator'>numerator</span><span class='comma'>,</span> <span class='label'>canonicalize:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>||=</span> <span class='id identifier rubyid_lit'>lit</span><span class='period'>.</span><span class='id identifier rubyid_datatype'>datatype</span>
+        <span class='id identifier rubyid_lit'>lit</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E+</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>E</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span>
+      <span class='comment'># Only valid for rdf:JSON
+</span>      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_json_c14n'>to_json_c14n</span>
     <span class='kw'>else</span>
       <span class='comment'># Otherwise, if datatype is null, set it to xsd:string or xsd:langString, depending on if item has a @language key.
 </span>      <span class='id identifier rubyid_datatype'>datatype</span> <span class='op'>||=</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@language</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_langString'>langString</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/XSD.html" title="RDF::XSD (class)">XSD</a></span></span><span class='period'>.</span><span class='id identifier rubyid_string'>string</span>
@@ -509,12 +531,12 @@
       <pre class="lines">
 
 
-139
-140
-141</pre>
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-afe7b3b10547/lib/json/ld/to_rdf.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-74a05a9f623c/lib/json/ld/to_rdf.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node'>node</span>
   <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_sym'>get_sym</span><span class='rparen'>)</span>
@@ -617,18 +639,6 @@
       <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
 127
 128
 129
@@ -637,10 +647,22 @@
 132
 133
 134
-135</pre>
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-afe7b3b10547/lib/json/ld/to_rdf.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/json-ld-74a05a9f623c/lib/json/ld/to_rdf.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_list'>parse_list</span><span class='lparen'>(</span><span class='id identifier rubyid_list'>list</span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='comment'>#log_debug(&#39;parse_list&#39;) {&quot;list: #{list.inspect}&quot;}
@@ -673,9 +695,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 23 12:48:02 2019 by
+  Generated on Wed May  1 14:48:46 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.6.0).
+  0.9.19 (ruby-2.6.2).
 </div>
 
     </div>

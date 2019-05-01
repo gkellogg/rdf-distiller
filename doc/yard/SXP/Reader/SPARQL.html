@@ -100,7 +100,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb</dd>
+    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb</dd>
   </dl>
   
 </div>
@@ -267,7 +267,37 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\?(:?\?([0-9]+)?|(\.[0-9]+))</span><span class='regexp_end'>/</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\?(?:[\?\.])(.*)</span><span class='regexp_end'>/</span></span></pre></dd>
+      
+        <dt id="EVAR_ID-constant" class="">EVAR_ID =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Distinguished existential variable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\$(.*)</span><span class='regexp_end'>/</span></span></pre></dd>
+      
+        <dt id="ND_EVAR-constant" class="">ND_EVAR =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Non-distinguished existential variable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\$(?:[\$\.])(.*)</span><span class='regexp_end'>/</span></span></pre></dd>
       
         <dt id="PNAME-constant" class="">PNAME =
           <div class="docstring">
@@ -383,7 +413,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(input, options = {}, &amp;block)  &#x21d2; SPARQL </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(input, **options, &amp;block)  &#x21d2; SPARQL </a>
     
 
     
@@ -545,7 +575,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#variable-instance_method" title="#variable (instance method)">#<strong>variable</strong>(id, distinguished = true)  &#x21d2; RDF::Query::Variable </a>
+      <a href="#variable-instance_method" title="#variable (instance method)">#<strong>variable</strong>(id, distinguished: true, existential: false)  &#x21d2; RDF::Query::Variable </a>
     
 
     
@@ -603,7 +633,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(input, options = {}, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="SXP::Reader::SPARQL (class)">SPARQL</a></span></tt> 
+    #<strong>initialize</strong>(input, **options, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="SXP::Reader::SPARQL (class)">SPARQL</a></span></tt> 
   
 
   
@@ -639,8 +669,6 @@
         <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../../Object.html" title="Object (class)">Object</a></span>}</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
       
     </li>
   
@@ -653,21 +681,21 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
 74
 75
 76
 77
 78
-79</pre>
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 74</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='lbrace'>{</span> <span class='ivar'>@prefixes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='semicolon'>;</span> <span class='ivar'>@bnodes</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='semicolon'>;</span> <span class='ivar'>@list_depth</span> <span class='op'>=</span> <span class='int'>0</span> <span class='rbrace'>}</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -715,12 +743,12 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-41
-42
-43</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='ivar'>@base_uri</span>
@@ -770,12 +798,12 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-46
-47
-48</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefixes'>prefixes</span>
   <span class='ivar'>@prefixes</span>
@@ -875,13 +903,13 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-60
-61
-62
-63</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -934,10 +962,6 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-213
-214
-215
-216
 217
 218
 219
@@ -951,10 +975,16 @@ token, which must be a URI.</p>
 227
 228
 229
-230</pre>
+230
+231
+232
+233
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 217</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_atom'>read_atom</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>=</span> <span class='id identifier rubyid_read_literal'>read_literal</span>
@@ -969,8 +999,10 @@ token, which must be a URI.</p>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Basic.html#INTEGER-constant" title="SXP::Reader::Basic::INTEGER (constant)">INTEGER</a></span></span>   <span class='kw'>then</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Literal/Integer.html" title="RDF::Literal::Integer (class)">Integer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#BNODE_ID-constant" title="SXP::Reader::SPARQL::BNODE_ID (constant)">BNODE_ID</a></span></span>  <span class='kw'>then</span> <span class='ivar'>@bnodes</span><span class='lbracket'>[</span><span class='backref'>$1</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='lparen'>(</span><span class='backref'>$1</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#BNODE_NEW-constant" title="SXP::Reader::SPARQL::BNODE_NEW (constant)">BNODE_NEW</a></span></span> <span class='kw'>then</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span>
-    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#ND_VAR-constant" title="SXP::Reader::SPARQL::ND_VAR (constant)">ND_VAR</a></span></span>   <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#VAR_ID-constant" title="SXP::Reader::SPARQL::VAR_ID (constant)">VAR_ID</a></span></span>    <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#ND_VAR-constant" title="SXP::Reader::SPARQL::ND_VAR (constant)">ND_VAR</a></span></span>    <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#VAR_ID-constant" title="SXP::Reader::SPARQL::VAR_ID (constant)">VAR_ID</a></span></span>    <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#ND_EVAR-constant" title="SXP::Reader::SPARQL::ND_EVAR (constant)">ND_EVAR</a></span></span>   <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#EVAR_ID-constant" title="SXP::Reader::SPARQL::EVAR_ID (constant)">EVAR_ID</a></span></span>   <span class='kw'>then</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='backref'>$1</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='kw'>else</span> <span class='id identifier rubyid_buffer'>buffer</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1028,10 +1060,6 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-150
-151
-152
-153
 154
 155
 156
@@ -1040,10 +1068,14 @@ token, which must be a URI.</p>
 159
 160
 161
-162</pre>
+162
+163
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_rdf_literal'>read_rdf_literal</span>
   <span class='id identifier rubyid_value'>value</span>   <span class='op'>=</span> <span class='id identifier rubyid_read_string'>read_string</span>
@@ -1109,10 +1141,6 @@ token, which must be a URI.</p>
       <pre class="lines">
 
 
-171
-172
-173
-174
 175
 176
 177
@@ -1141,10 +1169,14 @@ token, which must be a URI.</p>
 200
 201
 202
-203</pre>
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_rdf_uri'>read_rdf_uri</span>
   <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1228,10 +1260,6 @@ found with a previously identified <span class='object_link'><a href="#PREFIX-co
       <pre class="lines">
 
 
-90
-91
-92
-93
 94
 95
 96
@@ -1276,10 +1304,14 @@ found with a previously identified <span class='object_link'><a href="#PREFIX-co
 135
 136
 137
-138</pre>
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_token'>read_token</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_peek_char'>peek_char</span>
@@ -1359,19 +1391,19 @@ found with a previously identified <span class='object_link'><a href="#PREFIX-co
       <pre class="lines">
 
 
-234
-235
-236
-237
-238
-239
 240
 241
 242
-243</pre>
+243
+244
+245
+246
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_comments'>skip_comments</span>
   <span class='kw'>until</span> <span class='id identifier rubyid_eof?'>eof?</span>
@@ -1391,7 +1423,7 @@ found with a previously identified <span class='object_link'><a href="#PREFIX-co
       <div class="method_details ">
   <h3 class="signature " id="variable-instance_method">
   
-    #<strong>variable</strong>(id, distinguished = true)  &#x21d2; <tt><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></tt> 
+    #<strong>variable</strong>(id, distinguished: true, existential: false)  &#x21d2; <tt><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></tt> 
   
 
   
@@ -1432,12 +1464,6 @@ variables are effectively the same as BNodes.</p>
       <pre class="lines">
 
 
-254
-255
-256
-257
-258
-259
 260
 261
 262
@@ -1447,25 +1473,23 @@ variables are effectively the same as BNodes.</p>
 266
 267
 268
-269</pre>
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-ff713add32bd/lib/sxp/reader/sparql.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sxp.rb-a6201a87d980/lib/sxp/reader/sparql.rb', line 260</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_distinguished'>distinguished</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   
   <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span>
     <span class='ivar'>@vars</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
     <span class='ivar'>@vars</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>begin</span>
-      <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_distinguished'>distinguished</span> <span class='op'>=</span> <span class='id identifier rubyid_distinguished'>distinguished</span>
-      <span class='id identifier rubyid_v'>v</span>
+      <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='id identifier rubyid_distinguished'>distinguished</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='id identifier rubyid_existential'>existential</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span>
-    <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_distinguished'>distinguished</span> <span class='op'>=</span> <span class='id identifier rubyid_distinguished'>distinguished</span>
-    <span class='id identifier rubyid_v'>v</span>
+    <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>distinguished:</span> <span class='id identifier rubyid_distinguished'>distinguished</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='id identifier rubyid_existential'>existential</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1478,9 +1502,9 @@ variables are effectively the same as BNodes.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 23 12:48:36 2019 by
+  Generated on Wed May  1 14:49:21 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.18 (ruby-2.6.0).
+  0.9.19 (ruby-2.6.2).
 </div>
 
     </div>
