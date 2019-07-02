@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'puma',               '~> 3.11'
   s.add_runtime_dependency      'nokogiri',           '~> 1.8'
   s.add_runtime_dependency      'nokogumbo',          '~> 1.5'
-  s.add_runtime_dependency      'yard' ,              '~> 0.9.12'
+  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.20"
 
   # development dependencies
   s.add_development_dependency  'foreman'
