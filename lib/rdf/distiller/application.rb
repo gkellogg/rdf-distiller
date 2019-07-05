@@ -202,7 +202,7 @@ module RDF::Distiller
         raw_opt = {
           symbol: :raw,
           control: :checkbox,
-          description: "Return raw results directly through the browser."
+          description: "Return raw results directly through the browser (use link at bottom of the page)."
         }
         # Return application
         erb :distiller, locals: {
