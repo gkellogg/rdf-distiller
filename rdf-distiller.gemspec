@@ -22,39 +22,39 @@ Gem::Specification.new do |s|
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 3.0'
+  s.add_runtime_dependency      "linkeddata",         '~> 3.1'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 2.0'
-  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.0'
-  s.add_runtime_dependency      'sass',               '~> 3.5'
-  s.add_runtime_dependency      'sprockets',          '~> 3.7.2'
+  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.2'
+  s.add_runtime_dependency      'sass',               '~> 3.7'
+  s.add_runtime_dependency      'sprockets',          '~> 3.7'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.2'
-  s.add_runtime_dependency      'uglifier',           '~> 3.2'
+  s.add_runtime_dependency      'uglifier',           '~> 4.2'
 
   s.add_runtime_dependency      'erubis',             '~> 2.7'
-  s.add_runtime_dependency      'haml',               '~> 5.0'
+  s.add_runtime_dependency      'haml',               '~> 5.1'
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
-  s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.0'
+  s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.1'
   s.add_runtime_dependency      "rack",               '~> 2.0'
   s.add_runtime_dependency      'rest-client',        '~> 2.0'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
-  s.add_runtime_dependency      'rack-cache',         '~> 1.7'
-  s.add_runtime_dependency      'redcarpet',          '~> 3.4'
-  s.add_runtime_dependency      'puma',               '>= 3.11', '< 5.0'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.8'
-  s.add_runtime_dependency      'nokogumbo',          '~> 1.5'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.10'
+  s.add_runtime_dependency      'redcarpet',          '~> 3.5'
+  s.add_runtime_dependency      'puma',               '~> 4.3'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.10'
+  s.add_runtime_dependency      'nokogumbo',          '~> 2.0'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.20"
 
   # development dependencies
   s.add_development_dependency  'foreman'
-  s.add_development_dependency  'rspec',              '~> 3.7'
-  s.add_development_dependency  'rspec-its',          '~> 1.2'
-  s.add_development_dependency  'rack-test',          '~> 0.8'
-  s.add_development_dependency  'jsonpath',           '~> 0.8'
-  s.add_development_dependency  'webmock',            '~> 3.1'
+  s.add_development_dependency  'rspec',              '~> 3.9'
+  s.add_development_dependency  'rspec-its',          '~> 1.3'
+  s.add_development_dependency  'rack-test',          '~> 1.1'
+  s.add_development_dependency  'jsonpath',           '~> 1.0'
+  s.add_development_dependency  'webmock',            '~> 3.7'
 
   s.post_install_message        = nil
 end
