@@ -10,11 +10,11 @@
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "RDF::Repository::Implementation";
   relpath = '../../';
 </script>
@@ -78,7 +78,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/rdf-28307eb5db44/lib/rdf/repository.rb</dd>
+    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/repository.rb</dd>
   </dl>
   
 </div>
@@ -254,14 +254,28 @@ serializable transactions.</p>
 343
 344
 345
-346</pre>
+346
+347
+348
+349
+350
+351
+352
+353</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-28307eb5db44/lib/rdf/repository.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/repository.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_changeset'>apply_changeset</span><span class='lparen'>(</span><span class='id identifier rubyid_changeset'>changeset</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='ivar'>@data</span>
-  <span class='id identifier rubyid_changeset'>changeset</span><span class='period'>.</span><span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_del'>del</span><span class='op'>|</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_from'>delete_from</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_del'>del</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_changeset'>changeset</span><span class='period'>.</span><span class='id identifier rubyid_deletes'>deletes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_del'>del</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_del'>del</span><span class='period'>.</span><span class='id identifier rubyid_constant?'>constant?</span>
+      <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_from'>delete_from</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_del'>del</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='comment'># we need this condition to handle wildcard statements
+</span>      <span class='id identifier rubyid_query_pattern'>query_pattern</span><span class='lparen'>(</span><span class='id identifier rubyid_del'>del</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_stmt'>stmt</span><span class='op'>|</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_from'>delete_from</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_stmt'>stmt</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_changeset'>changeset</span><span class='period'>.</span><span class='id identifier rubyid_inserts'>inserts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ins'>ins</span><span class='op'>|</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='id identifier rubyid_insert_to'>insert_to</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_ins'>ins</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='ivar'>@data</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span>
 <span class='kw'>end</span></pre>
@@ -301,12 +315,12 @@ serializable transactions.</p>
       <pre class="lines">
 
 
-350
-351
-352</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-28307eb5db44/lib/rdf/repository.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/repository.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_isolation_level'>isolation_level</span>
   <span class='symbol'>:serializable</span>
@@ -366,12 +380,12 @@ the Repository contents.</p>
       <pre class="lines">
 
 
-361
-362
-363</pre>
+368
+369
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/rdf-28307eb5db44/lib/rdf/repository.rb', line 361</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/repository.rb', line 368</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_snapshot'>snapshot</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>data:</span> <span class='ivar'>@data</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -386,9 +400,9 @@ the Repository contents.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 16 15:18:54 2019 by
+  Generated on Wed Jan 15 14:10:23 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.20 (ruby-2.6.5).
+  0.9.24 (ruby-2.7.0).
 </div>
 
     </div>

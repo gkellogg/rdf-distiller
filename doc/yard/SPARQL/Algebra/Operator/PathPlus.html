@@ -10,11 +10,11 @@
   
 </title>
 
-  <link rel="stylesheet" href="../../../css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "SPARQL::Algebra::Operator::PathPlus";
   relpath = '../../../';
 </script>
@@ -103,7 +103,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.6.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/operator/path_plus.rb</dd>
+    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/operator/path_plus.rb</dd>
   </dl>
   
 </div>
@@ -482,7 +482,7 @@
 96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.6.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/operator/path_plus.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/operator/path_plus.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:subject</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:object</span><span class='rbracket'>]</span>
@@ -522,14 +522,14 @@
 
     <span class='comment'># Recurse on subject, if is a variable
 </span>    <span class='kw'>case</span>
-    <span class='kw'>when</span> <span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_variable?'>variable?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_variable?'>variable?</span>
-      <span class='comment'># Query starting with bound object as subject, but replace result with subject
-</span>      <span class='id identifier rubyid_rs'>rs</span> <span class='op'>=</span> <span class='id identifier rubyid_queryable'>queryable</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+    <span class='kw'>when</span> <span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_variable?'>variable?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_variable?'>variable?</span>      <span class='comment'># Query starting with bound object as subject, but replace result with subject
+</span>
+      <span class='id identifier rubyid_rs'>rs</span> <span class='op'>=</span> <span class='id identifier rubyid_queryable'>queryable</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
         <span class='label'>subject:</span> <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='label'>accumulator:</span> <span class='lparen'>(</span><span class='id identifier rubyid_cumulative_solutions'>cumulative_solutions</span> <span class='op'>+</span> <span class='id identifier rubyid_immediate_solutions'>immediate_solutions</span><span class='rparen'>)</span><span class='comma'>,</span>
-        <span class='label'>depth:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span>
-      <span class='comment'># Query starting with bound subject as object, but replace result with subject
-</span>      <span class='id identifier rubyid_ro'>ro</span> <span class='op'>=</span> <span class='id identifier rubyid_queryable'>queryable</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+        <span class='label'>depth:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span>      <span class='comment'># Query starting with bound subject as object, but replace result with subject
+</span>
+      <span class='id identifier rubyid_ro'>ro</span> <span class='op'>=</span> <span class='id identifier rubyid_queryable'>queryable</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
         <span class='label'>object:</span> <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='label'>accumulator:</span> <span class='lparen'>(</span><span class='id identifier rubyid_cumulative_solutions'>cumulative_solutions</span> <span class='op'>+</span> <span class='id identifier rubyid_immediate_solutions'>immediate_solutions</span><span class='rparen'>)</span><span class='comma'>,</span>
         <span class='label'>depth:</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:depth</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='id identifier rubyid_object'>object</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -562,9 +562,9 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Dec 16 15:19:32 2019 by
+  Generated on Wed Jan 15 14:10:51 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.20 (ruby-2.6.5).
+  0.9.24 (ruby-2.7.0).
 </div>
 
     </div>
