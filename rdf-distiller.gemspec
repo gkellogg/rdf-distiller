@@ -38,15 +38,15 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.1'
-  s.add_runtime_dependency      "rack",               '~> 2.0'
-  s.add_runtime_dependency      'rest-client',        '~> 2.0'
+  s.add_runtime_dependency      "rack",               '~> 2.1'
+  s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
-  s.add_runtime_dependency      'rack-cache',         '~> 1.10'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.11'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
   s.add_runtime_dependency      'puma',               '~> 4.3'
   s.add_runtime_dependency      'nokogiri',           '~> 1.10'
   s.add_runtime_dependency      'nokogumbo',          '~> 2.0'
-  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.20"
+  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.24"
 
   # development dependencies
   s.add_development_dependency  'foreman'
@@ -54,7 +54,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency  'rspec-its',          '~> 1.3'
   s.add_development_dependency  'rack-test',          '~> 1.1'
   s.add_development_dependency  'jsonpath',           '~> 1.0'
-  s.add_development_dependency  'webmock',            '~> 3.7'
+  s.add_development_dependency  'webmock',            '~> 3.8'
 
   s.post_install_message        = nil
 end
