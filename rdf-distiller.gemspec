@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files              = %w(AUTHORS README.md UNLICENSE VERSION) + Dir.glob('lib/**/*.rb')
   s.require_paths      = %w(lib)
 
-  s.required_ruby_version      = '>= 2.3.1'
+  s.required_ruby_version      = '>= 2.4.0'
   s.requirements               = []
 
   # RDF dependencies
