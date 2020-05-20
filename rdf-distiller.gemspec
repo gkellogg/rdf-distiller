@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.date               = File.mtime('VERSION').strftime('%Y-%m-%d')
 
   s.name               = 'rdf-distiller'
-  s.homepage           = 'http://gkellogg/rdf-distiller/'
+  s.homepage           = 'https://github.com/gkellogg/rdf-distiller/'
   s.license            = 'Public Domain' if s.respond_to?(:license=)
   s.summary            = 'Translate any RDF format to any other using Ruby RDF gems'
   s.description        = s.summary

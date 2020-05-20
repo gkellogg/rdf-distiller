@@ -60,7 +60,7 @@ Distills between formats supported in [Linked Data][].
 * [RDF Distiller](http://rdf.greggkellogg.net)
 
 ## Author
-* [Gregg Kellogg](http://github.com/gkellogg) - <http://greggkellogg.net/>
+* [Gregg Kellogg](https://github.com/gkellogg) - <http://greggkellogg.net/>
 
 ## Hosting Notes
 * Setup to run on Heroku.
@@ -89,7 +89,7 @@ see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 ## Resources
 
 * gregg@greggkellogg.net
-* <http://github.com/gkellogg/rdf-distiller>
+* <https://github.com/gkellogg/rdf-distiller>
 * <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
 [RDF.rb]:         http://ruby-rdf.github.com/rdf
