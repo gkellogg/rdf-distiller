@@ -2,7 +2,7 @@
 
 Ruby-based RDF Distiller and SPARQL service.
 
-[![Build Status](https://travis-ci.org/gkellogg/rdf-distiller.png?branch=master)](http://travis-ci.org/gkellogg/rdf-distiller)
+[![Build Status](https://travis-ci.org/gkellogg/rdf-distiller.png?branch=master)](https://travis-ci.org/gkellogg/rdf-distiller)
 
 ## DESCRIPTION
 RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
@@ -57,10 +57,10 @@ Distills between formats supported in [Linked Data][].
 * {RDF::DO RDF Dataobjects}
 
 ## Resources
-* [RDF Distiller](http://rdf.greggkellogg.net)
+* [RDF Distiller](https://rdf.greggkellogg.net)
 
 ## Author
-* [Gregg Kellogg](https://github.com/gkellogg) - <http://greggkellogg.net/>
+* [Gregg Kellogg](https://github.com/gkellogg) - <https://greggkellogg.net/>
 
 ## Hosting Notes
 * Setup to run on Heroku.
@@ -84,43 +84,43 @@ This repository uses [Git Flow](https://github.com/nvie/gitflow) to mange develo
 ## License
 
 This is free and unencumbered public domain software. For more information,
-see <http://unlicense.org/> or the accompanying {file:UNLICENSE} file.
+see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 
 ## Resources
 
 * gregg@greggkellogg.net
 * <https://github.com/gkellogg/rdf-distiller>
-* <http://lists.w3.org/Archives/Public/public-rdf-ruby/>
+* <https://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
-[RDF.rb]:         http://ruby-rdf.github.com/rdf
-[RDF::JSON]:      http://rdoc.info/github/ruby-rdf/rdf-json/
-[RDF::Microdata]: http://rdoc.info/github/ruby-rdf/rdf-microdata
-[RDF::N3]:        http://rdoc.info/github/ruby-rdf/rdf-n3
-[RDF::RDFa]:      http://rdoc.info/github/ruby-rdf/rdf-rdfa
-[RDF::RDFXML]:    http://rdoc.info/github/ruby-rdf/rdf-rdfxml
-[RDF::Tabular]:   http://rdoc.info/github/ruby-rdf/rdf-tabular
-[RDF::TriG]:      http://rdoc.info/github/ruby-rdf/rdf-trig
-[RDF::TriX]:      http://rdoc.info/github/ruby-rdf/rdf-trix/
-[RDF::Turtle]:    http://rdoc.info/github/ruby-rdf/rdf-turtle
-[RDF::Vocab]:     http://rdoc.info/github/ruby-rdf/rdf-vocab
-[JSON::LD]:       http://rdoc.info/github/ruby-rdf/json-ld
-[SPARQL gem]:     http://rdoc.info/github/ruby-rdf/sparql
-[JSON-LD]:        http://json-ld.org/
-[Microdata]:      http://dev.w3.org/html5/md/
-[N-Triples]:      http://en.wikipedia.org/wiki/N-Triples
-[N-Quads]:        http://en.wikipedia.org/wiki/N-Quads
-[Notation3]:      http://en.wikipedia.org/wiki/Notation3
-[LinkedData]:     http://ruby-rdf.github.com/linkeddata
-[Linked Data]:    http://en.wikipedia.org/wiki/LinkedData
-[RDF/JSON]:       http://n2.talis.com/wiki/RDF_JSON_Specification
-[RDF/XML]:        http://www.w3.org/TR/rdf-syntax-grammar/
-[RDFa]:           http://en.wikipedia.org/wiki/RDFa
-[SPARQL]:         http://en.wikipedia.org/wiki/Sparql
-[TriG]:           http://en.wikipedia.org/wiki/TriG_(syntax)
-[TriX]:           http://en.wikipedia.org/wiki/TriX_(syntax)
-[Turtle]:         http://en.wikipedia.org/wiki/Turtle_(syntax)
-[CSV]:            http://en.wikipedia.org/wiki/Comma-separated_values
-[TSV]:            http://en.wikipedia.org/wiki/Tab-separated_values
-[YARD]:           http://yardoc.org/
-[YARD-GS]:        http://rubydoc.info/docs/yard/file/docs/GettingStarted.md
-[PDD]:            http://unlicense.org/#unlicensing-contributions
+[RDF.rb]:         https://ruby-rdf.github.com/rdf
+[RDF::JSON]:      https://rdoc.info/github/ruby-rdf/rdf-json/
+[RDF::Microdata]: https://rdoc.info/github/ruby-rdf/rdf-microdata
+[RDF::N3]:        https://rdoc.info/github/ruby-rdf/rdf-n3
+[RDF::RDFa]:      https://rdoc.info/github/ruby-rdf/rdf-rdfa
+[RDF::RDFXML]:    https://rdoc.info/github/ruby-rdf/rdf-rdfxml
+[RDF::Tabular]:   https://rdoc.info/github/ruby-rdf/rdf-tabular
+[RDF::TriG]:      https://rdoc.info/github/ruby-rdf/rdf-trig
+[RDF::TriX]:      https://rdoc.info/github/ruby-rdf/rdf-trix/
+[RDF::Turtle]:    https://rdoc.info/github/ruby-rdf/rdf-turtle
+[RDF::Vocab]:     https://rdoc.info/github/ruby-rdf/rdf-vocab
+[JSON::LD]:       https://rdoc.info/github/ruby-rdf/json-ld
+[SPARQL gem]:     https://rdoc.info/github/ruby-rdf/sparql
+[JSON-LD]:        https://json-ld.org/
+[Microdata]:      https://dev.w3.org/html5/md/
+[N-Triples]:      https://en.wikipedia.org/wiki/N-Triples
+[N-Quads]:        https://en.wikipedia.org/wiki/N-Quads
+[Notation3]:      https://en.wikipedia.org/wiki/Notation3
+[LinkedData]:     https://ruby-rdf.github.com/linkeddata
+[Linked Data]:    https://en.wikipedia.org/wiki/LinkedData
+[RDF/JSON]:       https://n2.talis.com/wiki/RDF_JSON_Specification
+[RDF/XML]:        https://www.w3.org/TR/rdf-syntax-grammar/
+[RDFa]:           https://en.wikipedia.org/wiki/RDFa
+[SPARQL]:         https://en.wikipedia.org/wiki/Sparql
+[TriG]:           https://en.wikipedia.org/wiki/TriG_(syntax)
+[TriX]:           https://en.wikipedia.org/wiki/TriX_(syntax)
+[Turtle]:         https://en.wikipedia.org/wiki/Turtle_(syntax)
+[CSV]:            https://en.wikipedia.org/wiki/Comma-separated_values
+[TSV]:            https://en.wikipedia.org/wiki/Tab-separated_values
+[YARD]:           https://yardoc.org/
+[YARD-GS]:        https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
+[PDD]:            https://unlicense.org/#unlicensing-contributions

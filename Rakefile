@@ -13,17 +13,14 @@ desc "Build DOAP files and documentation"
 task default: [:doap, :yard]
 
 desc "Build documentation"
-task yard: [:clean_doc, :readme]
-
-YARD::Rake::YardocTask.new do |y|
-  y.files = Dir.glob("lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/rdf*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/json-ld*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/sparql*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/spira*/lib/**/*.rb") +
-            Dir.glob("vendor/bundler/**/sxp*/lib/**/*.rb") +
-            ["-"] +
-            Dir.glob("*-README")
+task yard: [:clean_doc, :readme] do
+  files = %w(lib/ readmes/ ) +
+          Dir.glob("vendor/bundler/ruby/*/bundler/gems/*/lib/") +
+          %w(- README.me) +
+          Dir.glob("readmes/*-README")
+  cmd = 'yardoc ' + files.join(' ')
+  puts cmd
+  #%x(#{cmd})
 end
 
 desc "Clean documentation"
@@ -35,13 +32,13 @@ desc "Create README links"
 task :readme do
   dir = File.expand_path("../", __FILE__)
   Dir.glob("readmes/*").each {|d| FileUtils.rm d}
-  Dir.glob('vendor/bundler/**/README').each do |path|
+  Dir.glob('vendor/bundler/**/README.md').each do |path|
     d = path.split('/')[-2]
-    next unless d
+    next unless d.match?(/(.*rdf.*|.*sparql.*|json-ld.*|sxp|ebnf)/)
     d.sub!(/-([a-z0-9]{12})$/, '')
     d.sub!(/-\d+\.\d+(?:\.\d+)$/, '')
-    puts "link #{path} to readmes/#{d}"
-    FileUtils.ln_s "#{dir}/#{path}", "#{dir}/readmes/#{d}" unless File.exist?("#{dir}/readmes/#{d}")
+    puts "link #{path} to readmes/#{d}-README"
+    FileUtils.ln_s "#{dir}/#{path}", "#{dir}/readmes/#{d}-README" unless File.exist?("#{dir}/readmes/#{d}-README")
   end
 end
 

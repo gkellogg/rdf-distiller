@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: rdf-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "rdf-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: rdf-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="rdf-rb-linked-data-for-ruby">RDF.rb: Linked Data for Ruby</h1>
+
+<p>This is a pure-Ruby library for working with <a href="https://www.w3.org/RDF/">Resource Description Framework
+(RDF)</a> data.</p>
+
+<ul>
+<li><a href="https://ruby-rdf.github.com/rdf">https://ruby-rdf.github.com/rdf</a></li>
+</ul>
+
+<p><a href="https://badge.fury.io/rb/rdf"><img src="https://badge.fury.io/rb/rdf.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/ruby-rdf/rdf"><img src="https://travis-ci.org/ruby-rdf/rdf.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/ruby-rdf/rdf"><img src="https://coveralls.io/repos/ruby-rdf/rdf/badge.svg" alt="Coverage Status"></a>
+<a href="https://gitter.im/ruby-rdf/rdf?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/ruby-rdf/rdf"></a></p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+<li>100% pure Ruby with minimal dependencies and no bloat.</li>
+<li>Fully compatible with <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1</a> specifications.</li>
+<li>100% free and unencumbered <a href="https://unlicense.org/">public domain</a> software.</li>
+<li>Provides a clean, well-designed RDF object model and related APIs.</li>
+<li>Supports parsing and serializing <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> and <a href="https://www.w3.org/TR/n-quads/">N-Quads</a> out of the box, with more
+serialization format support available through add-on extensions.</li>
+<li>Includes in-memory graph and repository implementations, with more storage
+adapter support available through add-on extensions.</li>
+<li>Implements basic graph pattern (BGP) query evaluation.</li>
+<li>Plays nice with others: entirely contained in the <code>RDF</code> module, and does
+not modify any of Ruby&#39;s core classes or standard library.</li>
+<li>Based entirely on Ruby&#39;s autoloading, meaning that you can generally make
+use of any one part of the library without needing to load up the rest.</li>
+<li>Compatible with Ruby Ruby &gt;= 2.4, Rubinius and JRuby 9.0+.
+
+<ul>
+<li>Note, changes in mapping hashes to keyword arguments for Ruby 2.7+ may require that arguments be passed more explicitly, especially when the first argument is a Hash and there are optional keyword arguments. In this case, Hash argument may need to be explicitly included within <code>{}</code> and the optional keyword arguments may need to be specified using <code>**{}</code> if there are no keyword arguments.</li>
+</ul></li>
+<li>Performs auto-detection of input to select appropriate Reader class if one
+cannot be determined from file characteristics.</li>
+<li>Provisional support for [RDF*][].</li>
+</ul>
+
+<h3 id="http-requests">HTTP requests</h3>
+
+<p>RDF.rb uses <code>Net::HTTP</code> for retrieving HTTP and HTTPS resources. If the
+<a href="https://rubygems.org/gems/rest-client">RestClient</a> gem is included, that will be used instead to retrieve remote
+resources. Clients may also consider using <a href="https://rubygems.org/gems/rest-client-components">RestClient Components</a> to enable
+client-side caching of HTTP results using <a href="https://rtomayko.github.io/rack-cache/">Rack::Cache</a> or other Rack
+middleware.</p>
+
+<h2 id="differences-between-rdf-1-0-and-rdf-1-1">Differences between RDF 1.0 and RDF 1.1</h2>
+
+<p>This version of RDF.rb is fully compatible with <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1</a>, but it creates some
+marginal incompatibilities with <a href="https://www.w3.org/TR/2004/REC-rdf-concepts-20040210/">RDF 1.0</a>, as implemented in versions prior to
+the 1.1 release of RDF.rb:</p>
+
+<ul>
+<li>Introduces <span class='object_link'><a href="RDF.html#IRI-constant" title="RDF::IRI (constant)">RDF::IRI</a></span>, as a synonym for <span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> either <span class='object_link'><a href="RDF.html#IRI-constant" title="RDF::IRI (constant)">RDF::IRI</a></span> or <span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> can be used interchangeably. Versions of RDF.rb prior to the 1.1 release were already compatible with IRIs. Internationalized Resource Identifiers (see [RFC3987][]) are a super-set of URIs (see [RFC3986][]) which allow for characters other than standard US-ASCII.</li>
+<li><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span> no longer uses the <code>Addressable</code> gem. As URIs typically don&#39;t need to be parsed, this provides a substantial performance improvement when enumerating or querying graphs and repositories.</li>
+<li><span class='object_link'><a href="RDF/List.html" title="RDF::List (class)">RDF::List</a></span> no longer emits a <code>rdf:List</code> type. However, it will now recognize any subjects that are <span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">RDF::Node</a></span> instances as being list elements, as long as they have both <code>rdf:first</code> and <code>rdf:rest</code> predicates.</li>
+<li><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span> adding a <code>graph_name</code> to a graph may only be done when the underlying storage model supports graph_names (the default <span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">RDF::Repository</a></span> does). The notion of <code>graph_name</code> in RDF.rb is treated equivalently to <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-named-graph">Named Graphs</a> within an RDF Dataset, and graphs on their own are not named.</li>
+<li><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span>, <span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span> and <span class='object_link'><a href="RDF/List.html" title="RDF::List (class)">RDF::List</a></span> now include <span class='object_link'><a href="RDF/Value.html" title="RDF::Value (module)">RDF::Value</a></span>, and not <span class='object_link'><a href="RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>. Made it clear that using <span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span> does not mean that it may be used within an <span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span>, for this see <span class='object_link'><a href="RDF/Term.html" title="RDF::Term (module)">RDF::Term</a></span>.</li>
+<li><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span> now is stricter about checking that all elements are valid when validating.</li>
+<li><span class='object_link'><a href="RDF/NTriples/Writer.html" title="RDF::NTriples::Writer (class)">RDF::NTriples::Writer</a></span> and <span class='object_link'><a href="RDF/NQuads/Writer.html" title="RDF::NQuads::Writer (class)">RDF::NQuads::Writer</a></span> now default to validate output, only allowing valid statements to be emitted. This may disabled by setting the <code>:validate</code> option to <code>false</code>.</li>
+<li><span class='object_link'><a href="RDF/Dataset.html" title="RDF::Dataset (class)">RDF::Dataset</a></span> is introduced as a class alias of <span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">RDF::Repository</a></span>. This allows closer alignment to the RDF concept of <a href="https://www.w3.org/TR/rdf11-concepts/#dfn-dataset">Dataset</a>.</li>
+<li>The <code>graph_name</code> of a graph within a Dataset or Repository may be either an <span class='object_link'><a href="RDF.html#IRI-constant" title="RDF::IRI (constant)">RDF::IRI</a></span> or <span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">RDF::Node</a></span>. Implementations of repositories may restrict this to being only <span class='object_link'><a href="RDF.html#IRI-constant" title="RDF::IRI (constant)">RDF::IRI</a></span>.</li>
+<li>There are substantial and somewhat incompatible changes to <span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span>. In <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1</a>, all literals are typed, including plain literals and language tagged literals. Internally, plain literals are given the <code>xsd:string</code> datatype and language tagged literals are given the <code>rdf:langString</code> datatype. Creating a plain literal, without a datatype or language, will automatically provide the <code>xsd:string</code> datatype; similar for language tagged literals. Note that most serialization formats will remove this datatype. Code which depends on a literal having the <code>xsd:string</code> datatype being different from a plain literal (formally, without a datatype) may break. However note that the <code>#has\_datatype?</code> will continue to return <code>false</code> for plain or language-tagged literals.</li>
+<li><span class='object_link'><a href="RDF/Query.html#execute-instance_method" title="RDF::Query#execute (method)">RDF::Query#execute</a></span> now accepts a block and returns <span class='object_link'><a href="RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span>. This allows <code>enumerable.query(query)</code> to behave like <code>query.execute(enumerable)</code> and either return an enumerable or yield each solution.</li>
+<li><span class='object_link'><a href="RDF/Queryable.html#query-instance_method" title="RDF::Queryable#query (method)">RDF::Queryable#query</a></span> now returns <span class='object_link'><a href="RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span> instead of an Enumerator if it&#39;s argument is an <span class='object_link'><a href="RDF/Query.html" title="RDF::Query (class)">RDF::Query</a></span>.</li>
+<li><span class='object_link'><a href="RDF/Util/File.html#open_file-class_method" title="RDF::Util::File.open_file (method)">RDF::Util::File.open_file</a></span> now performs redirects and manages <code>base_uri</code> based on W3C recommendations:
+
+<ul>
+<li><code>base_uri</code> is set to the original URI if a status 303 is provided, otherwise any other redirect will set <code>base_uri</code> to the redirected location.</li>
+<li><code>base_uri</code> is set to the content of the <code>Location</code> header if status is <em>success</em>.</li>
+</ul></li>
+<li>Additionally, <span class='object_link'><a href="RDF/Util/File.html#open_file-class_method" title="RDF::Util::File.open_file (method)">RDF::Util::File.open_file</a></span> sets the result encoding from <code>charset</code> if provided, defaulting to <code>UTF-8</code>. Other access methods include <code>last_modified</code> and <code>content_type</code>, </li>
+<li><span class='object_link'><a href="RDF/StrictVocabulary.html" title="RDF::StrictVocabulary (class)">RDF::StrictVocabulary</a></span> added with an easy way to keep vocabulary definitions up to date based on their OWL or RDFS definitions. Most vocabularies are now StrictVocabularies meaning that an attempt to resolve a particular term in that vocabulary will error if the term is not defined in the vocabulary.</li>
+<li>New vocabulary definitions have been added for <a href="http://www.w3.org/2002/12/cal/icaltzd#">ICal</a>, <a href="http://www.w3.org/ns/ma-ont#">Media Annotations (MA)</a>, <a href="http://ogp.me/ns#">Facebook OpenGraph (OG)</a>, <a href="http://www.w3.org/ns/prov#">PROV</a>, <a href="http://www.w3.org/2008/05/skos-xl#">SKOS-XL (SKOSXL)</a>, <a href="http://rdf.data-vocabulary.org/">Data Vocabulary (V)</a>, <a href="http://www.w3.org/2006/vcard/ns#">VCard</a>, <a href="http://rdfs.org/ns/void#http://rdfs.org/ns/void#">VOID</a>, <a href="http://www.w3.org/2007/05/powder-s#">Powder-S (WDRS)</a>, and <a href="http://www.w3.org/1999/xhtml/vocab#">XHV</a>.</li>
+</ul>
+
+<p>Notably, <span class='object_link'><a href="RDF/Queryable.html#query-instance_method" title="RDF::Queryable#query (method)">RDF::Queryable#query</a></span> and <span class='object_link'><a href="RDF/Query.html#execute-instance_method" title="RDF::Query#execute (method)">RDF::Query#execute</a></span> are now completely symmetric; this allows an implementation of <span class='object_link'><a href="RDF/Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span> to optimize queries using implementation-specific logic, allowing for substantial performance improvements when executing BGP queries.</p>
+
+<h2 id="tutorials">Tutorials</h2>
+
+<ul>
+<li><a href="https://semanticweb.org/wiki/Getting_data_from_the_Semantic_Web_%28Ruby%29">Getting data from the Semantic Web using Ruby and RDF.rb</a></li>
+<li><a href="https://stephenpope.co.uk/?p=85">Using RDF.rb and Spira to process RDF data from the British Ordnance Survey</a></li>
+<li><a href="https://www.jenitennison.com/blog/node/152">Getting started with RDF and SPARQL using 4store and RDF.rb</a></li>
+</ul>
+
+<h2 id="command-line">Command Line</h2>
+
+<p>When installed, RDF.rb includes a <code>rdf</code> shell script which acts as a wrapper to perform a number of different
+operations on RDF files using available readers and writers.</p>
+
+<ul>
+<li><code>count</code>: Parse and RDF input and count the number of statements.</li>
+<li><code>predicates</code>: Returns unique objects from parsed input.</li>
+<li><code>objects</code>: Returns unique objects from parsed input.</li>
+<li><code>serialize</code>: Parse an RDF input and re-serializing to <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> or another available format using <code>--output-format</code> option.</li>
+<li><code>subjects</code>: Returns unique subjects from parsed input.</li>
+</ul>
+
+<p>The <code>serialize</code> command can also be used to serialize as a vocabulary.</p>
+
+<p>Different RDF gems will augment the <code>rdf</code> script with more capabilities, which may require specifying the appropriate <code>--input-format</code> option to revel.</p>
+
+<h2 id="examples">Examples</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span>
+</code></pre>
+
+<h3 id="writing-rdf-data-using-the-n-triples-format">Writing RDF data using the <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> format</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/ntriples</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:hello</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFS.html" title="RDF::RDFS (class)">RDFS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_label'><span class='object_link'><a href="RDF/RDFS.html#label-instance_method" title="RDF::RDFS#label (method)">label</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:ntriples</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>or</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class)">Writer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span> <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_graph'>graph</span> <span class='rbrace'>}</span>
+</code></pre>
+
+<h3 id="reading-rdf-data-in-the-n-triples-format">Reading RDF data in the <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> format</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/ntriples</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://ruby-rdf.github.com/rdf/etc/doap.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p>or</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reader.html" title="RDF::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://ruby-rdf.github.com/rdf/etc/doap.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span>
+  <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="reading-rdf-data-in-other-formats">Reading RDF data in other formats</h3>
+
+<p><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">RDF::Reader.open</a></span> and <span class='object_link'><a href="RDF/Repository.html#load-class_method" title="RDF::Repository.load (method)">RDF::Repository.load</a></span> use a number of mechanisms to determine the appropriate reader
+to use when loading a file. The specific format to use can be forced using, e.g. <code>format: :ntriples</code>
+option where the specific format symbol is determined by the available readers. Both also use
+MimeType or file extension, where available.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/nquads</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://ruby-rdf.github.com/rdf/etc/doap.nq</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:nquads</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>A specific sub-type of Reader can also be invoked directly:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/nquads</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NQuads.html" title="RDF::NQuads (module)">NQuads</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NQuads/Reader.html" title="RDF::NQuads::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://ruby-rdf.github.com/rdf/etc/doap.nq</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span>
+  <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Reader/Writer implementations may override <span class='object_link'><a href="RDF/Format.html#detect-class_method" title="RDF::Format.detect (method)">RDF::Format.detect</a></span>, which takes a small sample if input
+and return a boolean indicating if it matches that specific format. In the case that a format cannot
+be detected from filename or other options, or that more than one format is identified,
+<span class='object_link'><a href="RDF/Format.html#for-class_method" title="RDF::Format.for (method)">RDF::Format.for</a></span> will query each loaded format by invoking it&#39;s <code>detect</code> method, and the first successful
+match will be used to read the input.</p>
+
+<h3 id="writing-rdf-data-using-other-formats">Writing RDF data using other formats</h3>
+
+<p><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">RDF::Writer.open</a></span>, <span class='object_link'><a href="RDF/Enumerable.html#dump-instance_method" title="RDF::Enumerable#dump (method)">RDF::Enumerable#dump</a></span>, <span class='object_link'><a href="RDF/Writer.html#dump-class_method" title="RDF::Writer.dump (method)">RDF::Writer.dump</a></span> take similar options to <span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">RDF::Reader.open</a></span> to determine the
+appropriate writer to use.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>linkeddata</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class)">Writer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello.nq</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:nquads</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span>
+  <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">Repository</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Repository.html#initialize-instance_method" title="RDF::Repository#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_repo'>repo</span><span class='op'>|</span>
+    <span class='id identifier rubyid_repo'>repo</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:hello</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFS.html" title="RDF::RDFS (class)">RDFS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_label'><span class='object_link'><a href="RDF/RDFS.html#label-instance_method" title="RDF::RDFS#label (method)">label</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://example/graph_name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>A specific sub-type of Writer can also be invoked directly:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/nquads</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">Repository</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Repository.html#initialize-instance_method" title="RDF::Repository#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:hello</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFS.html" title="RDF::RDFS (class)">RDFS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_label'><span class='object_link'><a href="RDF/RDFS.html#label-instance_method" title="RDF::RDFS#label (method)">label</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://example/graph_name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hello.nq</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:nquads</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+</code></pre>
+
+<h2 id="reader-writer-convenience-methods">Reader/Writer convenience methods</h2>
+
+<p><span class='object_link'><a href="RDF/Enumerable.html" title="RDF::Enumerable (module)">RDF::Enumerable</a></span> implements <code>to_{format}</code> for each available instance of <span class='object_link'><a href="RDF/Reader.html" title="RDF::Reader (class)">RDF::Reader</a></span>.
+For example, if <code>rdf/turtle</code> is loaded, this allows the following:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:hello</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFS.html" title="RDF::RDFS (class)">RDFS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_label'><span class='object_link'><a href="RDF/RDFS.html#label-instance_method" title="RDF::RDFS#label (method)">label</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_to_ttl'>to_ttl</span>
+</code></pre>
+
+<p>Similarly, <span class='object_link'><a href="RDF/Mutable.html" title="RDF::Mutable (module)">RDF::Mutable</a></span> implements <code>from_{format}</code> for each available instance
+of <span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span>. For example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_from_ttl'>from_ttl</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ a &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#Resource&gt;]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Note that no prefixes are loaded automatically, however they can be provided as arguments:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_from_ttl'>from_ttl</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[ a rdf:Resource]</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>prefixes:</span> <span class='lbrace'>{</span><span class='label'>rdf:</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+</code></pre>
+
+<h3 id="querying-rdf-data-using-basic-graph-patterns-bgps">Querying RDF data using basic graph patterns (BGPs)</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/ntriples</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://ruby-rdf.github.com/rdf/etc/doap.nt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Query.html" title="RDF::Query (class)">Query</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Query.html#initialize-instance_method" title="RDF::Query#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lbrace'>{</span>
+  <span class='label'>person:</span> <span class='lbrace'>{</span>
+    <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>  <span class='op'>=&gt;</span> <span class='const'>FOAF</span><span class='period'>.</span><span class='const'>Person</span><span class='comma'>,</span>
+    <span class='const'>FOAF</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='symbol'>:name</span><span class='comma'>,</span>
+    <span class='const'>FOAF</span><span class='period'>.</span><span class='id identifier rubyid_mbox'>mbox</span> <span class='op'>=&gt;</span> <span class='symbol'>:email</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+<span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>**</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_solution'>solution</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_solution'>solution</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> email=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_solution'>solution</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>The same query may also be run from the graph:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_solution'>solution</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_solution'>solution</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> email=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_solution'>solution</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>In general, querying from using the <code>queryable</code> instance allows a specific implementation of <code>queryable</code> to perform query optimizations specific to the datastore on which it is based.</p>
+
+<p>A separate <a href="https://rubydoc.info/github/ruby-rdf/sparql">SPARQL</a> gem builds on basic BGP support to provide full support for <a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1</a> queries.</p>
+
+<h3 id="using-pre-defined-rdf-vocabularies">Using pre-defined RDF vocabularies</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span>      <span class='comment'>#=&gt; RDF::URI(&quot;http://purl.org/dc/terms/title&quot;)
+</span><span class='const'>FOAF</span><span class='period'>.</span><span class='id identifier rubyid_knows'>knows</span>    <span class='comment'>#=&gt; RDF::URI(&quot;http://xmlns.com/foaf/0.1/knows&quot;)
+</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>      <span class='comment'>#=&gt; RDF::URI(&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&quot;)
+</span><span class='const'>RDFS</span><span class='period'>.</span><span class='id identifier rubyid_seeAlso'>seeAlso</span>  <span class='comment'>#=&gt; RDF::URI(&quot;http://www.w3.org/2000/01/rdf-schema#seeAlso&quot;)
+</span><span class='const'>RSS</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span>     <span class='comment'>#=&gt; RDF::URI(&quot;http://purl.org/rss/1.0/title&quot;)
+</span><span class='const'>OWL</span><span class='period'>.</span><span class='id identifier rubyid_sameAs'>sameAs</span>    <span class='comment'>#=&gt; RDF::URI(&quot;http://www.w3.org/2002/07/owl#sameAs&quot;)
+</span><span class='const'>XSD</span><span class='period'>.</span><span class='id identifier rubyid_dateTime'>dateTime</span>  <span class='comment'>#=&gt; RDF::URI(&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;)
+</span></code></pre>
+
+<h3 id="using-ad-hoc-rdf-vocabularies">Using ad-hoc RDF vocabularies</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_foaf'>foaf</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocabulary.html" title="RDF::Vocabulary (class)">Vocabulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Vocabulary.html#initialize-instance_method" title="RDF::Vocabulary#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://xmlns.com/foaf/0.1/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_foaf'>foaf</span><span class='period'>.</span><span class='id identifier rubyid_knows'>knows</span>    <span class='comment'>#=&gt; RDF::URI(&quot;http://xmlns.com/foaf/0.1/knows&quot;)
+</span><span class='id identifier rubyid_foaf'>foaf</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span>   <span class='comment'>#=&gt; RDF::URI(&quot;http://xmlns.com/foaf/0.1/name&quot;)
+</span><span class='id identifier rubyid_foaf'>foaf</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mbox</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>  <span class='comment'>#=&gt; RDF::URI(&quot;http://xmlns.com/foaf/0.1/mbox&quot;)
+</span></code></pre>
+
+<h2 id="rdf-rdfstar">RDF* (RDFStar)</h2>
+
+<p><a href="https://ruby-rdf.github.com/">RDF.rb</a> includes provisional support for [RDF*][] with an N-Triples/N-Quads syntax extension that uses inline statements in the <em>subject</em> or <em>object</em> position.</p>
+
+<p>Internally, an <code>RDF::Statement</code> is treated as another resource, along with <code>RDF::URI</code> and <code>RDF::Node</code>, which allows an <code>RDF::Statement</code> to have a <code>#subject</code> or <code>#object</code> which is also an <code>RDF::Statement</code>. (Currently no prohibition for recursive statements any deeper, but no prohibition, either).</p>
+
+<h3 id="serializing-a-graph-containing-embedded-statements">Serializing a Graph containing embedded statements</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/ntriples</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bob</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/FOAF.html" title="RDF::Vocab::FOAF (class)">FOAF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_age'><span class='object_link'><a href="RDF/Vocab/FOAF.html#age-instance_method" title="RDF::Vocab::FOAF#age (method)">age</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='int'>23</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ex:certainty</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='float'>0.9</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:ntriples</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; &#39;&lt;&lt;&lt;bob&gt; &lt;http://xmlns.com/foaf/0.1/age&gt; &quot;23&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;&gt;&gt; &lt;ex:certainty&gt; &quot;0.9&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .&#39;
+</span></code></pre>
+
+<h3 id="reading-a-graph-containing-embedded-statements">Reading a Graph containing embedded statements</h3>
+
+<p>By default, the N-Triples reader will reject a document containing a subject resource.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_nt'>nt</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;&lt;&lt;bob&gt; &lt;http://xmlns.com/foaf/0.1/age&gt; &quot;23&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;&gt;&gt; &lt;ex:certainty&gt; &quot;0.9&quot;^^&lt;http://www.w3.org/2001/XMLSchema#double&gt; .</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='comment'># =&gt; RDF::ReaderError
+</span></code></pre>
+
+<p>Readers support a <code>rdfstar</code> option with either <code>:PG</code> (Property Graph) or <code>:SA</code> (Separate Assertions) modes. In <code>:PG</code> mode, statements that are used in the subject or object positions are also implicitly added to the graph:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:PG</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 2
+</span></code></pre>
+
+<p>When using the <code>:SA</code> mode, only one statement is asserted, although the reified statement is contained within the graph.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:SA</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 1
+</span></code></pre>
+
+<h2 id="documentation">Documentation</h2>
+
+<p><a href="https://rubydoc.info/github/ruby-rdf/rdf">https://rubydoc.info/github/ruby-rdf/rdf</a></p>
+
+<h3 id="rdf-object-model">RDF Object Model</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Value.html" title="RDF::Value (module)">RDF::Value</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Term.html" title="RDF::Term (module)">RDF::Term</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">RDF::Literal</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Literal/Boolean.html" title="RDF::Literal::Boolean (class)">RDF::Literal::Boolean</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Date.html" title="RDF::Literal::Date (class)">RDF::Literal::Date</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/DateTime.html" title="RDF::Literal::DateTime (class)">RDF::Literal::DateTime</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Decimal.html" title="RDF::Literal::Decimal (class)">RDF::Literal::Decimal</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Double.html" title="RDF::Literal::Double (class)">RDF::Literal::Double</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Integer.html" title="RDF::Literal::Integer (class)">RDF::Literal::Integer</a></span></li>
+<li><span class='object_link'><a href="RDF/Literal/Time.html" title="RDF::Literal::Time (class)">RDF::Literal::Time</a></span></li>
+<li><a href="https://rubydoc.info/github/gkellogg/rdf-xsd">RDF::XSD</a> (extension)</li>
+</ul></li>
+<li><span class='object_link'><a href="RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">RDF::Node</a></span></li>
+<li><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">RDF::URI</a></span></li>
+</ul></li>
+<li><span class='object_link'><a href="RDF/List.html" title="RDF::List (class)">RDF::List</a></span></li>
+<li><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">RDF::Graph</a></span></li>
+<li><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">RDF::Statement</a></span></li>
+</ul></li>
+</ul>
+
+<h3 id="rdf-serialization">RDF Serialization</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Format.html" title="RDF::Format (class)">RDF::Format</a></span></li>
+<li><span class='object_link'><a href="RDF/Reader.html" title="RDF::Reader (class)">RDF::Reader</a></span></li>
+<li><span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class)">RDF::Writer</a></span></li>
+</ul>
+
+<h3 id="rdf-serialization-formats">RDF Serialization Formats</h3>
+
+<p>The following is a partial list of RDF formats implemented either natively, or through the inclusion of
+other gems:</p>
+
+<ul>
+<li><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">RDF::NTriples</a></span></li>
+<li><span class='object_link'><a href="RDF/NQuads.html" title="RDF::NQuads (module)">RDF::NQuads</a></span></li>
+<li><a href="https://ruby-rdf.github.com/json-ld">JSON::LD</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-json">RDF::JSON</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-microdata">RDF::Microdata</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-n3">RDF::N3</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.io/rdf-raptor">RDF::Raptor::RDFXML</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.io/rdf-raptor">RDF::Raptor::Turtle</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-rdfa">RDF::RDFa</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-rdfxml">RDF::RDFXML</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-trig">RDF::TriG</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-trix">RDF::TriX</a> (extension)</li>
+<li><a href="https://ruby-rdf.github.com/rdf-turtle">RDF::Turtle</a> (extension)</li>
+</ul>
+
+<p>The meta-gem <a href="https://rubydoc.info/github/ruby-rdf/linkeddata">LinkedData</a> includes many of these gems.</p>
+
+<h3 id="rdf-datatypes">RDF Datatypes</h3>
+
+<p>RDF.rb only implements core datatypes from the
+<a href="https://www.w3.org/TR/rdf11-concepts/#datatype-maps">RDF Datatype Map</a>. Most other
+XSD and RDF datatype implementations can be find in the following:</p>
+
+<ul>
+<li><span class='object_link'><a href="RDF/XSD.html" title="RDF::XSD (class)">RDF::XSD</a></span></li>
+</ul>
+
+<h3 id="graph-isomorphism">Graph Isomorphism</h3>
+
+<p>Two graphs may be compared with each other to determine if they are <em>isomorphic</em>.
+As BNodes within two different graphs are no equal, graphs may not be directly compared.
+The <code>RDF::Isomorphic</code> gem may be used to determine if they make the same statements, aside
+from BNode identity (i.e., they each entail the other)</p>
+
+<ul>
+<li><code>RDF::Isomorphic</code></li>
+</ul>
+
+<h3 id="rdf-storage">RDF Storage</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">RDF::Repository</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Countable.html" title="RDF::Countable (module)">RDF::Countable</a></span></li>
+<li><span class='object_link'><a href="RDF/Enumerable.html" title="RDF::Enumerable (module)">RDF::Enumerable</a></span></li>
+<li><span class='object_link'><a href="RDF/Indexable.html" title="RDF::Indexable (module)">RDF::Indexable</a></span></li>
+<li><span class='object_link'><a href="RDF/Queryable.html" title="RDF::Queryable (module)">RDF::Queryable</a></span></li>
+<li><span class='object_link'><a href="RDF/Mutable.html" title="RDF::Mutable (module)">RDF::Mutable</a></span></li>
+<li><span class='object_link'><a href="RDF/Durable.html" title="RDF::Durable (module)">RDF::Durable</a></span></li>
+</ul></li>
+<li><span class='object_link'><a href="RDF/Transaction.html" title="RDF::Transaction (class)">RDF::Transaction</a></span></li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf-agraph">RDF::AllegroGraph</a> (extension)</li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf-mongo">RDF::Mongo</a> (extension)</li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf-do">RDF::DataObjects</a> (extension)</li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf-sesame">RDF::Sesame</a> (extension)</li>
+</ul>
+
+<h3 id="rdf-querying">RDF Querying</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Query.html" title="RDF::Query (class)">RDF::Query</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Query/HashPatternNormalizer.html" title="RDF::Query::HashPatternNormalizer (class)">RDF::Query::HashPatternNormalizer</a></span></li>
+<li><span class='object_link'><a href="RDF/Query/Pattern.html" title="RDF::Query::Pattern (class)">RDF::Query::Pattern</a></span></li>
+<li><span class='object_link'><a href="RDF/Query/Solution.html" title="RDF::Query::Solution (class)">RDF::Query::Solution</a></span></li>
+<li><span class='object_link'><a href="RDF/Query/Solutions.html" title="RDF::Query::Solutions (class)">RDF::Query::Solutions</a></span></li>
+<li><span class='object_link'><a href="RDF/Query/Variable.html" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></li>
+</ul></li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/sparql">SPARQL</a> (extension)</li>
+</ul>
+
+<h3 id="rdf-vocabularies">RDF Vocabularies</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span>         - Resource Description Framework (RDF)</li>
+<li><span class='object_link'><a href="RDF/OWL.html" title="RDF::OWL (class)">RDF::OWL</a></span>    - Web Ontology Language (OWL)</li>
+<li><span class='object_link'><a href="RDF/RDFS.html" title="RDF::RDFS (class)">RDF::RDFS</a></span>   - RDF Schema (RDFS)</li>
+<li><span class='object_link'><a href="RDF/RDFV.html" title="RDF::RDFV (class)">RDF::RDFV</a></span>   - RDF Vocabulary (RDFV)</li>
+<li><span class='object_link'><a href="RDF/XSD.html" title="RDF::XSD (class)">RDF::XSD</a></span>    - XML Schema (XSD)</li>
+</ul>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://ruby-lang.org/">Ruby</a> (&gt;= 2.2)</li>
+<li>[LinkHeader]<a href="%3E=%200.0.8"></a></li>
+<li>Soft dependency on <a href="https://rubygems.org/gems/rest-client">RestClient</a> (&gt;= 1.7)</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<p>The recommended installation method is via <a href="https://rubygems.org/">RubyGems</a>.
+To install the latest official release of RDF.rb, do:</p>
+
+<pre class="code ruby"><code class="ruby">% [sudo] gem install rdf             # Ruby 2+
+</code></pre>
+
+<h2 id="download">Download</h2>
+
+<p>To get a local working copy of the development repository, do:</p>
+
+<pre class="code ruby"><code class="ruby">% git clone git://github.com/ruby-rdf/rdf.git
+</code></pre>
+
+<p>Alternatively, download the latest development version as a tarball as
+follows:</p>
+
+<pre class="code ruby"><code class="ruby">% wget https://github.com/ruby-rdf/rdf/tarball/master
+</code></pre>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf">https://rubydoc.info/github/ruby-rdf/rdf</a></li>
+<li><a href="https://github.com/ruby-rdf/rdf">https://github.com/ruby-rdf/rdf</a></li>
+<li><a href="https://rubygems.org/gems/rdf">https://rubygems.org/gems/rdf</a></li>
+<li><a href="https://www.ohloh.net/p/rdf">https://www.ohloh.net/p/rdf</a></li>
+</ul>
+
+<h2 id="mailing-list">Mailing List</h2>
+
+<ul>
+<li><a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/">https://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+<li><a href="https://github.com/artob">Arto Bendiken</a> - <a href="https://ar.to/">https://ar.to/</a></li>
+<li><a href="https://github.com/bhuga">Ben Lavender</a> - <a href="https://bhuga.net/">https://bhuga.net/</a></li>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
+</ul>
+
+<h2 id="contributors">Contributors</h2>
+
+<ul>
+<li><a href="https://github.com/clnx">Călin Ardelean</a> - <a href="https://github.com/clnx">https://github.com/clnx</a></li>
+<li><a href="https://github.com/markborkum">Mark Borkum</a> - <a href="https://github.com/markborkum">https://github.com/markborkum</a></li>
+<li><a href="https://github.com/danny">Danny Gagne</a> - <a href="http://www.dannygagne.com/">http://www.dannygagne.com/</a></li>
+<li><a href="https://github.com/jgeiger">Joey Geiger</a> - <a href="https://github.com/jgeiger">https://github.com/jgeiger</a></li>
+<li><a href="https://github.com/fumi">Fumihiro Kato</a> - <a href="https://fumi.me/">https://fumi.me/</a></li>
+<li><a href="https://github.com/kna">Naoki Kawamukai</a> - <a href="https://github.com/kna">https://github.com/kna</a></li>
+<li><a href="https://github.com/tomjnixon">Tom Nixon</a> - <a href="https://github.com/tomjnixon">https://github.com/tomjnixon</a></li>
+<li><a href="https://github.com/hellekin">Hellekin O. Wolf</a> - <a href="https://hellekin.cepheide.org/">https://hellekin.cepheide.org/</a></li>
+<li><a href="https://github.com/jfieber">John Fieber</a> - <a href="https://github.com/jfieber">https://github.com/jfieber</a></li>
+<li><a href="https://github.com/ursm">Keita Urashima</a> - <a href="https://ursm.jp/">https://ursm.jp/</a></li>
+<li><a href="https://github.com/pius">Pius Uzamere</a> - <a href="http://pius.me/">http://pius.me/</a></li>
+<li><a href="https://github.com/nyarly">Judson Lester</a> - <a href="https://github.com/nyarly">https://github.com/nyarly</a></li>
+<li><a href="https://github.com/petervandenabeele">Peter Vandenabeele</a> - <a href="https://github.com/petervandenabeele">https://github.com/petervandenabeele</a></li>
+<li><a href="https://github.com/no-reply">Tom Johnson</a> - <a href="https://github.com/no-reply">https://github.com/no-reply</a></li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>This repository uses <a href="https://github.com/nvie/gitflow">Git Flow</a> to mange development and release activity. All submissions <em>must</em> be on a feature branch based on the <em>develop</em> branch to ease staging and integration.</p>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.
+Before committing, run <code>git diff --check</code> to make sure of this.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don&#39;t touch the <code>.gemspec</code> or <code>VERSION</code> files. If you need to change them,
+do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the
+corresponding list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Don&#39;t touch the <code>AUTHORS</code> file. If your contributions are significant
+enough, be assured we will eventually add you in there.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+
+<p>[RDF*][]:           <a href="https://lists.w3.org/Archives/Public/public-rdf-star/">https://lists.w3.org/Archives/Public/public-rdf-star/</a></p>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat May 23 11:29:24 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.7.0).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -104,7 +104,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb</dd>
+    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb</dd>
   </dl>
   
 </div>
@@ -612,7 +612,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(input = $stdin, encoding: Encoding::UTF_8, validate: false, canonicalize: false, intern: true, prefixes: Hash.new, base_uri: nil, **options) {|reader| ... } &#x21d2; Reader </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(input = $stdin, base_uri: nil, canonicalize: false, encoding: Encoding::UTF_8, intern: true, prefixes: Hash.new, rdfstar: nil, validate: false, **options) {|reader| ... } &#x21d2; Reader </a>
     
 
     
@@ -967,7 +967,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(input = $stdin, encoding: Encoding::UTF_8, validate: false, canonicalize: false, intern: true, prefixes: Hash.new, base_uri: nil, **options) {|reader| ... } &#x21d2; <tt><span class='object_link'><a href="" title="RDF::Reader (class)">Reader</a></span></tt> 
+    #<strong>initialize</strong>(input = $stdin, base_uri: nil, canonicalize: false, encoding: Encoding::UTF_8, intern: true, prefixes: Hash.new, rdfstar: nil, validate: false, **options) {|reader| ... } &#x21d2; <tt><span class='object_link'><a href="" title="RDF::Reader (class)">Reader</a></span></tt> 
   
 
   
@@ -1003,36 +1003,19 @@
   
     <li>
       
-        <span class='name'>encoding</span>
+        <span class='name'>base_uri</span>
       
       
-        <span class='type'>(<tt>Encoding</tt>)</span>
+        <span class='type'>(<tt>#to_s</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>Encoding::UTF_8</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>(Encoding::UTF_8)
-the encoding of the input stream</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>validate</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>false</tt>)</em>
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>(false)
-whether to validate the parsed statements and values</p>
+        <div class='inline'><p>(nil)
+the base URI to use when resolving relative URIs (not supported by
+all readers)</p>
 </div>
       
     </li>
@@ -1057,6 +1040,24 @@ whether to canonicalize parsed literals</p>
   
     <li>
       
+        <span class='name'>encoding</span>
+      
+      
+        <span class='type'>(<tt>Encoding</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Encoding::UTF_8</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(Encoding::UTF_8)
+the encoding of the input stream</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>intern</span>
       
       
@@ -1069,6 +1070,26 @@ whether to canonicalize parsed literals</p>
         &mdash;
         <div class='inline'><p>(true)
 whether to intern all parsed URIs</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>rdfstar</span>
+      
+      
+        <span class='type'>(<tt>:PG</tt>, <tt>:SA</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(nil)
+support parsing RDF* statement resources.
+If <code>:PG</code>, referenced statements are also emitted.
+If <code>:SA</code>, referenced statements are not emitted.</p>
 </div>
       
     </li>
@@ -1093,25 +1114,6 @@ the prefix mappings to use (not supported by all readers)</p>
   
     <li>
       
-        <span class='name'>base_uri</span>
-      
-      
-        <span class='type'>(<tt>#to_s</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>(nil)
-the base URI to use when resolving relative URIs (not supported by
-all readers)</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>options</span>
       
       
@@ -1121,6 +1123,24 @@ all readers)</p>
       
         &mdash;
         <div class='inline'><p>any additional options</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>validate</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(false)
+whether to validate the parsed statements and values</p>
 </div>
       
     </li>
@@ -1183,16 +1203,6 @@ all readers)</p>
       <pre class="lines">
 
 
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
 292
 293
 294
@@ -1214,29 +1224,43 @@ all readers)</p>
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span>
-               <span class='label'>encoding:</span>      <span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='comma'>,</span>
-               <span class='label'>validate:</span>      <span class='kw'>false</span><span class='comma'>,</span>
+               <span class='label'>base_uri:</span>      <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>canonicalize:</span>  <span class='kw'>false</span><span class='comma'>,</span>
+               <span class='label'>encoding:</span>      <span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='comma'>,</span>
                <span class='label'>intern:</span>        <span class='kw'>true</span><span class='comma'>,</span>
                <span class='label'>prefixes:</span>      <span class='const'><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='comma'>,</span>
-               <span class='label'>base_uri:</span>      <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>rdfstar:</span>       <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>validate:</span>      <span class='kw'>false</span><span class='comma'>,</span>
                <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span>
                <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_base_uri'>base_uri</span>     <span class='op'>||=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_base_uri'>base_uri</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:base_uri</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span>
-    <span class='label'>encoding:</span>       <span class='id identifier rubyid_encoding'>encoding</span><span class='comma'>,</span>
-    <span class='label'>validate:</span>       <span class='id identifier rubyid_validate'>validate</span><span class='comma'>,</span>
+    <span class='label'>base_uri:</span>       <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
     <span class='label'>canonicalize:</span>   <span class='id identifier rubyid_canonicalize'>canonicalize</span><span class='comma'>,</span>
+    <span class='label'>encoding:</span>       <span class='id identifier rubyid_encoding'>encoding</span><span class='comma'>,</span>
     <span class='label'>intern:</span>         <span class='id identifier rubyid_intern'>intern</span><span class='comma'>,</span>
     <span class='label'>prefixes:</span>       <span class='id identifier rubyid_prefixes'>prefixes</span><span class='comma'>,</span>
-    <span class='label'>base_uri:</span>       <span class='id identifier rubyid_base_uri'>base_uri</span>
+    <span class='label'>rdfstar:</span>        <span class='id identifier rubyid_rdfstar'>rdfstar</span><span class='comma'>,</span>
+    <span class='label'>validate:</span>       <span class='id identifier rubyid_validate'>validate</span>
   <span class='rbrace'>}</span><span class='rparen'>)</span>
 
   <span class='ivar'>@input</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_input'>input</span>
@@ -1326,12 +1350,12 @@ all readers)</p>
       <pre class="lines">
 
 
-320
-321
-322</pre>
+332
+333
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 332</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1419,7 +1443,7 @@ all readers)</p>
 55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Format.html" title="RDF::Format (class)">Format</a></span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:reader</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:nil?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -1717,7 +1741,7 @@ we pick the first one we find</p>
 102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='kw'>for</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_arg'>arg</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
@@ -1790,7 +1814,7 @@ we pick the first one we find</p>
 117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1959,12 +1983,6 @@ we pick the first one we find</p>
       <pre class="lines">
 
 
-203
-204
-205
-206
-207
-208
 209
 210
 211
@@ -1999,10 +2017,16 @@ we pick the first one we find</p>
 240
 241
 242
-243</pre>
+243
+244
+245
+246
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='comment'># If we&#39;re the abstract reader, and we can figure out a concrete reader from format, use that.
@@ -2022,9 +2046,9 @@ we pick the first one we find</p>
       <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:content_type</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
       <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_format_options'>format_options</span><span class='lbracket'>[</span><span class='symbol'>:file_name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_filename'>filename</span>
-    <span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>self</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="RDF::Reader (class)">Reader</a></span></span>      <span class='comment'># We are the abstract reader class, find an appropriate reader
-</span>
-      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span> <span class='op'>||</span> <span class='id identifier rubyid_format_options'>format_options</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>self</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="RDF::Reader (class)">Reader</a></span></span>
+      <span class='comment'># We are the abstract reader class, find an appropriate reader
+</span>      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_format'>format</span> <span class='op'>||</span> <span class='id identifier rubyid_format_options'>format_options</span><span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='comment'># Return a sample from the input file
 </span>        <span class='id identifier rubyid_sample'>sample</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>1000</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_rewind'>rewind</span>
@@ -2141,13 +2165,25 @@ we pick the first one we find</p>
 172
 173
 174
-175</pre>
+175
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>
   <span class='lbracket'>[</span>
+    <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='label'>symbol:</span> <span class='symbol'>:base_uri</span><span class='comma'>,</span>
+      <span class='label'>control:</span> <span class='symbol'>:url</span><span class='comma'>,</span>
+      <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI.html" title="RDF::URI (class)">URI</a></span></span><span class='comma'>,</span>
+      <span class='label'>on:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--uri URI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Base URI of input file, defaults to the filename.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
       <span class='label'>symbol:</span> <span class='symbol'>:canonicalize</span><span class='comma'>,</span>
       <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></span><span class='comma'>,</span>
@@ -2180,11 +2216,11 @@ we pick the first one we find</p>
         <span class='kw'>end</span>
     <span class='kw'>end</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-      <span class='label'>symbol:</span> <span class='symbol'>:base_uri</span><span class='comma'>,</span>
-      <span class='label'>control:</span> <span class='symbol'>:url</span><span class='comma'>,</span>
-      <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI.html" title="RDF::URI (class)">URI</a></span></span><span class='comma'>,</span>
-      <span class='label'>on:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--uri URI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Base URI of input file, defaults to the filename.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>symbol:</span> <span class='symbol'>:rdfstar</span><span class='comma'>,</span>
+      <span class='label'>control:</span> <span class='symbol'>:select</span><span class='comma'>,</span>
+      <span class='label'>datatype:</span> <span class='lbracket'>[</span><span class='symbol'>:PG</span><span class='comma'>,</span> <span class='symbol'>:SA</span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>on:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--rdf-star </span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Parse RDF*, either in Property Graph mode (PG) or Separate Assertions mode (SA).</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI.html" title="RDF::CLI (class)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLI/Option.html" title="RDF::CLI::Option (class)">Option</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CLI/Option.html#initialize-instance_method" title="RDF::CLI::Option#initialize (method)">new</a></span></span><span class='lparen'>(</span>
       <span class='label'>symbol:</span> <span class='symbol'>:validate</span><span class='comma'>,</span>
       <span class='label'>datatype:</span> <span class='const'><span class='object_link'><a href="../TrueClass.html" title="TrueClass (class)">TrueClass</a></span></span><span class='comma'>,</span>
@@ -2243,12 +2279,12 @@ we pick the first one we find</p>
       <pre class="lines">
 
 
-248
-249
-250</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -2325,12 +2361,12 @@ we pick the first one we find</p>
       <pre class="lines">
 
 
-330
-331
-332</pre>
+342
+343
+344</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 330</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 342</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
@@ -2397,12 +2433,12 @@ we pick the first one we find</p>
       <pre class="lines">
 
 
-583
-584
-585</pre>
+615
+616
+617</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 583</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 615</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_canonicalize?'>canonicalize?</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:canonicalize</span><span class='rbracket'>]</span>
@@ -2466,12 +2502,12 @@ further read attempts.</p>
       <pre class="lines">
 
 
-470
-471
-472</pre>
+502
+503
+504</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 470</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 502</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@input</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span> <span class='kw'>unless</span> <span class='ivar'>@input</span><span class='period'>.</span><span class='id identifier rubyid_closed?'>closed?</span>
@@ -2506,6 +2542,9 @@ further read attempts.</p>
 
 <p>Statements are yielded in the order that they are read from the input
 stream.</p>
+
+<p>If the <code>rdfstar</code> option is <code>:PG</code> and triples include
+embedded statements, they are also enumerated.</p>
 
 
   </div>
@@ -2640,24 +2679,38 @@ stream.</p>
       <pre class="lines">
 
 
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414</pre>
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 405</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='kw'>begin</span>
-      <span class='id identifier rubyid_loop'>loop</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_read_statement'>read_statement</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_st'>st</span> <span class='op'>=</span> <span class='id identifier rubyid_read_statement'>read_statement</span>
+        <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_st'>st</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rdfstar</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:PG</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_st'>st</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>rescue</span> <span class='const'>EOFError</span>
       <span class='id identifier rubyid_rewind'>rewind</span> <span class='kw'>rescue</span> <span class='kw'>nil</span>
     <span class='kw'>end</span>
@@ -2690,6 +2743,9 @@ stream.</p>
 
 <p>Triples are yielded in the order that they are read from the input
 stream.</p>
+
+<p>If the <code>rdfstar</code> option is <code>:PG</code> and triples include
+embedded statements, they are also enumerated.</p>
 
 
   </div>
@@ -2829,24 +2885,38 @@ stream.</p>
       <pre class="lines">
 
 
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448</pre>
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 464</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
     <span class='kw'>begin</span>
-      <span class='id identifier rubyid_loop'>loop</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_read_triple'>read_triple</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_triple'>triple</span> <span class='op'>=</span> <span class='id identifier rubyid_read_triple'>read_triple</span>
+        <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:rdfstar</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:PG</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_triple'>triple</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_triple'>triple</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_triple'>triple</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>rescue</span> <span class='const'>EOFError</span>
       <span class='id identifier rubyid_rewind'>rewind</span> <span class='kw'>rescue</span> <span class='kw'>nil</span>
     <span class='kw'>end</span>
@@ -2896,19 +2966,19 @@ stream.</p>
       <pre class="lines">
 
 
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567</pre>
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 558</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 590</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_encoding'>encoding</span>
   <span class='kw'>case</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span>
@@ -2963,12 +3033,12 @@ stream.</p>
       <pre class="lines">
 
 
-549
-550
-551</pre>
+581
+582
+583</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 549</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 581</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fail_object'>fail_object</span>
   <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected object (found: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_line'>current_line</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>lineno:</span> <span class='id identifier rubyid_lineno'>lineno</span><span class='comma'>,</span> <span class='label'>exception:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReaderError.html" title="RDF::ReaderError (class)">ReaderError</a></span></span><span class='rparen'>)</span>
@@ -3016,12 +3086,12 @@ stream.</p>
       <pre class="lines">
 
 
-540
-541
-542</pre>
+572
+573
+574</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 540</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 572</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fail_predicate'>fail_predicate</span>
   <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected predicate (found: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_line'>current_line</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>lineno:</span> <span class='id identifier rubyid_lineno'>lineno</span><span class='comma'>,</span> <span class='label'>exception:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReaderError.html" title="RDF::ReaderError (class)">ReaderError</a></span></span><span class='rparen'>)</span>
@@ -3069,12 +3139,12 @@ stream.</p>
       <pre class="lines">
 
 
-531
-532
-533</pre>
+563
+564
+565</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 531</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 563</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fail_subject'>fail_subject</span>
   <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected subject (found: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_line'>current_line</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>lineno:</span> <span class='id identifier rubyid_lineno'>lineno</span><span class='comma'>,</span> <span class='label'>exception:</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ReaderError.html" title="RDF::ReaderError (class)">ReaderError</a></span></span><span class='rparen'>)</span>
@@ -3141,12 +3211,12 @@ stream.</p>
       <pre class="lines">
 
 
-592
-593
-594</pre>
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 592</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 624</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_intern?'>intern?</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:intern</span><span class='rbracket'>]</span>
@@ -3194,12 +3264,12 @@ stream.</p>
       <pre class="lines">
 
 
-478
-479
-480</pre>
+510
+511
+512</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 510</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lineno'>lineno</span>
   <span class='ivar'>@input</span><span class='period'>.</span><span class='id identifier rubyid_lineno'>lineno</span>
@@ -3348,13 +3418,13 @@ stream.</p>
       <pre class="lines">
 
 
-378
-379
-380
-381</pre>
+390
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>:</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -3426,12 +3496,12 @@ stream.</p>
       <pre class="lines">
 
 
-342
-343
-344</pre>
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefixes'>prefixes</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:prefixes</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -3519,12 +3589,12 @@ stream.</p>
       <pre class="lines">
 
 
-357
-358
-359</pre>
+369
+370
+371</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefixes='>prefixes=</span><span class='lparen'>(</span><span class='id identifier rubyid_prefixes'>prefixes</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:prefixes</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_prefixes'>prefixes</span>
@@ -3597,15 +3667,15 @@ stream.</p>
       <pre class="lines">
 
 
-512
-513
-514</pre>
+544
+545
+546</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 512</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 544</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_statement'>read_statement</span>
-  <span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Statement.html#initialize-instance_method" title="RDF::Statement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_read_triple'>read_triple</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_read_triple'>read_triple</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3675,12 +3745,12 @@ stream.</p>
       <pre class="lines">
 
 
-522
-523
-524</pre>
+554
+555
+556</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 522</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 554</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read_triple'>read_triple</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>#read_triple</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># override in subclasses
@@ -3741,12 +3811,12 @@ stream.</p>
       <pre class="lines">
 
 
-456
-457
-458</pre>
+488
+489
+490</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 456</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rewind'>rewind</span>
   <span class='ivar'>@input</span><span class='period'>.</span><span class='id identifier rubyid_rewind'>rewind</span>
@@ -3794,12 +3864,12 @@ stream.</p>
       <pre class="lines">
 
 
-255
-256
-257</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -3877,15 +3947,15 @@ result.</p>
       <pre class="lines">
 
 
-497
-498
-499
-500
-501
-502</pre>
+529
+530
+531
+532
+533
+534</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 529</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='kw'>super</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_log_statistics'>log_statistics</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span>
@@ -3955,12 +4025,12 @@ result.</p>
       <pre class="lines">
 
 
-574
-575
-576</pre>
+606
+607
+608</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/reader.rb', line 574</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-26d4cf9907b0/lib/rdf/reader.rb', line 606</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate?'>validate?</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:validate</span><span class='rbracket'>]</span>
@@ -3975,9 +4045,9 @@ result.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 15 14:10:33 2020 by
+  Generated on Sat May 23 11:29:32 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.24 (ruby-2.7.0).
+  0.9.25 (ruby-2.7.0).
 </div>
 
     </div>

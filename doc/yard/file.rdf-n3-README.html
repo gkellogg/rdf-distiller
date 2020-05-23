@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: rdf-n3-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "rdf-n3-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: rdf-n3-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="rdf-n3-reader-writer-and-reasoner">RDF::N3 reader/writer and reasoner</h1>
+
+<p>Notation-3 reader/writer for <a href="https://ruby-rdf.github.com/rdf">RDF.rb</a> .</p>
+
+<p><a href="https://badge.fury.io/rb/rdf-n3"><img src="https://badge.fury.io/rb/rdf-n3.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/ruby-rdf/rdf-n3"><img src="https://travis-ci.org/ruby-rdf/rdf-n3.png?branch=master" alt="Build Status"></a></p>
+
+<h2 id="description">Description</h2>
+
+<p>RDF::N3 is an Notation-3 parser for Ruby using the <a href="https://ruby-rdf.github.com/rdf">RDF.rb</a>  library suite. Also implements N3 Entailment.</p>
+
+<p>Reader inspired from TimBL predictiveParser and Python librdf implementation.</p>
+
+<h2 id="turtle-deprecated">Turtle deprecated</h2>
+
+<p>Support for Turtle mime-types and specific format support has been deprecated from this gem,
+as Turtle is now implemented using <a href="https://ruby-rdf.github.com/rdf-turtle/">RDF::Turtle</a>.</p>
+
+<h2 id="features">Features</h2>
+
+<p>RDF::N3 parses <a href="https://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a>, <a href="https://www.w3.org/TR/turtle/">Turtle</a> and <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> into statements or quads. It also performs reasoning and serializes to N3.</p>
+
+<p>Install with <code>gem install rdf-n3</code></p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+<li>Support for Variables in Formulae. Existential variables are quantified to RDF::Node instances, Universals to RDF::Query::Variable, with the URI of the variable target used as the variable name.</li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+
+<p>Instantiate a reader from a local file:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3/Reader.html" title="RDF::N3::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.n3</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span>
+   <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+   <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Define <code>@base</code> and <code>@prefix</code> definitions, and use for serialization using <code>:base_uri</code> an <code>:prefixes</code> options</p>
+
+<p>Write a graph to a file:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3/Writer.html" title="RDF::N3::Writer (class)">Writer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/test.n3</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span>
+   <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_graph'>graph</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="reasoning">Reasoning</h3>
+
+<p>Experimental N3 reasoning is supported. Instantiate a reasoner from a dataset:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3/Reasoner.html" title="RDF::N3::Reasoner (class)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/N3/Reasoner.html#initialize-instance_method" title="RDF::N3::Reasoner#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_reasoner'>reasoner</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">N3</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/N3/Reader.html" title="RDF::N3::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/foaf.n3</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_reasoner'>reasoner</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+
+   <span class='id identifier rubyid_reader'>reader</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
+     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+   <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Reasoning is performed by turning a repository containing formula and predicate operators into an executable set of operators (similar to the executable SPARQL Algebra). Reasoning adds statements to the base dataset, marked with <code>:inferred</code> (e.g. <code>statement.inferred?</code>). Predicate operators are defined from the following vocabularies:</p>
+
+<ul>
+<li>RDF List vocabulary <a href="http://www.w3.org/2000/10/swap/list#">http://www.w3.org/2000/10/swap/list#</a>
+
+<ul>
+<li>list:append (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Append.html" title="RDF::N3::Algebra::List::Append (class)">RDF::N3::Algebra::List::Append</a></span>)</li>
+<li>list:in (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/In.html" title="RDF::N3::Algebra::List::In (class)">RDF::N3::Algebra::List::In</a></span>)</li>
+<li>list:last (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Last.html" title="RDF::N3::Algebra::List::Last (class)">RDF::N3::Algebra::List::Last</a></span>)</li>
+<li>list:member (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Member.html" title="RDF::N3::Algebra::List::Member (class)">RDF::N3::Algebra::List::Member</a></span>)</li>
+</ul></li>
+<li>RDF Log vocabulary <a href="http://www.w3.org/2000/10/swap/log#">http://www.w3.org/2000/10/swap/log#</a>
+
+<ul>
+<li>log:conclusion (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conclusion.html" title="RDF::N3::Algebra::Log::Conclusion (class)">RDF::N3::Algebra::Log::Conclusion</a></span>)</li>
+<li>log:conjunction (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conjunction.html" title="RDF::N3::Algebra::Log::Conjunction (class)">RDF::N3::Algebra::Log::Conjunction</a></span>)</li>
+<li>log:equalTo (See <span class='object_link'><a href="RDF/N3/Algebra/Log/EqualTo.html" title="RDF::N3::Algebra::Log::EqualTo (class)">RDF::N3::Algebra::Log::EqualTo</a></span>)</li>
+<li>log:implies (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Implies.html" title="RDF::N3::Algebra::Log::Implies (class)">RDF::N3::Algebra::Log::Implies</a></span>)</li>
+<li>log:includes (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Includes.html" title="RDF::N3::Algebra::Log::Includes (class)">RDF::N3::Algebra::Log::Includes</a></span>)</li>
+<li>log:notEqualTo (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotEqualTo.html" title="RDF::N3::Algebra::Log::NotEqualTo (class)">RDF::N3::Algebra::Log::NotEqualTo</a></span>)</li>
+<li>log:notIncludes (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotIncludes.html" title="RDF::N3::Algebra::Log::NotIncludes (class)">RDF::N3::Algebra::Log::NotIncludes</a></span>)</li>
+<li>log:outputString (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/OutputString.html" title="RDF::N3::Algebra::Log::OutputString (class)">RDF::N3::Algebra::Log::OutputString</a></span>)</li>
+</ul></li>
+</ul>
+
+<p>N3 Formulae are introduced with the { statement-list } syntax. A given formula is assigned an RDF::Node instance, which is also used as the graph_name for RDF::Statement instances provided to RDF::N3::Reader#each_statement. For example, the following N3 generates the associated statements:</p>
+
+<pre class="code ruby"><code class="ruby">@prefix x: &lt;http://example.org/x-ns/#&gt; .
+@prefix log: &lt;http://www.w3.org/2000/10/swap/log#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/#&gt; .
+
+{ [ x:firstname  &quot;Ora&quot; ] dc:wrote [ dc:title  &quot;Moby Dick&quot; ] } a log:falsehood .
+</code></pre>
+
+<p>when turned into an RDF Repository results in the following quads</p>
+
+<pre class="code ruby"><code class="ruby">_:form &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://www.w3.org/2000/10/swap/log#falsehood&gt; .
+_:moby &lt;http://purl.org/dc/elements/1.1/#title&gt; &quot;Moby Dick&quot; _:form .
+_:ora &lt;http://purl.org/dc/elements/1.1/#wrote&gt; _:moby _:form .
+_:ora &lt;http://example.org/x-ns/#firstname&gt; &quot;Ora&quot; _:form .
+</code></pre>
+
+<p>Reasoning uses a Notation3 Algebra, similar to <a href="https://jena.apache.org/documentation/notes/sse.html">SPARQL S-Expressions</a>. This implementation considers formulae to be patterns, which may be asserted on statements made in the default graph, possibly loaded from a separate file. The logical relationships are reduced to algebraic operators. </p>
+
+<h3 id="variables">Variables</h3>
+
+<p>N3 Variables are introduced with @forAll, @forSome, or ?x. Variables reference URIs described in formulae, typically defined in the default vocabulary (e.g., &quot;:x&quot;). Existential variables are replaced with an allocated RDF::Node instance. Universal variables are replaced with a RDF::Query::Variable instance. For example, the following N3 generates the associated statements:</p>
+
+<pre class="code ruby"><code class="ruby">@forAll &lt;#h&gt;. @forSome &lt;#g&gt;. &lt;#g&gt; &lt;#loves&gt; &lt;#h&gt; .
+</code></pre>
+
+<p>results in:</p>
+
+<pre class="code ruby"><code class="ruby">h = RDF::Query::Variable.new(&lt;#h&gt;)
+g = RDF::Node.new()
+RDF::Statement(f, &lt;#loves&gt;, h)
+</code></pre>
+
+<p>Note that the behavior of both existential and universal variables is not entirely in keeping with the <a href="https://www.w3.org/TeamSubmission/n3/">Team Submission</a>, and neither work quite like SPARQL variables. When used in the antecedent part of an implication, universal variables should behave much like SPARQL variables. This area is subject to a fair amount of change.</p>
+
+<h2 id="implementation-notes">Implementation Notes</h2>
+
+<p>The parser is driven through a rules table contained in lib/rdf/n3/reader/meta.rb. This includes
+branch rules to indicate productions to be taken based on a current production. Terminals are denoted
+through a set of regular expressions used to match each type of terminal.</p>
+
+<p>The [meta.rb][file:lib/rdf/n3/reader/meta.rb] file is generated from lib/rdf/n3/reader/n3-selectors.n3
+(taken from <a href="http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3">http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3</a>) which is the result of parsing
+<a href="http://www.w3.org/2000/10/swap/grammar/n3.n3">http://www.w3.org/2000/10/swap/grammar/n3.n3</a> (along with bnf-rules.n3) using cwm using the following command sequence:</p>
+
+<pre class="code ruby"><code class="ruby">cwm n3.n3 bnf-rules.n3 --think --purge --data &gt; n3-selectors.n3
+</code></pre>
+
+<p>[n3-selectors.n3][file:lib/rdf/n3/reader/n3-selectors.rb] is itself used to generate meta.rb using script/build_meta.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (~&gt; 3.0, &gt;= 3.0.10)</li>
+</ul>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Full documentation available on <a href="https://rubydoc.info/github/ruby-rdf/rdf-n3">RubyDoc.info</a></p>
+
+<h3 id="principle-classes">Principle Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/N3.html" title="RDF::N3 (module)">RDF::N3</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Format.html" title="RDF::N3::Format (class)">RDF::N3::Format</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Reader.html" title="RDF::N3::Reader (class)">RDF::N3::Reader</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Reasoner.html" title="RDF::N3::Reasoner (class)">RDF::N3::Reasoner</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Writer.html" title="RDF::N3::Writer (class)">RDF::N3::Writer</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra.html" title="RDF::N3::Algebra (module)">RDF::N3::Algebra</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Formula.html" title="RDF::N3::Algebra::Formula (class)">RDF::N3::Algebra::Formula</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/List/Append.html" title="RDF::N3::Algebra::List::Append (class)">RDF::N3::Algebra::List::Append</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/List/In.html" title="RDF::N3::Algebra::List::In (class)">RDF::N3::Algebra::List::In</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/List/Last.html" title="RDF::N3::Algebra::List::Last (class)">RDF::N3::Algebra::List::Last</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/List/Member.html" title="RDF::N3::Algebra::List::Member (class)">RDF::N3::Algebra::List::Member</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Conclusion.html" title="RDF::N3::Algebra::Log::Conclusion (class)">RDF::N3::Algebra::Log::Conclusion</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Conjunction.html" title="RDF::N3::Algebra::Log::Conjunction (class)">RDF::N3::Algebra::Log::Conjunction</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/EqualTo.html" title="RDF::N3::Algebra::Log::EqualTo (class)">RDF::N3::Algebra::Log::EqualTo</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Implies.html" title="RDF::N3::Algebra::Log::Implies (class)">RDF::N3::Algebra::Log::Implies</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Includes.html" title="RDF::N3::Algebra::Log::Includes (class)">RDF::N3::Algebra::Log::Includes</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/NotEqualTo.html" title="RDF::N3::Algebra::Log::NotEqualTo (class)">RDF::N3::Algebra::Log::NotEqualTo</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/NotIncludes.html" title="RDF::N3::Algebra::Log::NotIncludes (class)">RDF::N3::Algebra::Log::NotIncludes</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Algebra/Log/OutputString.html" title="RDF::N3::Algebra::Log::OutputString (class)">RDF::N3::Algebra::Log::OutputString</a></span></li>
+</ul></li>
+</ul>
+
+<h3 id="additional-vocabularies">Additional vocabularies</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/N3/Log.html" title="RDF::N3::Log (class)">RDF::N3::Log</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Rei.html" title="RDF::N3::Rei (class)">RDF::N3::Rei</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Crypto.html" title="RDF::N3::Crypto (class)">RDF::N3::Crypto</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/List.html" title="RDF::N3::List (class)">RDF::N3::List</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Math.html" title="RDF::N3::Math (class)">RDF::N3::Math</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Str.html" title="RDF::N3::Str (class)">RDF::N3::Str</a></span></li>
+<li><span class='object_link'><a href="RDF/N3/Time.html" title="RDF::N3::Time (class)">RDF::N3::Time</a></span></li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+<li><a href="https://ruby-rdf.github.com/rdf">RDF.rb</a></li>
+<li><a href="http://rdf.greggkellogg.net/distiller">Distiller</a></li>
+<li><a href="https://rubydoc.info/github/ruby-rdf/rdf-n3/">Documentation</a></li>
+<li><a href="file:file.History.html">History</a></li>
+<li><a href="https://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a></li>
+<li><a href="https://www.w3.org/2000/10/swap/Primer.html">N3 Primer</a></li>
+<li><a href="https://www.w3.org/DesignIssues/Reify.html">N3 Reification</a></li>
+<li><a href="https://www.w3.org/TR/turtle/">Turtle</a></li>
+<li><a href="https://www.w3.org/2000/10/swap/test/README.html">W3C SWAP Test suite</a></li>
+<li><a href="https://www.w3.org/2001/sw/DataAccess/df1/tests/README.txt">W3C Turtle Test suite</a></li>
+<li><a href="https://www.w3.org/TR/n-triples/">N-Triples</a></li>
+</ul>
+
+<h2 id="author">Author</h2>
+
+<ul>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
+</ul>
+
+<h2 id="contributors">Contributors</h2>
+
+<ul>
+<li><a href="https://github.com/njh">Nicholas Humfrey</a> - <a href="https://njh.me/">https://njh.me/</a></li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>This repository uses <a href="https://github.com/nvie/gitflow">Git Flow</a> to mange development and release activity. All submissions <em>must</em> be on a feature branch based on the <em>develop</em> branch to ease staging and integration.</p>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don&#39;t touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+
+<h2 id="feedback">Feedback</h2>
+
+<ul>
+<li><a href="mailto:gregg@greggkellogg.net">gregg@greggkellogg.net</a></li>
+<li><a href="https://rubygems.org/gem/rdf-n3">https://rubygems.org/gem/rdf-n3</a></li>
+<li><a href="https://github.com/ruby-rdf/rdf-n3">https://github.com/ruby-rdf/rdf-n3</a></li>
+<li><a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/">https://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat May 23 11:29:24 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.7.0).
+</div>
+
+    </div>
+  </body>
+</html>
