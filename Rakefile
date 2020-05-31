@@ -20,7 +20,7 @@ task yard: [:clean_doc, :readme] do
           Dir.glob("readmes/*-README")
   cmd = 'yardoc ' + files.join(' ')
   puts cmd
-  #%x(#{cmd})
+  %x(#{cmd})
 end
 
 desc "Clean documentation"

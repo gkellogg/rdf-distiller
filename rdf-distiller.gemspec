@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 3.1'
+  s.add_runtime_dependency      "sinatra-linkeddata", '~> 3.1', '>= 3.1.1'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
