@@ -99,8 +99,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb<span class="defines">,<br />
-  vendor/bundler/ruby/2.7.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/extensions.rb</span>
+    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/sparql-cd4915d97d78/lib/sparql/algebra/extensions.rb<span class="defines">,<br />
+  vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb</span>
 </dd>
   </dl>
   
@@ -108,13 +108,87 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Extensions for <code>RDF::Query::Variable</code>.</p>
+    <p>An RDF query variable.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating a named unbound variable</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:x</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_unbound?'>unbound?</span>   <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>      <span class='comment'>#=&gt; nil</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating an anonymous unbound variable</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>       <span class='comment'>#=&gt; :g2166151240</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Unbound variables match any value</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>===</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='int'>42</span><span class='rparen'>)</span>     <span class='comment'>#=&gt; true</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Creating a bound variable</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:y</span><span class='comma'>,</span> <span class='int'>123</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_bound?'>bound?</span>     <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>      <span class='comment'>#=&gt; 123</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Bound variables match only their actual value</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:y</span><span class='comma'>,</span> <span class='int'>123</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span> <span class='op'>===</span> <span class='int'>42</span>     <span class='comment'>#=&gt; false
+</span><span class='id identifier rubyid_var'>var</span> <span class='op'>===</span> <span class='int'>123</span>    <span class='comment'>#=&gt; true</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Getting the variable name</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:y</span><span class='comma'>,</span> <span class='int'>123</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_named?'>named?</span>     <span class='comment'>#=&gt; true
+</span><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>       <span class='comment'>#=&gt; :y
+</span><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>     <span class='comment'>#=&gt; :y</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Rebinding a variable returns the previous value</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_bind!'>bind!</span><span class='lparen'>(</span><span class='int'>456</span><span class='rparen'>)</span> <span class='comment'>#=&gt; 123
+</span><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>      <span class='comment'>#=&gt; 456</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Unbinding a previously bound variable</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_unbind!'>unbind!</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_unbound?'>unbound?</span>   <span class='comment'>#=&gt; true</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Getting the string representation of a variable</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:x</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>       <span class='comment'>#=&gt; &quot;?x&quot;
+</span><span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'>Variable</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:y</span><span class='comma'>,</span> <span class='int'>123</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_var'>var</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>       <span class='comment'>#=&gt; &quot;?y=123&quot;</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -231,7 +305,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#bind-instance_method" title="#bind (instance method)">#<strong>bind</strong>(value)  &#x21d2; RDF::Term </a>
+      <a href="#bind-instance_method" title="#bind (instance method)">#<strong>bind</strong>(value)  &#x21d2; Object </a>
     
 
     
@@ -513,6 +587,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#optimize-instance_method" title="#optimize (instance method)">#<strong>optimize</strong>(**options)  &#x21d2; RDF::Query::Variable </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return self.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_s-instance_method" title="#to_s (instance method)">#<strong>to_s</strong>  &#x21d2; String </a>
     
 
@@ -641,17 +738,6 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html" title="SPARQL::Algebra::Expression (module)">SPARQL::Algebra::Expression</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#cast-class_method" title="SPARQL::Algebra::Expression.cast (method)">cast</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#constant%3F-instance_method" title="SPARQL::Algebra::Expression#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#extension-class_method" title="SPARQL::Algebra::Expression.extension (method)">extension</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#extensions-class_method" title="SPARQL::Algebra::Expression.extensions (method)">extensions</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#for-class_method" title="SPARQL::Algebra::Expression.for (method)">for</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#invalid%3F-instance_method" title="SPARQL::Algebra::Expression#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#node%3F-instance_method" title="SPARQL::Algebra::Expression#node? (method)">#node?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#open-class_method" title="SPARQL::Algebra::Expression.open (method)">open</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#optimize-instance_method" title="SPARQL::Algebra::Expression#optimize (method)">#optimize</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#parse-class_method" title="SPARQL::Algebra::Expression.parse (method)">parse</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#register_extension-class_method" title="SPARQL::Algebra::Expression.register_extension (method)">register_extension</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#to_sxp_bin-instance_method" title="SPARQL::Algebra::Expression#to_sxp_bin (method)">#to_sxp_bin</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#valid%3F-instance_method" title="SPARQL::Algebra::Expression#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#validate!-instance_method" title="SPARQL::Algebra::Expression#validate! (method)">#validate!</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Term.html" title="RDF::Term (module)">Term</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Term.html#<=>-instance_method" title="RDF::Term#&lt;=&gt; (method)">#<=></a></span>, <span class='object_link'><a href="../Term.html#aggregate%3F-instance_method" title="RDF::Term#aggregate? (method)">#aggregate?</a></span>, <span class='object_link'><a href="../Term.html#compatible%3F-instance_method" title="RDF::Term#compatible? (method)">#compatible?</a></span>, <span class='object_link'><a href="../Term.html#escape-instance_method" title="RDF::Term#escape (method)">#escape</a></span>, <span class='object_link'><a href="../Term.html#ndvars-instance_method" title="RDF::Term#ndvars (method)">#ndvars</a></span>, <span class='object_link'><a href="../Term.html#term%3F-instance_method" title="RDF::Term#term? (method)">#term?</a></span>, <span class='object_link'><a href="../Term.html#to_base-instance_method" title="RDF::Term#to_base (method)">#to_base</a></span>, <span class='object_link'><a href="../Term.html#to_term-instance_method" title="RDF::Term#to_term (method)">#to_term</a></span>, <span class='object_link'><a href="../Term.html#vars-instance_method" title="RDF::Term#vars (method)">#vars</a></span></p>
 
@@ -666,6 +752,17 @@
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Value.html" title="RDF::Value (module)">Value</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Value.html#anonymous%3F-instance_method" title="RDF::Value#anonymous? (method)">#anonymous?</a></span>, <span class='object_link'><a href="../Value.html#canonicalize-instance_method" title="RDF::Value#canonicalize (method)">#canonicalize</a></span>, <span class='object_link'><a href="../Value.html#canonicalize!-instance_method" title="RDF::Value#canonicalize! (method)">#canonicalize!</a></span>, <span class='object_link'><a href="../Value.html#constant%3F-instance_method" title="RDF::Value#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="../Value.html#graph%3F-instance_method" title="RDF::Value#graph? (method)">#graph?</a></span>, <span class='object_link'><a href="../Value.html#inspect-instance_method" title="RDF::Value#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="../Value.html#inspect!-instance_method" title="RDF::Value#inspect! (method)">#inspect!</a></span>, <span class='object_link'><a href="../Value.html#invalid%3F-instance_method" title="RDF::Value#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="../Value.html#iri%3F-instance_method" title="RDF::Value#iri? (method)">#iri?</a></span>, <span class='object_link'><a href="../Value.html#list%3F-instance_method" title="RDF::Value#list? (method)">#list?</a></span>, <span class='object_link'><a href="../Value.html#literal%3F-instance_method" title="RDF::Value#literal? (method)">#literal?</a></span>, <span class='object_link'><a href="../Value.html#node%3F-instance_method" title="RDF::Value#node? (method)">#node?</a></span>, <span class='object_link'><a href="../Value.html#resource%3F-instance_method" title="RDF::Value#resource? (method)">#resource?</a></span>, <span class='object_link'><a href="../Value.html#start_with%3F-instance_method" title="RDF::Value#start_with? (method)">#start_with?</a></span>, <span class='object_link'><a href="../Value.html#statement%3F-instance_method" title="RDF::Value#statement? (method)">#statement?</a></span>, <span class='object_link'><a href="../Value.html#term%3F-instance_method" title="RDF::Value#term? (method)">#term?</a></span>, <span class='object_link'><a href="../Value.html#to_nquads-instance_method" title="RDF::Value#to_nquads (method)">#to_nquads</a></span>, <span class='object_link'><a href="../Value.html#to_ntriples-instance_method" title="RDF::Value#to_ntriples (method)">#to_ntriples</a></span>, <span class='object_link'><a href="../Value.html#to_rdf-instance_method" title="RDF::Value#to_rdf (method)">#to_rdf</a></span>, <span class='object_link'><a href="../Value.html#to_term-instance_method" title="RDF::Value#to_term (method)">#to_term</a></span>, <span class='object_link'><a href="../Value.html#type_error-instance_method" title="RDF::Value#type_error (method)">#type_error</a></span>, <span class='object_link'><a href="../Value.html#uri%3F-instance_method" title="RDF::Value#uri? (method)">#uri?</a></span>, <span class='object_link'><a href="../Value.html#valid%3F-instance_method" title="RDF::Value#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="../Value.html#validate!-instance_method" title="RDF::Value#validate! (method)">#validate!</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html" title="SPARQL::Algebra::Expression (module)">SPARQL::Algebra::Expression</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#cast-class_method" title="SPARQL::Algebra::Expression.cast (method)">cast</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#constant%3F-instance_method" title="SPARQL::Algebra::Expression#constant? (method)">#constant?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#extension-class_method" title="SPARQL::Algebra::Expression.extension (method)">extension</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#extensions-class_method" title="SPARQL::Algebra::Expression.extensions (method)">extensions</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#for-class_method" title="SPARQL::Algebra::Expression.for (method)">for</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#invalid%3F-instance_method" title="SPARQL::Algebra::Expression#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#new-class_method" title="SPARQL::Algebra::Expression.new (method)">new</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#node%3F-instance_method" title="SPARQL::Algebra::Expression#node? (method)">#node?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#open-class_method" title="SPARQL::Algebra::Expression.open (method)">open</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#optimize!-instance_method" title="SPARQL::Algebra::Expression#optimize! (method)">#optimize!</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#parse-class_method" title="SPARQL::Algebra::Expression.parse (method)">parse</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#register_extension-class_method" title="SPARQL::Algebra::Expression.register_extension (method)">register_extension</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#to_sxp_bin-instance_method" title="SPARQL::Algebra::Expression#to_sxp_bin (method)">#to_sxp_bin</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#valid%3F-instance_method" title="SPARQL::Algebra::Expression#valid? (method)">#valid?</a></span>, <span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#validate!-instance_method" title="SPARQL::Algebra::Expression#validate! (method)">#validate!</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -801,7 +898,7 @@
 87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>distinguished:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>existential:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>g</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid___id__'>__id__</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='period'>.</span><span class='id identifier rubyid_abs'>abs</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -895,7 +992,7 @@
 56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -965,7 +1062,7 @@
 63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
   <span class='ivar'>@value</span>
@@ -1050,16 +1147,16 @@
       <pre class="lines">
 
 
-229
-230
-231
-232
-233
-234
-235</pre>
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 241</span>
 
 <span class='kw'>def</span> <span class='op'>===</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_unbound?'>unbound?</span>
@@ -1076,7 +1173,11 @@
       <div class="method_details ">
   <h3 class="signature " id="bind-instance_method">
   
-    #<strong>bind</strong>(value)  &#x21d2; <tt><span class='object_link'><a href="../Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt> 
+    
+      <span class="overload">#<strong>bind</strong>(value)  &#x21d2; <tt>self</tt> </span>
+    
+      <span class="overload">#<strong>bind</strong>(value)  &#x21d2; <tt><span class='object_link'><a href="../Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt> </span>
+    
   
 
   
@@ -1089,6 +1190,69 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>Rebinds this variable to the given <code>value</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <p class="tag_title">Overloads:</p>
+  <ul class="overload">
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>bind</strong>(value)  &#x21d2; <tt>self</tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns the bound variable.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Solution.html" title="RDF::Query::Solution (class)">RDF::Query::Solution</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>self</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the bound variable</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </li>
+    
+      
+      <li class="overload_item">
+        <span class="signature">#<strong>bind</strong>(value)  &#x21d2; <tt><span class='object_link'><a href="../Term.html" title="RDF::Term (module)">RDF::Term</a></span></tt> </span>
+        <div class="docstring">
+  <div class="discussion">
+    <p>Returns the previous value, if any.</p>
 
 
   </div>
@@ -1127,6 +1291,12 @@
     </li>
   
 </ul>
+
+</div>
+      </li>
+    
+  </ul>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -1149,19 +1319,33 @@
       <pre class="lines">
 
 
-162
-163
-164
-165
-166</pre>
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='id identifier rubyid_old_value'>old_value</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Query.html" title="RDF::Query (class)">Query</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Solution.html" title="RDF::Query::Solution (class)">Solution</a></span></span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+    <span class='kw'>self</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[DEPRECATION] RDF::Query::Variable#bind should be used with a solution, not a term.\n</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span>
+         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Called from </span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_location_of_caller'>location_of_caller</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+    <span class='id identifier rubyid_old_value'>old_value</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1221,12 +1405,12 @@
       <pre class="lines">
 
 
-193
-194
-195</pre>
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bindings'>bindings</span>
   <span class='id identifier rubyid_unbound?'>unbound?</span> <span class='op'>?</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_value'>value</span><span class='rbrace'>}</span>
@@ -1294,7 +1478,7 @@
 113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bound?'>bound?</span>
   <span class='op'>!</span><span class='id identifier rubyid_unbound?'>unbound?</span>
@@ -1363,7 +1547,7 @@ By default, variables are distinguished</p>
 138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_distinguished='>distinguished=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='ivar'>@distinguished</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -1431,7 +1615,7 @@ By default, variables are distinguished</p>
 129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_distinguished?'>distinguished?</span>
   <span class='ivar'>@distinguished</span>
@@ -1518,18 +1702,18 @@ variable. Or, to another Term if bound, or to any other Term</p>
       <pre class="lines">
 
 
-213
-214
-215
-216
-217
-218
-219
-220
-221</pre>
+225
+226
+227
+228
+229
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_unbound?'>unbound?</span>
@@ -1632,21 +1816,6 @@ options passed from query</p>
     </li>
   
 </ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1654,13 +1823,13 @@ options passed from query</p>
       <pre class="lines">
 
 
-389
-390
-391
-392</pre>
+486
+487
+488
+489</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/sparql-ebcec52fe1e6/lib/sparql/algebra/extensions.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/sparql-cd4915d97d78/lib/sparql/algebra/extensions.rb', line 486</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_evaluate'>evaluate</span><span class='lparen'>(</span><span class='id identifier rubyid_bindings'>bindings</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span> <span class='kw'>if</span> <span class='id identifier rubyid_bindings'>bindings</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:bound?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_bindings'>bindings</span><span class='period'>.</span><span class='id identifier rubyid_bound?'>bound?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -1730,7 +1899,7 @@ By default, variables are universal</p>
 155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_existential='>existential=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='ivar'>@existential</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -1798,7 +1967,7 @@ By default, variables are universal</p>
 146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_existential?'>existential?</span>
   <span class='ivar'>@existential</span>
@@ -1861,12 +2030,12 @@ By default, variables are universal</p>
       <pre class="lines">
 
 
-202
-203
-204</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -1934,10 +2103,74 @@ By default, variables are universal</p>
 105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named?'>named?</span>
   <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="optimize-instance_method">
+  
+    #<strong>optimize</strong>(**options)  &#x21d2; <tt><span class='object_link'><a href="" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return self</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="RDF::Query::Variable (class)">RDF::Query::Variable</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a copy of <code>self</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="../../SPARQL/Algebra/Expression.html#optimize-instance_method" title="SPARQL::Algebra::Expression#optimize (method)">SPARQL::Algebra::Expression#optimize</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+496
+497
+498</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/sparql-cd4915d97d78/lib/sparql/algebra/extensions.rb', line 496</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_optimize'>optimize</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2014,13 +2247,13 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
       <pre class="lines">
 
 
-252
-253
-254
-255</pre>
+264
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_distinguished?'>distinguished?</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_existential?'>existential?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>?</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lparen'>(</span><span class='id identifier rubyid_existential?'>existential?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$$</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>??</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -2092,14 +2325,14 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
       <pre class="lines">
 
 
-173
-174
-175
-176
-177</pre>
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unbind'>unbind</span>
   <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
@@ -2169,7 +2402,7 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
 121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unbound?'>unbound?</span>
   <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2244,7 +2477,7 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
 97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variable?'>variable?</span> 
   <span class='kw'>true</span>
@@ -2311,12 +2544,12 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
       <pre class="lines">
 
 
-184
-185
-186</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-3c0fc67183db/lib/rdf/query/variable.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/rdf-24ba7cdc342f/lib/rdf/query/variable.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
   <span class='lbrace'>{</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='rbrace'>}</span>
@@ -2331,9 +2564,9 @@ v.to_s =&gt; &#39;??a&#39;</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 15 14:10:36 2020 by
+  Generated on Sat May 30 17:01:09 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.24 (ruby-2.7.0).
+  0.9.25 (ruby-2.7.1).
 </div>
 
     </div>

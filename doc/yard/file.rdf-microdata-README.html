@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: rdf-microdata-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "rdf-microdata-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: rdf-microdata-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="rdf-microdata-reader-writer">RDF::Microdata reader/writer</h1>
+
+<p><a href="https://dev.w3.org/html5/md/Overview.html" title="HTML Microdata">Microdata</a> parser for RDF.rb.</p>
+
+<p><a href="https://badge.fury.io/rb/rdf-microdata"><img src="https://badge.fury.io/rb/rdf-microdata.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/ruby-rdf/rdf-microdata"><img src="https://secure.travis-ci.org/ruby-rdf/rdf-microdata.png?branch=master" alt="Build Status"></a></p>
+
+<h2 id="description">DESCRIPTION</h2>
+
+<p>RDF::Microdata is a Microdata reader for Ruby using the <a href="https://github.com/ruby-rdf/rdf">RDF.rb</a> library suite.</p>
+
+<h2 id="features">FEATURES</h2>
+
+<p>RDF::Microdata parses <a href="https://dev.w3.org/html5/md/Overview.html" title="HTML Microdata">Microdata</a> into statements or triples using the rules defined in <a href="https://dvcs.w3.org/hg/htmldata/raw-file/default/microdata-rdf/index.html" title="Microdata to RDF">Microdata RDF</a>.</p>
+
+<ul>
+<li>Microdata parser.</li>
+<li>Uses Nokogiri for parsing HTML</li>
+<li>If available, uses <a href="https://github.com/rubys/nokogumbo/#readme">Nokogumbo</a> gem for are pure-HTML5 parser with better error detection.</li>
+</ul>
+
+<p>Install with &#39;gem install rdf-microdata&#39;</p>
+
+<h3 id="living-implementation">Living implementation</h3>
+
+<p>Microdata to RDF transformation is undergoing active development. This implementation attempts to be up-to-date
+as of the time of release, and is being used in developing the <a href="https://dvcs.w3.org/hg/htmldata/raw-file/default/microdata-rdf/index.html" title="Microdata to RDF">Microdata RDF</a> specification.</p>
+
+<p>This implementation includes support for the proposed <a href="https://www.w3.org/wiki/WebSchemas/InverseProperties#Proposed_Action:_New_attribute_.40itemprop-reverse">@itemprop-reverse</a> attribute.</p>
+
+<h3 id="microdata-registry">Microdata Registry</h3>
+
+<p>The parser uses a build-in version of the <a href="https://dvcs.w3.org/hg/htmldata/raw-file/default/microdata-rdf/index.html" title="Microdata to RDF">Microdata RDF</a> registry.</p>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="reading-rdf-data-in-the-microdata-format">Reading RDF data in the Microdata format</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/microdata</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:microdata</span><span class='rparen'>)</span>
+</code></pre>
+
+<h3 id="reading-using-content-negotation">Reading using content-negotation</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/microdata</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.html</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>content_type:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/html</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="note">Note</h2>
+
+<p>This spec is based on the W3C HTML Data Task Force specification and does not support
+GRDDL-type triple generation, such as for html&gt;head&gt;title anchor tags.</p>
+
+<p>If the <code>RDFa</code> parser is available, <span class='object_link'><a href="RDF/Microdata/Format.html" title="RDF::Microdata::Format (class)">RDF::Microdata::Format</a></span> will not assert content type <code>text/html</code> or file extension <code>.html</code>, as this is also asserted by RDFa. Instead, the RDFa reader will invoke the microdata reader if an <code>@itemscope</code> attribute is detected.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (&gt;= 3.1)</li>
+<li><a href="https://rubygems.org/gems/rdf-xsd">RDF::XSD</a> (&gt;= 3.1)</li>
+<li><a href="https://rubygems.org/gems/htmlentities">HTMLEntities</a> (&#39;&gt;= 4.3.0&#39;)</li>
+<li><a href="https://rubygems.org/gems/nokogiri">Nokogiri</a> (&gt;= 1.10)</li>
+<li>Soft dependency on <a href="https://github.com/rubys/nokogumbo">Nokogumbo</a> (~&gt; 2.0)</li>
+</ul>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Full documentation available on <a href="https://rubydoc.info/github/ruby-rdf/rdf-microdata/frames">Rubydoc.info</a></p>
+
+<h3 id="principle-classes">Principle Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Microdata/Format.html" title="RDF::Microdata::Format (class)">RDF::Microdata::Format</a></span>
+Asserts :html format, text/html mime-type and .html file extension.</li>
+<li><span class='object_link'><a href="RDF/Microdata/Reader.html" title="RDF::Microdata::Reader (class)">RDF::Microdata::Reader</a></span>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Microdata/Reader/Nokogiri.html" title="RDF::Microdata::Reader::Nokogiri (module)">RDF::Microdata::Reader::Nokogiri</a></span></li>
+</ul></li>
+</ul>
+
+<h3 id="rdfa-based-reader">RDFa-based Reader</h3>
+
+<p>There is an experimental reader based on transforming Microdata to RDFa within the DOM. To invoke
+this, add the <code>rdfa: true</code> option to the <span class='object_link'>RDF::Microdata::Reader.new</span>, or
+use <span class='object_link'><a href="RDF/Microdata/RdfaReader.html" title="RDF::Microdata::RdfaReader (class)">RDF::Microdata::RdfaReader</a></span> directly.</p>
+
+<p>The reader exposes a <code>#rdfa</code> method, which can be used to retrieve the transformed HTML+RDFa</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+<li><a href="https://github.com/ruby-rdf/rdf">RDF.rb</a></li>
+<li><a href="https://www.rubydoc.info/github/ruby-rdf/rdf-microdata/">Documentation</a></li>
+<li><a href="file:History.md">History</a></li>
+<li><a href="https://dev.w3.org/html5/md/Overview.html" title="HTML Microdata">Microdata</a></li>
+<li><a href="https://dvcs.w3.org/hg/htmldata/raw-file/default/microdata-rdf/index.html" title="Microdata to RDF">Microdata RDF</a></li>
+</ul>
+
+<h2 id="author">Author</h2>
+
+<ul>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don&#39;t touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+
+<h2 id="feedback">FEEDBACK</h2>
+
+<ul>
+<li><a href="mailto:gregg@greggkellogg.net">gregg@greggkellogg.net</a></li>
+<li><a href="https://rubygems.org/rdf-microdata">https://rubygems.org/rdf-microdata</a></li>
+<li><a href="https://github.com/ruby-rdf/rdf-microdata">https://github.com/ruby-rdf/rdf-microdata</a></li>
+<li><a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/">https://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat May 30 17:00:10 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.7.1).
+</div>
+
+    </div>
+  </body>
+</html>

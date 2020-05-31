@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: rdf-reasoner-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "rdf-reasoner-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: rdf-reasoner-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="rdf-reasoner">rdf-reasoner</h1>
+
+<p>Reasons over RDFS/OWL vocabularies and schema.org to generate statements which are entailed based on base RDFS/OWL rules along with vocabulary information. It can also be used to ask specific questions, such as if a given object is consistent with the vocabulary ruleset. This can be used to implement <a href="https://www.w3.org/TR/sparql11-entailment/">SPARQL Entailment</a> Regimes and <a href="https://www.w3.org/TR/rdf-schema/">RDF Schema</a> entailment.</p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+<li>Entail <code>rdfs:subClassOf</code> generating an array of terms which are ancestors of the subject.</li>
+<li>Entail <code>rdfs:subPropertyOf</code> generating an array of terms which are ancestors of the subject.</li>
+<li>Entail <code>rdfs:domain</code> and <code>rdfs:range</code> adding <code>rdf:type</code> assertions on the subject or object.</li>
+<li>Inverse <code>rdfs:subClassOf</code> entailment, to find descendant classes of the subject term.</li>
+<li>Inverse <code>rdfs:subPropertyOf</code> entailment, to find descendant properties of the subject term.</li>
+<li>Entail <code>owl:equivalentClass</code> generating an array of terms equivalent to the subject.</li>
+<li>Entail <code>owl:equivalentProperty</code> generating an array of terms equivalent to the subject.</li>
+<li><code>domainCompatible?</code> determines if a particular resource is compatible with the domain definition of a given predicate, based on the intersection of entailed subclasses with the property domain.</li>
+<li><code>rangeCompatible?</code> determines if a particular resource is compatible with the range definition of a given predicate, based on the intersection of entailed subclasses or literal types with the property domain.</li>
+<li>adds <code>entail</code> and <code>lint</code> commands to the <code>rdf</code> command line interface</li>
+</ul>
+
+<p>Domain and Range entailment include specific rules for schema.org vocabularies.</p>
+
+<ul>
+<li>A plain literal is an acceptable value for any property.</li>
+<li>If <code>resource</code> is of type <code>schema:Role</code>, <code>resource</code> is domain acceptable if any other resource references <code>resource</code> using the same property.</li>
+<li>If <code>resource</code> is of type <code>schema:Role</code>, it is range acceptable if it has the same property with an acceptable value.</li>
+<li>If <code>resource</code> is of type <code>rdf:List</code> (must be previously entailed), it is range acceptable if all members of the list are otherwise range acceptable on the same property.</li>
+</ul>
+
+<h3 id="limiting-vocabularies-used-for-reasoning">Limiting vocabularies used for reasoning</h3>
+
+<p>As loading vocabularies can dominate processing time, the <code>RDF::Vocabulary.limit_vocabs</code> method can be used to set a specific set of vocabularies over which to reason. For example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocabulary.html" title="RDF::Vocabulary (class)">Vocabulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_limit_vocabs'><span class='object_link'><a href="RDF/Vocabulary.html#limit_vocabs-class_method" title="RDF::Vocabulary.limit_vocabs (method)">limit_vocabs</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdf</span><span class='comma'>,</span> <span class='symbol'>:rdf</span><span class='comma'>,</span> <span class='symbol'>:schema</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>will limit the vocabularies which are returned from <code>RDF::Vocabulary.each</code>, which is used for reasoning and other operations over vocabularies and terms.</p>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="determine-super-classes-of-a-class">Determine super-classes of a class</h3>
+
+<pre class="code ruby"><code class="ruby">require &#39;rdf/reasoner&#39;
+
+RDF::Reasoner.apply(:rdfs)
+term = RDF::Vocabulary.find_term(&quot;http://xmlns.com/foaf/0.1/Person&quot;)
+term.entail(:subClassOf)
+  # =&gt; [
+    foaf:Agent,
+    http://www.w3.org/2000/10/swap/pim/contact#Person,
+    geo:SpatialThing,
+    foaf:Person
+  ]
+</code></pre>
+
+<h3 id="determine-sub-classes-of-a-class">Determine sub-classes of a class</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdfs</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_term'>term</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/FOAF.html" title="RDF::Vocab::FOAF (class)">FOAF</a></span></span><span class='period'>.</span><span class='const'><span class='object_link'><a href="RDF/Vocab/FOAF.html#Person-instance_method" title="RDF::Vocab::FOAF#Person (method)">Person</a></span></span>
+<span class='id identifier rubyid_term'>term</span><span class='period'>.</span><span class='id identifier rubyid_entail'>entail</span><span class='lparen'>(</span><span class='symbol'>:subClass</span><span class='rparen'>)</span> <span class='comment'># =&gt; [foaf:Person, mo:SoloMusicArtist]
+</span></code></pre>
+
+<h3 id="determine-if-a-resource-is-compatible-with-the-domains-of-a-property">Determine if a resource is compatible with the domains of a property</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdfs</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_subj'>subj</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://rubygems.org/gems/rdf-reasoner</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/DOAP.html" title="RDF::Vocab::DOAP (class)">DOAP</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="RDF/Vocab/DOAP.html#name-instance_method" title="RDF::Vocab::DOAP#name (method)">name</a></span></span><span class='period'>.</span><span class='id identifier rubyid_domain_compatible?'>domain_compatible?</span><span class='lparen'>(</span><span class='id identifier rubyid_subj'>subj</span><span class='comma'>,</span> <span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span> <span class='comment'># =&gt; true
+</span></code></pre>
+
+<h3 id="determine-if-a-resource-is-compatible-with-the-ranges-of-a-property">Determine if a resource is compatible with the ranges of a property</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdfs</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/DOAP.html" title="RDF::Vocab::DOAP (class)">DOAP</a></span></span><span class='period'>.</span><span class='id identifier rubyid_created'><span class='object_link'><a href="RDF/Vocab/DOAP.html#created-instance_method" title="RDF::Vocab::DOAP#created (method)">created</a></span></span><span class='period'>.</span><span class='id identifier rubyid_range_compatible?'>range_compatible?</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span> <span class='comment'># =&gt; true
+</span></code></pre>
+
+<h3 id="perform-equivalentclass-entailment-on-a-graph">Perform equivalentClass entailment on a graph</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:owl</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_entail!'>entail!</span><span class='lparen'>(</span><span class='symbol'>:equivalentClass</span><span class='rparen'>)</span>
+</code></pre>
+
+<h3 id="yield-all-entailed-statements-for-all-entailment-methods">Yield all entailed statements for all entailment methods</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdfs</span><span class='comma'>,</span> <span class='symbol'>:owl</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_enum_statement'>enum_statement</span><span class='period'>.</span><span class='id identifier rubyid_entail'>entail</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'># &gt;= graph.enum_statement.count
+</span></code></pre>
+
+<h3 id="lint-an-expanded-graph">Lint an expanded graph</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/reasoner</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Reasoner.html" title="RDF::Reasoner (module)">Reasoner</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RDF/Reasoner.html#apply-class_method" title="RDF::Reasoner.apply (method)">apply</a></span></span><span class='lparen'>(</span><span class='symbol'>:rdfs</span><span class='comma'>,</span> <span class='symbol'>:owl</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_entail!'>entail!</span>
+<span class='id identifier rubyid_messages'>messages</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_lint'>lint</span>
+<span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_kind'>kind</span><span class='comma'>,</span> <span class='id identifier rubyid_term_messages'>term_messages</span><span class='op'>|</span>
+  <span class='id identifier rubyid_term_messages'>term_messages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_term'>term</span><span class='comma'>,</span> <span class='id identifier rubyid_messages'>messages</span><span class='op'>|</span>
+    <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kind'>kind</span><span class='embexpr_end'>}</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_term'>term</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_messages'>messages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:output</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_m'>m</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="command-line-interface">Command-Line interface</h2>
+
+<p>The <code>rdf</code> command-line interface is extended with <code>entail</code> and <code>lint</code> commands. <code>Entail</code> can be used in combination, with <code>serialize</code> to generate an output graph representation including entailed triples.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://ruby-lang.org/">Ruby</a> (&gt;= 2.4)</li>
+<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (~&gt; 3.1)</li>
+</ul>
+
+<h2 id="mailing-list">Mailing List</h2>
+
+<ul>
+<li><a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/">https://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.
+Before committing, run <code>git diff --check</code> to make sure of this.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don&#39;t touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat May 30 17:00:10 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.7.1).
+</div>
+
+    </div>
+  </body>
+</html>

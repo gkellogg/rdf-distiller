@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: rdf-turtle-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "rdf-turtle-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: rdf-turtle-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="rdf-turtle-reader-writer">RDF::Turtle reader/writer</h1>
+
+<p><a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> reader/writer for <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a> .</p>
+
+<p><a href="https://badge.fury.io/rb/rdf-turtle"><img src="https://badge.fury.io/rb/rdf-turtle.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/ruby-rdf/rdf-turtle"><img src="https://travis-ci.org/ruby-rdf/rdf-turtle.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/ruby-rdf/rdf-turtle"><img src="https://coveralls.io/repos/ruby-rdf/rdf-turtle/badge.svg" alt="Coverage Status"></a>
+<a href="https://gemnasium.com/ruby-rdf/rdf-turtle"><img src="https://gemnasium.com/ruby-rdf/rdf-turtle.png" alt="Dependency Status"></a></p>
+
+<h2 id="description">Description</h2>
+
+<p>This is a <a href="https://ruby-lang.org/">Ruby</a> implementation of a <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> parser for <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a>.</p>
+
+<h2 id="features">Features</h2>
+
+<p>RDF::Turtle parses <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> and <a href="https://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> into statements or triples. It also serializes to Turtle.</p>
+
+<p>Install with <code>gem install rdf-turtle</code></p>
+
+<ul>
+<li>100% free and unencumbered <a href="https://unlicense.org/">public domain</a> software.</li>
+<li>Implements a complete parser for <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a>.</li>
+<li>Compatible with Ruby &gt;= 2.2.2.</li>
+<li>Optional streaming writer, to serialize large graphs</li>
+<li>Provisional support for <a href="https://lists.w3.org/Archives/Public/public-rdf-star/">Turtle*</a>.</li>
+</ul>
+
+<h2 id="usage">Usage</h2>
+
+<p>Instantiate a reader from a local file:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="RDF/Graph.html#load-class_method" title="RDF::Graph.load (method)">load</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/doap.ttl</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>format:</span>  <span class='symbol'>:ttl</span><span class='rparen'>)</span>
+</code></pre>
+
+<p>Define <code>@base</code> and <code>@prefix</code> definitions, and use for serialization using <code>:base_uri</code> an <code>:prefixes</code> options.</p>
+
+<p>Canonicalize and validate using <code>:canonicalize</code> and <code>:validate</code> options.</p>
+
+<p>Write a graph to a file:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle/Writer.html" title="RDF::Turtle::Writer (class)">Writer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/test.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span>
+   <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_graph'>graph</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="turtle-rdfstar">Turtle* (RDFStar)</h2>
+
+<p>Both reader and writer include provisional support for <a href="https://lists.w3.org/Archives/Public/public-rdf-star/">Turtle*</a>.</p>
+
+<p>Internally, an <code>RDF::Statement</code> is treated as another resource, along with <code>RDF::URI</code> and <code>RDF::Node</code>, which allows an <code>RDF::Statement</code> to have a <code>#subject</code> or <code>#object</code> which is also an <code>RDF::Statement</code>.</p>
+
+<p><strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong></p>
+
+<h3 id="serializing-a-graph-containing-embedded-statements">Serializing a Graph containing embedded statements</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bob</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/FOAF.html" title="RDF::Vocab::FOAF (class)">FOAF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_age'><span class='object_link'><a href="RDF/Vocab/FOAF.html#age-instance_method" title="RDF::Vocab::FOAF#age (method)">age</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='int'>23</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ex:certainty</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='float'>0.9</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:ttl</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>standard_prefixes:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; &#39;&lt;&lt;&lt;bob&gt; foaf:age 23&gt;&gt; &lt;ex:certainty&gt; 9.0e-1 .&#39;
+</span></code></pre>
+
+<h3 id="reading-a-graph-containing-embedded-statements">Reading a Graph containing embedded statements</h3>
+
+<p>By default, the Turtle reader will reject a document containing a subject resource.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ttl'>ttl</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>
+  @prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+  @prefix ex: &lt;http://example.com/&gt; .
+  &lt;&lt;&lt;bob&gt; foaf:age 23&gt;&gt; ex:certainty 9.0e-1 .
+</span><span class='tstring_end'>)</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ttl'>ttl</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='comment'># =&gt; RDF::ReaderError
+</span></code></pre>
+
+<p>Readers support a <code>rdfstar</code> option with either <code>:PG</code> (Property Graph) or <code>:SA</code> (Separate Assertions) modes. In <code>:PG</code> mode, statements that are used in the subject or object positions are also implicitly added to the graph:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ttl'>ttl</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:PG</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 2
+</span></code></pre>
+
+<p>When using the <code>:SA</code> mode, only one statement is asserted, although the reified statement is contained within the graph.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ttl'>ttl</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:SA</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 1
+</span></code></pre>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Full documentation available on <a href="https://rubydoc.info/github/ruby-rdf/rdf-turtle/master/file/README.md">Rubydoc.info</a></p>
+
+<h3 id="principle-classes">Principle Classes</h3>
+
+<ul>
+<li><span class='object_link'><a href="RDF/Turtle/Format.html" title="RDF::Turtle::Format (class)">RDF::Turtle::Format</a></span></li>
+<li><span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">RDF::Turtle::Reader</a></span></li>
+<li><span class='object_link'><a href="RDF/Turtle/Writer.html" title="RDF::Turtle::Writer (class)">RDF::Turtle::Writer</a></span></li>
+</ul>
+
+<h3 id="variations-from-the-spec">Variations from the spec</h3>
+
+<p>In some cases, the specification is unclear on certain issues:</p>
+
+<ul>
+<li>The LC version of the <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> specification separates rules for <code>@base</code> and <code>@prefix</code> with closing &#39;.&#39; from the SPARQL-like <code>BASE</code> and <code>PREFIX</code> without closing &#39;.&#39;. This version implements a more flexible syntax where the <code>@</code> and closing <code>.</code> are optional and <code>base/prefix</code> are matched case independently.</li>
+<li>Additionally, both <code>a</code> and <code>A</code> match <code>rdf:type</code>.</li>
+</ul>
+
+<h3 id="freebase-specific-reader">Freebase-specific Reader</h3>
+
+<p>There is a special reader useful for processing <a href="https://developers.google.com/freebase/data">Freebase Dumps</a>. To invoke
+this, add the <code>freebase:  true</code> option to the <span class='object_link'>RDF::Turtle::Reader.new</span>, or
+use <span class='object_link'><a href="RDF/Turtle/FreebaseReader.html" title="RDF::Turtle::FreebaseReader (class)">RDF::Turtle::FreebaseReader</a></span> directly. As with <span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">RDF::Turtle::Reader</a></span>,
+prefix definitions may be passed in using the <code>:prefixes</code> option to
+RDF::Turtle::FreebaseReader} using the standard mechanism defined
+for <code>RDF::Reader</code>.</p>
+
+<p>The <a href="https://developers.google.com/freebase/data">Freebase Dumps</a> have a very normalized form, similar to N-Triples but
+with prefixes. They also have a large amount of garbage. This Reader is
+optimized for this format and will perform faster error recovery.</p>
+
+<p>An example of reading Freebase dumps:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rdf/turtle</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_fb'>fb</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>../freebase/freebase-rdf-2013-03-03-00-00.ttl</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_fb_prefixes'>fb_prefixes</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+  <span class='label'>ns:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://rdf.freebase.com/ns/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>key:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://rdf.freebase.com/key/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>owl:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.w3.org/2002/07/owl#&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>rdfs:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.w3.org/2000/01/rdf-schema#</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>rdf:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.w3.org/1999/02/22-rdf-syntax-ns#</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>xsd:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://www.w3.org/2001/XMLSchema#</span><span class='tstring_end'>&quot;</span></span>
+<span class='rbrace'>}</span>
+<span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle.html" title="RDF::Turtle (module)">Turtle</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Turtle/Reader.html" title="RDF::Turtle::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Reader.html#open-class_method" title="RDF::Reader.open (method)">open</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_fb'>fb</span><span class='comma'>,</span>
+  <span class='label'>freebase:</span>  <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>prefixes:</span>  <span class='id identifier rubyid_fb_prefixes'>fb_prefixes</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+
+  <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_each_statement'>each_statement</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_stmt'>stmt</span><span class='op'>|</span> <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_stmt'>stmt</span><span class='period'>.</span><span class='id identifier rubyid_to_ntriples'>to_ntriples</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="implementation-notes">Implementation Notes</h2>
+
+<p>This version uses a hand-written parser using the Lexer from the <a href="https://rubygems.org/gems/ebnf">EBNF</a> gem instead of a general <a href="https://rubygems.org/gems/ebnf">EBNF</a> LL(1) parser for faster performance.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://ruby-lang.org/">Ruby</a> (&gt;= 2.4)</li>
+<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (~&gt; 3.1)</li>
+<li><a href="https://rubygems.org/gems/ebnf">EBNF</a> (~&gt; 1.1)</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<p>The recommended installation method is via <a href="https://rubygems.org/">RubyGems</a>.
+To install the latest official release of the <code>RDF::Turtle</code> gem, do:</p>
+
+<pre class="code ruby"><code class="ruby">% [sudo] gem install rdf-turtle
+</code></pre>
+
+<h2 id="mailing-list">Mailing List</h2>
+
+<ul>
+<li><a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/">https://lists.w3.org/Archives/Public/public-rdf-ruby/</a></li>
+</ul>
+
+<h2 id="author">Author</h2>
+
+<ul>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
+</ul>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>This repository uses <a href="https://github.com/nvie/gitflow">Git Flow</a> to mange development and release activity. All submissions <em>must</em> be on a feature branch based on the <em>develop</em> branch to ease staging and integration.</p>
+
+<ul>
+<li>Do your best to adhere to the existing coding conventions and idioms.</li>
+<li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Don&#39;t touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
+change them, do so on your private branch only.</li>
+<li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
+list in the the <code>README</code>. Alphabetical order applies.</li>
+<li>Do note that in order for us to merge any non-trivial changes (as a rule
+of thumb, additions larger than about 15 lines of code), we need an
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>This is free and unencumbered public domain software. For more information,
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+
+<p>A copy of the <a href="https://dvcs.w3.org/hg/rdf/file/default/rdf-turtle/turtle.bnf">Turtle EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="https://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Sat May 30 17:00:10 2020 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.25 (ruby-2.7.1).
+</div>
+
+    </div>
+  </body>
+</html>

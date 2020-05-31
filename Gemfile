@@ -1,7 +1,7 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gemspec
-ruby "2.7"
+ruby "2.7.1"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"

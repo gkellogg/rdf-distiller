@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.date               = File.mtime('VERSION').strftime('%Y-%m-%d')
 
   s.name               = 'rdf-distiller'
-  s.homepage           = 'http://gkellogg/rdf-distiller/'
+  s.homepage           = 'https://github.com/gkellogg/rdf-distiller/'
   s.license            = 'Public Domain' if s.respond_to?(:license=)
   s.summary            = 'Translate any RDF format to any other using Ruby RDF gems'
   s.description        = s.summary
@@ -18,11 +18,11 @@ Gem::Specification.new do |s|
   s.files              = %w(AUTHORS README.md UNLICENSE VERSION) + Dir.glob('lib/**/*.rb')
   s.require_paths      = %w(lib)
 
-  s.required_ruby_version      = '>= 2.3.1'
+  s.required_ruby_version      = '>= 2.4.0'
   s.requirements               = []
 
   # RDF dependencies
-  s.add_runtime_dependency      "linkeddata",         '~> 3.1'
+  s.add_runtime_dependency      "sinatra-linkeddata", '~> 3.1', '>= 3.1.1'
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
