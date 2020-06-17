@@ -59,16 +59,19 @@
 
       <div id="content"><div id='filecontents'><h1 id="ebnf">EBNF</h1>
 
-<p><a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser and generic parser generator.</p>
+<p><a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser and generic parser generator.</p>
 
-<p><a href="http://badge.fury.io/rb/ebnf"><img src="https://badge.fury.io/rb/ebnf.png" alt="Gem Version"></a>
-<a href="http://travis-ci.org/dryruby/ebnf"><img src="https://secure.travis-ci.org/dryruby/ebnf.png?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/r/dryruby/ebnf"><img src="https://coveralls.io/repos/dryruby/ebnf/badge.svg" alt="Coverage Status"></a>
-<a href="https://gemnasium.com/dryruby/ebnf"><img src="https://gemnasium.com/dryruby/ebnf.png" alt="Dependency Status"></a></p>
+<p><a href="https://badge.fury.io/rb/ebnf"><img src="https://badge.fury.io/rb/ebnf.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/dryruby/ebnf"><img src="https://secure.travis-ci.org/dryruby/ebnf.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/dryruby/ebnf"><img src="https://coveralls.io/repos/dryruby/ebnf/badge.svg" alt="Coverage Status"></a></p>
 
 <h2 id="description">Description</h2>
 
-<p>This is a <a href="http://ruby-lang.org/">Ruby</a> implementation of an <a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> and [BNF][] parser and parser generator. It parses <a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammars to [BNF][], generates <a href="http://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> and Branch tables for <a href="http://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> grammars, which can be used with the stream <a href="http://en.wikipedia.org/wiki/Lexical_analysis#Tokenizer">Tokenizer</a> and <a href="http://en.wikipedia.org/wiki/LL_parser">LL(1) Parser</a>.</p>
+<p>This is a <a href="https://ruby-lang.org/">Ruby</a> implementation of an <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> and <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a> parser and parser generator.</p>
+
+<h3 id="ll-1-parser">LL(1) Parser</h3>
+
+<p>In one mode, it parses <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammars to <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a>, generates <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> and Branch tables for <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> grammars, which can be used with the stream <a href="https://en.wikipedia.org/wiki/Lexical_analysis#Tokenizer">Tokenizer</a> and <a href="https://en.wikipedia.org/wiki/LL_parser">LL(1) Parser</a>.</p>
 
 <p>As LL(1) grammars operate using <code>alt</code> and <code>seq</code> primitives, allowing for a match on alternative productions or a sequence of productions, generating a parser requires turning the EBNF rules into BNF:</p>
 
@@ -85,13 +88,19 @@ _a_1_ ::= op2
 
 <p>Of note in this implementation is that the tokenizer and parser are streaming, so that they can process inputs of arbitrary size.</p>
 
+<p>See <span class='object_link'><a href="EBNF/LL1.html" title="EBNF::LL1 (module)">EBNF::LL1</a></span> and <span class='object_link'><a href="EBNF/LL1/Parser.html" title="EBNF::LL1::Parser (module)">EBNF::LL1::Parser</a></span> for further information.</p>
+
+<h3 id="peg-packrat-parser"><a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a>/<a href="https://pdos.csail.mit.edu/%7Ebaford/packrat/thesis/">Packrat</a> Parser</h3>
+
+<p>An additional Parsing Expression Grammar (<a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a>) parser generator is also supported. This performs more minmal transformations on the parsed grammar to extract sub-productions, which allows each component of a rule to generate its own parsing event.</p>
+
 <h2 id="usage">Usage</h2>
 
-<h3 id="parsing-an-ll-1-grammar">Parsing an LL(1) Grammar</h3>
+<h3 id="parsing-an-ebnf-grammar">Parsing an EBNF Grammar</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ebnf</span><span class='tstring_end'>&#39;</span></span>
 
-<span class='id identifier rubyid_ebnf'>ebnf</span> <span class='op'>=</span> <span class='const'>EBNF</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./etc/ebnf.ebnf</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_ebnf'>ebnf</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="EBNF.html" title="EBNF (module)">EBNF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="EBNF.html#parse-class_method" title="EBNF.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>./etc/ebnf.ebnf</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 </code></pre>
 
 <p>Output rules and terminals as S-Expressions, Turtle, HTML or BNF</p>
@@ -102,227 +111,189 @@ _a_1_ ::= op2
 <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 </code></pre>
 
-<p>Transform EBNF to BNF (generates sub-productions using <code>alt</code> or <code>seq</code> from <code>plus</code>, <code>star</code> or <code>opt</code>)</p>
+<p>Transform EBNF to PEG (generates sub-rules for embedded expressions) and the RULES table as Ruby for parsing grammars:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_make_peg'>make_peg</span>
+<span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_ruby'>to_ruby</span>
+</code></pre>
+
+<p>Transform EBNF to BNF (generates sub-rules using <code>alt</code> or <code>seq</code> from <code>plus</code>, <code>star</code> or <code>opt</code>)</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_make_bnf'>make_bnf</span>
 </code></pre>
 
-<p>Generate <a href="http://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> rules for BNF grammars</p>
+<p>Generate <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> rules for BNF grammars (using &quot;ebnf&quot; as the starting production):</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_first_follow'>first_follow</span><span class='lparen'>(</span><span class='symbol'>:ebnf</span><span class='rparen'>)</span>
 </code></pre>
 
-<p>Generate Terminal, <a href="http://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a>, Cleanup and Branch tables as Ruby for parsing grammars</p>
+<p>Generate Terminal, <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a>, Cleanup and Branch tables as Ruby for parsing grammars:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_build_tables'>build_tables</span>
 <span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_ruby'>to_ruby</span>
 </code></pre>
 
-<p>Generate formatted grammar using HTML (requires <a href="http://rubygems.org/gems/haml">Haml</a> gem)</p>
+<p>Generate formatted grammar using HTML (requires <a href="https://rubygems.org/gems/haml">Haml</a> gem):</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_html'>to_html</span>
 </code></pre>
 
-<h3 id="parser-s-expressions">Parser S-Expressions</h3>
+<h3 id="parser-debugging">Parser debugging</h3>
 
-<p>Intermediate representations of the grammar may be serialized to Lisp-like S-Expressions. For example, the rule <code>[1] ebnf        ::= (declaration | rule)*</code> is serialized as <code>(rule ebnf &quot;1&quot; (star (alt declaration rule)))</code>.</p>
+<p>Inevitably while implementing a parser for some specific grammar, a developer will need greater insight into the operation of the parser. While this can involve sorting through a tremendous amount of data, the parser can be provided a <a href="https://ruby-doc.org/stdlib-2.4.0/libdoc/logger/rdoc/Logger.html">Logger</a> instance which will output messages at varying levels of detail to document the state of the parser at any given point. Most useful is likely the <code>INFO</code> level of debugging, but even more detail is revealed using the <code>DEBUG</code> level. <code>WARN</code> and <code>ERROR</code> statements will typically also be provided as part of an exception if parsing fails, but can be shown in the context of other parsing state with appropriate indentation as part of the logger.</p>
 
-<p>Once the <a href="http://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> conversion is made, the <a href="http://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> table is generated, this rule expands as follows:</p>
+<h3 id="parser-errors">Parser errors</h3>
 
-<pre class="code ruby"><code class="ruby"> (rule ebnf &quot;1&quot;
-  (start #t)
-  (first &quot;@pass&quot; &quot;@terminals&quot; LHS _eps)
-  (follow _eof)
-  (cleanup star)
-  (alt _empty _ebnf_2))
- (rule _ebnf_1 &quot;1.1&quot;
-  (first &quot;@pass&quot; &quot;@terminals&quot; LHS)
-  (follow &quot;@pass&quot; &quot;@terminals&quot; LHS _eof)
-  (alt declaration rule))
- (rule _ebnf_2 &quot;1.2&quot;
-  (first &quot;@pass&quot; &quot;@terminals&quot; LHS)
-  (follow _eof)
-  (cleanup merge)
-  (seq _ebnf_1 ebnf))
- (rule _ebnf_3 &quot;1.3&quot; (first &quot;@pass&quot; &quot;@terminals&quot; LHS _eps) (follow _eof) (seq ebnf))
-</code></pre>
-
-<h3 id="creating-terminal-definitions-and-parser-rules-to-parse-generated-grammars">Creating terminal definitions and parser rules to parse generated grammars</h3>
-
-<p>The parser is initialized to callbacks invoked on entry and exit
-to each <code>terminal</code> and <code>production</code>. A trivial parser loop can be described as follows:</p>
-
-<pre class="code ruby"><code class="ruby">require &#39;ebnf/ll1/parser&#39;
-require &#39;meta&#39;
-
-class Parser
-  include Meta
-
-  terminal(:SYMBOL, /([a-z]|[A-Z]|[0-9]|_)+/) do |prod, token, input|
-    # Add data based on scanned token to input
-    input[:symbol] = token.value
-  end
-
-  start_production(:rule) do |input, current, callback|
-    # Process on start of production
-    # Set state for entry into recursed rules through current
-
-    # Callback to parser loop with callback
-  end
-
-  production(:rule) do |input, current, callback|
-    # Process on end of production
-    # return results in input, retrieve results from recursed rules in current
-
-    # Callback to parser loop with callback
-  end
-
-  def initialize(input)
-    parser_options = {
-      branch: BRANCH,
-      first: FIRST,
-      follow: FOLLOW,
-      cleanup: CLEANUP
-    }
-    parse(input, start_symbol, parser_options) do |context, *data|
-      # Process calls from callback from productions
-
-    rescue ArgumentError, RDF::LL1::Parser::Error =&gt; e
-      progress(&quot;Parsing completed with errors:\n\t#{e.message}&quot;)
-      raise RDF::ReaderError, e.message if validate?
-    end
-</code></pre>
-
-<h3 id="branch-table">Branch Table</h3>
-
-<p>The Branch table is a hash mapping production rules to a hash relating terminals appearing in input to sequence of productions to follow when the corresponding input terminal is found. This allows either the <code>seq</code> primitive, where all terminals map to the same sequence of productions, or the <code>alt</code> primitive, where each terminal may map to a different production.</p>
-
-<pre class="code ruby"><code class="ruby">BRANCH = {
-  :alt =&gt; {
-    &quot;(&quot; =&gt; [:seq, :_alt_1],
-    :ENUM =&gt; [:seq, :_alt_1],
-    :HEX =&gt; [:seq, :_alt_1],
-    :O_ENUM =&gt; [:seq, :_alt_1],
-    :O_RANGE =&gt; [:seq, :_alt_1],
-    :RANGE =&gt; [:seq, :_alt_1],
-    :STRING1 =&gt; [:seq, :_alt_1],
-    :STRING2 =&gt; [:seq, :_alt_1],
-    :SYMBOL =&gt; [:seq, :_alt_1],
-  },
-  ...
-  :declaration =&gt; {
-    &quot;@pass&quot; =&gt; [:pass],
-    &quot;@terminals&quot; =&gt; [&quot;@terminals&quot;],
-  },
-  ...
-}
-</code></pre>
-
-<p>In this case the <code>alt</code> rule is <code>seq (&#39;|&#39; seq)*</code> can happen when any of the specified tokens appears on the input stream. The all cause the same token to be passed to the <code>seq</code> rule and follow with <code>_alt_1</code>, which handles the <code>(&#39;|&#39; seq)*</code> portion of the rule, after the first sequence is matched.</p>
-
-<p>The <code>declaration</code> rule is <code>@terminals&#39; | pass</code> using the <code>alt</code> primitive determining the production to run based on the terminal appearing on the input stream. Eventually, a terminal production is found and the token is consumed.</p>
-
-<h3 id="first-follow-table">First/Follow Table</h3>
-
-<p>The <a href="http://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> table is a hash mapping production rules to the terminals that may proceed or follow the rule. For example:</p>
-
-<pre class="code ruby"><code class="ruby">FIRST = {
-  :alt =&gt; [
-    :HEX,
-    :SYMBOL,
-    :ENUM,
-    :O_ENUM,
-    :RANGE,
-    :O_RANGE,
-    :STRING1,
-    :STRING2,
-    &quot;(&quot;],
-  ...
-}
-</code></pre>
-
-<h3 id="terminals-table">Terminals Table</h3>
-
-<p>This table is a simple list of the terminal productions found in the grammar. For example:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='const'>TERMINALS</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@pass</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@terminals</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-  <span class='symbol'>:ENUM</span><span class='comma'>,</span> <span class='symbol'>:HEX</span><span class='comma'>,</span> <span class='symbol'>:LHS</span><span class='comma'>,</span> <span class='symbol'>:O_ENUM</span><span class='comma'>,</span> <span class='symbol'>:O_RANGE</span><span class='comma'>,</span><span class='symbol'>:POSTFIX</span><span class='comma'>,</span>
-  <span class='symbol'>:RANGE</span><span class='comma'>,</span> <span class='symbol'>:STRING1</span><span class='comma'>,</span> <span class='symbol'>:STRING2</span><span class='comma'>,</span> <span class='symbol'>:SYMBOL</span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span>
-<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-</code></pre>
-
-<h3 id="cleanup-table">Cleanup Table</h3>
-
-<p>This table identifies productions which used EBNF rules, which are transformed to BNF for actual parsing. This allows the parser, in some cases, to reproduce <em>star</em>, <em>plus</em>, and <em>opt</em> rule matches. For example:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='const'>CLEANUP</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-  <span class='symbol'>:_alt_1</span> <span class='op'>=&gt;</span> <span class='symbol'>:star</span><span class='comma'>,</span>
-  <span class='symbol'>:_alt_3</span> <span class='op'>=&gt;</span> <span class='symbol'>:merge</span><span class='comma'>,</span>
-  <span class='symbol'>:_diff_1</span> <span class='op'>=&gt;</span> <span class='symbol'>:opt</span><span class='comma'>,</span>
-  <span class='symbol'>:ebnf</span> <span class='op'>=&gt;</span> <span class='symbol'>:star</span><span class='comma'>,</span>
-  <span class='symbol'>:_ebnf_2</span> <span class='op'>=&gt;</span> <span class='symbol'>:merge</span><span class='comma'>,</span>
-  <span class='symbol'>:_postfix_1</span> <span class='op'>=&gt;</span> <span class='symbol'>:opt</span><span class='comma'>,</span>
-  <span class='symbol'>:seq</span> <span class='op'>=&gt;</span> <span class='symbol'>:plus</span><span class='comma'>,</span>
-  <span class='symbol'>:_seq_1</span> <span class='op'>=&gt;</span> <span class='symbol'>:star</span><span class='comma'>,</span>
-  <span class='symbol'>:_seq_2</span> <span class='op'>=&gt;</span> <span class='symbol'>:merge</span><span class='comma'>,</span>
-<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-</code></pre>
-
-<p>In this case the <code>ebnf</code> rule was <code>(declaration | rule)*</code>. As BNF does not support a star operator, this is decomposed into a set of rules using <code>alt</code> and <code>seq</code> primitives:</p>
-
-<pre class="code ruby"><code class="ruby">ebnf    ::= _empty _ebnf_2
-_ebnf_1 ::= declaration | rule
-_ebnf_2 ::= _ebnf_1 ebnf
-_ebnf_3 ::= ebnf
-</code></pre>
-
-<p>The <code>_empty</code> production matches an empty string, so allows for now value. <code>_ebnf_2</code> matches <code>declaration | rule</code> (using the <code>alt</code> primitive) followed by <code>ebnf</code>, creating a sequence of zero or more <code>declaration</code> or <code>alt</code> members.</p>
+<p>On a parsing failure, and exception is raised with information that may be useful in determining the source of the error.</p>
 
 <h2 id="ebnf-grammar">EBNF Grammar</h2>
 
-<p>The <a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> variant used here is based on <a href="http://w3.org/">W3C</a> <a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> (see <a href="file.ebnf.html" title="EBNF grammar">EBNF grammar</a>) as defined in the
-<a href="http://www.w3.org/TR/REC-xml/">XML 1.0 recommendation</a>, with minor extensions:</p>
+<p>The <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> variant used here is based on <a href="https://w3.org/">W3C</a> <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> (see <a href="file.ebnf.html" title="EBNF grammar">EBNF grammar</a>) as defined in the
+<a href="https://www.w3.org/TR/REC-xml/">XML 1.0 recommendation</a>, with minor extensions:</p>
+
+<p>The general form of a rule is:</p>
+
+<pre class="code ruby"><code class="ruby">symbol ::= expression
+</code></pre>
+
+<p>which can also be proceeded by an optional number enclosed in square brackets to identify the rule number:</p>
+
+<pre class="code ruby"><code class="ruby">[1] symbol ::= expression
+</code></pre>
+
+<p>Symbols are written with an initial capital letter if they are the start symbol of a regular language (terminals), otherwise with an initial lowercase letter (non-terminals). Literal strings are quoted.</p>
+
+<p>Within the expression on the right-hand side of a rule, the following expressions are used to match strings of one or more characters:</p>
+
+<table>
+  <tr><td><code>#xN</code></td>
+    <td>where <code>N</code> is a hexadecimal integer, the expression matches the character whose number (code point) in ISO/IEC 10646 is <code>N</code>. The number of leading zeros in the <code>#xN</code> form is insignificant.</td></tr>
+  <tr><td><code>[a-zA-Z], [#xN-#xN]</code>
+    <td>matches any Char with a value in the range(s) indicated (inclusive).</td></tr>
+  <tr><td><code>[abc], [#xN#xN#xN]</code></td>
+    <td>matches any Char with a value among the characters enumerated. Enumerations and ranges can be mixed in one set of brackets.</td></tr>
+  <tr><td><code>[^a-z], [^#xN-#xN]</code></td>
+    <td>matches any Char with a value outside the range indicated.</td></tr>
+  <tr><td><code>[^abc], [^#xN#xN#xN]</code></td>
+    <td>matches any Char with a value not among the characters given. Enumerations and ranges of forbidden values can be mixed in one set of brackets.</td></tr>
+  <tr><td><code>"string"</code></td>
+    <td>matches a literal string matching that given inside the double quotes.</td></tr>
+  <tr><td><code>'string'</code></td>
+    <td>matches a literal string matching that given inside the single quotes.</td></tr>
+  <tr><td><code>A (B | C)</code></td>
+    <td><code>(B | C)</code> is treated as a unit and may be combined as described in this list.</td></tr>
+  <tr><td><code>A?</code></td>
+    <td>matches A or nothing; optional A.</td></tr>
+  <tr><td><code>A B</code></td>
+    <td>matches <code>A</code> followed by <code>B</code>. This operator has higher precedence than alternation; thus <code>A B | C D</code> is identical to <code>(A B) | (C D)</code>.</td></tr>
+  <tr><td><code>A | B</code></td>
+    <td>matches <code>A</code> or <code>B</code>.</td></tr>
+  <tr><td><code>A - B</code></td>
+    <td>matches any string that matches <code>A</code> but does not match <code>B</code>.</td></tr>
+  <tr><td><code>A+</code></td>
+    <td>matches one or more occurrences of <code>A</code>. Concatenation has higher precedence than alternation; thus <code>A+ | B+</code> is identical to <code>(A+) | (B+)</code>.</td></tr>
+  <tr><td><code>A*</code></td>
+    <td>matches zero or more occurrences of <code>A</code>. Concatenation has higher precedence than alternation; thus <code>A* | B*</code> is identical to <code>(A*) | (B*)</code>.</td></tr>
+  <tr><td><code>@pass " "*</code></td>
+    <td>Defines consumed whitespace in the document. Any whitespace found between non-terminal rules is consumed and ignored.</td></tr>
+  <tr><td><code>@terminals</code></td>
+    <td>Introduces terminal rules. All rules defined after this point are treated as terminals.</td></tr>
+</table>
 
 <ul>
-<li>Comments include <code>\\</code> and <code>#</code> through end of line (other than hex character) and <code>/* ... */ (* ... *) which may cross lines</code></li>
+<li>Comments include <code>//</code> and <code>#</code> through end of line (other than hex character) and <code>/* ... */ (* ... *) which may cross lines</code></li>
 <li>All rules <strong>MAY</strong> start with an identifier, contained within square brackets. For example <code>[1] rule</code>, where the value within the brackets is a symbol <code>([a-z] | [A-Z] | [0-9] | &quot;_&quot; | &quot;.&quot;)+</code></li>
-<li><code>@terminals</code> causes following rules to be treated as terminals. Any terminal which are entirely upper-case are also treated as terminals</li>
+<li><code>@terminals</code> causes following rules to be treated as terminals. Any terminal which is all upper-case (eg<code>TERMINAL</code>), or any rules with expressions that match characters (<code>#xN</code>, <code>[a-z]</code>, <code>[^a-z]</code>, <code>[abc]</code>, <code>[^abc]</code>, <code>&quot;string&quot;</code>, <code>&#39;string&#39;</code>, or <code>A - B</code>), are also treated as terminals.</li>
 <li><code>@pass</code> defines the expression used to detect whitespace, which is removed in processing.</li>
 <li>No support for <code>wfc</code> (well-formedness constraint) or <code>vc</code> (validity constraint).</li>
 </ul>
 
-<p>Parsing this grammar yields an S-Expression version: <a href="file.ebnf.ll1.html" title="ebnf.ll1">ebnf.ll1</a>.</p>
+<p>Parsing this grammar yields an S-Expression version: <a href="file.ebnf.html" title="ebnf">ebnf</a> (or <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> version <a href="file.ebnf.ll1.html" title="ebnf.ll1">ebnf.ll1</a> or <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> version <a href="file.ebnf.peg.html" title="ebnf.peg">ebnf.peg</a>).</p>
 
-<h2 id="example-parser">Example parser</h2>
+<h3 id="parser-s-expressions">Parser S-Expressions</h3>
 
-<p>For an example parser built using this gem, see <a href="file.README.html" title="EBNF Parser example">EBNF Parser example</a>. This example creates a parser for the <a href="http://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar which generates the same Abstract Syntax Tree as the built-in parser in the gem.</p>
+<p>Intermediate representations of the grammar may be serialized to Lisp-like S-Expressions. For example, the rule</p>
+
+<pre class="code ruby"><code class="ruby">[1] ebnf        ::= (declaration | rule)*
+</code></pre>
+
+<p>is serialized as</p>
+
+<pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot; (star (alt declaration rule)))
+</code></pre>
+
+<p>Different components of an EBNF rule expression are transformed into their own operator:</p>
+
+<table>
+  <tr><td><code>#xN</code></td><td><code>(hex "#xN")</code></td></tr>
+  <tr><td><code>[a-z#xN-#xN]</code></td><td><code>(range "a-z#xN-#xN")</code></td></tr>
+  <tr><td><code>[abc#xN]</code></td><td><code>(range "abc#xN")</code></td></tr>
+  <tr><td><code>[^a-z#xN-#xN]</code></td><td><code>(range "^a-z#xN-#xN")</code></td></tr>
+  <tr><td><code>[^abc#xN]</code></td><td><code>(range "^abc#xN")</code></td></tr>
+  <tr><td><code>"string"</code></td><td><code>"string"</code></td></tr>
+  <tr><td><code>'string'</code></td><td><code>"string"</code></td></tr>
+  <tr><td><code>A (B | C)</code></td><td><code>(seq (A (alt B C)))</code></td></tr>
+  <tr><td><code>A?</code></td><td><code>(opt A)</code></td></tr>
+  <tr><td><code>A B</code></td><td><code>(seq A B)</code></td></tr>
+  <tr><td><code>A | B</code></td><td><code>(alt A B)</code></td></tr>
+  <tr><td><code>A - B</code></td><td><code>(diff A B)</code></td></tr>
+  <tr><td><code>A+</code></td><td><code>(plus A)</code></td></tr>
+  <tr><td><code>A*</code></td><td><code>(star A)</code></td></tr>
+  <tr><td><code>@pass " "*</code></td><td><code>(pass (star " "))</code></td></tr>
+  <tr><td><code>@terminals</code></td><td></td></tr>
+</table>
+
+<p>Additionally, rules defined with an UPPERCASE symbol are treated as terminals.</p>
+
+<p>For an <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> parser generator, the <span class='object_link'><a href="EBNF/BNF.html#make_bnf-instance_method" title="EBNF::BNF#make_bnf (method)">EBNF::BNF#make_bnf</a></span> method can be used to transform the EBNF rule into a BNF rule.</p>
+
+<pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot; (alt _empty _ebnf_2))
+(rule _ebnf_1 &quot;1.1&quot; (alt declaration rule))
+(rule _ebnf_2 &quot;1.2&quot; (seq _ebnf_1 ebnf))
+(rule _ebnf_3 &quot;1.3&quot; (seq ebnf))
+</code></pre>
+
+<p>This allows <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> and other tables used by a parser to parse examples of the associated grammar. For more, see <span class='object_link'><a href="EBNF/LL1.html" title="EBNF::LL1 (module)">EBNF::LL1</a></span>.</p>
+
+<p>For a <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> parser generator, there is a simpler transformation that reduces rules containing sub-expressions (composed of <code>star</code>, <code>alt</code>, <code>seq</code> and similar expressions) and creates named rules to allow appropriate callbacks and for naming elements of the generating abstract syntax tree. The <span class='object_link'><a href="EBNF/PEG.html#make_peg-instance_method" title="EBNF::PEG#make_peg (method)">EBNF::PEG#make_peg</a></span> method transforms the original rule into the following two rules:</p>
+
+<pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot; (star _ebnf_1))
+(rule _ebnf_1 &quot;1.1&quot; (alt declaration rule))
+</code></pre>
+
+<h2 id="example-parsers">Example parsers</h2>
+
+<p>For a <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> parser for a simple grammar implementing a calculator see [Calc example](<a href="http://dryruby.github.io/ebnf/examples/calc/doc/calc.html">http://dryruby.github.io/ebnf/examples/calc/doc/calc.html</a></p>
+
+<p>For an example parser built using this gem that parses the <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar, see <a href="http://dryruby.github.io/ebnf/examples/ebnf-peg-parser/doc/parser.html">EBNF PEG Parser example</a>. This example creates a parser for the <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar which generates the same Abstract Syntax Tree as the built-in parser in the gem.</p>
+
+<p>There is also an
+<a href="http://dryruby.github.io/ebnf/examples/ebnf-peg-parser/doc/parser.html">EBNF LL(1) Parser example</a>.</p>
 
 <h2 id="acknowledgements">Acknowledgements</h2>
 
 <p>Much of this work, particularly the generic parser, is inspired by work originally done by
-Tim Berners-Lee&#39;s Python <a href="http://www.w3.org/2000/10/swap/grammar/predictiveParser.py">predictive parser</a>.</p>
+Tim Berners-Lee&#39;s Python <a href="https://www.w3.org/2000/10/swap/grammar/predictiveParser.py">predictive parser</a>.</p>
 
-<p>The EBNF parser was inspired by Dan Connolly&#39;s
-<a href="http://www.w3.org/2000/10/swap/grammar/ebnf2turtle.py">EBNF to Turtle processor</a>,
-<a href="http://www.w3.org/2000/10/swap/grammar/ebnf2bnf.n3">EBNF to BNF Notation-3 rules</a>,
-and <a href="http://www.w3.org/2000/10/swap/grammar/first_follow.n3">First Follow Notation-3 rules</a>. </p>
+<p>The <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> parser was inspired by Dan Connolly&#39;s
+<a href="https://www.w3.org/2000/10/swap/grammar/ebnf2turtle.py">EBNF to Turtle processor</a>,
+<a href="https://www.w3.org/2000/10/swap/grammar/ebnf2bnf.n3">EBNF to BNF Notation-3 rules</a>,
+and <a href="https://www.w3.org/2000/10/swap/grammar/first_follow.n3">First Follow Notation-3 rules</a>. </p>
 
 <h2 id="documentation">Documentation</h2>
 
-<p>Full documentation available on <a href="http://rubydoc.info/github/dryruby/ebnf/master/frames">Rubydoc.info</a>.</p>
+<p>Full documentation available on <a href="https://rubydoc.info/github/dryruby/ebnf">Rubydoc.info</a>.</p>
 
 <h2 id="future-work">Future Work</h2>
 
 <ul>
 <li>Better LL(1) parser tests</li>
-<li>Either generate <a href="http://pdos.csail.mit.edu/%7Ebaford/packrat/thesis/">Packrat parser</a> for a <a href="http://en.wikipedia.org/wiki/Parsing_expression_grammar">Parsing Regular Expression Grammar</a>, or integrate with <a href="http://rubygems.org/gems/treetop">Treetop</a> or similar.</li>
 </ul>
 
 <h2 id="author">Author</h2>
 
 <ul>
-<li><a href="http://github.com/gkellogg">Gregg Kellogg</a> - <a href="http://greggkellogg.net/">http://greggkellogg.net/</a></li>
+<li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
 </ul>
 
 <h2 id="contributing">Contributing</h2>
@@ -332,27 +303,27 @@ and <a href="http://www.w3.org/2000/10/swap/grammar/first_follow.n3">First Follo
 <ul>
 <li>Do your best to adhere to the existing coding conventions and idioms.</li>
 <li>Don&#39;t use hard tabs, and don&#39;t leave trailing whitespace on any line.</li>
-<li>Do document every method you add using <a href="http://yardoc.org/">YARD</a> annotations. Read the
-<a href="http://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
+<li>Do document every method you add using <a href="https://yardoc.org/">YARD</a> annotations. Read the
+<a href="https://rubydoc.info/docs/yard/file/docs/GettingStarted.md">tutorial</a> or just look at the existing code for examples.</li>
 <li>Don&#39;t touch the <code>.gemspec</code>, <code>VERSION</code> or <code>AUTHORS</code> files. If you need to
 change them, do so on your private branch only.</li>
 <li>Do feel free to add yourself to the <code>CREDITS</code> file and the corresponding
 list in the the <code>README</code>. Alphabetical order applies.</li>
 <li>Do note that in order for us to merge any non-trivial changes (as a rule
 of thumb, additions larger than about 15 lines of code), we need an
-explicit <a href="http://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
 </ul>
 
 <h2 id="license">License</h2>
 
 <p>This is free and unencumbered public domain software. For more information,
-see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
 
-<p>A copy of the <a href="http://dvcs.w3.org/hg/rdf/file/default/rdf-turtle/turtle.bnf">Turtle EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="http://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
+<p>A copy of the <a href="https://dvcs.w3.org/hg/rdf/file/default/rdf-turtle/turtle.bnf">Turtle EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="https://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sat May 30 17:00:10 2020 by
+  Generated on Wed Jun 17 13:00:13 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.1).
 </div>
