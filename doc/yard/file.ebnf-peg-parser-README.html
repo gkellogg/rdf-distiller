@@ -59,24 +59,24 @@
 
       <div id="content"><div id='filecontents'><h1 id="ebnf-parser-example">EBNF Parser example</h1>
 
-<p>This example implements an <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser equivalent to the built-in parser. The proximate result is an Abstract S-Expression composed of sub-rules which can be directly executed by the parser. Effectively, this is a re-implementation of <span class='object_link'><a href="EBNF/Parser.html" title="EBNF::Parser (module)">EBNF::Parser</a></span> itself.</p>
+<p>This example implements an <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser equivalent to the built-in parser. The proximate result is an Abstract <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> composed of sub-rules which can be directly executed by the parser. Effectively, this is a re-implementation of <span class='object_link'><a href="EBNF/Parser.html" title="EBNF::Parser (module)">EBNF::Parser</a></span> itself.</p>
 
-<h2 id="parsing-an-ll-1-grammar">Parsing an LL(1) Grammar</h2>
+<h2 id="parsing-the-grammar">Parsing the Grammar</h2>
 
-<pre class="code ruby"><code class="ruby">require &#39;ebnf&#39;
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ebnf</span><span class='tstring_end'>&#39;</span></span>
 
-ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
+<span class='id identifier rubyid_ebnf'>ebnf</span> <span class='op'>=</span> <span class='const'>EBNFPegParser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>../../etc/ebnf.ebnf</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 </code></pre>
 
-<p>Output rules and terminals as S-Expressions, Turtle or EBNF</p>
+<p>Output rules and terminals as <a href="https://en.wikipedia.org/wiki/S-expression">S-Expressions</a>, <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> or <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a></p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_sxp'>to_sxp</span>
 </code></pre>
 
-<p>This generates a S-Expression form of the grammar suitable for use by <span class='object_link'><a href="EBNF.html" title="EBNF (module)">EBNF</a></span>.</p>
+<p>This generates a <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> form of the grammar suitable for use by <span class='object_link'><a href="EBNF.html" title="EBNF (module)">EBNF</a></span>.</p>
 
 <pre class="code ruby"><code class="ruby">(
- (pass (seq PASS))
+ (pass _pass (seq PASS))
  (rule ebnf &quot;1&quot; (star (alt declaration rule)))
  (rule declaration &quot;2&quot; (alt &quot;@terminals&quot; pass))
  (rule rule &quot;3&quot; (seq LHS expression))
@@ -88,13 +88,14 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
  (rule primary &quot;9&quot;
   (alt HEX SYMBOL ENUM O_ENUM RANGE O_RANGE STRING1 STRING2 (seq &quot;(&quot; expression &quot;)&quot;)))
  (rule pass &quot;10&quot; (seq &quot;@pass&quot; expression))
- (terminal LHS &quot;11&quot; (seq (opt (seq &quot;[&quot; (plus SYMBOL) &quot;]&quot; (plus &quot; &quot;))) SYMBOL (star &quot; &quot;) &quot;::=&quot;))
+ (terminal LHS &quot;11&quot; (seq (opt (seq &quot;[&quot; SYMBOL &quot;]&quot; (plus &quot; &quot;))) SYMBOL (star &quot; &quot;) &quot;::=&quot;))
  (terminal SYMBOL &quot;12&quot; (plus (alt (range &quot;a-z&quot;) (range &quot;A-Z&quot;) (range &quot;0-9&quot;) &quot;_&quot; &quot;.&quot;)))
  (terminal HEX &quot;13&quot; (seq &quot;#x&quot; (plus (alt (range &quot;a-f&quot;) (range &quot;A-F&quot;) (range &quot;0-9&quot;)))))
  (terminal ENUM &quot;14&quot; (diff (alt (seq &quot;[&quot; (plus R_CHAR)) (seq (plus HEX) &quot;]&quot;)) LHS))
  (terminal O_ENUM &quot;15&quot; (alt (seq &quot;[^&quot; (plus R_CHAR)) (seq (plus HEX) &quot;]&quot;)))
- (terminal RANGE &quot;16&quot; (alt (seq &quot;[&quot; (seq R_CHAR &quot;-&quot; R_CHAR)) (seq (diff HEX HEX) &quot;]&quot;)))
- (terminal O_RANGE &quot;17&quot; (alt (seq &quot;[^&quot; (seq R_CHAR &quot;-&quot; R_CHAR)) (seq (diff HEX HEX) &quot;]&quot;)))
+ (terminal RANGE &quot;16&quot; (seq &quot;[&quot; (plus (alt (seq R_CHAR &quot;-&quot; R_CHAR) (seq HEX &quot;-&quot; HEX))) &quot;]&quot;))
+ (terminal O_RANGE &quot;17&quot;
+  (seq &quot;[^&quot; (plus (alt (seq R_CHAR &quot;-&quot; R_CHAR) (seq HEX &quot;-&quot; HEX))) &quot;]&quot;))
  (terminal STRING1 &quot;18&quot; (seq &quot;\&quot;&quot; (star (diff CHAR &quot;\&quot;&quot;)) &quot;\&quot;&quot;))
  (terminal STRING2 &quot;19&quot; (seq &quot;&#39;&quot; (star (diff CHAR &quot;&#39;&quot;)) &quot;&#39;&quot;))
  (terminal CHAR &quot;20&quot;
@@ -114,12 +115,12 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
     (seq &quot;(*&quot; (star (alt (opt (seq &quot;*&quot; (range &quot;^)&quot;))) (range &quot;^*&quot;))) &quot;*)&quot;)) )) )
 </code></pre>
 
-<p>This can then be used as input to <span class='object_link'><a href="EBNF.html#parse-class_method" title="EBNF.parse (method)">EBNF.parse</a></span> to transform EBNF to PEG for parsing examples of the grammar using <span class='object_link'><a href="EBNF/PEG/Parser.html" title="EBNF::PEG::Parser (module)">EBNF::PEG::Parser</a></span>.</p>
+<p>This can then be used as input to <span class='object_link'><a href="EBNF.html#parse-class_method" title="EBNF.parse (method)">EBNF.parse</a></span> to transform <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> to <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> for parsing examples of the grammar using <span class='object_link'><a href="EBNF/PEG/Parser.html" title="EBNF::PEG::Parser (module)">EBNF::PEG::Parser</a></span>.</p>
 
 <pre class="code ruby"><code class="ruby">ebnf --input-format sxp --peg ebnf.sxp -o ebnf.peg.sxp
 </code></pre>
 
-<p>An example S-Expression for rule <code>ebnf</code>, which is decomposed into sub-rules as follows:</p>
+<p>An example <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> for rule <code>ebnf</code>, which is decomposed into sub-rules as follows:</p>
 
 <pre class="code ruby"><code class="ruby"> (rule ebnf &quot;1&quot; (star _ebnf_1))
  (rule _ebnf_1 &quot;1.1&quot; (alt declaration rule))
@@ -137,7 +138,7 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
 
 <h3 id="parser-basics">Parser basics</h3>
 
-<p>The parser operates directly using the rules from the abstract syntax tree generated by turning the original EBNF grammar using <span class='object_link'><a href="EBNF/PEG.html#make_peg-instance_method" title="EBNF::PEG#make_peg (method)">EBNF::PEG#make_peg</a></span>. Tokens are derived from terminal rules defined in the grammar or contained inline through non-terminal rule definitions. Tokens are either strings, which must be matched exactly, or symbols, which identify a regular expression used to match the terminal and yield a token. The association between terminal symbols and their regular expressions along with processing rules to invoke when they are identified are described in <a href="#Terminal_definitions">Terminal definitions</a>.</p>
+<p>The parser operates directly using the rules from the abstract syntax tree generated by turning the original <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar using <span class='object_link'><a href="EBNF/PEG.html#make_peg-instance_method" title="EBNF::PEG#make_peg (method)">EBNF::PEG#make_peg</a></span>. Tokens are derived from terminal rules defined in the grammar or contained inline through non-terminal rule definitions. Tokens are either strings, which must be matched exactly, or symbols, which identify a regular expression used to match the terminal and yield a token. The association between terminal symbols and their regular expressions along with processing rules to invoke when they are identified are described in <a href="#Terminal_definitions">Terminal definitions</a>.</p>
 
 <p>The parser starts with the specified rule, <code>ebnf</code> in this case, and executes that rule, which is expected to completely parse the input file potentially leaving some whitespace.</p>
 
@@ -158,7 +159,7 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
 
 <p>If a rule matches, it enters a <em>production</em>, which may invoke a <em>start production before matching is attempted, and will call any _production</em> either if matched, or unmatched. That <em>production</em> may choose to evaluate the returned abstract syntax tree to simplify the result, or create some semantic representation of that value.</p>
 
-<p>Due to the nature of [PEG][] parsers, the same rule may be attempted at the same input location many times; this is optimized by use of a <a href="https://pdos.csail.mit.edu/%7Ebaford/packrat/thesis/">Packrat</a> memoizing cache, which remembers the result of a previous successful evaluation and short-circuits further execution.</p>
+<p>Due to the nature of <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> parsers, the same rule may be attempted at the same input location many times; this is optimized by use of a <a href="https://pdos.csail.mit.edu/%7Ebaford/packrat/thesis/">Packrat</a> memoizing cache, which remembers the result of a previous successful evaluation and short-circuits further execution.</p>
 
 <p>Processing continues by continuing to look for productions sequence and pushing those productions onto the stack. When a production is complete, any associated <em>production handler</em> is invoked, after popping off the top of the <code>prod_data</code> stack. The just removed hash is passed as <code>current</code> to the <em>production handler</em>. This is typically where the work of the parser happens. See <a href="#Production_definitions">Production definitions</a> for more information.</p>
 
@@ -219,7 +220,7 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
 <pre class="code ruby"><code class="ruby">[1] ebnf        ::= (declaration | rule)*
 </code></pre>
 
-<p>This is reduced to the LL(1) S-Expression noted above:</p>
+<p>This is reduced to the <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> noted above:</p>
 
 <pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot; (star _ebnf_1))
 (rule _ebnf_1 &quot;1.1&quot; (alt declaration rule))
@@ -229,7 +230,7 @@ ebnf = EBNFPegParser.new(File.open(../../etc/ebnf.ebnf))
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jun 17 13:00:13 2020 by
+  Generated on Mon Aug 17 10:44:28 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.1).
 </div>
