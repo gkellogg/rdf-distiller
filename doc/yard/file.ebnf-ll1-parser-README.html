@@ -59,24 +59,24 @@
 
       <div id="content"><div id='filecontents'><h1 id="ebnf-parser-example">EBNF Parser example</h1>
 
-<p>This example implements an <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser equivalent to the built-in parser. The proximate result is an Abstract S-Expression which can be used to generate parser tables input grammars. Effectively, this is a re-implementation of <span class='object_link'><a href="EBNF/Parser.html" title="EBNF::Parser (module)">EBNF::Parser</a></span> itself.</p>
+<p>This example implements an <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> parser equivalent to the built-in parser. The proximate result is an Abstract <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> which can be used to generate parser tables input grammars. Effectively, this is a re-implementation of <span class='object_link'><a href="EBNF/Parser.html" title="EBNF::Parser (module)">EBNF::Parser</a></span> itself.</p>
 
-<h2 id="parsing-an-ll-1-grammar">Parsing an LL(1) Grammar</h2>
+<h2 id="parsing-the-grammar">Parsing the Grammar</h2>
 
-<pre class="code ruby"><code class="ruby">require &#39;parser&#39;
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>parser</span><span class='tstring_end'>&#39;</span></span>
 
-ebnf = EBNFLL1Parser.new(File.open(../../etc/ebnf.ebnf))
+<span class='id identifier rubyid_ebnf'>ebnf</span> <span class='op'>=</span> <span class='const'>EBNFLL1Parser</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>../../etc/ebnf.ebnf</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 </code></pre>
 
-<p>Output rules and terminals as S-Expressions, Turtle or EBNF</p>
+<p>Output rules and terminals as <a href="https://en.wikipedia.org/wiki/S-expression">S-Expressions</a>, <a href="https://www.w3.org/TR/2012/WD-turtle-20120710/">Turtle</a> or <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a></p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_ebnf'>ebnf</span><span class='period'>.</span><span class='id identifier rubyid_to_sxp'>to_sxp</span>
 </code></pre>
 
-<p>This generates a S-Expression form of the grammar suitable for use by <span class='object_link'><a href="EBNF.html" title="EBNF (module)">EBNF</a></span> for generating a BNF representation (avoiding <code>star</code>, <code>plus</code>, and <code>opt</code> expressions), LL(1) first/follow comprehensions and branch tables used for parsing input files based on the grammar.</p>
+<p>This generates a <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> form of the grammar suitable for use by <span class='object_link'><a href="EBNF.html" title="EBNF (module)">EBNF</a></span> for generating a <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a> representation (avoiding <code>star</code>, <code>plus</code>, and <code>opt</code> expressions), <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> comprehensions and branch tables used for parsing input files based on the grammar.</p>
 
 <pre class="code ruby"><code class="ruby">(
- (pass (seq PASS))
+ (pass _pass (seq PASS))
  (rule ebnf &quot;1&quot; (star (alt declaration rule)))
  (rule declaration &quot;2&quot; (alt &quot;@terminals&quot; pass))
  (rule rule &quot;3&quot; (seq LHS expression))
@@ -88,13 +88,14 @@ ebnf = EBNFLL1Parser.new(File.open(../../etc/ebnf.ebnf))
  (rule primary &quot;9&quot;
   (alt HEX SYMBOL ENUM O_ENUM RANGE O_RANGE STRING1 STRING2 (seq &quot;(&quot; expression &quot;)&quot;)))
  (rule pass &quot;10&quot; (seq &quot;@pass&quot; expression))
- (terminal LHS &quot;11&quot; (seq (opt (seq &quot;[&quot; (plus SYMBOL) &quot;]&quot; (plus &quot; &quot;))) SYMBOL (star &quot; &quot;) &quot;::=&quot;))
+ (terminal LHS &quot;11&quot; (seq (opt (seq &quot;[&quot; SYMBOL &quot;]&quot; (plus &quot; &quot;))) SYMBOL (star &quot; &quot;) &quot;::=&quot;))
  (terminal SYMBOL &quot;12&quot; (plus (alt (range &quot;a-z&quot;) (range &quot;A-Z&quot;) (range &quot;0-9&quot;) &quot;_&quot; &quot;.&quot;)))
  (terminal HEX &quot;13&quot; (seq &quot;#x&quot; (plus (alt (range &quot;a-f&quot;) (range &quot;A-F&quot;) (range &quot;0-9&quot;)))))
  (terminal ENUM &quot;14&quot; (diff (alt (seq &quot;[&quot; (plus R_CHAR)) (seq (plus HEX) &quot;]&quot;)) LHS))
  (terminal O_ENUM &quot;15&quot; (alt (seq &quot;[^&quot; (plus R_CHAR)) (seq (plus HEX) &quot;]&quot;)))
- (terminal RANGE &quot;16&quot; (alt (seq &quot;[&quot; (seq R_CHAR &quot;-&quot; R_CHAR)) (seq (diff HEX HEX) &quot;]&quot;)))
- (terminal O_RANGE &quot;17&quot; (alt (seq &quot;[^&quot; (seq R_CHAR &quot;-&quot; R_CHAR)) (seq (diff HEX HEX) &quot;]&quot;)))
+ (terminal RANGE &quot;16&quot; (seq &quot;[&quot; (plus (alt (seq R_CHAR &quot;-&quot; R_CHAR) (seq HEX &quot;-&quot; HEX))) &quot;]&quot;))
+ (terminal O_RANGE &quot;17&quot;
+  (seq &quot;[^&quot; (plus (alt (seq R_CHAR &quot;-&quot; R_CHAR) (seq HEX &quot;-&quot; HEX))) &quot;]&quot;))
  (terminal STRING1 &quot;18&quot; (seq &quot;\&quot;&quot; (star (diff CHAR &quot;\&quot;&quot;)) &quot;\&quot;&quot;))
  (terminal STRING2 &quot;19&quot; (seq &quot;&#39;&quot; (star (diff CHAR &quot;&#39;&quot;)) &quot;&#39;&quot;))
  (terminal CHAR &quot;20&quot;
@@ -114,13 +115,13 @@ ebnf = EBNFLL1Parser.new(File.open(../../etc/ebnf.ebnf))
     (seq &quot;(*&quot; (star (alt (opt (seq &quot;*&quot; (range &quot;^)&quot;))) (range &quot;^*&quot;))) &quot;*)&quot;)) )) )
 </code></pre>
 
-<p>This can then be used as input to <span class='object_link'><a href="EBNF.html#parse-class_method" title="EBNF.parse (method)">EBNF.parse</a></span> to transform EBNF to BNF, create LL(1) first/follow rules and/or generate parser tables for parsing examples of the grammar using <span class='object_link'><a href="EBNF/LL1/Parser.html" title="EBNF::LL1::Parser (module)">EBNF::LL1::Parser</a></span>.</p>
+<p>This can then be used as input to <span class='object_link'><a href="EBNF.html#parse-class_method" title="EBNF.parse (method)">EBNF.parse</a></span> to transform <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> to <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a>, create <a href="https://www.csd.uwo.ca/%7Emoreno//CS447/Lectures/Syntax.html/node14.html">LL(1)</a> <a href="https://en.wikipedia.org/wiki/LL_parser#Constructing_an_LL.281.29_parsing_table">First/Follow</a> rules and/or generate parser tables for parsing examples of the grammar using <span class='object_link'><a href="EBNF/LL1/Parser.html" title="EBNF::LL1::Parser (module)">EBNF::LL1::Parser</a></span>.</p>
 
 <pre class="code ruby"><code class="ruby">ebnf --input-format sxp --bnf ebnf.sxp
 ebnf --input-format sxp --ll1 ebnf --format rb ebnf.sxp
 </code></pre>
 
-<p>An example S-Expression for rule <code>ebnf</code>, which uses both <code>start</code> and <code>alt</code> operators is transformed to use just BNF <code>alt</code> and <code>seq</code> operators, and include <code>first</code> and <code>follow</code> sets is shown here:</p>
+<p>An example <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> for rule <code>ebnf</code>, which uses both <code>start</code> and <code>alt</code> operators is transformed to use just BNF <code>alt</code> and <code>seq</code> operators, and include <code>first</code> and <code>follow</code> sets is shown here:</p>
 
 <pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot;
  (start #t)
@@ -139,9 +140,9 @@ ebnf --input-format sxp --ll1 ebnf --format rb ebnf.sxp
 
 <h2 id="example-walkthrough">Example Walkthrough</h2>
 
-<p>This example uses the EBNF grammar from <a href="file.ebnf.html" title="ebnf">ebnf</a> to generate <a href="file.meta.html" title="meta">meta</a>, which include the resulting <code>BRANCH</code>, <code>FIRST</code>, <code>FOLLOW</code>, <code>TERMINALS</code> and <code>PASS</code> tables, used by <a href="file.parser.html" title="parser">parser</a> to implement a parser for the grammar.</p>
+<p>This example uses the <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar from <a href="file.ebnf.html" title="ebnf">ebnf</a> to generate <a href="file.meta.html" title="meta">meta</a>, which include the resulting <code>BRANCH</code>, <code>FIRST</code>, <code>FOLLOW</code>, <code>TERMINALS</code> and <code>PASS</code> tables, used by <a href="file.parser.html" title="parser">parser</a> to implement a parser for the grammar.</p>
 
-<p>The first step is defining regular expressions for terminals used within the grammar. The table generation process in <span class='object_link'><a href="EBNF/LL1.html#build_tables-instance_method" title="EBNF::LL1#build_tables (method)">EBNF::LL1#build_tables</a></span> is not yet capable of automatically generating regular expressions for terminal productions, so they must be defined by hand. For the EBNF grammar, this is done in <span class='object_link'><a href="EBNF/Terminals.html" title="EBNF::Terminals (module)">EBNF::Terminals</a></span>.</p>
+<p>The first step is defining regular expressions for terminals used within the grammar. The table generation process in <span class='object_link'><a href="EBNF/LL1.html#build_tables-instance_method" title="EBNF::LL1#build_tables (method)">EBNF::LL1#build_tables</a></span> is not yet capable of automatically generating regular expressions for terminal productions, so they must be defined by hand. For the <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar, this is done in <span class='object_link'><a href="EBNF/Terminals.html" title="EBNF::Terminals (module)">EBNF::Terminals</a></span>.</p>
 
 <p>The <a href="file.parser.html" title="parser">parser</a> is implemented using the EBNFLL1Parser class, which includes <span class='object_link'><a href="EBNF/LL1/Parser.html" title="EBNF::LL1::Parser (module)">EBNF::LL1::Parser</a></span> and EBNFParserMeta.</p>
 
@@ -188,12 +189,12 @@ ebnf --input-format sxp --ll1 ebnf --format rb ebnf.sxp
 <pre class="code ruby"><code class="ruby">[5] alt         ::= seq (&#39;|&#39; seq)*
 </code></pre>
 
-<p>When this is invoked, we have already processed one <code>seq</code>, which is placed on the <code>prod_data</code> stack, as <code>input[:seq]</code>. The result is to remove the <code>seq</code> data and append it to the <code>alt</code> data in <code>input[:alt]</code>. The final result of <code>alt</code>, will then be the hash containing :alt and an array of data matching the <code>seq</code> sub-productions. Looking at the EBNF grammar itself, we can see that the first declaration is</p>
+<p>When this is invoked, we have already processed one <code>seq</code>, which is placed on the <code>prod_data</code> stack, as <code>input[:seq]</code>. The result is to remove the <code>seq</code> data and append it to the <code>alt</code> data in <code>input[:alt]</code>. The final result of <code>alt</code>, will then be the hash containing :alt and an array of data matching the <code>seq</code> sub-productions. Looking at the <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> grammar itself, we can see that the first declaration is</p>
 
 <pre class="code ruby"><code class="ruby">[1] ebnf        ::= (declaration | rule)*
 </code></pre>
 
-<p>This is reduced to the LL(1) S-Expression noted above:</p>
+<p>This is reduced to the LL(1) <a href="https://en.wikipedia.org/wiki/S-expression">S-Expression</a> noted above:</p>
 
 <pre class="code ruby"><code class="ruby">(rule ebnf &quot;1&quot;
  (start #t)
@@ -208,11 +209,11 @@ ebnf --input-format sxp --ll1 ebnf --format rb ebnf.sxp
 (rule _ebnf_3 &quot;1.3&quot; (first &quot;@pass&quot; &quot;@terminals&quot; LHS _eps) (follow _eof) (seq ebnf))
 </code></pre>
 
-<p>The <code>ebnf</code> production uses the <code>alt</code> operator. When matching the production itself we can see that it is either a <code>declaration</code> or a <code>rule</code>. In this case of this parser, the result of parsing EBNF is an Abstract Syntax Tree, but in other cases it may create something else. In the case of the <a href="https://rubygems.org/gems/rdf-turtle">Turtle gem</a>, the parser generates <em>RDF Triples</em>. Because the parser uses a streaming lexer, a file of any length can be passed to the parser, which emits triples as sufficient processing completes.</p>
+<p>The <code>ebnf</code> production uses the <code>alt</code> operator. When matching the production itself we can see that it is either a <code>declaration</code> or a <code>rule</code>. In this case of this parser, the result of parsing <a href="https://www.w3.org/TR/REC-xml/#sec-notation">EBNF</a> is an Abstract Syntax Tree, but in other cases it may create something else. In the case of the <a href="https://rubygems.org/gems/rdf-turtle">Turtle gem</a>, the parser generates <em>RDF Triples</em>. Because the parser uses a streaming lexer, a file of any length can be passed to the parser, which emits triples as sufficient processing completes.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jun 17 13:00:13 2020 by
+  Generated on Mon Aug 17 10:44:28 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.1).
 </div>
