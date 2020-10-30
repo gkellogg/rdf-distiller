@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gemspec
-ruby "2.7.1"
+ruby "2.7.2"
 
 # Include non-released gems first
 gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
@@ -17,6 +17,7 @@ gem 'rdf-json',           git: "https://github.com/ruby-rdf/rdf-json", branch: "
 gem 'rdf-microdata',      git: "https://github.com/ruby-rdf/rdf-microdata", branch: "develop"
 gem 'rdf-n3',             git: "https://github.com/ruby-rdf/rdf-n3", branch: "develop"
 gem 'rdf-normalize',      git: "https://github.com/ruby-rdf/rdf-normalize", branch: "develop"
+gem 'rdf-ordered-repo',   git: "https://github.com/ruby-rdf/rdf-ordered-repo", branch: "develop"
 gem 'rdf-rdfa',           git: "https://github.com/ruby-rdf/rdf-rdfa", branch: "develop"
 gem 'rdf-rdfxml',         git: "https://github.com/ruby-rdf/rdf-rdfxml", branch: "develop"
 gem 'rdf-reasoner',       git: "https://github.com/ruby-rdf/rdf-reasoner", branch: "develop"
@@ -36,13 +37,13 @@ gem 'sparql-client',      git: "https://github.com/ruby-rdf/sparql-client", bran
 gem 'sxp',                git: "https://github.com/dryruby/sxp.rb", branch: "develop"
 gem "syntax"
 gem "rake"
-gem 'better_errors'
+gem 'better_errors', '>= 2.7.1'
 gem 'binding_of_caller'
 
 # Until Tilt is updated to remove (issue #316)
 #gem 'tilt',               git: "https://github.com/rtomayko/tilt"
 
 group :debug do
-  gem 'shotgun'
+  gem 'shotgun', '>= 0.9.2'
   gem "byebug"
 end

@@ -8,6 +8,7 @@ require 'sass'
 require 'logger'
 require 'erubis'
 require 'linkeddata'
+require 'rdf/ordered_repo'
 require 'rdf/cli'
 require 'json/ld/preloaded' # Preload certain contexts
 require 'uri'
@@ -393,7 +394,7 @@ module RDF::Distiller
     def doap
       @doap ||= begin
         request.logger.debug "load #{DOAP_NT}"
-        RDF::Repository.load(DOAP_NT)
+        RDF::OrderedRepo.load(DOAP_NT)
       end
     end
 
