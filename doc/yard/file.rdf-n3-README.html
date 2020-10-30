@@ -62,22 +62,31 @@
 <p>Notation-3 reader/writer for <a href="https://ruby-rdf.github.com/rdf">RDF.rb</a> .</p>
 
 <p><a href="https://badge.fury.io/rb/rdf-n3"><img src="https://badge.fury.io/rb/rdf-n3.png" alt="Gem Version"></a>
-<a href="https://travis-ci.org/ruby-rdf/rdf-n3"><img src="https://travis-ci.org/ruby-rdf/rdf-n3.png?branch=master" alt="Build Status"></a></p>
+<a href="https://travis-ci.org/ruby-rdf/rdf-n3"><img src="https://travis-ci.org/ruby-rdf/rdf-n3.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/ruby-rdf/rdf-n3"><img src="https://coveralls.io/repos/ruby-rdf/rdf-n3/badge.svg" alt="Coverage Status"></a></p>
 
 <h2 id="description">Description</h2>
 
-<p>RDF::N3 is an Notation-3 parser for Ruby using the <a href="https://ruby-rdf.github.com/rdf">RDF.rb</a>  library suite. Also implements N3 Entailment.</p>
+<p>RDF::N3 is an Notation-3 parser and reasoner for Ruby using the <a href="https://ruby-rdf.github.com/rdf">RDF.rb</a> library suite.</p>
 
 <p>Reader inspired from TimBL predictiveParser and Python librdf implementation.</p>
 
-<h2 id="turtle-deprecated">Turtle deprecated</h2>
+<h2 id="uses-cg-specification">Uses CG Specification</h2>
 
-<p>Support for Turtle mime-types and specific format support has been deprecated from this gem,
-as Turtle is now implemented using <a href="https://ruby-rdf.github.com/rdf-turtle/">RDF::Turtle</a>.</p>
+<p>This version tracks the <a href="https://www.w3.org/community/n3-dev/">W3C N3 Community Group</a> <a href="https://w3c.github.io/N3/spec/">Specification</a> which has incompatibilities with the <a href="https://www.w3.org/TeamSubmission/n3/">Team Submission</a> version. Notably:</p>
+
+<ul>
+<li>The <code>@keywords</code> declaration is removed, and most form of <code>@</code> keywords (e.g., <code>@is</code>, <code>@has</code>, <code>@true</code>) are no longer supported.</li>
+<li>Terminals adhere closely to their counterparts in <a href="https://www.w3.org/TR/turtle/">Turtle</a>.</li>
+<li>The modifier <code>&lt;-</code> is introduced as a synonym for <code>is ... of</code>.</li>
+<li>The SPARQL <code>BASE</code> and <code>PREFIX</code> declarations are supported.</li>
+</ul>
+
+<p>This brings N3 closer to compatibility with Turtle.</p>
 
 <h2 id="features">Features</h2>
 
-<p>RDF::N3 parses <a href="https://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a>, <a href="https://www.w3.org/TR/turtle/">Turtle</a> and <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> into statements or quads. It also performs reasoning and serializes to N3.</p>
+<p>RDF::N3 parses <a href="https://w3c.github.io/N3/spec/">Notation-3</a>, <a href="https://www.w3.org/TR/turtle/">Turtle</a> and <a href="https://www.w3.org/TR/n-triples/">N-Triples</a> into statements or quads. It also performs reasoning and serializes to N3.</p>
 
 <p>Install with <code>gem install rdf-n3</code></p>
 
@@ -120,32 +129,109 @@ as Turtle is now implemented using <a href="https://ruby-rdf.github.com/rdf-turt
 <span class='kw'>end</span>
 </code></pre>
 
-<p>Reasoning is performed by turning a repository containing formula and predicate operators into an executable set of operators (similar to the executable SPARQL Algebra). Reasoning adds statements to the base dataset, marked with <code>:inferred</code> (e.g. <code>statement.inferred?</code>). Predicate operators are defined from the following vocabularies:</p>
+<p>Reasoning is performed by turning a repository containing formula and predicate operators into an executable set of operators (similar to the executable SPARQL Algebra). Reasoning adds statements to the base dataset, marked with <code>:inferred</code> (e.g. <code>statement.inferred?</code>). Predicate operators are defined from the following vocabularies.</p>
+
+<p>When dispatching built-in operators, precedence is given to operators whos operands are fully evaluated, followed by those having only variable output operands, followed by those having the fewest operands. Operators are evaluated until either no solutions are derived, or all operators have been completed.</p>
+
+<p>Reasoning is discussed in the <a href="https://www.w3.org/DesignIssues/Notation3.html" title="Notation-3 Design Issues">Design Issues</a> document.</p>
+
+<h4 id="rdf-list-vocabulary-http-www-w3-org-2000-10-swap-list">RDF List vocabulary <a href="http://www.w3.org/2000/10/swap/list#">http://www.w3.org/2000/10/swap/list#</a></h4>
 
 <ul>
-<li>RDF List vocabulary <a href="http://www.w3.org/2000/10/swap/list#">http://www.w3.org/2000/10/swap/list#</a>
-
-<ul>
-<li>list:append (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Append.html" title="RDF::N3::Algebra::List::Append (class)">RDF::N3::Algebra::List::Append</a></span>)</li>
-<li>list:in (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/In.html" title="RDF::N3::Algebra::List::In (class)">RDF::N3::Algebra::List::In</a></span>)</li>
-<li>list:last (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Last.html" title="RDF::N3::Algebra::List::Last (class)">RDF::N3::Algebra::List::Last</a></span>)</li>
-<li>list:member (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/List/Member.html" title="RDF::N3::Algebra::List::Member (class)">RDF::N3::Algebra::List::Member</a></span>)</li>
-</ul></li>
-<li>RDF Log vocabulary <a href="http://www.w3.org/2000/10/swap/log#">http://www.w3.org/2000/10/swap/log#</a>
-
-<ul>
-<li>log:conclusion (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conclusion.html" title="RDF::N3::Algebra::Log::Conclusion (class)">RDF::N3::Algebra::Log::Conclusion</a></span>)</li>
-<li>log:conjunction (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conjunction.html" title="RDF::N3::Algebra::Log::Conjunction (class)">RDF::N3::Algebra::Log::Conjunction</a></span>)</li>
-<li>log:equalTo (See <span class='object_link'><a href="RDF/N3/Algebra/Log/EqualTo.html" title="RDF::N3::Algebra::Log::EqualTo (class)">RDF::N3::Algebra::Log::EqualTo</a></span>)</li>
-<li>log:implies (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Implies.html" title="RDF::N3::Algebra::Log::Implies (class)">RDF::N3::Algebra::Log::Implies</a></span>)</li>
-<li>log:includes (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Includes.html" title="RDF::N3::Algebra::Log::Includes (class)">RDF::N3::Algebra::Log::Includes</a></span>)</li>
-<li>log:notEqualTo (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotEqualTo.html" title="RDF::N3::Algebra::Log::NotEqualTo (class)">RDF::N3::Algebra::Log::NotEqualTo</a></span>)</li>
-<li>log:notIncludes (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotIncludes.html" title="RDF::N3::Algebra::Log::NotIncludes (class)">RDF::N3::Algebra::Log::NotIncludes</a></span>)</li>
-<li>log:outputString (not implemented yet - See <span class='object_link'><a href="RDF/N3/Algebra/Log/OutputString.html" title="RDF::N3::Algebra::Log::OutputString (class)">RDF::N3::Algebra::Log::OutputString</a></span>)</li>
-</ul></li>
+<li><code>list:append</code> (See <span class='object_link'><a href="RDF/N3/Algebra/List/Append.html" title="RDF::N3::Algebra::List::Append (class)">RDF::N3::Algebra::List::Append</a></span>)</li>
+<li><code>list:first</code>  (See <span class='object_link'><a href="RDF/N3/Algebra/List/First.html" title="RDF::N3::Algebra::List::First (class)">RDF::N3::Algebra::List::First</a></span>)</li>
+<li><code>list:in</code>     (See <span class='object_link'><a href="RDF/N3/Algebra/List/In.html" title="RDF::N3::Algebra::List::In (class)">RDF::N3::Algebra::List::In</a></span>)</li>
+<li><code>list:last</code>   (See <span class='object_link'><a href="RDF/N3/Algebra/List/Last.html" title="RDF::N3::Algebra::List::Last (class)">RDF::N3::Algebra::List::Last</a></span>)</li>
+<li><code>list:length</code> (See <span class='object_link'><a href="RDF/N3/Algebra/List/Length.html" title="RDF::N3::Algebra::List::Length (class)">RDF::N3::Algebra::List::Length</a></span>)</li>
+<li><code>list:member</code> (See <span class='object_link'><a href="RDF/N3/Algebra/List/Member.html" title="RDF::N3::Algebra::List::Member (class)">RDF::N3::Algebra::List::Member</a></span>)</li>
 </ul>
 
-<p>N3 Formulae are introduced with the { statement-list } syntax. A given formula is assigned an RDF::Node instance, which is also used as the graph_name for RDF::Statement instances provided to RDF::N3::Reader#each_statement. For example, the following N3 generates the associated statements:</p>
+<h4 id="rdf-log-vocabulary-http-www-w3-org-2000-10-swap-log">RDF Log vocabulary <a href="http://www.w3.org/2000/10/swap/log#">http://www.w3.org/2000/10/swap/log#</a></h4>
+
+<ul>
+<li><code>log:conclusion</code>    (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conclusion.html" title="RDF::N3::Algebra::Log::Conclusion (class)">RDF::N3::Algebra::Log::Conclusion</a></span>)</li>
+<li><code>log:conjunction</code>   (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Conjunction.html" title="RDF::N3::Algebra::Log::Conjunction (class)">RDF::N3::Algebra::Log::Conjunction</a></span>)</li>
+<li><code>log:content</code>       (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Content.html" title="RDF::N3::Algebra::Log::Content (class)">RDF::N3::Algebra::Log::Content</a></span>)</li>
+<li><code>log:equalTo</code>       (See <span class='object_link'><a href="RDF/N3/Algebra/Log/EqualTo.html" title="RDF::N3::Algebra::Log::EqualTo (class)">RDF::N3::Algebra::Log::EqualTo</a></span>)</li>
+<li><code>log:implies</code>       (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Implies.html" title="RDF::N3::Algebra::Log::Implies (class)">RDF::N3::Algebra::Log::Implies</a></span>)</li>
+<li><code>log:includes</code>      (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Includes.html" title="RDF::N3::Algebra::Log::Includes (class)">RDF::N3::Algebra::Log::Includes</a></span>)</li>
+<li><code>log:n3String</code>      (See <span class='object_link'><a href="RDF/N3/Algebra/Log/N3String.html" title="RDF::N3::Algebra::Log::N3String (class)">RDF::N3::Algebra::Log::N3String</a></span>)</li>
+<li><code>log:notEqualTo</code>    (See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotEqualTo.html" title="RDF::N3::Algebra::Log::NotEqualTo (class)">RDF::N3::Algebra::Log::NotEqualTo</a></span>)</li>
+<li><code>log:notIncludes</code>   (See <span class='object_link'><a href="RDF/N3/Algebra/Log/NotIncludes.html" title="RDF::N3::Algebra::Log::NotIncludes (class)">RDF::N3::Algebra::Log::NotIncludes</a></span>)</li>
+<li><code>log:outputString</code>  See <span class='object_link'><a href="RDF/N3/Algebra/Log/OutputString.html" title="RDF::N3::Algebra::Log::OutputString (class)">RDF::N3::Algebra::Log::OutputString</a></span>)</li>
+<li><code>log:parsedAsN3</code>    (See <span class='object_link'><a href="RDF/N3/Algebra/Log/ParsedAsN3.html" title="RDF::N3::Algebra::Log::ParsedAsN3 (class)">RDF::N3::Algebra::Log::ParsedAsN3</a></span>)</li>
+<li><code>log:semantics</code>     (See <span class='object_link'><a href="RDF/N3/Algebra/Log/Semantics.html" title="RDF::N3::Algebra::Log::Semantics (class)">RDF::N3::Algebra::Log::Semantics</a></span>)</li>
+</ul>
+
+<h4 id="rdf-math-vocabulary-http-www-w3-org-2000-10-swap-math">RDF Math vocabulary <a href="http://www.w3.org/2000/10/swap/math#">http://www.w3.org/2000/10/swap/math#</a></h4>
+
+<ul>
+<li><code>math:absoluteValue</code>    (See <span class='object_link'><a href="RDF/N3/Algebra/Math/AbsoluteValue.html" title="RDF::N3::Algebra::Math::AbsoluteValue (class)">RDF::N3::Algebra::Math::AbsoluteValue</a></span>)</li>
+<li><code>math:ceiling</code>          (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Ceiling.html" title="RDF::N3::Algebra::Math::Ceiling (class)">RDF::N3::Algebra::Math::Ceiling</a></span>)</li>
+<li><code>math:cosh</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Math/CosH.html" title="RDF::N3::Algebra::Math::CosH (class)">RDF::N3::Algebra::Math::CosH</a></span>)</li>
+<li><code>math:cos</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Cos.html" title="RDF::N3::Algebra::Math::Cos (class)">RDF::N3::Algebra::Math::Cos</a></span>)</li>
+<li><code>math:difference</code>       (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Difference.html" title="RDF::N3::Algebra::Math::Difference (class)">RDF::N3::Algebra::Math::Difference</a></span>)</li>
+<li><code>math:equalTo</code>          (See RDF::N3::Algebra::Math::Equal)</li>
+<li><code>math:exponentiation</code>   (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Exponentiation.html" title="RDF::N3::Algebra::Math::Exponentiation (class)">RDF::N3::Algebra::Math::Exponentiation</a></span>)</li>
+<li><code>math:floor</code>            (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Floor.html" title="RDF::N3::Algebra::Math::Floor (class)">RDF::N3::Algebra::Math::Floor</a></span>)</li>
+<li><code>math:greaterThan</code>      (See <span class='object_link'><a href="RDF/N3/Algebra/Math/GreaterThan.html" title="RDF::N3::Algebra::Math::GreaterThan (class)">RDF::N3::Algebra::Math::GreaterThan</a></span>)</li>
+<li><code>math:integerQuotient</code>  (See <span class='object_link'><a href="RDF/N3/Algebra/Math/IntegerQuotient.html" title="RDF::N3::Algebra::Math::IntegerQuotient (class)">RDF::N3::Algebra::Math::IntegerQuotient</a></span>)</li>
+<li><code>math:lessThan</code>         (See <span class='object_link'><a href="RDF/N3/Algebra/Math/LessThan.html" title="RDF::N3::Algebra::Math::LessThan (class)">RDF::N3::Algebra::Math::LessThan</a></span>)</li>
+<li><code>math:negation</code>         (See RDF::N3::Algebra::Math::Negate)</li>
+<li><code>math:notEqualTo</code>       (See RDF::N3::Algebra::Math::NotEqual)</li>
+<li><code>math:notGreaterThan</code>   (See <span class='object_link'><a href="RDF/N3/Algebra/Math/NotGreaterThan.html" title="RDF::N3::Algebra::Math::NotGreaterThan (class)">RDF::N3::Algebra::Math::NotGreaterThan</a></span>)</li>
+<li><code>math:notLessThan</code>      (See <span class='object_link'><a href="RDF/N3/Algebra/Math/NotLessThan.html" title="RDF::N3::Algebra::Math::NotLessThan (class)">RDF::N3::Algebra::Math::NotLessThan</a></span>)</li>
+<li><code>math:product</code>          (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Product.html" title="RDF::N3::Algebra::Math::Product (class)">RDF::N3::Algebra::Math::Product</a></span>)</li>
+<li><code>math:quotient</code>         (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Quotient.html" title="RDF::N3::Algebra::Math::Quotient (class)">RDF::N3::Algebra::Math::Quotient</a></span>)</li>
+<li><code>math:remainder</code>        (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Remainder.html" title="RDF::N3::Algebra::Math::Remainder (class)">RDF::N3::Algebra::Math::Remainder</a></span>)</li>
+<li><code>math:rounded</code>          (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Rounded.html" title="RDF::N3::Algebra::Math::Rounded (class)">RDF::N3::Algebra::Math::Rounded</a></span>)</li>
+<li><code>math:sinh</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Math/SinH.html" title="RDF::N3::Algebra::Math::SinH (class)">RDF::N3::Algebra::Math::SinH</a></span>)</li>
+<li><code>math:sin</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Sin.html" title="RDF::N3::Algebra::Math::Sin (class)">RDF::N3::Algebra::Math::Sin</a></span>)</li>
+<li><code>math:sum</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Sum.html" title="RDF::N3::Algebra::Math::Sum (class)">RDF::N3::Algebra::Math::Sum</a></span>)</li>
+<li><code>math:tanh</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Math/TanH.html" title="RDF::N3::Algebra::Math::TanH (class)">RDF::N3::Algebra::Math::TanH</a></span>)</li>
+<li><code>math:tan</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Math/Tan.html" title="RDF::N3::Algebra::Math::Tan (class)">RDF::N3::Algebra::Math::Tan</a></span>)</li>
+</ul>
+
+<h4 id="rdf-string-vocabulary-http-www-w3-org-2000-10-swap-str">RDF String vocabulary <a href="http://www.w3.org/2000/10/swap/str#">http://www.w3.org/2000/10/swap/str#</a></h4>
+
+<ul>
+<li><code>string:concatenation</code>        (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Concatenation.html" title="RDF::N3::Algebra::Str::Concatenation (class)">RDF::N3::Algebra::Str::Concatenation</a></span>)</li>
+<li><code>string:contains</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Contains.html" title="RDF::N3::Algebra::Str::Contains (class)">RDF::N3::Algebra::Str::Contains</a></span>)</li>
+<li><code>string:containsIgnoringCase</code> (See <span class='object_link'><a href="RDF/N3/Algebra/Str/ContainsIgnoringCase.html" title="RDF::N3::Algebra::Str::ContainsIgnoringCase (class)">RDF::N3::Algebra::Str::ContainsIgnoringCase</a></span>)</li>
+<li><code>string:endsWith</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Str/EndsWith.html" title="RDF::N3::Algebra::Str::EndsWith (class)">RDF::N3::Algebra::Str::EndsWith</a></span>)</li>
+<li><code>string:equalIgnoringCase</code>    (See <span class='object_link'><a href="RDF/N3/Algebra/Str/EqualIgnoringCase.html" title="RDF::N3::Algebra::Str::EqualIgnoringCase (class)">RDF::N3::Algebra::Str::EqualIgnoringCase</a></span>)</li>
+<li><code>string:format</code>               (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Format.html" title="RDF::N3::Algebra::Str::Format (class)">RDF::N3::Algebra::Str::Format</a></span>)</li>
+<li><code>string:greaterThan</code>          (See <span class='object_link'><a href="RDF/N3/Algebra/Str/GreaterThan.html" title="RDF::N3::Algebra::Str::GreaterThan (class)">RDF::N3::Algebra::Str::GreaterThan</a></span>)</li>
+<li><code>string:lessThan</code>             (See <span class='object_link'><a href="RDF/N3/Algebra/Str/LessThan.html" title="RDF::N3::Algebra::Str::LessThan (class)">RDF::N3::Algebra::Str::LessThan</a></span>)</li>
+<li><code>string:matches</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Matches.html" title="RDF::N3::Algebra::Str::Matches (class)">RDF::N3::Algebra::Str::Matches</a></span>)</li>
+<li><code>string:notEqualIgnoringCase</code> (See <span class='object_link'><a href="RDF/N3/Algebra/Str/NotEqualIgnoringCase.html" title="RDF::N3::Algebra::Str::NotEqualIgnoringCase (class)">RDF::N3::Algebra::Str::NotEqualIgnoringCase</a></span>)</li>
+<li><code>string:notGreaterThan</code>       (See <span class='object_link'><a href="RDF/N3/Algebra/Str/NotGreaterThan.html" title="RDF::N3::Algebra::Str::NotGreaterThan (class)">RDF::N3::Algebra::Str::NotGreaterThan</a></span>)</li>
+<li><code>string:notLessThan</code>          (See <span class='object_link'><a href="RDF/N3/Algebra/Str/NotLessThan.html" title="RDF::N3::Algebra::Str::NotLessThan (class)">RDF::N3::Algebra::Str::NotLessThan</a></span>)</li>
+<li><code>string:notMatches</code>           (See <span class='object_link'><a href="RDF/N3/Algebra/Str/NotMatches.html" title="RDF::N3::Algebra::Str::NotMatches (class)">RDF::N3::Algebra::Str::NotMatches</a></span>)</li>
+<li><code>string:replace</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Replace.html" title="RDF::N3::Algebra::Str::Replace (class)">RDF::N3::Algebra::Str::Replace</a></span>)</li>
+<li><code>string:scrape</code>               (See <span class='object_link'><a href="RDF/N3/Algebra/Str/Scrape.html" title="RDF::N3::Algebra::Str::Scrape (class)">RDF::N3::Algebra::Str::Scrape</a></span>)</li>
+<li><code>string:startsWith</code>           (See <span class='object_link'><a href="RDF/N3/Algebra/Str/StartsWith.html" title="RDF::N3::Algebra::Str::StartsWith (class)">RDF::N3::Algebra::Str::StartsWith</a></span>)</li>
+</ul>
+
+<h4 id="rdf-time-vocabulary">RDF Time vocabulary &lt;&gt;</h4>
+
+<ul>
+<li><code>time:dayOfWeek</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Time/DayOfWeek.html" title="RDF::N3::Algebra::Time::DayOfWeek (class)">RDF::N3::Algebra::Time::DayOfWeek</a></span>)</li>
+<li><code>time:day</code>                    (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Day.html" title="RDF::N3::Algebra::Time::Day (class)">RDF::N3::Algebra::Time::Day</a></span>)</li>
+<li><code>time:gmTime</code>                 (See <span class='object_link'><a href="RDF/N3/Algebra/Time/GmTime.html" title="RDF::N3::Algebra::Time::GmTime (class)">RDF::N3::Algebra::Time::GmTime</a></span>)</li>
+<li><code>time:hour</code>                   (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Hour.html" title="RDF::N3::Algebra::Time::Hour (class)">RDF::N3::Algebra::Time::Hour</a></span>)</li>
+<li><code>time:inSeconds</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Time/InSeconds.html" title="RDF::N3::Algebra::Time::InSeconds (class)">RDF::N3::Algebra::Time::InSeconds</a></span>)</li>
+<li><code>time:localTime</code>              (See <span class='object_link'><a href="RDF/N3/Algebra/Time/LocalTime.html" title="RDF::N3::Algebra::Time::LocalTime (class)">RDF::N3::Algebra::Time::LocalTime</a></span>)</li>
+<li><code>time:minute</code>                 (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Minute.html" title="RDF::N3::Algebra::Time::Minute (class)">RDF::N3::Algebra::Time::Minute</a></span>)</li>
+<li><code>time:month</code>                  (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Month.html" title="RDF::N3::Algebra::Time::Month (class)">RDF::N3::Algebra::Time::Month</a></span>)</li>
+<li><code>time:second</code>                 (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Second.html" title="RDF::N3::Algebra::Time::Second (class)">RDF::N3::Algebra::Time::Second</a></span>)</li>
+<li><code>time:timeZone</code>               (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Timezone.html" title="RDF::N3::Algebra::Time::Timezone (class)">RDF::N3::Algebra::Time::Timezone</a></span>)</li>
+<li><code>time:year</code>                   (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Year.html" title="RDF::N3::Algebra::Time::Year (class)">RDF::N3::Algebra::Time::Year</a></span>)</li>
+</ul>
+
+<h3 id="formulae">Formulae</h3>
+
+<p>N3 Formulae are introduced with the <code>{ statement-list }</code> syntax. A given formula is assigned an <code>RDF::Node</code> instance, which is also used as the graph_name for <code>RDF::Statement</code> instances provided to <code>RDF::N3::Reader#each_statement</code>. For example, the following N3 generates the associated statements:</p>
 
 <pre class="code ruby"><code class="ruby">@prefix x: &lt;http://example.org/x-ns/#&gt; .
 @prefix log: &lt;http://www.w3.org/2000/10/swap/log#&gt; .
@@ -166,7 +252,7 @@ _:ora &lt;http://example.org/x-ns/#firstname&gt; &quot;Ora&quot; _:form .
 
 <h3 id="variables">Variables</h3>
 
-<p>N3 Variables are introduced with @forAll, @forSome, or ?x. Variables reference URIs described in formulae, typically defined in the default vocabulary (e.g., &quot;:x&quot;). Existential variables are replaced with an allocated RDF::Node instance. Universal variables are replaced with a RDF::Query::Variable instance. For example, the following N3 generates the associated statements:</p>
+<p>N3 Variables are introduced with <code>@forAll</code>, <code>@forSome</code>, or <code>?x</code>. Variables reference URIs described in formulae, typically defined in the default vocabulary (e.g., <code>&quot;:x&quot;</code>). Existential variables are replaced with an allocated <code>RDF::Node</code> instance. Universal variables are replaced with a <code>RDF::Query::Variable</code> instance. For example, the following N3 generates the associated statements:</p>
 
 <pre class="code ruby"><code class="ruby">@forAll &lt;#h&gt;. @forSome &lt;#g&gt;. &lt;#g&gt; &lt;#loves&gt; &lt;#h&gt; .
 </code></pre>
@@ -180,25 +266,17 @@ RDF::Statement(f, &lt;#loves&gt;, h)
 
 <p>Note that the behavior of both existential and universal variables is not entirely in keeping with the <a href="https://www.w3.org/TeamSubmission/n3/">Team Submission</a>, and neither work quite like SPARQL variables. When used in the antecedent part of an implication, universal variables should behave much like SPARQL variables. This area is subject to a fair amount of change.</p>
 
-<h2 id="implementation-notes">Implementation Notes</h2>
+<h3 id="query">Query</h3>
 
-<p>The parser is driven through a rules table contained in lib/rdf/n3/reader/meta.rb. This includes
-branch rules to indicate productions to be taken based on a current production. Terminals are denoted
-through a set of regular expressions used to match each type of terminal.</p>
+<p>Formulae are typically used to query the knowledge-base, which is set from the base-formula/default graph. A formula is composed of both constant statements, and variable statements. When running as a query, such as for the antecedent formula in <code>log:implies</code>, statements including either explicit variables or blank nodes are treated as query patterns and are used to query the knowledge base to create a solution set, which is used either prove the formula correct, or create bindings passed to the consequent formula.</p>
 
-<p>The [meta.rb][file:lib/rdf/n3/reader/meta.rb] file is generated from lib/rdf/n3/reader/n3-selectors.n3
-(taken from <a href="http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3">http://www.w3.org/2000/10/swap/grammar/n3-selectors.n3</a>) which is the result of parsing
-<a href="http://www.w3.org/2000/10/swap/grammar/n3.n3">http://www.w3.org/2000/10/swap/grammar/n3.n3</a> (along with bnf-rules.n3) using cwm using the following command sequence:</p>
-
-<pre class="code ruby"><code class="ruby">cwm n3.n3 bnf-rules.n3 --think --purge --data &gt; n3-selectors.n3
-</code></pre>
-
-<p>[n3-selectors.n3][file:lib/rdf/n3/reader/n3-selectors.rb] is itself used to generate meta.rb using script/build_meta.</p>
+<p>Blank nodes associated with rdf:List statements used as part of a built-in are made <em>non-distinguished</em> existential variables, and patters containing these variables become optional. If they are not bound as part of the query, the implicitly are bound as the original blank nodes defined within the formula, which allows for both constant list arguments, list arguments that contain variables, or arguments which are variables expanding to lists.</p>
 
 <h2 id="dependencies">Dependencies</h2>
 
 <ul>
-<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (~&gt; 3.0, &gt;= 3.0.10)</li>
+<li><a href="https://rubygems.org/gems/rdf">RDF.rb</a> (~&gt; 3.1, &gt;= 3.1.4)</li>
+<li><a href="https://ruby-rdf.github.com/ebnf">EBNF</a> (~&gt; 2.1)</li>
 </ul>
 
 <h2 id="documentation">Documentation</h2>
@@ -217,30 +295,15 @@ through a set of regular expressions used to match each type of terminal.</p>
 
 <ul>
 <li><span class='object_link'><a href="RDF/N3/Algebra/Formula.html" title="RDF::N3::Algebra::Formula (class)">RDF::N3::Algebra::Formula</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/List/Append.html" title="RDF::N3::Algebra::List::Append (class)">RDF::N3::Algebra::List::Append</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/List/In.html" title="RDF::N3::Algebra::List::In (class)">RDF::N3::Algebra::List::In</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/List/Last.html" title="RDF::N3::Algebra::List::Last (class)">RDF::N3::Algebra::List::Last</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/List/Member.html" title="RDF::N3::Algebra::List::Member (class)">RDF::N3::Algebra::List::Member</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Conclusion.html" title="RDF::N3::Algebra::Log::Conclusion (class)">RDF::N3::Algebra::Log::Conclusion</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Conjunction.html" title="RDF::N3::Algebra::Log::Conjunction (class)">RDF::N3::Algebra::Log::Conjunction</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/EqualTo.html" title="RDF::N3::Algebra::Log::EqualTo (class)">RDF::N3::Algebra::Log::EqualTo</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Implies.html" title="RDF::N3::Algebra::Log::Implies (class)">RDF::N3::Algebra::Log::Implies</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/Includes.html" title="RDF::N3::Algebra::Log::Includes (class)">RDF::N3::Algebra::Log::Includes</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/NotEqualTo.html" title="RDF::N3::Algebra::Log::NotEqualTo (class)">RDF::N3::Algebra::Log::NotEqualTo</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/NotIncludes.html" title="RDF::N3::Algebra::Log::NotIncludes (class)">RDF::N3::Algebra::Log::NotIncludes</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Algebra/Log/OutputString.html" title="RDF::N3::Algebra::Log::OutputString (class)">RDF::N3::Algebra::Log::OutputString</a></span></li>
 </ul></li>
 </ul>
 
 <h3 id="additional-vocabularies">Additional vocabularies</h3>
 
 <ul>
-<li><span class='object_link'><a href="RDF/N3/Log.html" title="RDF::N3::Log (class)">RDF::N3::Log</a></span></li>
 <li><span class='object_link'><a href="RDF/N3/Rei.html" title="RDF::N3::Rei (class)">RDF::N3::Rei</a></span></li>
 <li><span class='object_link'><a href="RDF/N3/Crypto.html" title="RDF::N3::Crypto (class)">RDF::N3::Crypto</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/List.html" title="RDF::N3::List (class)">RDF::N3::List</a></span></li>
 <li><span class='object_link'><a href="RDF/N3/Math.html" title="RDF::N3::Math (class)">RDF::N3::Math</a></span></li>
-<li><span class='object_link'><a href="RDF/N3/Str.html" title="RDF::N3::Str (class)">RDF::N3::Str</a></span></li>
 <li><span class='object_link'><a href="RDF/N3/Time.html" title="RDF::N3::Time (class)">RDF::N3::Time</a></span></li>
 </ul>
 
@@ -251,12 +314,13 @@ through a set of regular expressions used to match each type of terminal.</p>
 <li><a href="http://rdf.greggkellogg.net/distiller">Distiller</a></li>
 <li><a href="https://rubydoc.info/github/ruby-rdf/rdf-n3/">Documentation</a></li>
 <li><a href="file:file.History.html">History</a></li>
-<li><a href="https://www.w3.org/DesignIssues/Notation3.html" title="Notation-3">Notation-3</a></li>
+<li><a href="https://w3c.github.io/N3/spec/">Notation-3</a></li>
+<li><a href="https://www.w3.org/TeamSubmission/n3/">Team Submission</a></li>
 <li><a href="https://www.w3.org/2000/10/swap/Primer.html">N3 Primer</a></li>
 <li><a href="https://www.w3.org/DesignIssues/Reify.html">N3 Reification</a></li>
 <li><a href="https://www.w3.org/TR/turtle/">Turtle</a></li>
-<li><a href="https://www.w3.org/2000/10/swap/test/README.html">W3C SWAP Test suite</a></li>
-<li><a href="https://www.w3.org/2001/sw/DataAccess/df1/tests/README.txt">W3C Turtle Test suite</a></li>
+<li><a href="https://w3c.github.io/N3/tests/">W3C SWAP Test suite</a></li>
+<li><a href="https://w3c.github.io/rdf-tests/turtle/">W3C Turtle Test suite</a></li>
 <li><a href="https://www.w3.org/TR/n-triples/">N-Triples</a></li>
 </ul>
 
@@ -264,12 +328,6 @@ through a set of regular expressions used to match each type of terminal.</p>
 
 <ul>
 <li><a href="https://github.com/gkellogg">Gregg Kellogg</a> - <a href="https://greggkellogg.net/">https://greggkellogg.net/</a></li>
-</ul>
-
-<h2 id="contributors">Contributors</h2>
-
-<ul>
-<li><a href="https://github.com/njh">Nicholas Humfrey</a> - <a href="https://njh.me/">https://njh.me/</a></li>
 </ul>
 
 <h2 id="contributing">Contributing</h2>
@@ -287,7 +345,9 @@ change them, do so on your private branch only.</li>
 list in the the <code>README</code>. Alphabetical order applies.</li>
 <li>Do note that in order for us to merge any non-trivial changes (as a rule
 of thumb, additions larger than about 15 lines of code), we need an
-explicit <a href="https://lists.w3.org/Archives/Public/public-rdf-ruby/2010May/0013.html">public domain dedication</a> on record from you.</li>
+explicit <a href="https://unlicense.org/#unlicensing-contributions">public domain dedication</a> on record from you,
+which you will be asked to agree to on the first commit to a repo within the organization.
+Note that the agreement applies to all repos in the <a href="https://github.com/ruby-rdf/">Ruby RDF</a> organization.</li>
 </ul>
 
 <h2 id="license">License</h2>
@@ -306,9 +366,9 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Mon Aug 17 10:44:28 2020 by
+  Generated on Thu Oct 29 17:22:02 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.25 (ruby-2.7.1).
+  0.9.25 (ruby-2.7.2).
 </div>
 
     </div>
