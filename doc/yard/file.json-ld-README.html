@@ -74,6 +74,7 @@
 <ul>
 <li>If the <a href="https://rubygems.org/gems/jsonlint">jsonlint</a> gem is installed, it will be used when validating an input document.</li>
 <li>If available, uses [Nokogiri][] and/or [Nokogumbo][] for parsing HTML, falls back to REXML otherwise.</li>
+<li>Provisional support for <a href="https://json-ld.github.io/json-ld-star/">JSON-LD*</a>.</li>
 </ul>
 
 <p><a href="file.earl.html">Implementation Report</a></p>
@@ -101,6 +102,64 @@
 <h3 id="multijson-parser">MultiJson parser</h3>
 
 <p>The <a href="https://rubygems.org/gems/multi_json">MultiJson</a> gem is used for parsing JSON; this defaults to the native JSON parser, but will use a more performant parser if one is available. A specific parser can be specified by adding the <code>:adapter</code> option to any API call. See <a href="https://rubygems.org/gems/multi_json">MultiJson</a> for more information.</p>
+
+<h3 id="json-ld-rdfstar">JSON-LD* (RDFStar)</h3>
+
+<p>The <span class='object_link'><a href="JSON/LD/API.html#toRdf-class_method" title="JSON::LD::API.toRdf (method)">JSON::LD::API.toRdf</a></span> and <span class='object_link'><a href="JSON/LD/API.html#fromRdf-class_method" title="JSON::LD::API.fromRdf (method)">JSON::LD::API.fromRdf</a></span> API methods, along with the <span class='object_link'><a href="JSON/LD/Reader.html" title="JSON::LD::Reader (class)">JSON::LD::Reader</a></span> and <span class='object_link'><a href="JSON/LD/Writer.html" title="JSON::LD::Writer (class)">JSON::LD::Writer</a></span>, include provisional support for <a href="https://json-ld.github.io/json-ld-star/">JSON-LD*</a>.</p>
+
+<p>Internally, an <code>RDF::Statement</code> is treated as another resource, along with <code>RDF::URI</code> and <code>RDF::Node</code>, which allows an <code>RDF::Statement</code> to have a <code>#subject</code> or <code>#object</code> which is also an <code>RDF::Statement</code>.</p>
+
+<p>In JSON-LD, with the <code>rdfstar</code> option set, the value of <code>@id</code>, in addition to an IRI or Blank Node Identifier, can be a JSON-LD node object having exactly one property with an optional <code>@id</code>, which may also be an embedded object. (It may also have <code>@context</code> and <code>@index</code> values).</p>
+
+<pre class="code ruby"><code class="ruby">{
+  &quot;@id&quot;: {
+    &quot;@context&quot;: {&quot;foaf&quot;: &quot;http://xmlns.com/foaf/0.1/&quot;},
+    &quot;@index&quot;: &quot;ignored&quot;,
+    &quot;@id&quot;: &quot;bob&quot;,
+    &quot;foaf:age&quot; 23
+  },
+  &quot;ex:certainty&quot;: 0.9
+}
+</code></pre>
+
+<p><strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong></p>
+
+<h4 id="serializing-a-graph-containing-embedded-statements">Serializing a Graph containing embedded statements</h4>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>json-ld</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_statement'>statement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Statement.html" title="RDF::Statement (class)">Statement</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bob</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab/FOAF.html" title="RDF::Vocab::FOAF (class)">FOAF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_age'><span class='object_link'><a href="RDF/Vocab/FOAF.html#age-instance_method" title="RDF::Vocab::FOAF#age (method)">age</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='int'>23</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ex:certainty</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Literal.html" title="RDF::Literal (class)">Literal</a></span></span><span class='lparen'>(</span><span class='float'>0.9</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='symbol'>:jsonld</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>standard_prefixes:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; {&quot;@id&quot;: {&quot;@id&quot;: &quot;bob&quot;, &quot;foaf:age&quot; 23}, &quot;ex:certainty&quot;: 0.9}
+</span></code></pre>
+
+<p>Alternatively, using the <span class='object_link'><a href="JSON/LD/API.html#fromRdf-class_method" title="JSON::LD::API.fromRdf (method)">JSON::LD::API.fromRdf</a></span> method:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="JSON.html" title="JSON (module)">JSON</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD.html" title="JSON::LD (module)">LD</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD/API.html" title="JSON::LD::API (class)">API</a></span></span><span class='op'>::</span><span class='id identifier rubyid_fromRdf'><span class='object_link'><a href="JSON/LD/API.html#fromRdf-class_method" title="JSON::LD::API.fromRdf (method)">fromRdf</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; {&quot;@id&quot;: {&quot;@id&quot;: &quot;bob&quot;, &quot;foaf:age&quot; 23}, &quot;ex:certainty&quot;: 0.9}
+</span></code></pre>
+
+<h4 id="reading-a-graph-containing-embedded-statements">Reading a Graph containing embedded statements</h4>
+
+<p>By default, <span class='object_link'><a href="JSON/LD/API.html#toRdf-class_method" title="JSON::LD::API.toRdf (method)">JSON::LD::API.toRdf</a></span> (and <span class='object_link'><a href="JSON/LD/Reader.html" title="JSON::LD::Reader (class)">JSON::LD::Reader</a></span>) will reject a document containing a subject resource.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_jsonld'>jsonld</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>{
+  &quot;@id&quot;: {
+    &quot;@id&quot;: &quot;bob&quot;, &quot;foaf:age&quot; 23
+  },
+  &quot;ex:certainty&quot;: 0.9
+}</span><span class='tstring_end'>)</span></span>
+<span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="JSON.html" title="JSON (module)">JSON</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD.html" title="JSON::LD (module)">LD</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD/API.html" title="JSON::LD::API (class)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_toRdf'><span class='object_link'><a href="JSON/LD/API.html#toRdf-class_method" title="JSON::LD::API.toRdf (method)">toRdf</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
+<span class='comment'># =&gt; JSON::LD::JsonLdError::InvalidIdValue
+</span></code></pre>
+
+<p><span class='object_link'><a href="JSON/LD/API.html#toRdf-class_method" title="JSON::LD::API.toRdf (method)">JSON::LD::API.toRdf</a></span> (and <span class='object_link'><a href="JSON/LD/Reader.html" title="JSON::LD::Reader (class)">JSON::LD::Reader</a></span>) support a boolean valued <code>rdfstar</code> option; only one statement is asserted, although the reified statement is contained within the graph.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+  <span class='const'><span class='object_link'><a href="JSON.html" title="JSON (module)">JSON</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD.html" title="JSON::LD (module)">LD</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JSON/LD/Reader.html" title="JSON::LD::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="JSON/LD/Reader.html#initialize-instance_method" title="JSON::LD::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_jsonld'>jsonld</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 1
+</span></code></pre>
 
 <h2 id="examples">Examples</h2>
 
@@ -677,7 +736,7 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Sun Nov 15 16:13:46 2020 by
+  Generated on Sun Dec 13 16:24:50 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.2).
 </div>
