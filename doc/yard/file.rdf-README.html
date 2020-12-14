@@ -94,7 +94,7 @@ use of any one part of the library without needing to load up the rest.</li>
 </ul></li>
 <li>Performs auto-detection of input to select appropriate Reader class if one
 cannot be determined from file characteristics.</li>
-<li>Provisional support for <a href="https://lists.w3.org/Archives/Public/public-rdf-star/">RDF*</a>.</li>
+<li>Provisional support for <a href="https://w3c.github.io/rdf-star/rdf-star-cg-spec.html/">RDF*</a>.</li>
 </ul>
 
 <h3 id="http-requests">HTTP requests</h3>
@@ -317,7 +317,7 @@ of <span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class
 
 <h2 id="rdf-rdfstar">RDF* (RDFStar)</h2>
 
-<p><a href="https://ruby-rdf.github.com/">RDF.rb</a> includes provisional support for <a href="https://lists.w3.org/Archives/Public/public-rdf-star/">RDF*</a> with an N-Triples/N-Quads syntax extension that uses inline statements in the <em>subject</em> or <em>object</em> position.</p>
+<p><a href="https://ruby-rdf.github.com/">RDF.rb</a> includes provisional support for <a href="https://w3c.github.io/rdf-star/rdf-star-cg-spec.html/">RDF*</a> with an N-Triples/N-Quads syntax extension that uses inline statements in the <em>subject</em> or <em>object</em> position.</p>
 
 <p>Internally, an <code>RDF::Statement</code> is treated as another resource, along with <code>RDF::URI</code> and <code>RDF::Node</code>, which allows an <code>RDF::Statement</code> to have a <code>#subject</code> or <code>#object</code> which is also an <code>RDF::Statement</code>.</p>
 
@@ -343,18 +343,10 @@ of <span class='object_link'><a href="RDF/Writer.html" title="RDF::Writer (class
 <span class='comment'># =&gt; RDF::ReaderError
 </span></code></pre>
 
-<p>Readers support a <code>rdfstar</code> option with either <code>:PG</code> (Property Graph) or <code>:SA</code> (Separate Assertions) modes. In <code>:PG</code> mode, statements that are used in the subject or object positions are also implicitly added to the graph:</p>
+<p>Readers support a boolean valued <code>rdfstar</code> option.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
-  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:PG</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
-<span class='kw'>end</span>
-<span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 2
-</span></code></pre>
-
-<p>When using the <code>:SA</code> mode, only one statement is asserted, although the reified statement is contained within the graph.</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
-  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='symbol'>:SA</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples.html" title="RDF::NTriples (module)">NTriples</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/NTriples/Reader.html" title="RDF::NTriples::Reader (class)">Reader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Reader.html#initialize-instance_method" title="RDF::Reader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_nt'>nt</span><span class='comma'>,</span> <span class='label'>rdfstar:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_reader'>reader</span><span class='op'>|</span> <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_reader'>reader</span><span class='rbrace'>}</span>
 <span class='kw'>end</span>
 <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='comment'>#=&gt; 1
 </span></code></pre>
@@ -592,7 +584,7 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Sun Nov 15 16:13:46 2020 by
+  Generated on Sun Dec 13 16:24:50 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.2).
 </div>

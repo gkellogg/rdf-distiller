@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/json-ld-a9f45ac16ca3/lib/json/ld/from_rdf.rb</dd>
+    <dd>vendor/bundler/ruby/2.7.0/bundler/gems/json-ld-40655ecb8f6a/lib/json/ld/from_rdf.rb</dd>
   </dl>
   
 </div>
@@ -387,12 +387,10 @@ If set to <code>true</code>, the JSON-LD processor will treat <code>rdf:type</co
 159
 160
 161
-162
-163
-164</pre>
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/json-ld-a9f45ac16ca3/lib/json/ld/from_rdf.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/2.7.0/bundler/gems/json-ld-40655ecb8f6a/lib/json/ld/from_rdf.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_statements'>from_statements</span><span class='lparen'>(</span><span class='id identifier rubyid_dataset'>dataset</span><span class='comma'>,</span> <span class='label'>useRdfType:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>useNativeTypes:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_default_graph'>default_graph</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -400,7 +398,6 @@ If set to <code>true</code>, the JSON-LD processor will treat <code>rdf:type</co
   <span class='id identifier rubyid_referenced_once'>referenced_once</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_ec'>ec</span> <span class='op'>=</span> <span class='ivar'>@context</span>
 
   <span class='comment'># Create an entry for compound-literal node detection
 </span>  <span class='id identifier rubyid_compound_literal_subjects'>compound_literal_subjects</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -411,7 +408,7 @@ If set to <code>true</code>, the JSON-LD processor will treat <code>rdf:type</co
 </span>  <span class='id identifier rubyid_dataset'>dataset</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_statement'>statement</span><span class='op'>|</span>
     <span class='comment'>#log_debug(&quot;statement&quot;) { statement.to_nquads.chomp}
 </span>
-    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>?</span> <span class='id identifier rubyid_ec'>ec</span><span class='period'>.</span><span class='id identifier rubyid_expand_iri'>expand_iri</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_graph_name'>graph_name</span><span class='comma'>,</span> <span class='label'>base:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@default</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>?</span> <span class='ivar'>@context</span><span class='period'>.</span><span class='id identifier rubyid_expand_iri'>expand_iri</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_graph_name'>graph_name</span><span class='comma'>,</span> <span class='label'>base:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@default</span><span class='tstring_end'>&#39;</span></span>
 
     <span class='comment'># Create a graph entry as needed
 </span>    <span class='id identifier rubyid_node_map'>node_map</span> <span class='op'>=</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -419,30 +416,29 @@ If set to <code>true</code>, the JSON-LD processor will treat <code>rdf:type</co
 
     <span class='id identifier rubyid_default_graph'>default_graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@default</span><span class='tstring_end'>&#39;</span></span>
 
-    <span class='id identifier rubyid_subject'>subject</span> <span class='op'>=</span> <span class='id identifier rubyid_ec'>ec</span><span class='period'>.</span><span class='id identifier rubyid_expand_iri'>expand_iri</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='label'>as_string:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>base:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_subject'>subject</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_subject'>subject</span> <span class='op'>=</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_resource_representation'>resource_representation</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span><span class='id identifier rubyid_useNativeTypes'>useNativeTypes</span><span class='rparen'>)</span>
 
     <span class='comment'># If predicate is rdf:datatype, note subject in compound literal subjects map
 </span>    <span class='kw'>if</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:rdfDirection</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>compound-literal</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_uri'>to_uri</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>direction</span><span class='tstring_end'>&#39;</span></span>
       <span class='id identifier rubyid_compound_literal_subjects'>compound_literal_subjects</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_subject'>subject</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
 
-    <span class='comment'># If object is an IRI or blank node identifier, and node map does not have an object member, create one and initialize its value to a new JSON object consisting of a single member @id whose value is set to object.
-</span>    <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span> <span class='kw'>unless</span>
-      <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span>
+    <span class='comment'># If object is an IRI, blank node identifier, or statement, and node map does not have an object member, create one and initialize its value to a new JSON object consisting of a single member @id whose value is set to object.
+</span>    <span class='kw'>unless</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_literal?'>literal?</span>
+      <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>||=</span>
+        <span class='id identifier rubyid_resource_representation'>resource_representation</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_useNativeTypes'>useNativeTypes</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
 
     <span class='comment'># If predicate equals rdf:type, and object is an IRI or blank node identifier, append object to the value of the @type member of node. If no such member exists, create one and initialize it to an array whose only item is object. Finally, continue to the next RDF triple.
+</span>    <span class='comment'># XXX JSON-LD* does not support embedded value of @type
 </span>    <span class='kw'>if</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_resource?'>resource?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_useRdfType'>useRdfType</span>
       <span class='id identifier rubyid_merge_value'>merge_value</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
       <span class='kw'>next</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Set value to the result of using the RDF to Object Conversion algorithm, passing object, rdfDirection, and use native types.
-</span>    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_ec'>ec</span><span class='period'>.</span><span class='id identifier rubyid_expand_value'>expand_value</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span>
-                            <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span>
-                            <span class='label'>rdfDirection:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:rdfDirection</span><span class='rbracket'>]</span><span class='comma'>,</span>
-                            <span class='label'>useNativeTypes:</span> <span class='id identifier rubyid_useNativeTypes'>useNativeTypes</span><span class='comma'>,</span>
-                            <span class='label'>base:</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_representation'>resource_representation</span><span class='lparen'>(</span><span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_useNativeTypes'>useNativeTypes</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_merge_value'>merge_value</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_statement'>statement</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
 
@@ -550,7 +546,7 @@ If set to <code>true</code>, the JSON-LD processor will treat <code>rdf:type</co
 </div>
 
       <div id="footer">
-  Generated on Sun Nov 15 16:13:49 2020 by
+  Generated on Sun Dec 13 16:24:57 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.2).
 </div>
