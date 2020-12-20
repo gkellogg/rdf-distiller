@@ -2,7 +2,7 @@
 
 Ruby-based RDF Distiller and SPARQL service.
 
-[![Build Status](https://travis-ci.org/gkellogg/rdf-distiller.png?branch=master)](https://travis-ci.org/gkellogg/rdf-distiller)
+[![Build Status](https://github.com/gkellogg/rdf-distiller/workflows/CI/badge.svg?branch=develop)](https://github.com/gkellogg/rdf-distiller/actions?query=workflow%3ACI)
 
 ## DESCRIPTION
 RDF::Distiller is Sinatra web portal for [RDF.rb][RDF.rb] library suite.
