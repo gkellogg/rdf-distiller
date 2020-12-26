@@ -81,6 +81,7 @@
 <li>Terminals adhere closely to their counterparts in <a href="https://www.w3.org/TR/turtle/">Turtle</a>.</li>
 <li>The modifier <code>&lt;-</code> is introduced as a synonym for <code>is ... of</code>.</li>
 <li>The SPARQL <code>BASE</code> and <code>PREFIX</code> declarations are supported.</li>
+<li>Implicit universal variables are defined at the top-level, rather than in the parent formula of the one in which they are defined.</li>
 </ul>
 
 <p>This brings N3 closer to compatibility with Turtle.</p>
@@ -235,7 +236,7 @@
 <li><code>time:year</code>                   (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Year.html" title="RDF::N3::Algebra::Time::Year (class)">RDF::N3::Algebra::Time::Year</a></span>)</li>
 </ul>
 
-<h3 id="formulae">Formulae</h3>
+<h3 id="formulae-quoted-graphs">Formulae / Quoted Graphs</h3>
 
 <p>N3 Formulae are introduced with the <code>{ statement-list }</code> syntax. A given formula is assigned an <code>RDF::Node</code> instance, which is also used as the graph_name for <code>RDF::Statement</code> instances provided to <code>RDF::N3::Reader#each_statement</code>. For example, the following N3 generates the associated statements:</p>
 
@@ -271,6 +272,11 @@ RDF::Statement(f, &lt;#loves&gt;, h)
 </code></pre>
 
 <p>Note that the behavior of both existential and universal variables is not entirely in keeping with the <a href="https://www.w3.org/TeamSubmission/n3/">Team Submission</a>, and neither work quite like SPARQL variables. When used in the antecedent part of an implication, universal variables should behave much like SPARQL variables. This area is subject to a fair amount of change.</p>
+
+<ul>
+<li>Variables, themselves, cannot be part of a solution, which limits the ability to generate updated rules for reasoning.</li>
+<li>Both Existentials and Universals are treated as simple variables, and there is really no preference given based on the order in which they are introduced.</li>
+</ul>
 
 <h3 id="query">Query</h3>
 
@@ -375,7 +381,7 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Sun Dec 20 13:16:57 2020 by
+  Generated on Sat Dec 26 12:37:23 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.2).
 </div>
