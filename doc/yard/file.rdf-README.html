@@ -105,6 +105,24 @@ resources. Clients may also consider using <a href="https://rubygems.org/gems/re
 client-side caching of HTTP results using <a href="https://rtomayko.github.io/rack-cache/">Rack::Cache</a> or other Rack
 middleware.</p>
 
+<p>See <span class='object_link'><a href="RDF/Util/File.html" title="RDF::Util::File (module)">RDF::Util::File</a></span> for configuring other mechanisms for retrieving resources.</p>
+
+<h3 id="term-caching-and-configuration">Term caching and configuration.</h3>
+
+<p>RDF.rb uses a weak-reference cache for storing internalized versions of URIs and Nodes. This is particularly useful for Nodes as two nodes are equivalent only if they&#39;re the same node.</p>
+
+<p>By default, each cache can grow to an unlimited size, but this can be configured using <span class='object_link'><a href="RDF.html#config-class_method" title="RDF.config (method)">RDF.config</a></span>, for general limits, along with URI- or Node-specific limits.</p>
+
+<p>For example, to limit the size of the URI intern cache only:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="RDF.html#config-class_method" title="RDF.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_uri_cache_size'>uri_cache_size</span> <span class='op'>=</span> <span class='int'>10_000</span>
+</code></pre>
+
+<p>The default for creating new caches without a specific initialization size can be set using:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'><span class='object_link'><a href="RDF.html#config-class_method" title="RDF.config (method)">config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cache_size'>cache_size</span> <span class='op'>=</span> <span class='int'>100_000</span>
+</code></pre>
+
 <h2 id="differences-between-rdf-1-0-and-rdf-1-1">Differences between RDF 1.0 and RDF 1.1</h2>
 
 <p>This version of RDF.rb is fully compatible with <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1</a>, but it creates some
@@ -584,7 +602,7 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Sun Dec 20 13:16:57 2020 by
+  Generated on Sat Dec 26 12:37:23 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.25 (ruby-2.7.2).
 </div>
