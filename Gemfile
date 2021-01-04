@@ -31,6 +31,7 @@ gem 'json-ld',            git: "https://github.com/ruby-rdf/json-ld", branch: "d
 gem 'json-ld-preloaded',  git: "https://github.com/ruby-rdf/json-ld-preloaded", branch: "develop"
 gem 'ld-patch',           git: "https://github.com/ruby-rdf/ld-patch", branch: "develop"
 gem 'ebnf',               git: "https://github.com/dryruby/ebnf",  branch: "develop"
+gem 'shacl',              git: "https://github.com/ruby-rdf/shacl", branch: "develop"
 gem 'shex',               git: "https://github.com/ruby-rdf/shex", branch: "develop"
 gem 'sparql',             git: "https://github.com/ruby-rdf/sparql", branch: "develop"
 gem 'sparql-client',      git: "https://github.com/ruby-rdf/sparql-client", branch: "develop"
