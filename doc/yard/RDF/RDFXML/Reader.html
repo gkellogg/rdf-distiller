@@ -101,8 +101,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb<span class="defines">,<br />
-  vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader/rexml.rb,<br /> vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader/nokogiri.rb</span>
+    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb<span class="defines">,<br />
+  vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader/rexml.rb,<br /> vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader/nokogiri.rb</span>
 </dd>
   </dl>
   
@@ -113,6 +113,8 @@
     <p>An RDF/XML parser in Ruby</p>
 
 <p>Based on RDF/XML Syntax Specification: <a href="http://www.w3.org/TR/REC-rdf-syntax/">http://www.w3.org/TR/REC-rdf-syntax/</a></p>
+
+<p>Extension: A nodeElement can also use the rdf:resource attribute, if none of the other standard attributes are defined.</p>
 
 
   </div>
@@ -672,8 +674,6 @@
       <pre class="lines">
 
 
-139
-140
 141
 142
 143
@@ -699,10 +699,15 @@
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
@@ -726,8 +731,11 @@
     <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_rewind'>rewind</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:rewind</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_initialize_xml'>initialize_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>rescue</span> <span class='id identifier rubyid_log_fatal'>log_fatal</span><span class='lparen'>(</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Empty document</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_root'><span class='object_link'><a href="../../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Synax errors</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_doc_errors'>doc_errors</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_doc_errors'>doc_errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_root'><span class='object_link'><a href="../../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_log_info'>log_info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Empty document</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_doc_errors'>doc_errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='id identifier rubyid_log_error'>log_error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Synax errors</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='id identifier rubyid_doc_errors'>doc_errors</span><span class='rbrace'>}</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
   <span class='kw'>end</span>
@@ -792,12 +800,12 @@
       <pre class="lines">
 
 
-111
-112
-113</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_implementation'>implementation</span>
   <span class='ivar'>@implementation</span>
@@ -839,10 +847,10 @@
       <pre class="lines">
 
 
-172</pre>
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -903,11 +911,6 @@
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
 185
 186
 187
@@ -948,10 +951,15 @@
 222
 223
 224
-225</pre>
+225
+226
+227
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1079,17 +1087,17 @@
       <pre class="lines">
 
 
-235
-236
-237
-238
-239
 240
 241
-242</pre>
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_triple'>each_triple</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -1129,10 +1137,10 @@
       <pre class="lines">
 
 
-169</pre>
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-7204fcbe1940/lib/rdf/rdfxml/reader.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-rdfxml-f800559d4bc4/lib/rdf/rdfxml/reader.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rewind'>rewind</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -1145,7 +1153,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Feb  2 14:15:28 2021 by
+  Generated on Sat Mar  6 13:17:18 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-3.0.0).
 </div>
