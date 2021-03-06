@@ -55,7 +55,7 @@ module RDF::Distiller
       set :assets_paths, %w(assets/js assets/css)
 
       # CSS minification
-      set :assets_css_compressor, :sassc
+      set :assets_css_compressor, :sass
 
       # JavaScript minification
       set :assets_js_compressor, :uglifier
