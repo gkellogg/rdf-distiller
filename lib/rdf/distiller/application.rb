@@ -4,7 +4,7 @@ require 'sinatra/asset_pipeline'
 require 'rack/protection'
 require 'sprockets-helpers'
 require 'uglifier'
-require 'sass'
+require 'sassc'
 require 'logger'
 require 'erubis'
 require 'linkeddata'
@@ -55,7 +55,7 @@ module RDF::Distiller
       set :assets_paths, %w(assets/js assets/css)
 
       # CSS minification
-      set :assets_css_compressor, :sass
+      set :assets_css_compressor, :sassc
 
       # JavaScript minification
       set :assets_js_compressor, :uglifier
