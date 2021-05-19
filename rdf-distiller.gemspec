@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files              = %w(AUTHORS README.md UNLICENSE VERSION) + Dir.glob('lib/**/*.rb')
   s.require_paths      = %w(lib)
 
-  s.required_ruby_version      = '>= 2.4'
+  s.required_ruby_version      = '>= 3.0'
   s.requirements               = []
 
   # RDF dependencies
@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rack-cache',         '~> 1.12'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
   s.add_runtime_dependency      'puma',               '~> 4.3'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.10'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.11', '>= 1.11.4'
   s.add_runtime_dependency      'nokogumbo',          '~> 2.0'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.25"
 
