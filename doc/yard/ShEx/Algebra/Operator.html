@@ -104,7 +104,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb</dd>
+    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb</dd>
   </dl>
   
 </div>
@@ -472,7 +472,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each_descendant-instance_method" title="#each_descendant (instance method)">#<strong>each_descendant</strong> {|operator| ... } &#x21d2; Enumerator </a>
+      <a href="#each_descendant-instance_method" title="#each_descendant (instance method)">#<strong>each_descendant</strong>(include_self = false) {|operator| ... } &#x21d2; Enumerator </a>
     
 
     
@@ -522,7 +522,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#expression-instance_method" title="#expression (instance method)">#<strong>expression</strong>  &#x21d2; TripleExpression </a>
+      <a href="#expression-instance_method" title="#expression (instance method)">#<strong>expression</strong>  &#x21d2; RDF::Resource, Operand </a>
     
 
     
@@ -536,7 +536,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The optional TripleExpression for this Shape.</p>
+    <span class="summary_desc"><div class='inline'><p>The first expression from <span class='object_link'><a href="#expressions-instance_method" title="ShEx::Algebra::Operator#expressions (method)">#expressions</a></span>.</p>
 </div></span>
   
 </li>
@@ -560,6 +560,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Expressions are all operands which are Operators or RDF::Resource.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-instance_method" title="#find (instance method)">#<strong>find</strong>(id)  &#x21d2; TripleExpression, ShapeExpression </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Find a ShapeExpression or TripleExpression by identifier.</p>
 </div></span>
   
 </li>
@@ -613,7 +636,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(*operands)  &#x21d2; Operator </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(*operands, **options)  &#x21d2; Operator </a>
     
 
     
@@ -902,6 +925,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Parent operator, if any.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#references-instance_method" title="#references (instance method)">#<strong>references</strong>  &#x21d2; RDF::Resource, Operand </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>References are all operands which are RDF::Resource.</p>
 </div></span>
   
 </li>
@@ -1554,10 +1600,10 @@
 59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 38</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_operands'>operands</span><span class='rparen'>)</span>
-  <span class='ivar'>@options</span>  <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='op'>:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_operands'>operands</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='ivar'>@options</span>  <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
   <span class='ivar'>@operands</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_operand'>operand</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_operand'>operand</span>
       <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span>
@@ -1633,7 +1679,7 @@
 200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span>
   <span class='ivar'>@id</span>
@@ -1688,7 +1734,7 @@
 205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logger='>logger=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='ivar'>@logger</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -1743,7 +1789,7 @@
 195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_operands'>operands</span>
   <span class='ivar'>@operands</span>
@@ -1785,7 +1831,7 @@
 21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1827,7 +1873,7 @@
 18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_schema'>schema</span>
   <span class='ivar'>@schema</span>
@@ -1941,8 +1987,6 @@
       <pre class="lines">
 
 
-263
-264
 265
 266
 267
@@ -2017,10 +2061,12 @@
 336
 337
 338
-339</pre>
+339
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_shexj'>from_shexj</span><span class='lparen'>(</span><span class='id identifier rubyid_operator'>operator</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../JSON.html" title="JSON (module)">JSON</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../JSON/LD.html" title="JSON::LD (module)">LD</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../JSON/LD/Context.html" title="JSON::LD::Context (class)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="../../JSON/LD/Context.html#parse-class_method" title="JSON::LD::Context.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../ShEx.html" title="ShEx (module)">ShEx</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../ShEx.html#CONTEXT-constant" title="ShEx::CONTEXT (constant)">CONTEXT</a></span></span><span class='rparen'>)</span>
@@ -2097,7 +2143,7 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_operands'>operands</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_operands'>operands</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>id:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2206,10 +2252,6 @@
       <pre class="lines">
 
 
-486
-487
-488
-489
 490
 491
 492
@@ -2244,10 +2286,14 @@
 521
 522
 523
-524</pre>
+524
+525
+526
+527
+528</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 486</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_iri'>iri</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># If we have a base URI, use that when constructing a new URI
@@ -2386,10 +2432,6 @@
       <pre class="lines">
 
 
-540
-541
-542
-543
 544
 545
 546
@@ -2400,10 +2442,14 @@
 551
 552
 553
-554</pre>
+554
+555
+556
+557
+558</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 540</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 544</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># If we have a base URI, use that when constructing a new URI
@@ -2478,12 +2524,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-467
-468
-469</pre>
+471
+472
+473</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 467</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 471</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_uri'>base_uri</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base_uri</span><span class='rbracket'>]</span>
@@ -2536,7 +2582,7 @@ as specified or when parsing a BASE prologue element.</p>
 66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_closed?'>closed?</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:closed</span><span class='rparen'>)</span>
@@ -2561,13 +2607,13 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-663
-664
-665
-666</pre>
+676
+677
+678
+679</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 663</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 676</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dup'>dup</span>
   <span class='id identifier rubyid_operands'>operands</span> <span class='op'>=</span> <span class='ivar'>@operands</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='kw'>rescue</span> <span class='id identifier rubyid_o'>o</span><span class='rbrace'>}</span>
@@ -2581,7 +2627,7 @@ as specified or when parsing a BASE prologue element.</p>
       <div class="method_details ">
   <h3 class="signature " id="each_descendant-instance_method">
   
-    #<strong>each_descendant</strong> {|operator| ... } &#x21d2; <tt>Enumerator</tt> 
+    #<strong>each_descendant</strong>(include_self = false) {|operator| ... } &#x21d2; <tt>Enumerator</tt> 
   
 
   
@@ -2599,7 +2645,24 @@ as specified or when parsing a BASE prologue element.</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>include_self</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Yields:</p>
 <ul class="yield">
   
@@ -2652,11 +2715,6 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-599
-600
-601
-602
-603
 604
 605
 606
@@ -2669,24 +2727,29 @@ as specified or when parsing a BASE prologue element.</p>
 613
 614
 615
-616</pre>
+616
+617
+618
+619
+620
+621</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 599</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 604</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='id identifier rubyid_include_self'>include_self</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
 
-    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_include_self'>include_self</span>
 
     <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_operand'>operand</span><span class='op'>|</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_operand'>operand</span>
       <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span>
         <span class='id identifier rubyid_operand'>operand</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
-          <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_descendant</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='kw'>true</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_descendant</span><span class='rparen'>)</span>
         <span class='kw'>end</span>
       <span class='kw'>else</span>
-        <span class='id identifier rubyid_operand'>operand</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_operand'>operand</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_descendant</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_operand'>operand</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='kw'>true</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_operand'>operand</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each_descendant</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -2754,14 +2817,14 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-587
-588
-589
-590
-591</pre>
+591
+592
+593
+594
+595</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 587</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 591</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>==</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>&amp;&amp;</span>
@@ -2776,7 +2839,7 @@ as specified or when parsing a BASE prologue element.</p>
       <div class="method_details ">
   <h3 class="signature " id="expression-instance_method">
   
-    #<strong>expression</strong>  &#x21d2; <tt><span class='object_link'><a href="TripleExpression.html" title="ShEx::Algebra::TripleExpression (module)">TripleExpression</a></span></tt> 
+    #<strong>expression</strong>  &#x21d2; <tt><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>, <tt>Operand</tt> 
   
 
   
@@ -2784,7 +2847,7 @@ as specified or when parsing a BASE prologue element.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>The optional TripleExpression for this Shape.</p>
+    <p>The first expression from <span class='object_link'><a href="#expressions-instance_method" title="ShEx::Algebra::Operator#expressions (method)">#expressions</a></span>.</p>
 
 
   </div>
@@ -2797,7 +2860,7 @@ as specified or when parsing a BASE prologue element.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="TripleExpression.html" title="ShEx::Algebra::TripleExpression (module)">TripleExpression</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>, <tt>Operand</tt>)</span>
       
       
       
@@ -2816,7 +2879,7 @@ as specified or when parsing a BASE prologue element.</p>
 228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expression'>expression</span>
   <span class='id identifier rubyid_expressions'>expressions</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -2870,11 +2933,79 @@ as specified or when parsing a BASE prologue element.</p>
 221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expressions'>expressions</span>
   <span class='ivar'>@expressions</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span>
     <span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">Resource</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="ShapeExpression.html" title="ShEx::Algebra::ShapeExpression (module)">ShapeExpression</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="TripleExpression.html" title="ShEx::Algebra::TripleExpression (module)">TripleExpression</a></span></span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find-instance_method">
+  
+    #<strong>find</strong>(id)  &#x21d2; <tt><span class='object_link'><a href="TripleExpression.html" title="ShEx::Algebra::TripleExpression (module)">TripleExpression</a></span></tt>, <tt><span class='object_link'><a href="ShapeExpression.html" title="ShEx::Algebra::ShapeExpression (module)">ShapeExpression</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Find a ShapeExpression or TripleExpression by identifier</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt>#to_s</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TripleExpression.html" title="ShEx::Algebra::TripleExpression (module)">TripleExpression</a></span></tt>, <tt><span class='object_link'><a href="ShapeExpression.html" title="ShEx::Algebra::ShapeExpression (module)">ShapeExpression</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+643
+644
+645</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 643</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2911,7 +3042,7 @@ as specified or when parsing a BASE prologue element.</p>
 85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_focus'>focus</span>
   <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:focus</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:focus</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -2942,7 +3073,7 @@ as specified or when parsing a BASE prologue element.</p>
 89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_focus='>focus=</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:focus</span><span class='rbrace'>}</span>
@@ -2991,12 +3122,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-579
-580
-581</pre>
+583
+584
+585</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 579</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 583</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%#0x(%s%s)&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid___id__'>__id__</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rparen'>)</span>
@@ -3110,12 +3241,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-478
-479
-480</pre>
+482
+483
+484</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 482</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_iri'>iri</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_iri'>iri</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -3140,12 +3271,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-341
-342
-343</pre>
+343
+344
+345</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_json_type'>json_type</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>::</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -3198,7 +3329,7 @@ as specified or when parsing a BASE prologue element.</p>
 96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matched'>matched</span>
   <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:matched</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:matched</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -3229,7 +3360,7 @@ as specified or when parsing a BASE prologue element.</p>
 100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matched='>matched=</span><span class='lparen'>(</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:matched</span><span class='rbrace'>}</span>
@@ -3283,7 +3414,7 @@ as specified or when parsing a BASE prologue element.</p>
 140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message'>message</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:message</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:message</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -3314,7 +3445,7 @@ as specified or when parsing a BASE prologue element.</p>
 144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message='>message=</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:message</span><span class='rbrace'>}</span>
@@ -3371,7 +3502,7 @@ as specified or when parsing a BASE prologue element.</p>
 169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_not_matched'>not_matched</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expression'>expression</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='label'>message:</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -3429,7 +3560,7 @@ as specified or when parsing a BASE prologue element.</p>
 176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_not_satisfied'>not_satisfied</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expression'>expression</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='label'>message:</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -3506,7 +3637,7 @@ as specified or when parsing a BASE prologue element.</p>
 213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 211</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_operand'>operand</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='int'>0</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span>
@@ -3554,10 +3685,10 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-624</pre>
+629</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 624</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 629</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent'>parent</span><span class='semicolon'>;</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:parent</span><span class='rbracket'>]</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -3603,15 +3734,68 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-630
-631
-632</pre>
+635
+636
+637</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 630</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 635</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent='>parent=</span><span class='lparen'>(</span><span class='id identifier rubyid_operator'>operator</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:parent</span><span class='rbracket'>]</span><span class='op'>=</span> <span class='id identifier rubyid_operator'>operator</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="references-instance_method">
+  
+    #<strong>references</strong>  &#x21d2; <tt><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>, <tt>Operand</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>References are all operands which are RDF::Resource</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">RDF::Resource</a></span></tt>, <tt>Operand</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+233
+234
+235</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 233</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_references'>references</span>
+  <span class='ivar'>@references</span> <span class='op'>=</span> <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/Resource.html" title="RDF::Resource (module)">Resource</a></span></span><span class='rparen'>)</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3661,7 +3845,7 @@ as specified or when parsing a BASE prologue element.</p>
 118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:satisfied</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:satisfied</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -3692,7 +3876,7 @@ as specified or when parsing a BASE prologue element.</p>
 122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfied='>satisfied=</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:satisfied</span><span class='rbrace'>}</span>
@@ -3754,7 +3938,7 @@ as specified or when parsing a BASE prologue element.</p>
 160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='label'>focus:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>matched:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>unmatched:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>satisfied:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>unsatisfied:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>message:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:NAME</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>satisfied</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_message'>message</span>
@@ -3813,7 +3997,7 @@ as specified or when parsing a BASE prologue element.</p>
 79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_semact?'>semact?</span><span class='semicolon'>;</span> <span class='kw'>false</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -3864,7 +4048,7 @@ as specified or when parsing a BASE prologue element.</p>
 73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_semantic_actions'>semantic_actions</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="SemAct.html" title="ShEx::Algebra::SemAct (class)">SemAct</a></span></span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -3927,10 +4111,6 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-561
-562
-563
-564
 565
 566
 567
@@ -3939,10 +4119,14 @@ as specified or when parsing a BASE prologue element.</p>
 570
 571
 572
-573</pre>
+573
+574
+575
+576
+577</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 561</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 565</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_serialize_value'>serialize_value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3983,7 +4167,7 @@ as specified or when parsing a BASE prologue element.</p>
 187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:NAME</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='ivar'>@id</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@id</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -4016,7 +4200,7 @@ as specified or when parsing a BASE prologue element.</p>
 182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_structure_error'>structure_error</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_expression'>expression</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:expression</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
@@ -4066,8 +4250,6 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-352
-353
 354
 355
 356
@@ -4171,10 +4353,14 @@ as specified or when parsing a BASE prologue element.</p>
 454
 455
 456
-457</pre>
+457
+458
+459
+460
+461</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
   <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='id identifier rubyid_json_type'>json_type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Schema</span><span class='tstring_end'>&#39;</span></span> <span class='op'>?</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@context</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../../ShEx.html" title="ShEx (module)">ShEx</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../ShEx.html#CONTEXT-constant" title="ShEx::CONTEXT (constant)">CONTEXT</a></span></span><span class='rbrace'>}</span> <span class='op'>:</span>  <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4259,6 +4445,8 @@ as specified or when parsing a BASE prologue element.</p>
       <span class='kw'>case</span> <span class='kw'>self</span>
       <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="And.html" title="ShEx::Algebra::And (class)">And</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Or.html" title="ShEx::Algebra::Or (class)">Or</a></span></span>
         <span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>shapeExprs</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+      <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Not.html" title="ShEx::Algebra::Not (class)">Not</a></span></span>
+        <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>shapeExpr</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>valueExpr</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
       <span class='kw'>end</span>
@@ -4302,12 +4490,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-345
-346
-347</pre>
+347
+348
+349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 347</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4355,26 +4543,16 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-245
-246
-247
-248
-249
-250
-251
 252
 253
-254</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sxp'>to_sxp</span>
-  <span class='kw'>begin</span>
-    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sxp</span><span class='tstring_end'>&#39;</span></span> <span class='comment'># @see https://rubygems.org/gems/sxp
-</span>  <span class='kw'>rescue</span> <span class='const'>LoadError</span>
-    <span class='id identifier rubyid_abort'>abort</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SPARQL::Algebra::Operator#to_sxp requires the SXP gem (hint: `gem install sxp&#39;).</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sparql/algebra/sxp_extensions</span><span class='tstring_end'>&#39;</span></span>
 
   <span class='id identifier rubyid_to_sxp_bin'>to_sxp_bin</span><span class='period'>.</span><span class='id identifier rubyid_to_sxp'>to_sxp</span>
@@ -4429,14 +4607,14 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-235
-236
-237
-238
-239</pre>
+242
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sxp_bin'>to_sxp_bin</span>
   <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:NAME</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>+</span>
@@ -4489,7 +4667,7 @@ as specified or when parsing a BASE prologue element.</p>
 76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_triple_expression?'>triple_expression?</span><span class='semicolon'>;</span> <span class='kw'>false</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -4540,7 +4718,7 @@ as specified or when parsing a BASE prologue element.</p>
 107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unmatched'>unmatched</span>
   <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:unmatched</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:unmatched</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -4571,7 +4749,7 @@ as specified or when parsing a BASE prologue element.</p>
 111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unmatched='>unmatched=</span><span class='lparen'>(</span><span class='id identifier rubyid_statements'>statements</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:unmatched</span><span class='rbrace'>}</span>
@@ -4625,7 +4803,7 @@ as specified or when parsing a BASE prologue element.</p>
 129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unsatisfied'>unsatisfied</span>
   <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:unsatisfied</span><span class='rbrace'>}</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='symbol'>:unsatisfied</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -4656,7 +4834,7 @@ as specified or when parsing a BASE prologue element.</p>
 133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unsatisfied='>unsatisfied=</span><span class='lparen'>(</span><span class='id identifier rubyid_ops'>ops</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span> <span class='id identifier rubyid_op'>op</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_op'>op</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:unsatisfied</span><span class='rbrace'>}</span>
@@ -4728,23 +4906,23 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-648
-649
-650
-651
-652
-653
-654
-655
-656
-657
-658
-659
-660
-661</pre>
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 648</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 661</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
   <span class='id identifier rubyid_operands'>operands</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_op'>op</span><span class='op'>|</span>
@@ -4860,12 +5038,12 @@ as specified or when parsing a BASE prologue element.</p>
       <pre class="lines">
 
 
-532
-533
-534</pre>
+536
+537
+538</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/algebra/operator.rb', line 532</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/algebra/operator.rb', line 536</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4880,9 +5058,9 @@ as specified or when parsing a BASE prologue element.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 12 13:29:23 2021 by
+  Generated on Thu Sep 30 14:37:49 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-3.0.0).
+  0.9.26 (ruby-3.0.2).
 </div>
 
     </div>

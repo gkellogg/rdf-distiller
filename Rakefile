@@ -31,6 +31,7 @@ end
 desc "Create README links"
 task :readme do
   dir = File.expand_path("../", __FILE__)
+  FileUtils.mkdir_p("readmes")
   Dir.glob("readmes/*").each {|d| FileUtils.rm d}
   Dir.glob('vendor/bundler/**/README.md').each do |path|
     d = path.split('/')[-2]
