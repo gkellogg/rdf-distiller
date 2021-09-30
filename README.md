@@ -23,6 +23,8 @@ Distills between formats supported in [Linked Data][].
 * Includes [Turtle][] support using the [RDF::Turtle][] gem.
 * Includes [Microdata][] support using the [RDF::Microdata][] gem.
 * Includes [JSON-LD][] support using the [JSON::LD][] gem.
+* Includes [SHACL][] support using the [SHACL][SHACL gem] gem.
+* Includes [ShEx][] support using the [ShEx][ShEx gem] gem.
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
 * Includes additional vocabularies using the [RDF::Vocab][] gem.
 
@@ -49,6 +51,8 @@ Distills between formats supported in [Linked Data][].
   * {Sinatra::SPARQL Linked Data for Sinatra}
 
 ### Query/Access
+* {SHACL}
+* {ShEx}
 * {SPARQL}
 * {SPARQL::Client SPARQL Client}
 * {Spira}
@@ -94,18 +98,20 @@ see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <https://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
 [RDF.rb]:         https://ruby-rdf.github.com/rdf
-[RDF::JSON]:      https://rdoc.info/github/ruby-rdf/rdf-json/
-[RDF::Microdata]: https://rdoc.info/github/ruby-rdf/rdf-microdata
-[RDF::N3]:        https://rdoc.info/github/ruby-rdf/rdf-n3
-[RDF::RDFa]:      https://rdoc.info/github/ruby-rdf/rdf-rdfa
-[RDF::RDFXML]:    https://rdoc.info/github/ruby-rdf/rdf-rdfxml
-[RDF::Tabular]:   https://rdoc.info/github/ruby-rdf/rdf-tabular
-[RDF::TriG]:      https://rdoc.info/github/ruby-rdf/rdf-trig
-[RDF::TriX]:      https://rdoc.info/github/ruby-rdf/rdf-trix/
-[RDF::Turtle]:    https://rdoc.info/github/ruby-rdf/rdf-turtle
-[RDF::Vocab]:     https://rdoc.info/github/ruby-rdf/rdf-vocab
-[JSON::LD]:       https://rdoc.info/github/ruby-rdf/json-ld
-[SPARQL gem]:     https://rdoc.info/github/ruby-rdf/sparql
+[RDF::JSON]:      https://ruby-rdf.github.com/rdf-json/
+[RDF::Microdata]: https://ruby-rdf.github.com/rdf-microdata
+[RDF::N3]:        https://ruby-rdf.github.com/rdf-n3
+[RDF::RDFa]:      https://ruby-rdf.github.com/rdf-rdfa
+[RDF::RDFXML]:    https://ruby-rdf.github.com/rdf-rdfxml
+[RDF::Tabular]:   https://ruby-rdf.github.com/rdf-tabular
+[RDF::TriG]:      https://ruby-rdf.github.com/rdf-trig
+[RDF::TriX]:      https://ruby-rdf.github.com/rdf-trix/
+[RDF::Turtle]:    https://ruby-rdf.github.com/rdf-turtle
+[RDF::Vocab]:     https://ruby-rdf.github.com/rdf-vocab
+[JSON::LD]:       https://ruby-rdf.github.com/json-ld
+[SHACL gem]:      https://ruby-rdf.github.com/shacl
+[ShEx gem]:       https://ruby-rdf.github.com/shex
+[SPARQL gem]:     https://ruby-rdf.github.com/sparql
 [JSON-LD]:        https://json-ld.org/
 [Microdata]:      https://dev.w3.org/html5/md/
 [N-Triples]:      https://en.wikipedia.org/wiki/N-Triples
@@ -116,6 +122,8 @@ see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [RDF/JSON]:       https://n2.talis.com/wiki/RDF_JSON_Specification
 [RDF/XML]:        https://www.w3.org/TR/rdf-syntax-grammar/
 [RDFa]:           https://en.wikipedia.org/wiki/RDFa
+[SHACL]:          https://en.wikipedia.org/wiki/SHACL
+[ShEx]:           https://en.wikipedia.org/wiki/ShEx
 [SPARQL]:         https://en.wikipedia.org/wiki/Sparql
 [TriG]:           https://en.wikipedia.org/wiki/TriG_(syntax)
 [TriX]:           https://en.wikipedia.org/wiki/TriX_(syntax)

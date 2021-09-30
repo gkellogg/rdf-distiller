@@ -98,7 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-5fe0cadcda10/lib/rdf/microdata/rdfa_reader.rb</dd>
+    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-60eb619bd4f9/lib/rdf/microdata/rdfa_reader.rb</dd>
   </dl>
   
 </div>
@@ -478,6 +478,7 @@
       <pre class="lines">
 
 
+31
 32
 33
 34
@@ -565,10 +566,13 @@
 116
 117
 118
-119</pre>
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-5fe0cadcda10/lib/rdf/microdata/rdfa_reader.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-60eb619bd4f9/lib/rdf/microdata/rdfa_reader.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
@@ -583,8 +587,12 @@
     <span class='comment'># Otherwise, default is utf-8
 </span>    <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>utf-8</span><span class='tstring_end'>&#39;</span></span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:read</span><span class='rparen'>)</span>
-    <span class='op'>::</span><span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>HTML5</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:read</span><span class='rparen'>)</span>
+      <span class='op'>::</span><span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>HTML5</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>max_parse_errors:</span> <span class='int'>1000</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>LoadError</span><span class='comma'>,</span> <span class='const'>NoMethodError</span>
+      <span class='op'>::</span><span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>HTML</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:encoding</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='comment'># For all members having @itemscope
@@ -718,12 +726,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-5fe0cadcda10/lib/rdf/microdata/rdfa_reader.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-60eb619bd4f9/lib/rdf/microdata/rdfa_reader.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rdfa'>rdfa</span>
   <span class='ivar'>@rdfa</span>
@@ -755,16 +763,16 @@
       <pre class="lines">
 
 
+11
 12
 13
 14
 15
 16
-17
-18</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-5fe0cadcda10/lib/rdf/microdata/rdfa_reader.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.0.0/bundler/gems/rdf-microdata-60eb619bd4f9/lib/rdf/microdata/rdfa_reader.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -783,9 +791,9 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 12 13:28:47 2021 by
+  Generated on Thu Sep 30 14:37:35 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-3.0.0).
+  0.9.26 (ruby-3.0.2).
 </div>
 
     </div>

@@ -83,7 +83,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/shex-633488d7a0bc/lib/shex/terminals.rb</dd>
+    <dd>vendor/bundler/ruby/3.0.0/bundler/gems/shex-7cdbd57ce725/lib/shex/terminals.rb</dd>
   </dl>
   
 </div>
@@ -315,7 +315,11 @@
         <dt id="WS-constant" class="">WS =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?:\s|(?:#[^\n\r]*))+</span><span class='regexp_end'>/m</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>%r(</span><span class='tstring_content'>(
+  \s
+| (?:\#[^\n\r]*)
+| (?:/\*(?:(?:\*[^/])|[^*])*\*/)
+)+</span><span class='regexp_end'>)xmu</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="RDF_TYPE-constant" class="">RDF_TYPE =
           <div class="docstring">
@@ -647,54 +651,6 @@
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\{\s*</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#INTEGER-constant" title="ShEx::Terminals::INTEGER (constant)">INTEGER</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>(?:,</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#WS-constant" title="ShEx::Terminals::WS (constant)">WS</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>*(?:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#INTEGER-constant" title="ShEx::Terminals::INTEGER (constant)">INTEGER</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>|\*)?)?</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#WS-constant" title="ShEx::Terminals::WS (constant)">WS</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>*\}</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
-        <dt id="STR_EXPR-constant" class="">STR_EXPR =
-          <div class="docstring">
-  <div class="discussion">
-    <p>String terminals, mixed case sensitivity</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>%r(</span><span class='tstring_content'>true|false
-   |\^\^|\/\/
-   |[\(\)\{\}\[\],\.;\=\-\~!\|\&amp;\@\$\?\+\*\%\^a]|
-   (?i:OR|AND|NOT
-     |BASE|PREFIX
-     |IRI|BNODE|NONLITERAL
-     |MINLENGTH|MAXLENGTH|LENGTH
-     |MAXINCLUSIVE|MAXEXCLUSIVE
-     |MININCLUSIVE|MINEXCLUSIVE
-     |TOTALDIGITS|FRACTIONDIGITS
-     |START
-     |EXTERNAL|CLOSED|EXTRA|LITERAL
-   )
-</span><span class='regexp_end'>)x</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-      
-        <dt id="STR_MAP-constant" class="">STR_MAP =
-          <div class="docstring">
-  <div class="discussion">
-    <p>Map terminals to canonical form</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
-        </dt>
-        <dd><pre class="code"><span class='qwords_beg'>%w{</span><span class='tstring_content'>OR</span><span class='words_sep'> </span><span class='tstring_content'>AND</span><span class='words_sep'> </span><span class='tstring_content'>NOT</span><span class='words_sep'> </span><span class='tstring_content'>BASE</span><span class='words_sep'> </span><span class='tstring_content'>PREFIX</span><span class='words_sep'> </span><span class='tstring_content'>IRI</span><span class='words_sep'> </span><span class='tstring_content'>BNODE</span><span class='words_sep'> </span><span class='tstring_content'>NONLITERAL</span><span class='words_sep'>
-  </span><span class='tstring_content'>MINLENGTH</span><span class='words_sep'> </span><span class='tstring_content'>MAXLENGTH</span><span class='words_sep'> </span><span class='tstring_content'>LENGTH</span><span class='words_sep'> </span><span class='tstring_content'>MININCLUSIVE</span><span class='words_sep'> </span><span class='tstring_content'>MAXINCLUSIVE</span><span class='words_sep'> </span><span class='tstring_content'>MINEXCLUSIVE</span><span class='words_sep'> </span><span class='tstring_content'>MAXEXCLUSIVE</span><span class='words_sep'>
-  </span><span class='tstring_content'>TOTALDIGITS</span><span class='words_sep'> </span><span class='tstring_content'>FRACTIONDIGITS</span><span class='words_sep'> </span><span class='tstring_content'>START</span><span class='words_sep'> </span><span class='tstring_content'>EXTERNAL</span><span class='words_sep'> </span><span class='tstring_content'>CLOSED</span><span class='words_sep'> </span><span class='tstring_content'>EXTRA</span><span class='words_sep'> </span><span class='tstring_content'>LITERAL</span><span class='tstring_end'>}</span></span><span class='period'>.</span>
-<span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_memo'>memo</span><span class='comma'>,</span> <span class='id identifier rubyid_t'>t</span><span class='op'>|</span>
-  <span class='id identifier rubyid_memo'>memo</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre></dd>
-      
     </dl>
   
 
@@ -709,9 +665,9 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 12 13:28:22 2021 by
+  Generated on Thu Sep 30 14:37:26 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-3.0.0).
+  0.9.26 (ruby-3.0.2).
 </div>
 
     </div>
