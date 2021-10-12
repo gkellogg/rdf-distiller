@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.12'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
-  s.add_runtime_dependency      'puma',               '~> 4.3'
+  s.add_runtime_dependency      'puma',               '>= 4.3', '< 6.0'
   s.add_runtime_dependency      'nokogiri',           '~> 1.12'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.25"
 
