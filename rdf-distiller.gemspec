@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'sinatra',            '~> 2.1'
   s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.2'
   s.add_runtime_dependency      'sassc',              '~> 2.4'
-  s.add_runtime_dependency      'sprockets',          '~> 3.7'
+  s.add_runtime_dependency      'sprockets',          '~> 3.7' # 4.0 but for sinatra-asset-pipeline
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
   s.add_runtime_dependency      'uglifier',           '~> 4.2'
 
@@ -41,9 +41,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      "rack",               '~> 2.2'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
-  s.add_runtime_dependency      'rack-cache',         '~> 1.12'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.13'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
-  s.add_runtime_dependency      'puma',               '>= 4.3', '< 6.0'
+  s.add_runtime_dependency      'puma',               '~> 5.5'
   s.add_runtime_dependency      'nokogiri',           '~> 1.12'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.25"
 
@@ -52,8 +52,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency  'rspec',              '~> 3.10'
   s.add_development_dependency  'rspec-its',          '~> 1.3'
   s.add_development_dependency  'rack-test',          '~> 1.1'
-  s.add_development_dependency  'jsonpath',           '~> 1.0'
-  s.add_development_dependency  'webmock',            '~> 3.11'
+  s.add_development_dependency  'jsonpath',           '~> 1.1'
+  s.add_development_dependency  'webmock',            '~> 3.14'
 
   s.post_install_message        = nil
 end
