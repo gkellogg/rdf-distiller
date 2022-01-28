@@ -97,27 +97,27 @@ see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 * <https://github.com/gkellogg/rdf-distiller>
 * <https://lists.w3.org/Archives/Public/public-rdf-ruby/>
 
-[RDF.rb]:         https://ruby-rdf.github.com/rdf
-[RDF::JSON]:      https://ruby-rdf.github.com/rdf-json/
-[RDF::Microdata]: https://ruby-rdf.github.com/rdf-microdata
-[RDF::N3]:        https://ruby-rdf.github.com/rdf-n3
-[RDF::RDFa]:      https://ruby-rdf.github.com/rdf-rdfa
-[RDF::RDFXML]:    https://ruby-rdf.github.com/rdf-rdfxml
-[RDF::Tabular]:   https://ruby-rdf.github.com/rdf-tabular
-[RDF::TriG]:      https://ruby-rdf.github.com/rdf-trig
-[RDF::TriX]:      https://ruby-rdf.github.com/rdf-trix/
-[RDF::Turtle]:    https://ruby-rdf.github.com/rdf-turtle
-[RDF::Vocab]:     https://ruby-rdf.github.com/rdf-vocab
-[JSON::LD]:       https://ruby-rdf.github.com/json-ld
-[SHACL gem]:      https://ruby-rdf.github.com/shacl
-[ShEx gem]:       https://ruby-rdf.github.com/shex
-[SPARQL gem]:     https://ruby-rdf.github.com/sparql
+[RDF.rb]:         https://ruby-rdf.github.io/rdf
+[RDF::JSON]:      https://ruby-rdf.github.io/rdf-json/
+[RDF::Microdata]: https://ruby-rdf.github.io/rdf-microdata
+[RDF::N3]:        https://ruby-rdf.github.io/rdf-n3
+[RDF::RDFa]:      https://ruby-rdf.github.io/rdf-rdfa
+[RDF::RDFXML]:    https://ruby-rdf.github.io/rdf-rdfxml
+[RDF::Tabular]:   https://ruby-rdf.github.io/rdf-tabular
+[RDF::TriG]:      https://ruby-rdf.github.io/rdf-trig
+[RDF::TriX]:      https://ruby-rdf.github.io/rdf-trix/
+[RDF::Turtle]:    https://ruby-rdf.github.io/rdf-turtle
+[RDF::Vocab]:     https://ruby-rdf.github.io/rdf-vocab
+[JSON::LD]:       https://ruby-rdf.github.io/json-ld
+[SHACL gem]:      https://ruby-rdf.github.io/shacl
+[ShEx gem]:       https://ruby-rdf.github.io/shex
+[SPARQL gem]:     https://ruby-rdf.github.io/sparql
 [JSON-LD]:        https://json-ld.org/
 [Microdata]:      https://dev.w3.org/html5/md/
 [N-Triples]:      https://en.wikipedia.org/wiki/N-Triples
 [N-Quads]:        https://en.wikipedia.org/wiki/N-Quads
 [Notation3]:      https://en.wikipedia.org/wiki/Notation3
-[LinkedData]:     https://ruby-rdf.github.com/linkeddata
+[LinkedData]:     https://ruby-rdf.github.io/linkeddata
 [Linked Data]:    https://en.wikipedia.org/wiki/LinkedData
 [RDF/JSON]:       https://n2.talis.com/wiki/RDF_JSON_Specification
 [RDF/XML]:        https://www.w3.org/TR/rdf-syntax-grammar/
