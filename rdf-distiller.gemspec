@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 2.1'
+  s.add_runtime_dependency      'sinatra',            '~> 2.2'
   s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.2'
   s.add_runtime_dependency      'sassc',              '~> 2.4'
   s.add_runtime_dependency      'sprockets',          '~> 3.7' # 4.0 but for sinatra-asset-pipeline
@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
   s.add_runtime_dependency      'puma',               '~> 5.5'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.12'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.13', '>= 1.13.4'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.25"
 
   # development dependencies

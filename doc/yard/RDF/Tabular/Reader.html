@@ -101,7 +101,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb</dd>
+    <dd>vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb</dd>
   </dl>
   
 </div>
@@ -763,10 +763,11 @@ or an Array used as an internalized array of arrays</p>
 158
 159
 160
-161</pre>
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
@@ -776,7 +777,8 @@ or an Array used as an internalized array of arrays</p>
     <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:path</span><span class='rparen'>)</span>
     <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span> <span class='kw'>if</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:filename</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_relative?'><span class='object_link'><a href="../URI.html#relative%3F-instance_method" title="RDF::URI#relative? (method)">relative?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-      <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file:/</span><span class='embexpr_beg'>#{</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span>
+      <span class='id identifier rubyid_file_uri'>file_uri</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file:</span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file_uri'>file_uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_normalize'>normalize</span>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_log_debug'>log_debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reader#initialize</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>input: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, base: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
@@ -920,7 +922,7 @@ or an Array used as an internalized array of arrays</p>
 23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_input'>input</span>
   <span class='ivar'>@input</span>
@@ -975,7 +977,7 @@ or an Array used as an internalized array of arrays</p>
 18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_metadata'>metadata</span>
   <span class='ivar'>@metadata</span>
@@ -1014,7 +1016,7 @@ or an Array used as an internalized array of arrays</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><a href="https://www.rubydoc.info/github/ruby-rdf/rdf/RDF/Writer#options-class_method" target="_parent" title="https://www.rubydoc.info/github/ruby-rdf/rdf/RDF/Writer#options-class_method">https://www.rubydoc.info/github/ruby-rdf/rdf/RDF/Writer#options-class_method</a></li>
+      <li><a href="https://ruby-rdf.github.io/rdf/RDF/Writer#options-class_method" target="_parent" title="https://ruby-rdf.github.io/rdf/RDF/Writer#options-class_method">https://ruby-rdf.github.io/rdf/RDF/Writer#options-class_method</a></li>
     
   </ul>
 
@@ -1055,7 +1057,7 @@ or an Array used as an internalized array of arrays</p>
 54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>
   <span class='kw'>super</span> <span class='op'>+</span> <span class='lbracket'>[</span>
@@ -1134,10 +1136,10 @@ or an Array used as an internalized array of arrays</p>
       <pre class="lines">
 
 
-638</pre>
+639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 638</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 639</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_minimal?'>minimal?</span><span class='semicolon'>;</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:minimal</span><span class='rbracket'>]</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -1182,10 +1184,10 @@ or an Array used as an internalized array of arrays</p>
       <pre class="lines">
 
 
-639</pre>
+640</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 639</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 640</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prov?'>prov?</span><span class='semicolon'>;</span> <span class='op'>!</span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:noProv</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -1248,7 +1250,6 @@ or an Array used as an internalized array of arrays</p>
       <pre class="lines">
 
 
-455
 456
 457
 458
@@ -1429,10 +1430,11 @@ or an Array used as an internalized array of arrays</p>
 633
 634
 635
-636</pre>
+636
+637</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 455</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># Construct metadata from that passed from file open, along with information from the file.
@@ -1766,7 +1768,6 @@ or an Array used as an internalized array of arrays</p>
       <pre class="lines">
 
 
-410
 411
 412
 413
@@ -1802,10 +1803,11 @@ or an Array used as an internalized array of arrays</p>
 443
 444
 445
-446</pre>
+446
+447</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 411</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_io'>io</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_options'>options</span>
@@ -1887,15 +1889,15 @@ or an Array used as an internalized array of arrays</p>
       <pre class="lines">
 
 
-377
 378
 379
 380
 381
-382</pre>
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-b3951f085ab6/lib/rdf/tabular/reader.rb', line 377</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/rdf-tabular-c40c620313ac/lib/rdf/tabular/reader.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
   <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:validate</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1913,7 +1915,7 @@ or an Array used as an internalized array of arrays</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Dec 30 14:46:05 2021 by
+  Generated on Tue May  3 17:50:14 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.0).
 </div>
