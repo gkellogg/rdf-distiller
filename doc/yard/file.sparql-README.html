@@ -57,9 +57,9 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1 id="sparql-for-rdf-rb">SPARQL for RDF.rb</h1>
+      <div id="content"><div id='filecontents'><h1 id="sparql-query-and-update-library-for-ruby">SPARQL Query and Update library for Ruby</h1>
 
-<p>This is a <a href="https://ruby-lang.org/">Ruby</a> implementation of <a href="https://en.wikipedia.org/wiki/SPARQL">SPARQL</a> for <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a>.</p>
+<p>An implementation of <a href="https://en.wikipedia.org/wiki/SPARQL">SPARQL</a> for <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a>.</p>
 
 <p><a href="https://badge.fury.io/rb/sparql"><img src="https://badge.fury.io/rb/sparql.png" alt="Gem Version"></a>
 <a href="https://github.com/ruby-rdf/sparql/actions?query=workflow%3ACI"><img src="https://github.com/ruby-rdf/sparql/workflows/CI/badge.svg?branch=develop" alt="Build Status"></a>
@@ -77,13 +77,15 @@
 or HTML.</li>
 <li>SPARQL CONSTRUCT or DESCRIBE serialized based on Format, Extension of Mime Type
 using available RDF Writers (see <a href="https://rubygems.org/gems/linkeddata">Linked Data</a>)</li>
-<li>SPARQL Client for accessing remote SPARQL endpoints.</li>
-<li>SPARQL Update</li>
+<li>SPARQL Client for accessing remote SPARQL endpoints (via <a href="https://github.com/ruby-rdf/sparql-client">sparql-client</a>).</li>
+<li><a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a> (via <span class='object_link'><a href="SPARQL/Server.html" title="SPARQL::Server (module)">SPARQL::Server</a></span>).</li>
+<li><a href="https://www.w3.org/TR/sparql11-update/">SPARQL 1.1 Update</a></li>
 <li><a href="https://rack.github.io">Rack</a> and <a href="https://www.sinatrarb.com/">Sinatra</a> middleware to perform <a href="https://en.wikipedia.org/wiki/Content_negotiation">HTTP content negotiation</a> for result formats
 
 <ul>
 <li>Compatible with any <a href="https://rack.github.io">Rack</a> or <a href="https://www.sinatrarb.com/">Sinatra</a> application and any Rack-based framework.</li>
 <li>Helper method for describing <a href="https://www.w3.org/TR/sparql11-service-description/">SPARQL Service Description</a></li>
+<li>Helper method for setting up datasets as part of the <a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a>.</li>
 </ul></li>
 <li>Implementation Report: <a href="file.earl.html" title="EARL">EARL</a></li>
 <li>Compatible with Ruby &gt;= 2.6.</li>
@@ -93,12 +95,13 @@ using available RDF Writers (see <a href="https://rubygems.org/gems/linkeddata">
 
 <h2 id="description">Description</h2>
 
-<p>The <span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span> gem implements <a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1 Query</a>, and <a href="https://www.w3.org/TR/sparql11-update/">SPARQL 1.1 Update</a>, and provides <a href="https://rack.github.io">Rack</a> and <a href="https://www.sinatrarb.com/">Sinatra</a> middleware to provide results using <a href="https://en.wikipedia.org/wiki/Content_negotiation">HTTP Content Negotiation</a>.</p>
+<p>The <span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span> gem implements <a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1 Query</a>, and <a href="https://www.w3.org/TR/sparql11-update/">SPARQL 1.1 Update</a>, and provides <a href="https://rack.github.io">Rack</a> and <a href="https://www.sinatrarb.com/">Sinatra</a> middleware to provide results using <a href="https://en.wikipedia.org/wiki/Content_negotiation">HTTP Content Negotiation</a> and to support <a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a>.</p>
 
 <ul>
 <li><span class='object_link'><a href="SPARQL/Grammar.html" title="SPARQL::Grammar (module)">SPARQL::Grammar</a></span> implements a <a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1 Query</a> and <a href="https://www.w3.org/TR/sparql11-update/">SPARQL 1.1 Update</a> parser generating <a href="https://jena.apache.org/documentation/notes/sse.html">SPARQL S-Expressions (SSE)</a>.</li>
-<li><span class='object_link'><a href="SPARQL/Algebra.html" title="SPARQL::Algebra (module)">SPARQL::Algebra</a></span> executes SSE against Any <code>RDF::Graph</code> or <code>RDF::Repository</code>, including compliant <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a> repository adaptors such as <a href="https://rubygems.org/gems/rdf-do">RDF::DO</a> and <a href="https://rubygems.org/gems/rdf-mongo">RDF::Mongo</a>.</li>
+<li><span class='object_link'><a href="SPARQL/Algebra.html" title="SPARQL::Algebra (module)">SPARQL::Algebra</a></span> executes SSE against Any <code>RDF::Graph</code> or <code>RDF::Repository</code>, including compliant <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a> repository adaptors such as <a href="https://rubygems.org/gems/rdf-do">RDF::DO</a> and <a href="https://rubygems.org/gems/rdf-mongo">RDF::Mongo</a>.</li>
 <li><span class='object_link'><a href="Rack/SPARQL.html" title="Rack::SPARQL (module)">Rack::SPARQL</a></span> and <span class='object_link'><a href="Sinatra/SPARQL.html" title="Sinatra::SPARQL (module)">Sinatra::SPARQL</a></span> provide middleware components to format results using an appropriate format based on <a href="https://en.wikipedia.org/wiki/Content_negotiation">HTTP content negotiation</a>.</li>
+<li><span class='object_link'><a href="SPARQL/Server.html" title="SPARQL::Server (module)">SPARQL::Server</a></span> implements the <a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a> using <span class='object_link'><a href="Sinatra/SPARQL.html" title="Sinatra::SPARQL (module)">Sinatra::SPARQL</a></span>.</li>
 </ul>
 
 <h3 id="sparql-1-1-query-extensions-and-limitations"><a href="https://www.w3.org/TR/sparql11-query/">SPARQL 1.1 Query</a> Extensions and Limitations</h3>
@@ -137,18 +140,32 @@ longer have a trailing &quot;.&quot;, although they do not need a leading digit.
 
 <ul>
 <li><a href="https://www.w3.org/TR/sparql11-federated-query/">Federated Query</a>,</li>
-<li><a href="https://www.w3.org/TR/sparql11-entailment/">Entailment Regimes</a>,</li>
-<li><a href="https://www.w3.org/TR/sparql11-protocol/">Protocol</a>, and</li>
-<li><a href="https://www.w3.org/TR/sparql11-http-rdf-update/">Graph Store HTTP Protocol</a></li>
+<li><a href="https://www.w3.org/TR/sparql11-entailment/">Entailment Regimes</a>, and</li>
+<li><a href="https://www.w3.org/TR/sparql11-http-rdf-update/">Graph Store HTTP Protocol</a> but the closely related <a href="https://www.w3.org/TR/ldp/">Linked Data Platform</a> implemented in <a href="https://github.com/ruby-rdf/rdf-ldp">rdf-ldp</a> supports these use cases.</li>
 </ul>
-
-<p>either in this, or related gems.</p>
 
 <h3 id="updates-for-rdf-1-1">Updates for RDF 1.1</h3>
 
-<p>Starting with version 1.1.2, the SPARQL gem uses the 1.1 version of the <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a>, which adheres to <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts</a> rather than <a href="https://www.w3.org/TR/rdf-concepts/">RDF 1.0</a>. The main difference is that there is now no difference between a <em>Simple Literal</em> (a literal with no datatype or language) and a Literal with datatype <em>xsd:string</em>; this causes some minor differences in the way in which queries are understood, and when expecting different results.</p>
+<p>Starting with version 1.1.2, the SPARQL gem uses the 1.1 version of the <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a>, which adheres to <a href="https://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts</a> rather than <a href="https://www.w3.org/TR/rdf-concepts/">RDF 1.0</a>. The main difference is that there is now no difference between a <em>Simple Literal</em> (a literal with no datatype or language) and a Literal with datatype <em>xsd:string</em>; this causes some minor differences in the way in which queries are understood, and when expecting different results.</p>
 
-<p>Additionally, queries now take a block, or return an <code>Enumerator</code>; this is in keeping with much of the behavior of <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a> methods, including <code>Queryable#query</code>, and with version 1.1 or <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a>, Query#execute. As a consequence, all queries which used to be of the form <code>query.execute(repository)</code> may equally be called as <code>repository.query(query)</code>. Previously, results were returned as a concrete class implementing <code>RDF::Queryable</code> or <code>RDF::Query::Solutions</code>, these are now <code>Enumerators</code>.</p>
+<p>Additionally, queries now take a block, or return an <code>Enumerator</code>; this is in keeping with much of the behavior of <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a> methods, including <code>Queryable#query</code>, and with version 1.1 or <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a>, Query#execute. As a consequence, all queries which used to be of the form <code>query.execute(repository)</code> may equally be called as <code>repository.query(query)</code>. Previously, results were returned as a concrete class implementing <code>RDF::Queryable</code> or <code>RDF::Query::Solutions</code>, these are now <code>Enumerators</code>.</p>
+
+<h3 id="sparql-1-2">SPARQL 1.2</h3>
+
+<p>The gem supports some of the extensions proposed by the <a href="https://github.com/w3c/sparql-12">SPARQL 1.2 Community Group</a>. In particular, the following extensions are now implemented:</p>
+
+<ul>
+<li><a href="https://github.com/w3c/sparql-12/blob/main/SEP/SEP-0002/sep-0002.md">SEP-0002: better support for Durations, Dates, and Times</a>
+
+<ul>
+<li>This includes full support for <code>xsd:date</code>, <code>xsd:time</code>, <code>xsd:duration</code>, <code>xsd:dayTimeDuration</code>, and <code>xsd:yearMonthDuration</code> along with associated XPath/XQuery functions including a new <code>ADJUST</code> builtin. (<strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong>)</li>
+</ul></li>
+<li><a href="https://github.com/w3c/sparql-12/blob/main/SEP/SEP-0003/sep-0003.md">SEP-0003: Property paths with a min/max hop</a>
+
+<ul>
+<li>This includes support for non-counting path forms such as <code>rdf:rest{1,3}</code> to match the union of paths <code>rdf:rest</code>, <code>rdf:rest/rdf:rest</code>, and <code>rdf:rest/rdf:rest/rdf:rest</code>.  (<strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong>)</li>
+</ul></li>
+</ul>
 
 <h3 id="sparql-extension-functions">SPARQL Extension Functions</h3>
 
@@ -246,44 +263,31 @@ WHERE {
 
 <h4 id="sparql-results">SPARQL results</h4>
 
-<p>The SPARQL results formats are extended to serialize embedded triples as described for <a href="https://rdf4j.org/documentation/programming/rdfstar/">RDF4J</a>:</p>
+<p>The SPARQL results formats are extended to serialize quoted triples as described for <a href="https://rdf4j.org/documentation/programming/rdfstar/">RDF4J</a>:</p>
 
 <pre class="code ruby"><code class="ruby">{
   &quot;head&quot; : {
-    &quot;vars&quot; : [
-      &quot;a&quot;,
-      &quot;b&quot;,
-      &quot;c&quot;
-    ]
+    &quot;vars&quot; : [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
   },
   &quot;results&quot; : {
     &quot;bindings&quot;: [
       { &quot;a&quot; : {
           &quot;type&quot; : &quot;triple&quot;,
           &quot;value&quot; : {
-            &quot;s&quot; : {
-              &quot;type&quot; : &quot;uri&quot;,
-              &quot;value&quot; : &quot;http://example.org/bob&quot;
-            },
-            &quot;p&quot; : {
-              &quot;type&quot; : &quot;uri&quot;,
-              &quot;value&quot; : &quot;http://xmlns.com/foaf/0.1/name&quot;
-            },
+            &quot;s&quot; : {&quot;value&quot; : &quot;http://example.org/bob&quot;, &quot;type&quot;: &quot;uri&quot;},
+            &quot;p&quot; : {&quot;value&quot; : &quot;http://xmlns.com/foaf/0.1/name&quot;, &quot;type&quot;: &quot;uri&quot;},
             &quot;o&quot; : {
-              &quot;datatype&quot; : &quot;http://www.w3.org/2001/XMLSchema#integer&quot;,
+              &quot;value&quot; : &quot;23&quot;,
               &quot;type&quot; : &quot;literal&quot;,
-              &quot;value&quot; : &quot;23&quot;
+              &quot;datatype&quot; : &quot;http://www.w3.org/2001/XMLSchema#integer&quot;
             }
           }
         },
-        &quot;b&quot;: { 
-          &quot;type&quot;: &quot;uri&quot;,
-          &quot;value&quot;: &quot;http://example.org/certainty&quot;
-        },
+        &quot;b&quot;: {&quot;value&quot;: &quot;http://example.org/certainty&quot;, &quot;type&quot;: &quot;uri&quot;},
         &quot;c&quot; : {
-          &quot;datatype&quot; : &quot;http://www.w3.org/2001/XMLSchema#decimal&quot;,
+          &quot;value&quot; : &quot;0.9&quot;,
           &quot;type&quot; : &quot;literal&quot;,
-          &quot;value&quot; : &quot;0.9&quot;
+          &quot;datatype&quot; : &quot;http://www.w3.org/2001/XMLSchema#decimal&quot;
         }
       }
     ]
@@ -298,21 +302,27 @@ to be returned any <code>RDF::Enumerable</code> or an enumerator extended with <
 You would typically return an instance of <code>RDF::Graph</code>, <code>RDF::Repository</code> or an enumerator extended with <code>RDF::Query::Solutions</code>
 from your Rack application, and let the <code>Rack::SPARQL::ContentNegotiation</code> middleware
 take care of serializing your response into whatever format the HTTP
-client requested and understands.</p>
+client requested and understands.
+Content negotiation also transforms <code>application/x-www-form-urlencoded</code> to either <code>application/sparql-query</code>
+or <code>application/sparql-update</code> as appropriate for <a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a>.</p>
 
 <p><span class='object_link'><a href="Sinatra/SPARQL.html" title="Sinatra::SPARQL (module)">Sinatra::SPARQL</a></span> is a thin Sinatra-specific wrapper around the
 <span class='object_link'><a href="Rack/SPARQL.html" title="Rack::SPARQL (module)">Rack::SPARQL</a></span> middleware, which implements SPARQL
  content negotiation for Rack applications. <span class='object_link'><a href="Sinatra/SPARQL.html" title="Sinatra::SPARQL (module)">Sinatra::SPARQL</a></span> also supports
- <a href="https://www.w3.org/TR/sparql11-service-description/">SPARQL 1.1 Service Description</a>.</p>
+ <a href="https://www.w3.org/TR/sparql11-service-description/">SPARQL 1.1 Service Description</a> (via <span class='object_link'><a href="Sinatra/SPARQL/Helpers.html#service_description-instance_method" title="Sinatra::SPARQL::Helpers#service_description (method)">Sinatra::SPARQL::Helpers#service_description</a></span> and protocol-based dataset mangement via <span class='object_link'><a href="Sinatra/SPARQL/Helpers.html#dataset-instance_method" title="Sinatra::SPARQL::Helpers#dataset (method)">Sinatra::SPARQL::Helpers#dataset</a></span> for <code>default-graph-uri</code> and <code>named-graph-uri</code> The <code>using-graph-uri</code> and <code>using-named-graph-uri</code> query parameters are managed through <span class='object_link'><a href="SPARQL/Algebra/Operator/Modify.html#execute-instance_method" title="SPARQL::Algebra::Operator::Modify#execute (method)">SPARQL::Algebra::Operator::Modify#execute</a></span>.</p>
 
-<p>The middleware queries <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a> for the MIME content types of known RDF
+<p>The middleware queries <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a> for the MIME content types of known RDF
 serialization formats, so it will work with whatever serialization extensions
 that are currently available for RDF.rb. (At present, this includes support
 for N-Triples, N-Quads, Turtle, RDF/XML, RDF/JSON, JSON-LD, RDFa, TriG and TriX.)</p>
 
+<h3 id="server">Server</h3>
+
+<p>A simple <a href="https://www.sinatrarb.com/">Sinatra</a>-based server is implemented in <span class='object_link'><a href="SPARQL/Server.html#application-class_method" title="SPARQL::Server.application (method)">SPARQL::Server.application</a></span> using <span class='object_link'><a href="Rack/SPARQL.html" title="Rack::SPARQL (module)">Rack::SPARQL</a></span> and <span class='object_link'><a href="Sinatra/SPARQL.html" title="Sinatra::SPARQL (module)">Sinatra::SPARQL</a></span> completes the implementation of <a href="https://www.w3.org/TR/sparql11-protocol/">SPARQL 1.1 Protocol</a> and can be used to compose a server including other capabilities.</p>
+
 <h3 id="remote-datasets">Remote datasets</h3>
 
-<p>A SPARQL query containing <code>FROM</code> or <code>FROM NAMED</code> (also <code>UPDATE</code> or <code>UPDATE NAMED</code>) will load the referenced IRI unless the repository already contains a graph with that same IRI. This is performed using <a href="https://rubydoc.info/github/ruby-rdf/rdf">RDF.rb</a> <code>RDF::Util::File.open_file</code> passing HTTP Accept headers for various available RDF formats. For best results, require <a href="https://rubygems.org/gems/linkeddata">Linked Data</a> to enable a full set of RDF formats in the <code>GET</code> request. Also, consider overriding <code>RDF::Util::File.open_file</code> with an implementation with support for HTTP Get headers (such as <code>Net::HTTP</code>).</p>
+<p>A SPARQL query containing <code>FROM</code> or <code>FROM NAMED</code> (also <code>UPDATE</code> or <code>UPDATE NAMED</code>) will load the referenced IRI unless the repository already contains a graph with that same IRI. This is performed using <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a> <code>RDF::Util::File.open_file</code> passing HTTP Accept headers for various available RDF formats. For best results, require <a href="https://rubygems.org/gems/linkeddata">Linked Data</a> to enable a full set of RDF formats in the <code>GET</code> request. Also, consider overriding <code>RDF::Util::File.open_file</code> with an implementation with support for HTTP Get headers (such as <code>Net::HTTP</code>).</p>
 
 <p>Queries using datasets are re-written to use the identified graphs for <code>FROM</code> and <code>FROM NAMED</code> by filtering the results, allowing the use of a repository that contains many graphs without confusing information.</p>
 
@@ -373,7 +383,9 @@ a full set of RDF formats.</p>
 
 <h3 id="parsing-a-sse-to-sparql-query-or-update-string-to-sparql">Parsing a SSE to SPARQL query or update string to SPARQL</h3>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SPARQL/Algebra.html" title="SPARQL::Algebra (module)">Algebra</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="SPARQL/Algebra.html#parse-class_method" title="SPARQL::Algebra.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%{</span><span class='tstring_content'>(bgp (triple ?s ?p ?o))</span><span class='tstring_end'>}</span></span><span class='rparen'>)</span>
+<pre class="code ruby"><code class="ruby"><span class='comment'># Note: if the SSE uses extension functions, they either must be XSD casting functions, or custom functions which are registered extensions. (See [SPARQL Extension Functions](#sparql-extension-functions))
+</span>
+<span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SPARQL/Algebra.html" title="SPARQL::Algebra (module)">Algebra</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="SPARQL/Algebra.html#parse-class_method" title="SPARQL::Algebra.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%{</span><span class='tstring_content'>(bgp (triple ?s ?p ?o))</span><span class='tstring_end'>}</span></span><span class='rparen'>)</span>
 <span class='id identifier rubyid_sparql'>sparql</span> <span class='op'>=</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_to_sparql'>to_sparql</span> <span class='comment'>#=&gt; &quot;SELECT * WHERE { ?s ?p ?o }&quot;
 </span></code></pre>
 
@@ -414,7 +426,7 @@ sparql server etc/doap.ttl
 </span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rack/sparql</span><span class='tstring_end'>&#39;</span></span>
 
 <span class='id identifier rubyid_repository'>repository</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">Repository</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Repository.html#initialize-instance_method" title="RDF::Repository#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
-  <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html#DC-constant" title="RDF::Vocab::DC (constant)">DC</a></span></span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 <span class='kw'>end</span>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPARQL.html" title="SPARQL (module)">SPARQL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="SPARQL.html#execute-class_method" title="SPARQL.execute (method)">execute</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * WHERE { ?s ?p ?o }</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_repository'>repository</span><span class='rparen'>)</span>
 
@@ -437,7 +449,7 @@ sparql server etc/doap.ttl
 <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_settings'>settings</span><span class='period'>.</span><span class='id identifier rubyid_sparql_options'>sparql_options</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='label'>standard_prefixes:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_repository'>repository</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Repository.html" title="RDF::Repository (class)">Repository</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Repository.html#initialize-instance_method" title="RDF::Repository#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
-    <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html#DC-constant" title="RDF::Vocab::DC (constant)">DC</a></span></span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Vocab.html" title="RDF::Vocab (module)">Vocab</a></span></span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>query</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>query</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^http:</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Util.html" title="RDF::Util (module)">Util</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Util/File.html" title="RDF::Util::File (module)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_file'><span class='object_link'><a href="RDF/Util/File.html#open_file-class_method" title="RDF::Util::File.open_file (method)">open_file</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>query</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='op'>::</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_decode'>decode</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>query</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -456,7 +468,7 @@ sparql server etc/doap.ttl
 
 <h2 id="documentation">Documentation</h2>
 
-<p>Full documentation available on <a href="https://rubydoc.info/github/ruby-rdf/sparql/frames">Rubydoc.info</a></p>
+<p>Full documentation available on <a href="https://ruby-rdf.github.io/sparql/frames">Rubydoc.info</a></p>
 
 <h3 id="principle-classes">Principle Classes</h3>
 
@@ -549,7 +561,7 @@ Note that the agreement applies to all repos in the <a href="https://github.com/
 <h2 id="license">License</h2>
 
 <p>This is free and unencumbered public domain software. For more information,
-see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a> file.</p>
+see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a>.</p>
 
 <p>A copy of the <a href="https://www.w3.org/TR/sparql11-query/#sparqlGrammar">SPARQL EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="https://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
 
@@ -557,7 +569,7 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Thu Dec 30 14:45:41 2021 by
+  Generated on Tue May  3 17:49:56 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.0).
 </div>
