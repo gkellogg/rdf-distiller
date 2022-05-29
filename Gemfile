@@ -38,7 +38,7 @@ gem 'sparql-client',      git: "https://github.com/ruby-rdf/sparql-client", bran
 gem 'sxp',                git: "https://github.com/dryruby/sxp.rb", branch: "develop"
 gem "syntax"
 gem "rake"
-gem 'better_errors', '>= 2.7.1'
+gem 'better_errors', '>= 2.9.1'
 gem 'binding_of_caller'
 
 # Until Tilt is updated to remove (issue #316)
