@@ -242,6 +242,28 @@
 <li><code>time:year</code>                   (See <span class='object_link'><a href="RDF/N3/Algebra/Time/Year.html" title="RDF::N3::Algebra::Time::Year (class)">RDF::N3::Algebra::Time::Year</a></span>)</li>
 </ul>
 
+<h2 id="parser-features">Parser features</h2>
+
+<h3 id="chaining-with-iripropertylist">Chaining with <code>iriPropertyList</code></h3>
+
+<p>Adds a proposed syntactic extension for <em>subject embedding</em> similar to a <code>blankNodePropertyList</code>. An <code>iriPropertyList</code> begins with <code>[ id _id_</code>, instead of a simple <code>[</code>. This sets <em>id</em> as the <strong>subject</strong> to be used for the following <code>propertyList</code>. This provides a mechanisms similar to <a href="https://www.w3.org/TR/json-ld11/#embedding">JSON-LD Embedding</a>.</p>
+
+<pre class="code ruby"><code class="ruby">@prefix dc: &lt;http://purl.org/dc/terms/&gt;.
+@prefix : &lt;http://example.org/nd#&gt;.
+
+:SummerReadingList a :OrderedListOfBooks ;
+  :toRead (
+    [id :mobyDick dc:title &quot;Moby Dick&quot;; :setting :WhaleIntestines ]
+    [
+      id :jaws
+      dc:title &quot;Jaws&quot;;
+      :setting :Beach
+    ]
+  ).
+</code></pre>
+
+<p>Note that the <em>id</em> used in the <code>iriPropertyList</code> is not delimited by a <code>;</code></p>
+
 <h3 id="formulae-quoted-graphs">Formulae / Quoted Graphs</h3>
 
 <p>N3 Formulae are introduced with the <code>{ statement-list }</code> syntax. A given formula is assigned an <code>RDF::Node</code> instance, which is also used as the graph_name for <code>RDF::Statement</code> instances provided to <code>RDF::N3::Reader#each_statement</code>. For example, the following N3 generates the associated statements:</p>
@@ -378,9 +400,9 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Tue May  3 17:49:56 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-3.1.0).
+  Generated on Sun Aug  7 15:53:11 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.0).
 </div>
 
     </div>

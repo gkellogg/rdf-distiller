@@ -36,9 +36,10 @@ gem 'shex',               git: "https://github.com/ruby-rdf/shex", branch: "deve
 gem 'sparql',             git: "https://github.com/ruby-rdf/sparql", branch: "develop"
 gem 'sparql-client',      git: "https://github.com/ruby-rdf/sparql-client", branch: "develop"
 gem 'sxp',                git: "https://github.com/dryruby/sxp.rb", branch: "develop"
+gem 'yaml-ld',            git: "https://github.com/ruby-rdf/yaml-ld", branch: "develop"
 gem "syntax"
 gem "rake"
-gem 'better_errors', '>= 2.7.1'
+gem 'better_errors', '>= 2.9.1'
 gem 'binding_of_caller'
 
 # Until Tilt is updated to remove (issue #316)
