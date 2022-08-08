@@ -66,9 +66,8 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
           .filter(function(c) {
             var useCmd = c.control !== 'button'; // buttons come elsewhere
             $.each((c.filter || {}), function(opt, value) {
-              if ($scope.options[opt] !== value) {
-                useCmd = false;
-              }
+              if (!Array.isArray(value)) {value = [value]}
+              if (!value.includes($scope.options[opt])) {useCmd = false;}
             });
             // Use the command, unless it's excluded
             return useCmd;
@@ -84,7 +83,8 @@ var distilApp = angular.module('distillerApp', ['ngRoute', 'ngSanitize'])
           .map(function(c) {
             var use = true;
             $.each((c.filter || {}), function(opt, value) {
-              if ($scope.options[opt] !== value) {use = false;}
+              if (!Array.isArray(value)) {value = [value]}
+              if (!value.includes($scope.options[opt])) {use = false;}
             });
             // Add command options from modifiers for enabled commands
             if ($scope.options[c.symbol]) {

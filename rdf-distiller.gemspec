@@ -44,8 +44,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
   s.add_runtime_dependency      'redcarpet',          '~> 3.5'
   s.add_runtime_dependency      'puma',               '~> 5.5'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.13', '>= 1.13.4'
-  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.25"
+  s.add_runtime_dependency      'nokogiri',           '~> 1.13', '>= 1.13.6'
+  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.27"
 
   # development dependencies
   s.add_development_dependency  'foreman'

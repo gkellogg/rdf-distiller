@@ -23,6 +23,7 @@ Distills between formats supported in [Linked Data][].
 * Includes [Turtle][] support using the [RDF::Turtle][] gem.
 * Includes [Microdata][] support using the [RDF::Microdata][] gem.
 * Includes [JSON-LD][] support using the [JSON::LD][] gem.
+* Includes [YAML-LD][] support using the [YAML_LD][]  gem.
 * Includes [SHACL][] support using the [SHACL][SHACL gem] gem.
 * Includes [ShEx][] support using the [ShEx][ShEx gem] gem.
 * Includes [SPARQL][] support using the [SPARQL][SPARQL gem] gem.
@@ -113,6 +114,7 @@ see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [ShEx gem]:       https://ruby-rdf.github.io/shex
 [SPARQL gem]:     https://ruby-rdf.github.io/sparql
 [JSON-LD]:        https://json-ld.org/
+[YAML_LD]:           https://ruby-rdf.github.io/yaml-ld
 [Microdata]:      https://dev.w3.org/html5/md/
 [N-Triples]:      https://en.wikipedia.org/wiki/N-Triples
 [N-Quads]:        https://en.wikipedia.org/wiki/N-Quads
@@ -130,6 +132,7 @@ see <https://unlicense.org/> or the accompanying {file:UNLICENSE} file.
 [Turtle]:         https://en.wikipedia.org/wiki/Turtle_(syntax)
 [CSV]:            https://en.wikipedia.org/wiki/Comma-separated_values
 [TSV]:            https://en.wikipedia.org/wiki/Tab-separated_values
+[YAML-LD]: https://json-ld.github.io/yaml-ld/spec
 [YARD]:           https://yardoc.org/
 [YARD-GS]:        https://rubydoc.info/docs/yard/file/docs/GettingStarted.md
 [PDD]:            https://unlicense.org/#unlicensing-contributions

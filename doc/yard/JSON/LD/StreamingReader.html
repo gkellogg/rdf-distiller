@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-9fd51e0622eb/lib/json/ld/streaming_reader.rb</dd>
+    <dd>vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-85174af7539c/lib/json/ld/streaming_reader.rb</dd>
   </dl>
   
 </div>
@@ -328,7 +328,7 @@
 20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-9fd51e0622eb/lib/json/ld/streaming_reader.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-85174af7539c/lib/json/ld/streaming_reader.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base'>base</span>
   <span class='ivar'>@base</span>
@@ -370,7 +370,7 @@
 21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-9fd51e0622eb/lib/json/ld/streaming_reader.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-85174af7539c/lib/json/ld/streaming_reader.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_namer'>namer</span>
   <span class='ivar'>@namer</span>
@@ -405,7 +405,7 @@
 21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-9fd51e0622eb/lib/json/ld/streaming_reader.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-85174af7539c/lib/json/ld/streaming_reader.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format'>format</span><span class='semicolon'>;</span> <span class='const'><span class='object_link'><a href="../../JSON.html" title="JSON (module)">JSON</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../LD.html" title="JSON::LD (module)">LD</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Format.html" title="JSON::LD::Format (class)">Format</a></span></span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -471,16 +471,18 @@
 43
 44
 45
-46</pre>
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-9fd51e0622eb/lib/json/ld/streaming_reader.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-85174af7539c/lib/json/ld/streaming_reader.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stream_statement'>stream_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_unique_bnodes'>unique_bnodes</span><span class='comma'>,</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:unique_bnodes</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:rename_bnodes</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='comment'># FIXME: document loader doesn&#39;t stream
 </span>  <span class='ivar'>@base</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../RDF/URI.html" title="RDF::URI (class)">URI</a></span></span><span class='lparen'>(</span><span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:base</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='ivar'>@doc</span><span class='comma'>,</span> <span class='op'>**</span><span class='ivar'>@options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_mj_opts'>mj_opts</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='period'>.</span><span class='id identifier rubyid_keep_if'>keep_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>!=</span> <span class='symbol'>:adapter</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../LD.html#MUTLI_JSON_ADAPTERS-constant" title="JSON::LD::MUTLI_JSON_ADAPTERS (constant)">MUTLI_JSON_ADAPTERS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='ivar'>@doc</span><span class='comma'>,</span> <span class='id identifier rubyid_mj_opts'>mj_opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_context_ref'>context_ref</span> <span class='op'>=</span> <span class='ivar'>@options</span><span class='lbracket'>[</span><span class='symbol'>:expandContext</span><span class='rbracket'>]</span>
   <span class='comment'>#context_ref = @options.fetch(:expandContext, remote_doc.contextUrl)
 </span>  <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Context.html" title="JSON::LD::Context (class)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="Context.html#parse-class_method" title="JSON::LD::Context.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_context_ref'>context_ref</span><span class='comma'>,</span> <span class='op'>**</span><span class='ivar'>@options</span><span class='rparen'>)</span>
@@ -508,9 +510,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May  3 17:49:57 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-3.1.0).
+  Generated on Sun Aug  7 15:53:12 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-3.1.0).
 </div>
 
     </div>
