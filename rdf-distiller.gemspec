@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'maruku',             '~> 0.7'
   s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.2'
-  s.add_runtime_dependency      "rack",               '~> 2.2'
+  s.add_runtime_dependency      "rack",               '>= 2.2', '< 4.0'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
