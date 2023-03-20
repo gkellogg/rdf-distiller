@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
 require 'sprockets'
-require 'uglifier'
-require 'erubis'
-require 'linkeddata'
+require 'sinatra/sprockets-helpers'
 require 'rack/protection'
 require 'logger'
 require 'rdf/cli'
@@ -17,6 +15,7 @@ module RDF::Distiller
     DOAP_JSON = File.join(APP_DIR, 'etc/doap.jsonld')
 
     # Assets
+    register Sinatra::Sprockets::Helpers
     set :sprockets, Sprockets::Environment.new(root)
     set :assets_prefix, '/assets'
     set :digest_assets, true
@@ -53,6 +52,15 @@ module RDF::Distiller
       sprockets.append_path File.join(root, 'assets', 'js')
       sprockets.js_compressor  = :uglify
       sprockets.css_compressor = :scss
+
+      # Configure Sprockets::Helpers (if necessary)
+      Sprockets::Helpers.configure do |config|
+        config.environment = sprockets
+        # Force to debug mode in development mode
+        # Debug mode automatically sets
+        # expand = true, digest = false, manifest = false
+        config.debug       = true if development?
+      end
     end
 
     configure :development do
@@ -67,6 +75,8 @@ module RDF::Distiller
     end
 
     helpers do
+      include Sprockets::Helpers
+
       # Set cache control
       def set_cache_header(options = {})
         options = {max_age: ENV.fetch('max_age', 60*5)}.merge(options)
