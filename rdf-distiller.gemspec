@@ -27,10 +27,8 @@ Gem::Specification.new do |s|
 
   # Sinatra dependencies
   s.add_runtime_dependency      'sinatra',            '~> 2.2'
-  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.2'
-  s.add_runtime_dependency      'sassc',              '~> 2.4'
-  s.add_runtime_dependency      'sprockets',          '~> 3.7' # 4.0 but for sinatra-asset-pipeline
-  s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
+  s.add_runtime_dependency      'sass',               '~> 3.7'
+  s.add_runtime_dependency      'sprockets',          '~> 4.0'
   s.add_runtime_dependency      'uglifier',           '~> 4.2'
 
   s.add_runtime_dependency      'erubis',             '~> 2.7'

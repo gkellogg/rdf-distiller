@@ -1,14 +1,11 @@
 # -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
-require 'sinatra/asset_pipeline'
-require 'rack/protection'
-require 'sprockets-helpers'
+require 'sprockets'
 require 'uglifier'
-require 'sassc'
-require 'logger'
 require 'erubis'
 require 'linkeddata'
-require 'rdf/ordered_repo'
+require 'rack/protection'
+require 'logger'
 require 'rdf/cli'
 require 'json/ld/preloaded' # Preload certain contexts
 require 'uri'
@@ -18,6 +15,11 @@ module RDF::Distiller
   class Application < Sinatra::Base
     DOAP_NT = File.join(APP_DIR, 'etc/doap.nt')
     DOAP_JSON = File.join(APP_DIR, 'etc/doap.jsonld')
+
+    # Assets
+    set :sprockets, Sprockets::Environment.new(root)
+    set :assets_prefix, '/assets'
+    set :digest_assets, true
 
     configure do
       register Sinatra::SPARQL
@@ -45,35 +47,12 @@ module RDF::Distiller
       mime_type :ttl, "text/turtle"
       mime_type :sse, "application/sse+sparql-query"
 
-      # Asset pipeline
-      set :digest_assets, false
-
-      # Include these files when precompiling assets
-      set :assets_precompile, %w(*.js *.css *.ttf *.gif)
-
-      # The path to your assets
-      set :assets_paths, %w(assets/js assets/css)
-
-      # CSS minification
-      set :assets_css_compressor, :sass
-
-      # JavaScript minification
-      set :assets_js_compressor, :uglifier
-
-      register Sinatra::AssetPipeline
-
-      # Configure Sprockets::Helpers (if necessary)
-      Sprockets::Helpers.configure do |config|
-        config.environment = sprockets
-        config.prefix      = assets_prefix
-        config.digest      = digest_assets
-        config.public_path = public_folder
-
-        # Force to debug mode in development mode
-        # Debug mode automatically sets
-        # expand = true, digest = false, manifest = false
-        config.debug       = true if development?
-      end
+      # Assets
+      # Setup Sprockets
+      sprockets.append_path File.join(root, 'assets', 'css')
+      sprockets.append_path File.join(root, 'assets', 'js')
+      sprockets.js_compressor  = :uglify
+      sprockets.css_compressor = :scss
     end
 
     configure :development do
@@ -88,8 +67,6 @@ module RDF::Distiller
     end
 
     helpers do
-      include Sprockets::Helpers
-
       # Set cache control
       def set_cache_header(options = {})
         options = {max_age: ENV.fetch('max_age', 60*5)}.merge(options)
@@ -106,7 +83,6 @@ module RDF::Distiller
       # @param [String] class_name
       # @return [String]
       def class_version(str)
-
         str = case str
         when "RDF.rb"       then "RDF"
         when "SXP for Ruby" then "SXP"
@@ -133,6 +109,12 @@ module RDF::Distiller
       msg = "Status: #{response.status} (#{request.request_method} #{request.path_info}), Content-Type: #{response.content_type}"
       msg += ", Location: #{response.location}" if response.location
       request.logger.info msg
+    end
+
+    # get assets
+    get "/assets/*" do
+      env["PATH_INFO"].sub!("/assets", "")
+      settings.sprockets.call(env)
     end
 
     # Get "/" either returns the main linter page or linted markup
@@ -394,7 +376,7 @@ module RDF::Distiller
     def doap
       @doap ||= begin
         request.logger.debug "load #{DOAP_NT}"
-        RDF::OrderedRepo.load(DOAP_NT)
+        RDF::Repository.load(DOAP_NT)
       end
     end
 

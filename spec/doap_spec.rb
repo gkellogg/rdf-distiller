@@ -17,8 +17,8 @@ describe RDF::Distiller::Application do
   end
 
   describe "/doap" do
-    let(:doap) {@doap ||= RDF::OrderedRepo.new << [RDF::URI("http://example/#this"), RDF.type, RDF::Vocab::DOAP.to_uri]}
-    before(:each) {allow(RDF::OrderedRepo).to receive(:load).and_return(doap)}
+    let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::Vocab::DOAP.to_uri]}
+    before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
     
     context "File extensions" do
       RDF::Format.file_extensions.keys.each do |extension|
