@@ -1,4 +1,6 @@
 $:.unshift File.expand_path("../../lib", __FILE__)
+ENV['RACK_ENV'] = 'test'
+
 require 'rubygems'
 require 'bundler/setup'
 require 'rspec'

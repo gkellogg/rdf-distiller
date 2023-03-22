@@ -1,14 +1,9 @@
 # -*- encoding: utf-8 -*-
 require 'sinatra/sparql'
-require 'sinatra/asset_pipeline'
+require 'sprockets'
+require 'sinatra/sprockets-helpers'
 require 'rack/protection'
-require 'sprockets-helpers'
-require 'uglifier'
-require 'sassc'
 require 'logger'
-require 'erubis'
-require 'linkeddata'
-require 'rdf/ordered_repo'
 require 'rdf/cli'
 require 'json/ld/preloaded' # Preload certain contexts
 require 'uri'
@@ -19,11 +14,17 @@ module RDF::Distiller
     DOAP_NT = File.join(APP_DIR, 'etc/doap.nt')
     DOAP_JSON = File.join(APP_DIR, 'etc/doap.jsonld')
 
+    # Assets
+    register Sinatra::Sprockets::Helpers
+    set :sprockets, Sprockets::Environment.new(root)
+    set :assets_prefix, '/assets'
+    set :digest_assets, true
+
     configure do
       register Sinatra::SPARQL
       unless test?
         enable :sessions
-        set :session_secret, ENV.fetch('SESSION_SECRET', "rdf-distiller")
+        set :session_secret, ENV.fetch('SESSION_SECRET', "c3b580b60077df557897f62cf347d4017351fb0100a6e4a6d3049df8ccc4ddb9")
         use Rack::Protection
       end
       set :root, APP_DIR
@@ -45,30 +46,16 @@ module RDF::Distiller
       mime_type :ttl, "text/turtle"
       mime_type :sse, "application/sse+sparql-query"
 
-      # Asset pipeline
-      set :digest_assets, false
-
-      # Include these files when precompiling assets
-      set :assets_precompile, %w(*.js *.css *.ttf *.gif)
-
-      # The path to your assets
-      set :assets_paths, %w(assets/js assets/css)
-
-      # CSS minification
-      set :assets_css_compressor, :sass
-
-      # JavaScript minification
-      set :assets_js_compressor, :uglifier
-
-      register Sinatra::AssetPipeline
+      # Assets
+      # Setup Sprockets
+      sprockets.append_path File.join(root, 'assets', 'css')
+      sprockets.append_path File.join(root, 'assets', 'js')
+      sprockets.js_compressor  = :uglify
+      sprockets.css_compressor = :scss
 
       # Configure Sprockets::Helpers (if necessary)
       Sprockets::Helpers.configure do |config|
         config.environment = sprockets
-        config.prefix      = assets_prefix
-        config.digest      = digest_assets
-        config.public_path = public_folder
-
         # Force to debug mode in development mode
         # Debug mode automatically sets
         # expand = true, digest = false, manifest = false
@@ -106,7 +93,6 @@ module RDF::Distiller
       # @param [String] class_name
       # @return [String]
       def class_version(str)
-
         str = case str
         when "RDF.rb"       then "RDF"
         when "SXP for Ruby" then "SXP"
@@ -135,6 +121,12 @@ module RDF::Distiller
       request.logger.info msg
     end
 
+    # get assets
+    get "/assets/*" do
+      env["PATH_INFO"].sub!("/assets", "")
+      settings.sprockets.call(env)
+    end
+
     # Get "/" either returns the main linter page or linted markup
     #
     # @method get_root
@@ -157,7 +149,7 @@ module RDF::Distiller
 
     get '/doap.?:format?' do
       set_cache_header
-      case format
+      case params[:format] || negotiated_format
       when :nt, :ntriples
         f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
         etag f
@@ -185,7 +177,7 @@ module RDF::Distiller
         }
       else
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
-        settings.sparql_options.merge!(format: format, content_type: content_type)
+        settings.sparql_options.merge!(format: negotiated_format, content_type: content_type)
         doap
       end
     end
@@ -223,7 +215,7 @@ module RDF::Distiller
         # Return raw content
         hash = distil(params)
         if hash[:format]
-          format hash[:format]
+          negotiated_format hash[:format]
           hash[:serialized]
         else
           content_type :txt
@@ -363,7 +355,7 @@ module RDF::Distiller
     # Negotiated format
     # @param [#to_sym] format (nil) allows a format to be specified
     # @return [Symbol]
-    def format(format = nil)
+    def negotiated_format(format = nil)
       params[:format] = format.to_sym if format
       case
       when params[:format]
@@ -389,12 +381,13 @@ module RDF::Distiller
         :html
       end
     end
+    #alias_method :negotiated_format, :format
 
     ## Default graph, loaded from DOAP file
     def doap
       @doap ||= begin
         request.logger.debug "load #{DOAP_NT}"
-        RDF::OrderedRepo.load(DOAP_NT)
+        RDF::Repository.load(DOAP_NT)
       end
     end
 

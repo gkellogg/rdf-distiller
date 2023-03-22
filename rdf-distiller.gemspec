@@ -26,34 +26,31 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 2.2'
-  s.add_runtime_dependency      'sinatra-asset-pipeline', '~> 2.2'
-  s.add_runtime_dependency      'sassc',              '~> 2.4'
-  s.add_runtime_dependency      'sprockets',          '~> 3.7' # 4.0 but for sinatra-asset-pipeline
+  s.add_runtime_dependency      'sinatra',            '~> 3.0'
+  s.add_runtime_dependency      'sass',               '~> 3.7'
+  s.add_runtime_dependency      'sprockets',          '~> 4.2'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
   s.add_runtime_dependency      'uglifier',           '~> 4.2'
 
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 5.2'
-  s.add_runtime_dependency      'maruku',             '~> 0.7'
-  s.add_runtime_dependency      'json-compare',       '~> 0.1'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.2'
   s.add_runtime_dependency      "rack",               '~> 2.2'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
-  s.add_runtime_dependency      'redcarpet',          '~> 3.5'
-  s.add_runtime_dependency      'puma',               '~> 5.5'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.13', '>= 1.13.6'
-  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.27"
+  s.add_runtime_dependency      'redcarpet',          '~> 3.6'
+  s.add_runtime_dependency      'puma',               '~> 6.1'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.14'
+  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.28"
 
   # development dependencies
-  s.add_development_dependency  'foreman'
-  s.add_development_dependency  'rspec',              '~> 3.10'
+  s.add_development_dependency  'puma',               '~> 6.1'
+  s.add_development_dependency  'rspec',              '~> 3.12'
   s.add_development_dependency  'rspec-its',          '~> 1.3'
-  s.add_development_dependency  'rack-test',          '~> 1.1'
+  s.add_development_dependency  'rack-test',          '~> 2.1'
   s.add_development_dependency  'jsonpath',           '~> 1.1'
-  s.add_development_dependency  'webmock',            '~> 3.14'
+  s.add_development_dependency  'webmock',            '~> 3.18'
 
   s.post_install_message        = nil
 end
