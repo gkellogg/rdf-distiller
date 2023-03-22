@@ -24,7 +24,7 @@ module RDF::Distiller
       register Sinatra::SPARQL
       unless test?
         enable :sessions
-        set :session_secret, ENV.fetch('SESSION_SECRET', "rdf-distiller")
+        set :session_secret, ENV.fetch('SESSION_SECRET', "c3b580b60077df557897f62cf347d4017351fb0100a6e4a6d3049df8ccc4ddb9")
         use Rack::Protection
       end
       set :root, APP_DIR
@@ -149,7 +149,7 @@ module RDF::Distiller
 
     get '/doap.?:format?' do
       set_cache_header
-      case format
+      case params[:format] || negotiated_format
       when :nt, :ntriples
         f = File.read(DOAP_NT).force_encoding(Encoding::UTF_8)
         etag f
@@ -177,7 +177,7 @@ module RDF::Distiller
         }
       else
         etag Digest::SHA1.hexdigest File.read(DOAP_NT)
-        settings.sparql_options.merge!(format: format, content_type: content_type)
+        settings.sparql_options.merge!(format: negotiated_format, content_type: content_type)
         doap
       end
     end
@@ -215,7 +215,7 @@ module RDF::Distiller
         # Return raw content
         hash = distil(params)
         if hash[:format]
-          format hash[:format]
+          negotiated_format hash[:format]
           hash[:serialized]
         else
           content_type :txt
@@ -355,7 +355,7 @@ module RDF::Distiller
     # Negotiated format
     # @param [#to_sym] format (nil) allows a format to be specified
     # @return [Symbol]
-    def format(format = nil)
+    def negotiated_format(format = nil)
       params[:format] = format.to_sym if format
       case
       when params[:format]
@@ -381,6 +381,7 @@ module RDF::Distiller
         :html
       end
     end
+    #alias_method :negotiated_format, :format
 
     ## Default graph, loaded from DOAP file
     def doap

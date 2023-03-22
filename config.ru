@@ -9,7 +9,7 @@ require 'restclient/components'
 require 'rack/cache'
 require 'rdf/distiller'
 
-set :environment, (ENV['RACK_ENV'] || 'production').to_sym
+set :environment, (ENV['RACK_ENV'] || 'develop').to_sym
 
 if ENV['RACK_ENV'] == 'production'
   use Rack::Cache,

@@ -19,6 +19,12 @@ describe RDF::Distiller::Application do
   describe "/doap" do
     let(:doap) {@doap ||= RDF::Repository.new << [RDF::URI("http://example/#this"), RDF.type, RDF::Vocab::DOAP.to_uri]}
     before(:each) {allow(RDF::Repository).to receive(:load).and_return(doap)}
+
+    it "returns HTML by default" do
+      get "/doap"
+      expect(last_response.body).to eq "" unless last_response.ok?
+      expect(last_response.content_type).to include('text/html')
+    end
     
     context "File extensions" do
       RDF::Format.file_extensions.keys.each do |extension|
