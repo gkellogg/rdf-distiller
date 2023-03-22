@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '>= 2.2', '< 4'
+  s.add_runtime_dependency      'sinatra',            '~> 3.0'
   s.add_runtime_dependency      'sass',               '~> 3.7'
   s.add_runtime_dependency      'sprockets',          '~> 4.2'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 5.2'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.2'
-  s.add_runtime_dependency      "rack",               '>= 2.2', '< 4'
+  s.add_runtime_dependency      "rack",               '~> 2.2'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
@@ -45,10 +45,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.28"
 
   # development dependencies
-  s.add_development_dependency  'foreman'
+  s.add_development_dependency  'puma',               '~> 6.1'
   s.add_development_dependency  'rspec',              '~> 3.12'
   s.add_development_dependency  'rspec-its',          '~> 1.3'
-  s.add_development_dependency  'rack-test',          '>= 1.1', '< 3'
+  s.add_development_dependency  'rack-test',          '~> 2.1'
   s.add_development_dependency  'jsonpath',           '~> 1.1'
   s.add_development_dependency  'webmock',            '~> 3.18'
 
