@@ -40,12 +40,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.13'
   s.add_runtime_dependency      'redcarpet',          '~> 3.6'
-  s.add_runtime_dependency      'puma',               '~> 6.1'
+  s.add_runtime_dependency      'puma',               '~> 6.3', '>= 6.3.1'
   s.add_runtime_dependency      'nokogiri',           '~> 1.14'
   s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.28"
 
   # development dependencies
-  s.add_development_dependency  'puma',               '~> 6.1'
   s.add_development_dependency  'rspec',              '~> 3.12'
   s.add_development_dependency  'rspec-its',          '~> 1.3'
   s.add_development_dependency  'rack-test',          '~> 2.1'
