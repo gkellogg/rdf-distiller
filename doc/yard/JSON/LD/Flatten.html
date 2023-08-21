@@ -88,7 +88,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-742eecbf4723/lib/json/ld/flatten.rb</dd>
+    <dd>vendor/bundler/ruby/3.2.0/bundler/gems/json-ld-4a13da952b2f/lib/json/ld/flatten.rb</dd>
   </dl>
   
 </div>
@@ -260,15 +260,6 @@
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
 216
 217
 218
@@ -290,17 +281,25 @@
 234
 235
 236
-237</pre>
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-742eecbf4723/lib/json/ld/flatten.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/json-ld-4a13da952b2f/lib/json/ld/flatten.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_annotations'>create_annotations</span><span class='lparen'>(</span><span class='id identifier rubyid_node_map'>node_map</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_node_map'>node_map</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span>
-    <span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='period'>.</span>
-    <span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:length</span><span class='rparen'>)</span><span class='period'>.</span>
-    <span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
-
+  <span class='id identifier rubyid_node_map'>node_map</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+    <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>{</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:length</span><span class='rparen'>)</span>
+    <span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
     <span class='id identifier rubyid_annotation'>annotation</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
     <span class='comment'># Deserialize key, and re-serialize the `@id` value.
 </span>    <span class='id identifier rubyid_emb'>emb</span> <span class='op'>=</span> <span class='id identifier rubyid_annotation'>annotation</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -311,8 +310,9 @@
 </span>    <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_json_c14n'>to_json_c14n</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span>
 
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+
     <span class='comment'># If node map has an entry for id and that entry contains the same property and value from entry:
-</span>    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> 
+</span>    <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_node_map'>node_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span>
 
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
 
@@ -486,7 +486,6 @@ Used when property value is a list</p>
       <pre class="lines">
 
 
-29
 30
 31
 32
@@ -649,10 +648,19 @@ Used when property value is a list</p>
 189
 190
 191
-192</pre>
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-742eecbf4723/lib/json/ld/flatten.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/json-ld-4a13da952b2f/lib/json/ld/flatten.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
                     <span class='label'>active_graph:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@default</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -664,11 +672,11 @@ Used when property value is a list</p>
     <span class='comment'># If element is an array, process each entry in element recursively by passing item for element, node map, active graph, active subject, active property, and list.
 </span>    <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
       <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                      <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
-                      <span class='label'>active_subject:</span> <span class='id identifier rubyid_active_subject'>active_subject</span><span class='comma'>,</span>
-                      <span class='label'>active_property:</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span>
-                      <span class='label'>reverse:</span> <span class='kw'>false</span><span class='comma'>,</span>
-                      <span class='label'>list:</span> <span class='id identifier rubyid_list'>list</span><span class='rparen'>)</span>
+        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
+        <span class='label'>active_subject:</span> <span class='id identifier rubyid_active_subject'>active_subject</span><span class='comma'>,</span>
+        <span class='label'>active_property:</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span>
+        <span class='label'>reverse:</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='label'>list:</span> <span class='id identifier rubyid_list'>list</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Expected hash or array to create_node_map, got </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -678,19 +686,21 @@ Used when property value is a list</p>
 
     <span class='comment'># Transform BNode types
 </span>    <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_blank_node?'>blank_node?</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_t'>t</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_blank_node?'>blank_node?</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_t'>t</span> <span class='rbrace'>}</span>
     <span class='kw'>end</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_value?'>value?</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
 
       <span class='comment'># For rdfstar, if value contains an `@annotation` member ...
 </span>      <span class='comment'># note: active_subject will not be nil, and may be an object itself.
 </span>      <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@annotation</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
         <span class='comment'># rdfstar being true is implicit, as it is checked in expansion
-</span>        <span class='id identifier rubyid_as'>as</span> <span class='op'>=</span> <span class='id identifier rubyid_node_reference?'>node_reference?</span><span class='lparen'>(</span><span class='id identifier rubyid_active_subject'>active_subject</span><span class='rparen'>)</span> <span class='op'>?</span>
-          <span class='id identifier rubyid_active_subject'>active_subject</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>:</span>
+</span>        <span class='id identifier rubyid_as'>as</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_node_reference?'>node_reference?</span><span class='lparen'>(</span><span class='id identifier rubyid_active_subject'>active_subject</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_active_subject'>active_subject</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+        <span class='kw'>else</span>
           <span class='id identifier rubyid_active_subject'>active_subject</span>
+        <span class='kw'>end</span>
         <span class='id identifier rubyid_star_subject'>star_subject</span> <span class='op'>=</span> <span class='lbrace'>{</span>
           <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_as'>as</span><span class='comma'>,</span>
           <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_element'>element</span><span class='rbracket'>]</span>
@@ -703,7 +713,7 @@ Used when property value is a list</p>
 
         <span class='comment'># Invoke recursively using annotation.
 </span>        <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_annotation'>annotation</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='rparen'>)</span>
+          <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -712,12 +722,12 @@ Used when property value is a list</p>
         <span class='id identifier rubyid_list'>list</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@list</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_element'>element</span>
       <span class='kw'>end</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_list?'>list?</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@list</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@list</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
       <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@list</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                      <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
-                      <span class='label'>active_subject:</span> <span class='id identifier rubyid_active_subject'>active_subject</span><span class='comma'>,</span>
-                      <span class='label'>active_property:</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span>
-                      <span class='label'>list:</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
+        <span class='label'>active_subject:</span> <span class='id identifier rubyid_active_subject'>active_subject</span><span class='comma'>,</span>
+        <span class='label'>active_property:</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span>
+        <span class='label'>list:</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
         <span class='id identifier rubyid_add_value'>add_value</span><span class='lparen'>(</span><span class='id identifier rubyid_subject_node'>subject_node</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='label'>property_is_array:</span> <span class='kw'>true</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
@@ -733,14 +743,14 @@ Used when property value is a list</p>
         <span class='id identifier rubyid_ser_id'>ser_id</span> <span class='op'>=</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span>
       <span class='kw'>end</span>
 
-      <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_ser_id'>ser_id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_node'>node</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='id identifier rubyid_ser_id'>ser_id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_reverse'>reverse</span>
-        <span class='comment'># Note: active_subject is a Hash
+        <span class='comment'># NOTE: active_subject is a Hash
 </span>        <span class='comment'># We&#39;re processing a reverse-property relationship.
 </span>        <span class='id identifier rubyid_add_value'>add_value</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_active_subject'>active_subject</span><span class='comma'>,</span> <span class='label'>property_is_array:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>allow_duplicate:</span> <span class='kw'>false</span><span class='rparen'>)</span>
       <span class='kw'>elsif</span> <span class='id identifier rubyid_active_property'>active_property</span>
-        <span class='id identifier rubyid_reference'>reference</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
+        <span class='id identifier rubyid_reference'>reference</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_list'>list</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
           <span class='id identifier rubyid_add_value'>add_value</span><span class='lparen'>(</span><span class='id identifier rubyid_subject_node'>subject_node</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span><span class='comma'>,</span> <span class='id identifier rubyid_reference'>reference</span><span class='comma'>,</span> <span class='label'>property_is_array:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>allow_duplicate:</span> <span class='kw'>false</span><span class='rparen'>)</span>
         <span class='kw'>else</span>
@@ -753,12 +763,16 @@ Used when property value is a list</p>
 </span>      <span class='comment'># XXX: what if we&#39;re reversing an annotation?
 </span>      <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@annotation</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
         <span class='comment'># rdfstar being true is implicit, as it is checked in expansion
-</span>        <span class='id identifier rubyid_as'>as</span> <span class='op'>=</span> <span class='id identifier rubyid_node_reference?'>node_reference?</span><span class='lparen'>(</span><span class='id identifier rubyid_active_subject'>active_subject</span><span class='rparen'>)</span> <span class='op'>?</span>
-          <span class='id identifier rubyid_active_subject'>active_subject</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>:</span>
+</span>        <span class='id identifier rubyid_as'>as</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_node_reference?'>node_reference?</span><span class='lparen'>(</span><span class='id identifier rubyid_active_subject'>active_subject</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_active_subject'>active_subject</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+        <span class='kw'>else</span>
           <span class='id identifier rubyid_active_subject'>active_subject</span>
-        <span class='id identifier rubyid_star_subject'>star_subject</span> <span class='op'>=</span> <span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>?</span> 
-          <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_as'>as</span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rbrace'>}</span> <span class='op'>:</span>
-          <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_as'>as</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_star_subject'>star_subject</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_reverse'>reverse</span>
+          <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_as'>as</span> <span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+        <span class='kw'>else</span>
+          <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_as'>as</span><span class='comma'>,</span> <span class='id identifier rubyid_active_property'>active_property</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+        <span class='kw'>end</span>
 
         <span class='comment'># Note that annotation is an array, make the reified subject the id of each member of that array.
 </span>        <span class='id identifier rubyid_annotation'>annotation</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@annotation</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span>
@@ -767,8 +781,8 @@ Used when property value is a list</p>
 
         <span class='comment'># Invoke recursively using annotation.
 </span>        <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_annotation'>annotation</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
-                        <span class='label'>active_subject:</span> <span class='id identifier rubyid_star_subject'>star_subject</span><span class='rparen'>)</span>
+          <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
+          <span class='label'>active_subject:</span> <span class='id identifier rubyid_star_subject'>star_subject</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@type</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -776,44 +790,46 @@ Used when property value is a list</p>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="JsonLdError.html" title="JSON::LD::JsonLdError (class)">JsonLdError</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JsonLdError/ConflictingIndexes.html" title="JSON::LD::JsonLdError::ConflictingIndexes (class)">ConflictingIndexes</a></span></span><span class='comma'>,</span>
-              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Element already has index </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> dfferent from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span>
-              <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="JsonLdError.html" title="JSON::LD::JsonLdError (class)">JsonLdError</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="JsonLdError/ConflictingIndexes.html" title="JSON::LD::JsonLdError::ConflictingIndexes (class)">ConflictingIndexes</a></span></span><span class='comma'>,</span>
+            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Element already has index </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> dfferent from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
         <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@index</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@reverse</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_referenced_node'>referenced_node</span><span class='comma'>,</span> <span class='id identifier rubyid_reverse_map'>reverse_map</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@reverse</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_referenced_node'>referenced_node</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_reverse_map'>reverse_map</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@reverse</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_reverse_map'>reverse_map</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_property'>property</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='op'>|</span>
           <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
             <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                            <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
-                            <span class='label'>active_subject:</span> <span class='id identifier rubyid_referenced_node'>referenced_node</span><span class='comma'>,</span>
-                            <span class='label'>active_property:</span> <span class='id identifier rubyid_property'>property</span><span class='comma'>,</span>
-                            <span class='label'>reverse:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+              <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
+              <span class='label'>active_subject:</span> <span class='id identifier rubyid_referenced_node'>referenced_node</span><span class='comma'>,</span>
+              <span class='label'>active_property:</span> <span class='id identifier rubyid_property'>property</span><span class='comma'>,</span>
+              <span class='label'>reverse:</span> <span class='kw'>true</span><span class='rparen'>)</span>
           <span class='kw'>end</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@graph</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@graph</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                        <span class='label'>active_graph:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+          <span class='label'>active_graph:</span> <span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@included</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@included</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='rparen'>)</span>
+          <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
-      <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_property'>property</span><span class='op'>|</span>
+      <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_property'>property</span><span class='op'>|</span>
         <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='lbracket'>[</span><span class='id identifier rubyid_property'>property</span><span class='rbracket'>]</span>
 
         <span class='id identifier rubyid_property'>property</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_blank_node?'>blank_node?</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='id identifier rubyid_property'>property</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_create_node_map'>create_node_map</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_graph_map'>graph_map</span><span class='comma'>,</span>
-                        <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
-                        <span class='label'>active_subject:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
-                        <span class='label'>active_property:</span> <span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
+          <span class='label'>active_graph:</span> <span class='id identifier rubyid_active_graph'>active_graph</span><span class='comma'>,</span>
+          <span class='label'>active_subject:</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+          <span class='label'>active_property:</span> <span class='id identifier rubyid_property'>property</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -876,31 +892,31 @@ Used when property value is a list</p>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248
-249
-250
-251
-252
 253
 254
 255
-256</pre>
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.1.0/bundler/gems/json-ld-742eecbf4723/lib/json/ld/flatten.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/json-ld-4a13da952b2f/lib/json/ld/flatten.rb', line 253</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_node'>node</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span></span>
-    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span>
-    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_memo'>memo</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='op'>|</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
       <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_namer'>namer</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>@id</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_blank_node?'>blank_node?</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_memo'>memo</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_rename_bnodes'>rename_bnodes</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_node'>node</span>
@@ -916,9 +932,9 @@ Used when property value is a list</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Mar 22 14:43:01 2023 by
+  Generated on Mon Aug 21 14:29:27 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-3.1.3).
+  0.9.34 (ruby-3.2.2).
 </div>
 
     </div>
