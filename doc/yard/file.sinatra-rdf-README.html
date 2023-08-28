@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: sinatra-rdf-README
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "sinatra-rdf-README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: sinatra-rdf-README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="linked-data-content-negotiation-for-sinatra-applications">Linked Data Content Negotiation for Sinatra Applications</h1>
+
+<p>This is a <a href="https://www.sinatrarb.com/">Sinatra</a> extension that provides <a href="https://linkeddata.org/">Linked Data</a> content
+negotiation for Sinatra applications.</p>
+
+<p>This version is based on [rack-linkeddata][] without the hard dependency on the [linkeddata][] gem, to allow applications to better manage their dependencies</p>
+
+<ul>
+<li><a href="https://github.com/ruby-rdf/sinatra-rdf">https://github.com/ruby-rdf/sinatra-rdf</a></li>
+</ul>
+
+<p><a href="https://badge.fury.io/rb/sinatra-rdf"><img src="https://badge.fury.io/rb/sinatra-rdf.svg" alt="Gem Version"></a>
+<a href="https://github.com/ruby-rdf/sinatra-rdf/actions?query=workflow%3ACI"><img src="https://github.com/ruby-rdf/sinatra-rdf/workflows/CI/badge.svg?branch=develop" alt="Build Status"></a>
+<a href="https://gitter.im/ruby-rdf/rdf"><img src="https://badges.gitter.im/ruby-rdf/rdf.png" alt="Gitter chat"></a></p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+<li>Implements <a href="https://en.wikipedia.org/wiki/Content_negotiation">HTTP content negotiation</a> for RDF content types using
+the <code>[Rack::RDF][Rack::RDF]</code> middleware.</li>
+<li>Supports all <a href="https://ruby-rdf.github.io/rdf/">RDF.rb</a> -compatible serialization formats.</li>
+<li>Supports both classic and modular Sinatra applications.</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="adding-linked-data-content-negotiation-to-a-classic-sinatra-application">Adding Linked Data content negotiation to a classic Sinatra application</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'>#!/usr/bin/env ruby -rubygems
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra/rdf</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/hello</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+    <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="adding-linked-data-content-negotiation-to-a-modular-sinatra-application">Adding Linked Data content negotiation to a modular Sinatra application</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'>#!/usr/bin/env ruby -rubygems
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra/base</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra/rdf</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='kw'>module</span> <span class='const'>My</span>
+  <span class='kw'>class</span> <span class='const'>Application</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'>Base</span>
+    <span class='id identifier rubyid_register'>register</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Sinatra/RDF.html" title="Sinatra::RDF (module)">RDF</a></span></span>
+
+    <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/hello</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+        <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='const'>My</span><span class='op'>::</span><span class='const'>Application</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span> <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>4567</span>
+</code></pre>
+
+<h3 id="adding-linked-data-content-negotiation-to-a-rackup-application">Adding Linked Data content negotiation to a Rackup application</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'>#!/usr/bin/env rackup
+</span><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra/base</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sinatra/rdf</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='kw'>module</span> <span class='const'>My</span>
+  <span class='kw'>class</span> <span class='const'>Application</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'>Base</span>
+    <span class='id identifier rubyid_register'>register</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Sinatra/RDF.html" title="Sinatra::RDF (module)">RDF</a></span></span>
+
+    <span class='id identifier rubyid_get'>get</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/hello</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Graph.html" title="RDF::Graph (class)">Graph</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Graph.html#initialize-instance_method" title="RDF::Graph#initialize (method)">new</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_graph'>graph</span><span class='op'>|</span>
+        <span class='id identifier rubyid_graph'>graph</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/Node.html" title="RDF::Node (class)">Node</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RDF/Resource.html#new-class_method" title="RDF::Resource.new (method)">new</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'>DC</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='id identifier rubyid_run'>run</span> <span class='const'>My</span><span class='op'>::</span><span class='const'>Application</span>
+</code></pre>
+
+<h3 id="testing-linked-data-content-negotiation-using-rackup-and-curl">Testing Linked Data content negotiation using <code>rackup</code> and <code>curl</code></h3>
+
+<pre class="code ruby"><code class="ruby">$ rackup doc/examples/config.ru
+
+$ curl -iH &quot;Accept: application/n-triples&quot; http://localhost:9292/hello
+$ curl -iH &quot;Accept: application/turtle&quot; http://localhost:9292/hello
+$ curl -iH &quot;Accept: application/rdf+xml&quot; http://localhost:9292/hello
+$ curl -iH &quot;Accept: application/json&quot; http://localhost:9292/hello
+$ curl -iH &quot;Accept: application/trix&quot; http://localhost:9292/hello
+$ curl -iH &quot;Accept: */*&quot; http://localhost:9292/hello
+</code></pre>
+
+<h2 id="description">Description</h2>
+
+<p><code>Sinatra::RDF</code> is a thin Sinatra-specific wrapper around the
+<code>[Rack::RDF][Rack::RDF]</code> middleware, which implements Linked
+Data content negotiation for Rack applications.</p>
+
+<p>At the moment the Sinatra extension simply corresponds
+to doing the following manually in a Sinatra application:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rack/rdf</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='kw'>module</span> <span class='const'>My</span>
+  <span class='kw'>class</span> <span class='const'>Application</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'>Base</span>
+    <span class='id identifier rubyid_use'>use</span>     <span class='const'><span class='object_link'><a href="Rack.html" title="Rack (module)">Rack</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rack/RDF.html" title="Rack::RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Rack/RDF/ContentNegotiation.html" title="Rack::RDF::ContentNegotiation (class)">ContentNegotiation</a></span></span>
+    <span class='id identifier rubyid_helpers'>helpers</span> <span class='const'><span class='object_link'><a href="Sinatra.html" title="Sinatra (module)">Sinatra</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Sinatra/RDF.html" title="Sinatra::RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Sinatra/RDF/Helpers.html" title="Sinatra::RDF::Helpers (module)">Helpers</a></span></span>
+    <span class='id identifier rubyid_include'>include</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>See the <code>Rack::RDF</code> documentation for more information on the
+operation and details of the content negotiation.</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<ul>
+<li><a href="https://ruby-rdf.github.io/sinatra-rdf/master">Sinatra::RDF</a></li>
+</ul>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<ul>
+<li><a href="https://rubygems.org/gems/sinatra">Sinatra</a> (~&gt; 3.1)</li>
+<li><a href="https://rubygems.org/gems/rack-rdf">Rack::RDF</a> (~&gt; 3.3)</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<p>The recommended installation method is via <a href="https://rubygems.org/">RubyGems</a>.
+To install the latest official release of the gem, do:</p>
+
+<pre class="code ruby"><code class="ruby">% [sudo] gem install sinatra-rdf
+</code></pre>
+
+<h2 id="download">Download</h2>
+
+<p>To get a local working copy of the development repository, do:</p>
+
+<pre class="code ruby"><code class="ruby">% git clone git://github.com/ruby-rdf/sinatra-rdf.git
+</code></pre>
+
+<p>Alternatively, you can download the latest development version as a tarball
+as follows:</p>
+
+<pre class="code ruby"><code class="ruby">% wget https://github.com/ruby-rdf/sinatra-rdf/tarball/master
+</code></pre>
+
+<h2 id="references">References</h2>
+
+<ul>
+<li><a href="https://www.w3.org/DesignIssues/LinkedData.html">https://www.w3.org/DesignIssues/LinkedData.html</a></li>
+<li><a href="https://linkeddata.org/docs/how-to-publish">https://linkeddata.org/docs/how-to-publish</a></li>
+<li><a href="https://linkeddata.org/conneg-303-redirect-code-samples">https://linkeddata.org/conneg-303-redirect-code-samples</a></li>
+<li><a href="https://www.w3.org/TR/cooluris/">https://www.w3.org/TR/cooluris/</a></li>
+<li><a href="https://www.w3.org/TR/swbp-vocab-pub/">https://www.w3.org/TR/swbp-vocab-pub/</a></li>
+<li><a href="https://patterns.dataincubator.org/book/publishing-patterns.html">https://patterns.dataincubator.org/book/publishing-patterns.html</a></li>
+</ul>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+<li><a href="https://github.com/artob">Arto Bendiken</a> - <a href="https://ar.to/">https://ar.to/</a></li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p><code>Sinatra::RDF</code> is free and unencumbered public domain software. For more
+information, see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying UNLICENSE file.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon Aug 28 09:18:46 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.2.2).
+</div>
+
+    </div>
+  </body>
+</html>
