@@ -4,19 +4,23 @@ gemspec
 ruby "3.2.2"
 
 # Include non-released gems first
-gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
+gem "rack-rdf",           git: "https://github.com/ruby-rdf/rack-rdf", branch: "develop"
 gem "rack-linkeddata",    git: "https://github.com/ruby-rdf/rack-linkeddata", branch: "develop"
+gem "sinatra-rdf",        git: "https://github.com/ruby-rdf/sinatra-rdf", branch: "develop"
+gem "sinatra-linkeddata", git: "https://github.com/ruby-rdf/sinatra-linkeddata", branch: "develop"
 gem "linkeddata",         git: "https://github.com/ruby-rdf/linkeddata", branch: "develop"
 gem "rdf",                git: "https://github.com/ruby-rdf/rdf", branch: "develop"
 gem "rdf-spec",           git: "https://github.com/ruby-rdf/rdf-spec", branch: "develop"
 
 gem 'rdf-aggregate-repo', git: "https://github.com/ruby-rdf/rdf-aggregate-repo", branch: "develop"
-gem 'rdf-isomorphic',     git: "https://github.com/ruby-rdf/rdf-isomorphic", branch: "develop"
 gem 'rdf-do',             git: "https://github.com/ruby-rdf/rdf-do", branch: "develop"
+gem 'rdf-hamster-repo',   git: "https://github.com/ruby-rdf/rdf-hamster-repo", branch: "develop"
+gem 'rdf-isomorphic',     git: "https://github.com/ruby-rdf/rdf-isomorphic", branch: "develop"
 gem 'rdf-json',           git: "https://github.com/ruby-rdf/rdf-json", branch: "develop"
 gem 'rdf-microdata',      git: "https://github.com/ruby-rdf/rdf-microdata", branch: "develop"
 gem 'rdf-n3',             git: "https://github.com/ruby-rdf/rdf-n3", branch: "develop"
 gem 'rdf-normalize',      git: "https://github.com/ruby-rdf/rdf-normalize", branch: "develop"
+gem 'rdf-ordered-repo',   git: "https://github.com/ruby-rdf/rdf-ordered-repo", branch: "develop"
 gem 'rdf-rdfa',           git: "https://github.com/ruby-rdf/rdf-rdfa", branch: "develop"
 gem 'rdf-rdfxml',         git: "https://github.com/ruby-rdf/rdf-rdfxml", branch: "develop"
 gem 'rdf-reasoner',       git: "https://github.com/ruby-rdf/rdf-reasoner", branch: "develop"
@@ -36,6 +40,7 @@ gem 'sparql',             git: "https://github.com/ruby-rdf/sparql", branch: "de
 gem 'sparql-client',      git: "https://github.com/ruby-rdf/sparql-client", branch: "develop"
 gem 'sxp',                git: "https://github.com/dryruby/sxp.rb", branch: "develop"
 gem 'yaml-ld',            git: "https://github.com/ruby-rdf/yaml-ld", branch: "develop"
+
 gem "syntax"
 gem "rake"
 gem 'better_errors', '>= 2.9.1'
