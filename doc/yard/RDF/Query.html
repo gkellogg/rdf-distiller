@@ -99,8 +99,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb<span class="defines">,<br />
-  vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query/pattern.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query/solution.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query/variable.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query/solutions.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query/hash_pattern_normalizer.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-n3-2b45a55b147e/lib/rdf/n3/extensions.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/rdf-spec-c3ac011277cf/lib/rdf/spec/inspects.rb,<br /> vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb</span>
+    <dd>vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb<span class="defines">,<br />
+  vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query/pattern.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query/solution.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query/variable.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query/solutions.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query/hash_pattern_normalizer.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-n3-a6ef81a7e1ce/lib/rdf/n3/extensions.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/rdf-spec-4f36efa2dbbc/lib/rdf/spec/inspects.rb,<br /> vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb</span>
 </dd>
   </dl>
   
@@ -1415,10 +1415,9 @@ _:a foaf:mbox &lt;mailto:alice@work.example.org&gt; .</code></pre>
           </span>
           
             &mdash; <div class='inline'><p>Default graph name for matching against queryable.
-Named queries either match against a specifically named
+Queries with a graph name match against a specifically named
 graphs if the name is an <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">Resource</a></span> or bound <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span>.
-Names that are against unbound variables match either default
-or named graphs.
+Queries using an unbound variable as a graph name only match against named graphs, and will not match the default graph.
 The name of <code>false</code> will only match against the default graph.</p>
 </div>
           
@@ -1546,10 +1545,9 @@ The name of <code>false</code> will only match against the default graph.</p>
         &mdash;
         <div class='inline'><p>(false)
 Default graph name for matching against queryable.
-Named queries either match against a specifically named
+Queries with a graph name match against a specifically named
 graphs if the name is an <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">Resource</a></span> or bound <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span>.
-Names that are against unbound variables match either default
-or named graphs.
+Queries using an unbound variable as a graph name only match against named graphs, and will not match the default graph.
 The name of <code>false</code> will only match against the default graph.</p>
 </div>
       
@@ -1674,6 +1672,8 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
+183
+184
 185
 186
 187
@@ -1694,12 +1694,10 @@ Alias for <code>:graph_name</code>.</p>
 202
 203
 204
-205
-206
-207</pre>
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_patterns'>patterns</span><span class='comma'>,</span> <span class='label'>solutions:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>validate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -1808,7 +1806,7 @@ Alias for <code>:graph_name</code>.</p>
 143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_graph_name'>graph_name</span>
   <span class='ivar'>@graph_name</span>
@@ -1878,7 +1876,7 @@ Alias for <code>:graph_name</code>.</p>
 137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1948,7 +1946,7 @@ Alias for <code>:graph_name</code>.</p>
 125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_patterns'>patterns</span>
   <span class='ivar'>@patterns</span>
@@ -2018,7 +2016,7 @@ Alias for <code>:graph_name</code>.</p>
 131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_solutions'>solutions</span>
   <span class='ivar'>@solutions</span>
@@ -2202,7 +2200,7 @@ Alias for <code>:graph_name</code>.</p>
 94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='id identifier rubyid_patterns'>patterns</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_patterns'>patterns</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -2436,7 +2434,7 @@ Alias for <code>:graph_name</code>.</p>
 117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='const'>Solutions</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -2524,12 +2522,12 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-416
-417
-418</pre>
+413
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 413</span>
 
 <span class='kw'>def</span> <span class='op'>+</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="" title="RDF::Query (class)">Query</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="RDF::Query#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_patterns'>patterns</span> <span class='op'>+</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_patterns'>patterns</span><span class='rparen'>)</span>
@@ -2598,13 +2596,13 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
+213
+214
 215
-216
-217
-218</pre>
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rparen'>)</span>
   <span class='ivar'>@patterns</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Query/Pattern.html" title="RDF::Query::Pattern (class)">Pattern</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rparen'>)</span>
@@ -2676,7 +2674,7 @@ Alias for <code>:graph_name</code>.</p>
 407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 404</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='comment'># FIXME: this should be graph_name == other.graph_name
@@ -2748,13 +2746,13 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-441
-442
-443
-444</pre>
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 438</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_graph_name'>apply_graph_name</span><span class='lparen'>(</span><span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_graph_name'>graph_name</span>
@@ -2839,7 +2837,7 @@ Alias for <code>:graph_name</code>.</p>
 474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 471</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 471</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_solution'>solution</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='id identifier rubyid_solution'>solution</span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -2903,12 +2901,12 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-428
-429
-430</pre>
+425
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 428</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 425</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default?'>default?</span>
   <span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>==</span> <span class='kw'>false</span>
@@ -2971,13 +2969,13 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-528
-529
-530
-531</pre>
+525
+526
+527
+528</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 528</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 525</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dup'>dup</span>
   <span class='id identifier rubyid_patterns'>patterns</span> <span class='op'>=</span> <span class='ivar'>@patterns</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rbrace'>}</span>
@@ -3073,12 +3071,12 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-509
-510
-511</pre>
+506
+507
+508</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 509</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 506</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_solution'>each_solution</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -3169,13 +3167,13 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-520
-521
-522
-523</pre>
+517
+518
+519
+520</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 520</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 517</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_statement'>each_statement</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_apply_graph_name'>apply_graph_name</span>
@@ -3239,12 +3237,12 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
-498
-499
-500</pre>
+495
+496
+497</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 498</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 495</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_empty?'>empty?</span>
   <span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -3314,7 +3312,7 @@ Alias for <code>:graph_name</code>.</p>
 532</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 532</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 532</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_executable?'>executable?</span><span class='semicolon'>;</span> <span class='kw'>true</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -3404,10 +3402,9 @@ per SPARQL 1.1 <em>Empty Group Pattern</em>.</p>
         &mdash;
         <div class='inline'><p>(nil)
 Default graph name for matching against queryable.
-Named queries either match against a specifically named
+Queries with a graph name match against a specifically named
 graphs if the name is an <span class='object_link'><a href="Resource.html" title="RDF::Resource (module)">Resource</a></span> or bound <span class='object_link'><a href="Query/Variable.html" title="RDF::Query::Variable (class)">Variable</a></span>.
-Names that are against unbound variables match either default
-or named graphs.
+Queries using an unbound variable as a graph name only match against named graphs, and will not match the default graph.
 The name of <code>false</code> will only match against the default graph.</p>
 </div>
       
@@ -3600,6 +3597,9 @@ Alias for <code>:graph_name</code>.</p>
       <pre class="lines">
 
 
+308
+309
+310
 311
 312
 313
@@ -3673,13 +3673,10 @@ Alias for <code>:graph_name</code>.</p>
 381
 382
 383
-384
-385
-386
-387</pre>
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 311</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 308</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_queryable'>queryable</span><span class='comma'>,</span> <span class='label'>bindings:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>solutions:</span> <span class='const'><span class='object_link'><a href="Query/Solution.html" title="RDF::Query::Solution (class)">Solution</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Query/Solution.html#initialize-instance_method" title="RDF::Query::Solution#initialize (method)">new</a></span></span><span class='comma'>,</span> <span class='label'>graph_name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='comment'># Use provided solutions to allow for query chaining
@@ -3826,12 +3823,12 @@ determine whether the query failed to match or not.</p>
       <pre class="lines">
 
 
-397
-398
-399</pre>
+394
+395
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_failed?'>failed?</span>
   <span class='ivar'>@solutions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -3885,7 +3882,7 @@ determine whether the query failed to match or not.</p>
 33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-spec-c3ac011277cf/lib/rdf/spec/inspects.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-spec-4f36efa2dbbc/lib/rdf/spec/inspects.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RDF::Query(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>?</span> <span class='id identifier rubyid_graph_name'>graph_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sxp'>to_sxp</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3958,12 +3955,12 @@ determine whether the query matched successfully or not.</p>
       <pre class="lines">
 
 
-409
-410
-411</pre>
+406
+407
+408</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matched?'>matched?</span>
   <span class='op'>!</span><span class='id identifier rubyid_failed?'>failed?</span>
@@ -4026,12 +4023,12 @@ determine whether the query matched successfully or not.</p>
       <pre class="lines">
 
 
-422
-423
-424</pre>
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 419</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named?'>named?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_graph_name'>graph_name</span>
@@ -4099,7 +4096,7 @@ determine whether the query matched successfully or not.</p>
 499</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 497</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ndvars'>ndvars</span>
   <span class='id identifier rubyid_vars'>vars</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:distinguished?</span><span class='rparen'>)</span>
@@ -4166,12 +4163,12 @@ determine whether the query matched successfully or not.</p>
       <pre class="lines">
 
 
-492
-493
-494</pre>
+489
+490
+491</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 492</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 489</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node?'>node?</span>
   <span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:node?</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_graph_name'>graph_name</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_graph_name'>graph_name</span><span class='period'>.</span><span class='id identifier rubyid_node?'>node?</span>
@@ -4257,12 +4254,12 @@ determine whether the query matched successfully or not.</p>
       <pre class="lines">
 
 
-242
-243
-244</pre>
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optimize'>optimize</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_optimize!'>optimize!</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4332,6 +4329,8 @@ determine whether the query matched successfully or not.</p>
       <pre class="lines">
 
 
+255
+256
 257
 258
 259
@@ -4340,12 +4339,10 @@ determine whether the query matched successfully or not.</p>
 262
 263
 264
-265
-266
-267</pre>
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optimize!'>optimize!</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='id identifier rubyid_required'>required</span> <span class='op'>=</span> <span class='ivar'>@patterns</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optional?</span><span class='rparen'>)</span>
@@ -4458,7 +4455,7 @@ according to their cost estimates.</p>
 518</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 508</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 508</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optimize!'>optimize!</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_optional'>optional</span><span class='comma'>,</span> <span class='id identifier rubyid_required'>required</span> <span class='op'>=</span> <span class='ivar'>@patterns</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optional?</span><span class='rparen'>)</span>
@@ -4576,13 +4573,13 @@ according to their cost estimates.</p>
       <pre class="lines">
 
 
+228
+229
 230
-231
-232
-233</pre>
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pattern'>pattern</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@patterns</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Query/Pattern.html" title="RDF::Query::Pattern (class)">Pattern</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -4651,7 +4648,7 @@ according to their cost estimates.</p>
 480</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_yields_boolean?'>query_yields_boolean?</span>
   <span class='kw'>false</span>
@@ -4719,7 +4716,7 @@ according to their cost estimates.</p>
 492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 490</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_yields_solutions?'>query_yields_solutions?</span>
   <span class='kw'>true</span>
@@ -4787,7 +4784,7 @@ according to their cost estimates.</p>
 486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 484</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 484</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_yields_statements?'>query_yields_statements?</span>
   <span class='kw'>false</span>
@@ -4859,7 +4856,7 @@ according to their cost estimates.</p>
 414</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 412</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rewrite'>rewrite</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
@@ -4988,7 +4985,7 @@ Filter Operations</p>
 464</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 441</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sparql'>to_sparql</span><span class='lparen'>(</span><span class='label'>top_level:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>filter_ops:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='ivar'>@patterns</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span>
@@ -5086,7 +5083,7 @@ Otherise, serialize as a BGP</p>
 430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 423</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sxp_bin'>to_sxp_bin</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:as_container</span><span class='rbracket'>]</span>
@@ -5155,12 +5152,12 @@ either a named graph or the default graph.</p>
       <pre class="lines">
 
 
-435
-436
-437</pre>
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 435</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unnamed?'>unnamed?</span>
   <span class='id identifier rubyid_graph_name'>graph_name</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -5227,14 +5224,14 @@ either a named graph or the default graph.</p>
       <pre class="lines">
 
 
+535
+536
+537
 538
-539
-540
-541
-542</pre>
+539</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 538</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 535</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_validate!'>validate!</span> <span class='kw'>rescue</span> <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>false</span>
@@ -5322,6 +5319,9 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
       <pre class="lines">
 
 
+548
+549
+550
 551
 552
 553
@@ -5331,13 +5331,10 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
 557
 558
 559
-560
-561
-562
-563</pre>
+560</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 551</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 548</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate!'>validate!</span>
   <span class='comment'># All patterns must be valid
@@ -5482,17 +5479,17 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
       <pre class="lines">
 
 
+453
+454
+455
 456
 457
 458
 459
-460
-461
-462
-463</pre>
+460</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 456</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variable?'>variable?</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
@@ -5564,12 +5561,12 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
       <pre class="lines">
 
 
-483
-484
-485</pre>
+480
+481
+482</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 483</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 480</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variable_count'>variable_count</span>
   <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
@@ -5632,16 +5629,16 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
       <pre class="lines">
 
 
+468
+469
+470
 471
 472
 473
-474
-475
-476
-477</pre>
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/rdf-c2bcdc15aedf/lib/rdf/query.rb', line 471</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/rdf-196b73b4a78a/lib/rdf/query.rb', line 468</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
   <span class='comment'># Set variables used in query
@@ -5713,7 +5710,7 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
 506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.2.0/bundler/gems/sparql-d7206d0f0d39/lib/sparql/algebra/extensions.rb', line 504</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/sparql-36baa432eb7f/lib/sparql/algebra/extensions.rb', line 504</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vars'>vars</span>
   <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
@@ -5728,9 +5725,9 @@ RDF::Queryable#query_execute that bypass our built-in query engine.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 09:18:54 2023 by
+  Generated on Mon Mar  4 10:15:53 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.34 (ruby-3.2.2).
+  0.9.36 (ruby-3.3.0).
 </div>
 
     </div>

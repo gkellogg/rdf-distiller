@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gemspec
-ruby "3.2.2"
+ruby "3.3.0"
 
 # Include non-released gems first
 gem "rack-rdf",           git: "https://github.com/ruby-rdf/rack-rdf", branch: "develop"
