@@ -26,30 +26,30 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 3.1'
+  s.add_runtime_dependency      'sinatra',            '~> 3.2'
   s.add_runtime_dependency      'sass',               '~> 3.7'
   s.add_runtime_dependency      'sprockets',          '~> 4.2'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
   s.add_runtime_dependency      'uglifier',           '~> 4.2'
 
   s.add_runtime_dependency      'erubis',             '~> 2.7'
-  s.add_runtime_dependency      'haml',               '~> 6.1'
+  s.add_runtime_dependency      'haml',               '~> 6.3'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.3'
   s.add_runtime_dependency      "rack",               '~> 2.2'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
-  s.add_runtime_dependency      'rack-cache',         '~> 1.13'
+  s.add_runtime_dependency      'rack-cache',         '~> 1.17'
   s.add_runtime_dependency      'redcarpet',          '~> 3.6'
-  s.add_runtime_dependency      'puma',               '~> 6.3', '>= 6.3.1'
-  s.add_runtime_dependency      'nokogiri',           '~> 1.15'
-  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.28"
+  s.add_runtime_dependency      'puma',               '~> 6.4', '>= 6.4.2'
+  s.add_runtime_dependency      'nokogiri',           '~> 1.16', '>= 1.16.5'
+  s.add_runtime_dependency      'yard' ,              '~> 0.9', ">= 0.9.36"
 
   # development dependencies
-  s.add_development_dependency  'rspec',              '~> 3.12'
+  s.add_development_dependency  'rspec',              '~> 3.13'
   s.add_development_dependency  'rspec-its',          '~> 1.3'
   s.add_development_dependency  'rack-test',          '~> 2.1'
   s.add_development_dependency  'jsonpath',           '~> 1.1'
-  s.add_development_dependency  'webmock',            '~> 3.18'
+  s.add_development_dependency  'webmock',            '~> 3.23'
 
   s.post_install_message        = nil
 end
