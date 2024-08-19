@@ -96,7 +96,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb</dd>
+    <dd>vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb</dd>
   </dl>
   
 </div>
@@ -735,7 +735,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -948,7 +949,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-112
 113
 114
 115
@@ -962,10 +962,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 123
 124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>expanded:</span> <span class='kw'>false</span><span class='comma'>,</span>
                  <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1030,7 +1031,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       
       
         &mdash;
-        <div class='inline'><p>If set to <code>true</code>, when extracting JSON-LD script elements from HTML, unless a specific fragment identifier is targeted, extracts all encountered JSON-LD script elements using an array form, if necessary.</p>
+        <div class='inline'><p>If set to <code>true</code>, when extracting JSON-LD script elements from HTML, unless a specific fragment identifier is targeted, extracts all encountered JSON-LD script elements using an array form, if necessary.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
       
     </li>
@@ -1134,8 +1136,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-298
-299
 300
 301
 302
@@ -1176,10 +1176,20 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 337
 338
 339
-340</pre>
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 300</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_documentLoader'>documentLoader</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>extractAllScripts:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>profile:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>requestProfile:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:read</span><span class='rparen'>)</span>
@@ -1202,7 +1212,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
     <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_content_type'>content_type</span>
     <span class='kw'>when</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>%r(</span><span class='tstring_content'>application/(\w+\+)*yaml</span><span class='regexp_end'>)</span></span>
       <span class='comment'># Parse YAML
-</span>      <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Representation.html#load-class_method" title="YAML_LD::Representation.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>      <span class='kw'>if</span> <span class='id identifier rubyid_extractAllScripts'>extractAllScripts</span>
+        <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load_stream'><span class='object_link'><a href="Representation.html#load_stream-class_method" title="YAML_LD::Representation.load_stream (method)">load_stream</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Representation.html#load-class_method" title="YAML_LD::Representation.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
     <span class='kw'>end</span>
@@ -1212,9 +1226,13 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <span class='label'>contextUrl:</span> <span class='id identifier rubyid_context_url'>context_url</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.yaml\w*$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r(</span><span class='tstring_content'>application/(\w+\+)*yaml</span><span class='regexp_end'>)</span></span><span class='rparen'>)</span>
     <span class='comment'># Parse YAML
-</span>    <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Representation.html#load-class_method" title="YAML_LD::Representation.load (method)">load</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RDF/Util.html" title="RDF::Util (module)">Util</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RDF/Util/File.html" title="RDF::Util::File (module)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_file'><span class='object_link'><a href="../RDF/Util/File.html#open_file-class_method" title="RDF::Util::File.open_file (method)">open_file</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span>
-                                         <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
-                                         <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RDF/Util.html" title="RDF::Util (module)">Util</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RDF/Util/File.html" title="RDF::Util::File (module)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_file'><span class='object_link'><a href="../RDF/Util/File.html#open_file-class_method" title="RDF::Util::File.open_file (method)">open_file</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base_uri'>base_uri</span> <span class='op'>||=</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_base_uri'>base_uri</span>
+    <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_extractAllScripts'>extractAllScripts</span>
+      <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load_stream'><span class='object_link'><a href="Representation.html#load_stream-class_method" title="YAML_LD::Representation.load_stream (method)">load_stream</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='const'><span class='object_link'><a href="Representation.html" title="YAML_LD::Representation (module)">Representation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Representation.html#load-class_method" title="YAML_LD::Representation.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='label'>filename:</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../JSON/LD/API/RemoteDocument.html" title="JSON::LD::API::RemoteDocument (class)">RemoteDocument</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../JSON/LD/API/RemoteDocument.html#initialize-instance_method" title="JSON::LD::API::RemoteDocument#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span>
       <span class='label'>documentUrl:</span> <span class='id identifier rubyid_base_uri'>base_uri</span><span class='comma'>,</span>
@@ -1417,7 +1435,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -1646,7 +1665,6 @@ The document base as determined during expansion</tt>)</span>
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -1660,10 +1678,11 @@ The document base as determined during expansion</tt>)</span>
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span>
                 <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1917,7 +1936,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -2117,7 +2137,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-154
 155
 156
 157
@@ -2131,10 +2150,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 165
 166
 167
-168</pre>
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='label'>expanded:</span> <span class='kw'>false</span><span class='comma'>,</span>
                  <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -2448,7 +2468,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -2661,7 +2682,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-201
 202
 203
 204
@@ -2675,10 +2695,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 212
 213
 214
-215</pre>
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_frame'>frame</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_frame'>frame</span><span class='comma'>,</span> <span class='label'>expanded:</span> <span class='kw'>false</span><span class='comma'>,</span>
                <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -2919,7 +2940,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -3112,7 +3134,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-268
 269
 270
 271
@@ -3127,10 +3148,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 280
 281
 282
-283</pre>
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fromRdf'>fromRdf</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='label'>useRdfType:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>useNativeTypes:</span> <span class='kw'>false</span><span class='comma'>,</span>
                  <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -3178,16 +3200,16 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-344
-345
-346
-347
-348
-349
-350</pre>
+354
+355
+356
+357
+358
+359
+360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_htmlLoader'>htmlLoader</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='label'>url:</span><span class='comma'>,</span> <span class='label'>extractAllScripts:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_extractAllScripts'>extractAllScripts</span>
@@ -3273,13 +3295,13 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-362
-363
-364
-365</pre>
+372
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_serializer'>serializer</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># de-alias any objects to avoid the use of aliases and anchors
@@ -3489,7 +3511,8 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
             
           </span>
           
-            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.</p>
+            &mdash; <div class='inline'><p>If set, when given an HTML input without a fragment identifier, extracts all <code>script</code> elements with type <code>application/ld+json</code> into an array during expansion.
+When given a YAML stream, extracts all documents in that stream into an array.</p>
 </div>
           
         </li>
@@ -3674,7 +3697,6 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
       <pre class="lines">
 
 
-232
 233
 234
 235
@@ -3686,10 +3708,11 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 241
 242
 243
-244</pre>
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-d851238cc6dc/lib/yaml_ld/api.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.3.0/bundler/gems/yaml-ld-2d2ba8e32d66/lib/yaml_ld/api.rb', line 233</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_toRdf'>toRdf</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='label'>expanded:</span> <span class='kw'>false</span><span class='comma'>,</span>
                <span class='label'>documentLoader:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:documentLoader</span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -3714,7 +3737,7 @@ See <span class='object_link'><a href="#serializer-class_method" title="YAML_LD:
 </div>
 
       <div id="footer">
-  Generated on Thu Jun  6 13:19:37 2024 by
+  Generated on Mon Aug 19 09:16:41 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.3.2).
 </div>
