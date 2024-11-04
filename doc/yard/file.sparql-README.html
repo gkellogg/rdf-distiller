@@ -90,7 +90,7 @@ using available RDF Writers (see <a href="https://rubygems.org/gems/linkeddata">
 <li>Implementation Report: <a href="file.earl.html" title="EARL">EARL</a></li>
 <li>Compatible with Ruby &gt;= 3.0.</li>
 <li>Supports Unicode query strings both on all versions of Ruby.</li>
-<li>Provisional support for <a href="https://w3c.github.io/rdf-star/rdf-star-cg-spec.html#sparql-query-language">SPARQL-star</a>.</li>
+<li>Provisional support for <a href="https://www.w3.org/TR/sparql12-query">SPARQL 1.2</a>.</li>
 </ul>
 
 <h2 id="description">Description</h2>
@@ -150,17 +150,17 @@ longer have a trailing &quot;.&quot;, although they do not need a leading digit.
 
 <p>Additionally, queries now take a block, or return an <code>Enumerator</code>; this is in keeping with much of the behavior of <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a> methods, including <code>Queryable#query</code>, and with version 1.1 or <a href="https://ruby-rdf.github.io/rdf">RDF.rb</a>, Query#execute. As a consequence, all queries which used to be of the form <code>query.execute(repository)</code> may equally be called as <code>repository.query(query)</code>. Previously, results were returned as a concrete class implementing <code>RDF::Queryable</code> or <code>RDF::Query::Solutions</code>, these are now <code>Enumerators</code>.</p>
 
-<h3 id="sparql-1-2">SPARQL 1.2</h3>
+<h3 id="sparql-dev">SPARQL Dev</h3>
 
-<p>The gem supports some of the extensions proposed by the <a href="https://github.com/w3c/sparql-12">SPARQL 1.2 Community Group</a>. In particular, the following extensions are now implemented:</p>
+<p>The gem supports some of the extensions proposed by the <a href="https://github.com/w3c/sparql-dev">SPARQL Dev Community Group</a>. In particular, the following extensions are now implemented:</p>
 
 <ul>
-<li><a href="https://github.com/w3c/sparql-12/blob/main/SEP/SEP-0002/sep-0002.md">SEP-0002: better support for Durations, Dates, and Times</a>
+<li><a href="https://github.com/w3c/sparql-dev/blob/main/SEP/SEP-0002/sep-0002.md">SEP-0002: better support for Durations, Dates, and Times</a>
 
 <ul>
 <li>This includes full support for <code>xsd:date</code>, <code>xsd:time</code>, <code>xsd:duration</code>, <code>xsd:dayTimeDuration</code>, and <code>xsd:yearMonthDuration</code> along with associated XPath/XQuery functions including a new <code>ADJUST</code> builtin. (<strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong>)</li>
 </ul></li>
-<li><a href="https://github.com/w3c/sparql-12/blob/main/SEP/SEP-0003/sep-0003.md">SEP-0003: Property paths with a min/max hop</a>
+<li><a href="https://github.com/w3c/sparql-dev/blob/main/SEP/SEP-0003/sep-0003.md">SEP-0003: Property paths with a min/max hop</a>
 
 <ul>
 <li>This includes support for non-counting path forms such as <code>rdf:rest{1,3}</code> to match the union of paths <code>rdf:rest</code>, <code>rdf:rest/rdf:rest</code>, and <code>rdf:rest/rdf:rest/rdf:rest</code>.  (<strong>Note: This feature is subject to change or elimination as the standards process progresses.</strong>)</li>
@@ -196,9 +196,9 @@ SELECT ?crypted
 
 <p>A call to execute a parsed query can include pre-bound variables, which cause queries to be executed with matching variables bound as defined. Variable pre-binding can be done using a Hash structure, or a Query Solution.  See <a href="#query-with-binding">Query with Binding example</a> and <span class='object_link'><a href="SPARQL/Algebra/Query.html#execute-instance_method" title="SPARQL::Algebra::Query#execute (method)">SPARQL::Algebra::Query#execute</a></span>.</p>
 
-<h3 id="sparqlstar-sparql-star">SPARQLStar (SPARQL-star)</h3>
+<h3 id="sparql-1-2">SPARQL 1.2</h3>
 
-<p>The gem supports <a href="https://w3c.github.io/rdf-star/rdf-star-cg-spec.html#sparql-query-language">SPARQL-star</a> where patterns may include sub-patterns recursively, for a kind of Reification.</p>
+<p>The gem supports <a href="https://www.w3.org/TR/sparql12-query">SPARQL 1.2</a> where patterns may include sub-patterns recursively, for a kind of Reification.</p>
 
 <p>For example, the following Turtle* file uses a statement as the subject of another statement:</p>
 
@@ -263,7 +263,7 @@ WHERE {
 }
 </code></pre>
 
-<p>Note that results can be serialized only when the format supports <a href="https://w3c.github.io/rdf-star/rdf-star-cg-spec.html">RDF-star</a>.</p>
+<p>Note that results can be serialized only when the format supports [SPARQL 1,2][].</p>
 
 <h4 id="sparql-results">SPARQL results</h4>
 
@@ -586,13 +586,13 @@ Note that the agreement applies to all repos in the <a href="https://github.com/
 <p>This is free and unencumbered public domain software. For more information,
 see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompanying <a href="file.UNLICENSE.html" title="UNLICENSE">UNLICENSE</a>.</p>
 
-<p>A copy of the <a href="https://www.w3.org/TR/sparql11-query/#sparqlGrammar">SPARQL EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="https://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
+<p>A copy of the <a href="https://www.w3.org/TR/sparql12-query/#sparqlGrammar">SPARQL EBNF</a> and derived parser files are included in the repository, which are not covered under the UNLICENSE. These files are covered via the <a href="https://www.w3.org/Consortium/Legal/2002/copyright-documents-20021231">W3C Document License</a>.</p>
 
 <p>A copy of the <a href="https://www.w3.org/2001/sw/DataAccess/tests/">SPARQL 1.0 tests</a> and <a href="https://www.w3.org/2009/sparql/docs/tests/">SPARQL 1.1 tests</a> are also included in the repository, which are not covered under the UNLICENSE; see the references for test copyright information.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Oct  3 09:50:38 2024 by
+  Generated on Mon Nov  4 12:09:04 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.3.5).
 </div>
