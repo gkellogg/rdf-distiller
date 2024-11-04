@@ -230,7 +230,7 @@ module RDF::Distiller
     # @overload post "/distiller", params
     # @see {#distil}
     post '/distiller' do
-      payload = Sinatra::IndifferentHash.new.merge(::JSON.parse(request.body.read))
+      payload = Sinatra::IndifferentHash.new.merge(::JSON.parse(request.body.tap(&:rewind).read))
       content_type :json
       distil(payload).to_json
     end
