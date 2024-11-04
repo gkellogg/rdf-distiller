@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 3.2'
+  s.add_runtime_dependency      'sinatra',            '~> 4.0'
   s.add_runtime_dependency      'sass',               '~> 3.7'
   s.add_runtime_dependency      'sprockets',          '~> 4.2'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 6.3'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.3'
-  s.add_runtime_dependency      "rack",               '~> 2.2'
+  s.add_runtime_dependency      "rack",               '~> 3.1'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
   s.add_runtime_dependency      'rack-cache',         '~> 1.17'
