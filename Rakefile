@@ -60,7 +60,7 @@ task :doap do
       next if path =~ %r(/rdf-\d.*\.(nq|nt)$)
       next if path.end_with?('metadata.json')
       puts "load #{path}"
-      g.load("file:/" + File.expand_path(path))
+      g.load("file:" + File.expand_path(path))
     rescue
       puts "#{$!}"
     end
