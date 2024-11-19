@@ -47,10 +47,7 @@ gem 'better_errors', '>= 2.9.1'
 gem 'binding_of_caller'
 
 # Until Rack::VERSION is defined again.
-gem 'rack',               git: 'git@github.com:rack/rack.git'
-
-# Until Tilt is updated to remove (issue #316)
-#gem 'tilt',               git: "https://github.com/rtomayko/tilt"
+gem 'rack',               git: 'https://github.com/rack/rack.git'
 
 group :debug do
   gem 'shotgun', '>= 0.9.2'
