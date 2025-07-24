@@ -46,9 +46,6 @@ gem "rake"
 gem 'better_errors', '~> 2.10'
 gem 'binding_of_caller'
 
-# Until Rack::VERSION is defined again.
-gem 'rack',               git: 'https://github.com/rack/rack.git'
-
 group :debug do
   gem 'shotgun', '>= 0.9.2'
   gem "byebug"
