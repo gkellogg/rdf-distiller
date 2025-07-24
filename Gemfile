@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gemspec
-ruby "3.3.5"
+ruby "3.4.3"
 
 # Include non-released gems first
 gem "rack-rdf",           git: "https://github.com/ruby-rdf/rack-rdf", branch: "develop"
@@ -43,7 +43,7 @@ gem 'yaml-ld',            git: "https://github.com/ruby-rdf/yaml-ld", branch: "d
 
 gem "syntax"
 gem "rake"
-gem 'better_errors', '>= 2.9.1'
+gem 'better_errors', '~> 2.10'
 gem 'binding_of_caller'
 
 # Until Rack::VERSION is defined again.

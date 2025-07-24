@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Rack::ShowExceptions
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Rack::ShowExceptions";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Rack.html" title="Rack (module)">Rack</a></span></span>
+     &raquo; 
+    <span class="title">ShowExceptions</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Rack::ShowExceptions
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Rack::ShowExceptions</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Rack::ShowExceptions catches all exceptions raised from the app it
+wraps.  It shows a useful backtrace with the sourcefile and
+clickable context, the whole Rack environment and the request
+data.</p>
+
+<p>Be careful when you use this on public-facing sites as it could
+reveal information helpful to attackers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ShowExceptions/Frame.html" title="Rack::ShowExceptions::Frame (class)">Frame</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CONTEXT-constant" class="">CONTEXT =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>7</span></pre></dd>
+      
+        <dt id="TEMPLATE-constant" class="">TEMPLATE =
+          <div class="docstring">
+  <div class="discussion">
+    <p>adapted from Django <www.djangoproject.com>
+Copyright (c) Django Software Foundation and individual contributors.
+Used under the modified BSD license:
+<a href="http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5">http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>ERB</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-&#39;HTML&#39;</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^      </span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='tstring_content'>  &lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+  &lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+    &lt;meta name=&quot;robots&quot; content=&quot;NONE,NOARCHIVE&quot; /&gt;
+    &lt;title&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+      html * { padding:0; margin:0; }
+      body * { padding:10px 20px; }
+      body * * { padding:0; }
+      body { font:small sans-serif; }
+      body&gt;div { border-bottom:1px solid #ddd; }
+      h1 { font-weight:normal; }
+      h2 { margin-bottom:.8em; }
+      h2 span { font-size:80%; color:#666; font-weight:normal; }
+      h3 { margin:1em 0 .5em 0; }
+      h4 { margin:0 0 .5em 0; font-weight: normal; }
+      table {
+          border:1px solid #ccc; border-collapse: collapse; background:white; }
+      tbody td, tbody th { vertical-align:top; padding:2px 3px; }
+      thead th {
+          padding:1px 6px 1px 3px; background:#fefefe; text-align:left;
+          font-weight:normal; font-size:11px; border:1px solid #ddd; }
+      tbody th { text-align:right; color:#666; padding-right:.5em; }
+      table.vars { margin:5px 0 2px 40px; }
+      table.vars td, table.req td { font-family:monospace; }
+      table td.code { width:100%;}
+      table td.code div { overflow:hidden; }
+      table.source th { color:#666; }
+      table.source td {
+          font-family:monospace; white-space:pre; border-bottom:1px solid #eee; }
+      ul.traceback { list-style-type:none; }
+      ul.traceback li.frame { margin-bottom:1em; }
+      div.context { margin: 10px 0; }
+      div.context ol {
+          padding-left:30px; margin:0 10px; list-style-position: inside; }
+      div.context ol li {
+          font-family:monospace; white-space:pre; color:#666; cursor:pointer; }
+      div.context ol.context-line li { color:black; background-color:#ccc; }
+      div.context ol.context-line li span { float: right; }
+      div.commands { margin-left: 40px; }
+      div.commands a { color:black; text-decoration:none; }
+      #summary { background: #ffc; }
+      #summary h2 { font-family: monospace; font-weight: normal; color: #666; white-space: pre-wrap; }
+      #summary ul#quicklinks { list-style-type: none; margin-bottom: 2em; }
+      #summary ul#quicklinks li { float: left; padding: 0 1em; }
+      #summary ul#quicklinks&gt;li+li { border-left: 1px #666 solid; }
+      #explanation { background:#eee; }
+      #template, #template-not-exist { background:#f6f6f6; }
+      #template-not-exist ul { margin: 0 0 0 20px; }
+      #traceback { background:#eee; }
+      #requestinfo { background:#f6f6f6; padding-left:120px; }
+      #summary table { border:none; background:transparent; }
+      #requestinfo h2, #requestinfo h3 { position:relative; margin-left:-100px; }
+      #requestinfo h3 { margin-bottom:-1em; }
+      .error { background: #ffc; }
+      .specific { color:#cc3300; font-weight:bold; }
+    &lt;/style&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    //&lt;!--
+      function getElementsByClassName(oElm, strTagName, strClassName){
+          // Written by Jonathan Snook, http://www.snook.ca/jon;
+          // Add-ons by Robert Nyman, http://www.robertnyman.com
+          var arrElements = (strTagName == &quot;*&quot; &amp;&amp; document.all)? document.all :
+          oElm.getElementsByTagName(strTagName);
+          var arrReturnElements = new Array();
+          strClassName = strClassName.replace(/\-/g, &quot;\\-&quot;);
+          var oRegExp = new RegExp(&quot;(^|\\s)&quot; + strClassName + &quot;(\\s|$$)&quot;);
+          var oElement;
+          for(var i=0; i&lt;arrElements.length; i++){
+              oElement = arrElements[i];
+              if(oRegExp.test(oElement.className)){
+                  arrReturnElements.push(oElement);
+              }
+          }
+          return (arrReturnElements)
+      }
+      function hideAll(elems) {
+        for (var e = 0; e &lt; elems.length; e++) {
+          elems[e].style.display = &#39;none&#39;;
+        }
+      }
+      window.onload = function() {
+        hideAll(getElementsByClassName(document, &#39;table&#39;, &#39;vars&#39;));
+        hideAll(getElementsByClassName(document, &#39;ol&#39;, &#39;pre-context&#39;));
+        hideAll(getElementsByClassName(document, &#39;ol&#39;, &#39;post-context&#39;));
+      }
+      function toggle() {
+        for (var i = 0; i &lt; arguments.length; i++) {
+          var e = document.getElementById(arguments[i]);
+          if (e) {
+            e.style.display = e.style.display == &#39;none&#39; ? &#39;block&#39; : &#39;none&#39;;
+          }
+        }
+        return false;
+      }
+      function varToggle(link, id) {
+        toggle(&#39;v&#39; + id);
+        var s = link.getElementsByTagName(&#39;span&#39;)[0];
+        var uarr = String.fromCharCode(0x25b6);
+        var darr = String.fromCharCode(0x25bc);
+        s.innerHTML = s.innerHTML == uarr ? darr : uarr;
+        return false;
+      }
+      //--&gt;
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+
+  &lt;div id=&quot;summary&quot;&gt;
+    &lt;h1&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/h1&gt;
+  &lt;% if exception.respond_to?(:detailed_message) %&gt;
+    &lt;h2&gt;&lt;%=h exception.detailed_message(highlight: false) %&gt;&lt;/h2&gt;
+  &lt;% else %&gt;
+    &lt;h2&gt;&lt;%=h exception.message %&gt;&lt;/h2&gt;
+  &lt;% end %&gt;
+    &lt;table&gt;&lt;tr&gt;
+      &lt;th&gt;Ruby&lt;/th&gt;
+      &lt;td&gt;
+  &lt;% if first = frames.first %&gt;
+        &lt;code&gt;&lt;%=h first.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h first.function %&gt;&lt;/code&gt;, line &lt;%=h frames.first.lineno %&gt;
+  &lt;% else %&gt;
+        unknown location
+  &lt;% end %&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;&lt;tr&gt;
+      &lt;th&gt;Web&lt;/th&gt;
+      &lt;td&gt;&lt;code&gt;&lt;%=h req.request_method %&gt; &lt;%=h(req.host + path)%&gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;&lt;/table&gt;
+
+    &lt;h3&gt;Jump to:&lt;/h3&gt;
+    &lt;ul id=&quot;quicklinks&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;#get-info&quot;&gt;GET&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#post-info&quot;&gt;POST&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#cookie-info&quot;&gt;Cookies&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#env-info&quot;&gt;ENV&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;traceback&quot;&gt;
+    &lt;h2&gt;Traceback &lt;span&gt;(innermost first)&lt;/span&gt;&lt;/h2&gt;
+    &lt;ul class=&quot;traceback&quot;&gt;
+  &lt;% frames.each { |frame| %&gt;
+        &lt;li class=&quot;frame&quot;&gt;
+          &lt;code&gt;&lt;%=h frame.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h frame.function %&gt;&lt;/code&gt;
+
+            &lt;% if frame.context_line %&gt;
+            &lt;div class=&quot;context&quot; id=&quot;c&lt;%=h frame.object_id %&gt;&quot;&gt;
+                &lt;% if frame.pre_context %&gt;
+                &lt;ol start=&quot;&lt;%=h frame.pre_context_lineno+1 %&gt;&quot; class=&quot;pre-context&quot; id=&quot;pre&lt;%=h frame.object_id %&gt;&quot;&gt;
+                  &lt;% frame.pre_context.each { |line| %&gt;
+                  &lt;li onclick=&quot;toggle(&#39;pre&lt;%=h frame.object_id %&gt;&#39;, &#39;post&lt;%=h frame.object_id %&gt;&#39;)&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;
+                  &lt;% } %&gt;
+                &lt;/ol&gt;
+                &lt;% end %&gt;
+
+              &lt;ol start=&quot;&lt;%=h frame.lineno %&gt;&quot; class=&quot;context-line&quot;&gt;
+                &lt;li onclick=&quot;toggle(&#39;pre&lt;%=h frame.object_id %&gt;&#39;, &#39;post&lt;%=h frame.object_id %&gt;&#39;)&quot;&gt;&lt;%=h frame.context_line %&gt;&lt;span&gt;...&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
+
+                &lt;% if frame.post_context %&gt;
+                &lt;ol start=&#39;&lt;%=h frame.lineno+1 %&gt;&#39; class=&quot;post-context&quot; id=&quot;post&lt;%=h frame.object_id %&gt;&quot;&gt;
+                  &lt;% frame.post_context.each { |line| %&gt;
+                  &lt;li onclick=&quot;toggle(&#39;pre&lt;%=h frame.object_id %&gt;&#39;, &#39;post&lt;%=h frame.object_id %&gt;&#39;)&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;
+                  &lt;% } %&gt;
+                &lt;/ol&gt;
+                &lt;% end %&gt;
+            &lt;/div&gt;
+            &lt;% end %&gt;
+        &lt;/li&gt;
+  &lt;% } %&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;requestinfo&quot;&gt;
+    &lt;h2&gt;Request information&lt;/h2&gt;
+
+    &lt;h3 id=&quot;get-info&quot;&gt;GET&lt;/h3&gt;
+    &lt;% if req.GET and not req.GET.empty? %&gt;
+      &lt;table class=&quot;req&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Variable&lt;/th&gt;
+            &lt;th&gt;Value&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;% req.GET.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+              &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;% } %&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;% else %&gt;
+      &lt;p&gt;No GET data.&lt;/p&gt;
+    &lt;% end %&gt;
+
+    &lt;h3 id=&quot;post-info&quot;&gt;POST&lt;/h3&gt;
+    &lt;% if ((req.POST and not req.POST.empty?) rescue (no_post_data = &quot;Invalid POST data&quot;; nil)) %&gt;
+      &lt;table class=&quot;req&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Variable&lt;/th&gt;
+            &lt;th&gt;Value&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;% req.POST.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+              &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;% } %&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;% else %&gt;
+      &lt;p&gt;&lt;%= no_post_data || &quot;No POST data&quot; %&gt;.&lt;/p&gt;
+    &lt;% end %&gt;
+
+
+    &lt;h3 id=&quot;cookie-info&quot;&gt;COOKIES&lt;/h3&gt;
+    &lt;% unless req.cookies.empty? %&gt;
+      &lt;table class=&quot;req&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Variable&lt;/th&gt;
+            &lt;th&gt;Value&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;% req.cookies.each { |key, val| %&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+              &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;% } %&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;% else %&gt;
+      &lt;p&gt;No cookie data.&lt;/p&gt;
+    &lt;% end %&gt;
+
+    &lt;h3 id=&quot;env-info&quot;&gt;Rack ENV&lt;/h3&gt;
+      &lt;table class=&quot;req&quot;&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Variable&lt;/th&gt;
+            &lt;th&gt;Value&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;% env.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+              &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;% } %&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+  &lt;/div&gt;
+
+  &lt;div id=&quot;explanation&quot;&gt;
+    &lt;p&gt;
+      You&#39;re seeing this error because you use &lt;code&gt;Rack::ShowExceptions&lt;/code&gt;.
+    &lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;/body&gt;
+  &lt;/html&gt;
+</span><span class='heredoc_end'>HTML</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(env)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dump_exception-instance_method" title="#dump_exception (instance method)">#<strong>dump_exception</strong>(exception)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#h-instance_method" title="#h (instance method)">#<strong>h</strong>(obj)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>:nodoc:.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(app)  &#x21d2; ShowExceptions </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of ShowExceptions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prefers_plaintext%3F-instance_method" title="#prefers_plaintext? (instance method)">#<strong>prefers_plaintext?</strong>(env)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pretty-instance_method" title="#pretty (instance method)">#<strong>pretty</strong>(env, exception)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#template-instance_method" title="#template (instance method)">#<strong>template</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(app)  &#x21d2; <tt><span class='object_link'><a href="" title="Rack::ShowExceptions (class)">ShowExceptions</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of ShowExceptions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='rparen'>)</span>
+  <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call-instance_method">
+  
+    #<strong>call</strong>(env)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+  <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>StandardError</span><span class='comma'>,</span> <span class='const'>LoadError</span><span class='comma'>,</span> <span class='const'>SyntaxError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_exception_string'>exception_string</span> <span class='op'>=</span> <span class='id identifier rubyid_dump_exception'>dump_exception</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Rack.html#RACK_ERRORS-constant" title="Rack::RACK_ERRORS (constant)">RACK_ERRORS</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_exception_string'>exception_string</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Rack.html#RACK_ERRORS-constant" title="Rack::RACK_ERRORS (constant)">RACK_ERRORS</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flush'>flush</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_accepts_html?'>accepts_html?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/html</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_pretty'>pretty</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='id identifier rubyid_exception_string'>exception_string</span>
+  <span class='kw'>end</span>
+
+  <span class='lbracket'>[</span>
+    <span class='int'>500</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='comma'>,</span>
+      <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dump_exception-instance_method">
+  
+    #<strong>dump_exception</strong>(exception)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 65</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dump_exception'>dump_exception</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:detailed_message</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_detailed_message'>detailed_message</span><span class='lparen'>(</span><span class='label'>highlight:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='comment'># :nocov:
+</span>  <span class='comment'># Ruby 3.2 added Exception#detailed_message, so the else
+</span>  <span class='comment'># branch cannot be hit on the current Ruby version.
+</span>  <span class='kw'>else</span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
+  <span class='comment'># :nocov:
+</span>  <span class='kw'>end</span>
+  <span class='id identifier rubyid_string'>string</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+  <span class='id identifier rubyid_string'>string</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_l'>l</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'><span class='object_link'><a href="../top-level-namespace.html#join-instance_method" title="#join (method)">join</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_string'>string</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="h-instance_method">
+  
+    #<strong>h</strong>(obj)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>:nodoc:</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_h'>h</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>                  <span class='comment'># :nodoc:
+</span>  <span class='kw'>case</span> <span class='id identifier rubyid_obj'>obj</span>
+  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span>
+    <span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_escape_html'><span class='object_link'><a href="Utils.html#escape_html-instance_method" title="Rack::Utils#escape_html (method)">escape_html</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_escape_html'><span class='object_link'><a href="Utils.html#escape_html-instance_method" title="Rack::Utils#escape_html (method)">escape_html</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="prefers_plaintext?-instance_method">
+  
+    #<strong>prefers_plaintext?</strong>(env)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 56</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_prefers_plaintext?'>prefers_plaintext?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+  <span class='op'>!</span><span class='id identifier rubyid_accepts_html?'>accepts_html?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pretty-instance_method">
+  
+    #<strong>pretty</strong>(env, exception)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pretty'>pretty</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_req'>req</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Rack.html" title="Rack (module)">Rack</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Request.html" title="Rack::Request (class)">Request</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Request.html#initialize-instance_method" title="Rack::Request#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+
+  <span class='comment'># This double assignment is to prevent an &quot;unused variable&quot; warning.
+</span>  <span class='comment'># Yes, it is dumb, but I don&#39;t like Ruby yelling at me.
+</span>  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_script_name'>script_name</span> <span class='op'>+</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_squeeze'>squeeze</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'># This double assignment is to prevent an &quot;unused variable&quot; warning.
+</span>  <span class='comment'># Yes, it is dumb, but I don&#39;t like Ruby yelling at me.
+</span>  <span class='id identifier rubyid_frames'>frames</span> <span class='op'>=</span> <span class='id identifier rubyid_frames'>frames</span> <span class='op'>=</span> <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span>
+    <span class='id identifier rubyid_frame'>frame</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ShowExceptions/Frame.html" title="Rack::ShowExceptions::Frame (class)">Frame</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Rack::ShowExceptions#initialize (method)">new</a></span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.*?):(\d+)(:in `(.*)&#39;)?</span><span class='regexp_end'>/</span></span>
+      <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='backref'>$1</span>
+      <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>=</span> <span class='backref'>$2</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+      <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_function'>function</span> <span class='op'>=</span> <span class='backref'>$4</span>
+
+      <span class='kw'>begin</span>
+        <span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>=</span> <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>-</span> <span class='int'>1</span>
+        <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_readlines'>readlines</span><span class='lparen'>(</span><span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_pre_context_lineno'>pre_context_lineno</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="#CONTEXT-constant" title="Rack::ShowExceptions::CONTEXT (constant)">CONTEXT</a></span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
+        <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_pre_context'>pre_context</span> <span class='op'>=</span> <span class='id identifier rubyid_lines'>lines</span><span class='lbracket'>[</span><span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_pre_context_lineno'>pre_context_lineno</span><span class='op'>...</span><span class='id identifier rubyid_lineno'>lineno</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_context_line'>context_line</span> <span class='op'>=</span> <span class='id identifier rubyid_lines'>lines</span><span class='lbracket'>[</span><span class='id identifier rubyid_lineno'>lineno</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+        <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_post_context_lineno'>post_context_lineno</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="#CONTEXT-constant" title="Rack::ShowExceptions::CONTEXT (constant)">CONTEXT</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_min'>min</span>
+        <span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_post_context'>post_context</span> <span class='op'>=</span> <span class='id identifier rubyid_lines'>lines</span><span class='lbracket'>[</span><span class='id identifier rubyid_lineno'>lineno</span> <span class='op'>+</span> <span class='int'>1</span><span class='op'>..</span><span class='id identifier rubyid_frame'>frame</span><span class='period'>.</span><span class='id identifier rubyid_post_context_lineno'>post_context_lineno</span><span class='rbracket'>]</span>
+      <span class='kw'>rescue</span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_frame'>frame</span>
+    <span class='kw'>else</span>
+      <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+
+  <span class='id identifier rubyid_template'>template</span><span class='period'>.</span><span class='id identifier rubyid_result'>result</span><span class='lparen'>(</span><span class='id identifier rubyid_binding'>binding</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="template-instance_method">
+  
+    #<strong>template</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/show_exceptions.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_template'>template</span>
+  <span class='const'><span class='object_link'><a href="#TEMPLATE-constant" title="Rack::ShowExceptions::TEMPLATE (constant)">TEMPLATE</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Jul 23 16:54:47 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

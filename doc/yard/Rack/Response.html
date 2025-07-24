@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Rack::Response
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Rack::Response";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Rack.html" title="Rack (module)">Rack</a></span></span>
+     &raquo; 
+    <span class="title">Response</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Rack::Response
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Rack::Response</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Response/Helpers.html" title="Rack::Response::Helpers (module)">Helpers</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Rack::Response provides a convenient interface to create a Rack
+response.</p>
+
+<p>It allows setting of headers and cookies, and provides useful
+defaults (an OK response with empty headers and body).</p>
+
+<p>You can use Response#write to iteratively generate your response,
+but note that this is buffered by Rack::Response until you call
++finish+.  +finish+ however can take a block inside which calls to
++write+ are synchronous with the Rack response.</p>
+
+<p>Your application&#39;s +call+ should end returning Response#finish.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="MockResponse.html" title="Rack::MockResponse (class)">MockResponse</a></span></p>
+</div>
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Response/Helpers.html" title="Rack::Response::Helpers (module)">Helpers</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Response/Raw.html" title="Rack::Response::Raw (class)">Raw</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CHUNKED-constant" class="">CHUNKED =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>chunked</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+        <dt id="STATUS_WITH_NO_ENTITY_BODY-constant" class="">STATUS_WITH_NO_ENTITY_BODY =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils.html#STATUS_WITH_NO_ENTITY_BODY-constant" title="Rack::Utils::STATUS_WITH_NO_ENTITY_BODY (constant)">STATUS_WITH_NO_ENTITY_BODY</a></span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#body-instance_method" title="#body (instance method)">#<strong>body</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute body.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#headers-instance_method" title="#headers (instance method)">#<strong>headers</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute headers.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#length-instance_method" title="#length (instance method)">#<strong>length</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute length.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#status-instance_method" title="#status (instance method)">#<strong>status</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute status.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#[]-class_method" title="[] (class method)">.<strong>[]</strong>(status, headers, body)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#chunked%3F-instance_method" title="#chunked? (instance method)">#<strong>chunked?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#close-instance_method" title="#close (instance method)">#<strong>close</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_header-instance_method" title="#delete_header (instance method)">#<strong>delete_header</strong>(key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>(&amp;callback)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#empty%3F-instance_method" title="#empty? (instance method)">#<strong>empty?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finish-instance_method" title="#finish (instance method)">#<strong>finish</strong>(&amp;block)  &#x21d2; Array </a>
+    
+
+    
+      (also: #to_a)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Generate a response array consistent with the requirements of the SPEC.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_header-instance_method" title="#get_header (instance method)">#<strong>get_header</strong>(key)  &#x21d2; Object </a>
+    
+
+    
+      (also: #[])
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_header%3F-instance_method" title="#has_header? (instance method)">#<strong>has_header?</strong>(key)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(body = nil, status = 200, headers = {}) {|_self| ... } &#x21d2; Response </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initialize the response object with the specified +body+, +status+ and +headers+.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#no_entity_body%3F-instance_method" title="#no_entity_body? (instance method)">#<strong>no_entity_body?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#redirect-instance_method" title="#redirect (instance method)">#<strong>redirect</strong>(target, status = 302)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_header-instance_method" title="#set_header (instance method)">#<strong>set_header</strong>(key, value)  &#x21d2; Object </a>
+    
+
+    
+      (also: #[]=)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#write-instance_method" title="#write (instance method)">#<strong>write</strong>(chunk)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Append a chunk to the response body.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Response/Helpers.html" title="Rack::Response::Helpers (module)">Helpers</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Response/Helpers.html#accepted%3F-instance_method" title="Rack::Response::Helpers#accepted? (method)">#accepted?</a></span>, <span class='object_link'><a href="Response/Helpers.html#add_header-instance_method" title="Rack::Response::Helpers#add_header (method)">#add_header</a></span>, <span class='object_link'><a href="Response/Helpers.html#append-instance_method" title="Rack::Response::Helpers#append (method)">#append</a></span>, <span class='object_link'><a href="Response/Helpers.html#bad_request%3F-instance_method" title="Rack::Response::Helpers#bad_request? (method)">#bad_request?</a></span>, <span class='object_link'><a href="Response/Helpers.html#buffered_body!-instance_method" title="Rack::Response::Helpers#buffered_body! (method)">#buffered_body!</a></span>, <span class='object_link'><a href="Response/Helpers.html#cache!-instance_method" title="Rack::Response::Helpers#cache! (method)">#cache!</a></span>, <span class='object_link'><a href="Response/Helpers.html#cache_control-instance_method" title="Rack::Response::Helpers#cache_control (method)">#cache_control</a></span>, <span class='object_link'><a href="Response/Helpers.html#cache_control=-instance_method" title="Rack::Response::Helpers#cache_control= (method)">#cache_control=</a></span>, <span class='object_link'><a href="Response/Helpers.html#client_error%3F-instance_method" title="Rack::Response::Helpers#client_error? (method)">#client_error?</a></span>, <span class='object_link'><a href="Response/Helpers.html#content_length-instance_method" title="Rack::Response::Helpers#content_length (method)">#content_length</a></span>, <span class='object_link'><a href="Response/Helpers.html#content_type-instance_method" title="Rack::Response::Helpers#content_type (method)">#content_type</a></span>, <span class='object_link'><a href="Response/Helpers.html#content_type=-instance_method" title="Rack::Response::Helpers#content_type= (method)">#content_type=</a></span>, <span class='object_link'><a href="Response/Helpers.html#created%3F-instance_method" title="Rack::Response::Helpers#created? (method)">#created?</a></span>, <span class='object_link'><a href="Response/Helpers.html#delete_cookie-instance_method" title="Rack::Response::Helpers#delete_cookie (method)">#delete_cookie</a></span>, <span class='object_link'><a href="Response/Helpers.html#do_not_cache!-instance_method" title="Rack::Response::Helpers#do_not_cache! (method)">#do_not_cache!</a></span>, <span class='object_link'><a href="Response/Helpers.html#etag-instance_method" title="Rack::Response::Helpers#etag (method)">#etag</a></span>, <span class='object_link'><a href="Response/Helpers.html#etag=-instance_method" title="Rack::Response::Helpers#etag= (method)">#etag=</a></span>, <span class='object_link'><a href="Response/Helpers.html#forbidden%3F-instance_method" title="Rack::Response::Helpers#forbidden? (method)">#forbidden?</a></span>, <span class='object_link'><a href="Response/Helpers.html#include%3F-instance_method" title="Rack::Response::Helpers#include? (method)">#include?</a></span>, <span class='object_link'><a href="Response/Helpers.html#informational%3F-instance_method" title="Rack::Response::Helpers#informational? (method)">#informational?</a></span>, <span class='object_link'><a href="Response/Helpers.html#invalid%3F-instance_method" title="Rack::Response::Helpers#invalid? (method)">#invalid?</a></span>, <span class='object_link'><a href="Response/Helpers.html#location-instance_method" title="Rack::Response::Helpers#location (method)">#location</a></span>, <span class='object_link'><a href="Response/Helpers.html#location=-instance_method" title="Rack::Response::Helpers#location= (method)">#location=</a></span>, <span class='object_link'><a href="Response/Helpers.html#media_type-instance_method" title="Rack::Response::Helpers#media_type (method)">#media_type</a></span>, <span class='object_link'><a href="Response/Helpers.html#media_type_params-instance_method" title="Rack::Response::Helpers#media_type_params (method)">#media_type_params</a></span>, <span class='object_link'><a href="Response/Helpers.html#method_not_allowed%3F-instance_method" title="Rack::Response::Helpers#method_not_allowed? (method)">#method_not_allowed?</a></span>, <span class='object_link'><a href="Response/Helpers.html#moved_permanently%3F-instance_method" title="Rack::Response::Helpers#moved_permanently? (method)">#moved_permanently?</a></span>, <span class='object_link'><a href="Response/Helpers.html#no_content%3F-instance_method" title="Rack::Response::Helpers#no_content? (method)">#no_content?</a></span>, <span class='object_link'><a href="Response/Helpers.html#not_acceptable%3F-instance_method" title="Rack::Response::Helpers#not_acceptable? (method)">#not_acceptable?</a></span>, <span class='object_link'><a href="Response/Helpers.html#not_found%3F-instance_method" title="Rack::Response::Helpers#not_found? (method)">#not_found?</a></span>, <span class='object_link'><a href="Response/Helpers.html#ok%3F-instance_method" title="Rack::Response::Helpers#ok? (method)">#ok?</a></span>, <span class='object_link'><a href="Response/Helpers.html#precondition_failed%3F-instance_method" title="Rack::Response::Helpers#precondition_failed? (method)">#precondition_failed?</a></span>, <span class='object_link'><a href="Response/Helpers.html#redirect%3F-instance_method" title="Rack::Response::Helpers#redirect? (method)">#redirect?</a></span>, <span class='object_link'><a href="Response/Helpers.html#redirection%3F-instance_method" title="Rack::Response::Helpers#redirection? (method)">#redirection?</a></span>, <span class='object_link'><a href="Response/Helpers.html#request_timeout%3F-instance_method" title="Rack::Response::Helpers#request_timeout? (method)">#request_timeout?</a></span>, <span class='object_link'><a href="Response/Helpers.html#server_error%3F-instance_method" title="Rack::Response::Helpers#server_error? (method)">#server_error?</a></span>, <span class='object_link'><a href="Response/Helpers.html#set_cookie-instance_method" title="Rack::Response::Helpers#set_cookie (method)">#set_cookie</a></span>, <span class='object_link'><a href="Response/Helpers.html#set_cookie_header-instance_method" title="Rack::Response::Helpers#set_cookie_header (method)">#set_cookie_header</a></span>, <span class='object_link'><a href="Response/Helpers.html#set_cookie_header=-instance_method" title="Rack::Response::Helpers#set_cookie_header= (method)">#set_cookie_header=</a></span>, <span class='object_link'><a href="Response/Helpers.html#successful%3F-instance_method" title="Rack::Response::Helpers#successful? (method)">#successful?</a></span>, <span class='object_link'><a href="Response/Helpers.html#unauthorized%3F-instance_method" title="Rack::Response::Helpers#unauthorized? (method)">#unauthorized?</a></span>, <span class='object_link'><a href="Response/Helpers.html#unprocessable%3F-instance_method" title="Rack::Response::Helpers#unprocessable? (method)">#unprocessable?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(body = nil, status = 200, headers = {}) {|_self| ... } &#x21d2; <tt><span class='object_link'><a href="" title="Rack::Response (class)">Response</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Initialize the response object with the specified +body+, +status+
+and +headers+.</p>
+
+<p>If the +body+ is +nil+, construct an empty response object with internal
+buffering.</p>
+
+<p>If the +body+ responds to +to_str+, assume it&#39;s a string-like object and
+construct a buffered response object containing using that string as the
+initial contents of the buffer.</p>
+
+<p>Otherwise it is expected +body+ conforms to the normal requirements of a
+Rack response body, typically implementing one of +each+ (enumerable
+body) or +call+ (streaming body).</p>
+
+<p>The +status+ defaults to +200+ which is the &quot;OK&quot; HTTP status code. You
+can provide any other valid status code.</p>
+
+<p>The +headers+ must be a +Hash+ of key-value header pairs which conform to
+the Rack specification for response headers. The key must be a +String+
+instance and the value can be either a +String+ or +Array+ instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>_self</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>_self</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Rack::Response (class)">Rack::Response</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the object that the method was called on</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='int'>200</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@status</span> <span class='op'>=</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Headers must be a Hash!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Headers.html" title="Rack::Headers (class)">Headers</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='comment'># Convert headers input to a plain hash with lowercase keys.
+</span>  <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='ivar'>@headers</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@writer</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:append</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@block</span> <span class='op'>=</span> <span class='kw'>nil</span>
+
+  <span class='comment'># Keep track of whether we have expanded the user supplied body.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='ivar'>@body</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='ivar'>@buffered</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='comment'># Body is unspecified - it may be a buffered response, or it may be a HEAD response.
+</span>    <span class='ivar'>@length</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:to_str</span><span class='rparen'>)</span>
+    <span class='ivar'>@body</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span>
+    <span class='ivar'>@buffered</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='ivar'>@length</span> <span class='op'>=</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_to_str'>to_str</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_body'>body</span>
+    <span class='ivar'>@buffered</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='comment'># undetermined as of yet.
+</span>    <span class='ivar'>@length</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>yield</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="body=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="body-instance_method">
+  
+    #<strong>body</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute body.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span>
+  <span class='ivar'>@body</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="headers-instance_method">
+  
+    #<strong>headers</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute headers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
+  <span class='ivar'>@headers</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="length=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="length-instance_method">
+  
+    #<strong>length</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute length.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_length'>length</span>
+  <span class='ivar'>@length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="status=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="status-instance_method">
+  
+    #<strong>status</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute status.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span>
+  <span class='ivar'>@status</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="[]-class_method">
+  
+    .<strong>[]</strong>(status, headers, body)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="chunked?-instance_method">
+  
+    #<strong>chunked?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_chunked?'>chunked?</span>
+  <span class='const'><span class='object_link'><a href="#CHUNKED-constant" title="Rack::Response::CHUNKED (constant)">CHUNKED</a></span></span> <span class='op'>==</span> <span class='id identifier rubyid_get_header'>get_header</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Rack.html#TRANSFER_ENCODING-constant" title="Rack::TRANSFER_ENCODING (constant)">TRANSFER_ENCODING</a></span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="close-instance_method">
+  
+    #<strong>close</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 152</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
+  <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span> <span class='kw'>if</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:close</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_header-instance_method">
+  
+    #<strong>delete_header</strong>(key)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 172</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_header'>delete_header</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span> <span class='kw'>unless</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@headers</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_key'>key</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="each-instance_method">
+  
+    #<strong>each</strong>(&amp;callback)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 130</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_callback'>callback</span><span class='rparen'>)</span>
+  <span class='ivar'>@buffered</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@block</span>
+    <span class='ivar'>@writer</span> <span class='op'>=</span> <span class='id identifier rubyid_callback'>callback</span>
+    <span class='ivar'>@block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="empty?-instance_method">
+  
+    #<strong>empty?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 156</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='ivar'>@block</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finish-instance_method">
+  
+    #<strong>finish</strong>(&amp;block)  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='to_a-instance_method'>to_a</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Generate a response array consistent with the requirements of the SPEC.
+which is suitable to be returned from the middleware <code>#call(env)</code> method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>a 3-tuple suitable of <code>[status, headers, body]</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finish'>finish</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_no_entity_body?'>no_entity_body?</span>
+    <span class='id identifier rubyid_delete_header'>delete_header</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span>
+    <span class='id identifier rubyid_delete_header'>delete_header</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span>
+    <span class='id identifier rubyid_close'>close</span>
+    <span class='kw'>return</span> <span class='lbracket'>[</span><span class='ivar'>@status</span><span class='comma'>,</span> <span class='ivar'>@headers</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+      <span class='comment'># We don&#39;t add the content-length here as the user has provided a block that can #write additional chunks to the body.
+</span>      <span class='ivar'>@block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span>
+      <span class='kw'>return</span> <span class='lbracket'>[</span><span class='ivar'>@status</span><span class='comma'>,</span> <span class='ivar'>@headers</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='comment'># If we know the length of the body, set the content-length header... except if we are chunked? which is a legacy special case where the body might already be encoded and thus the actual encoded body length and the content-length are likely to be different.
+</span>      <span class='kw'>if</span> <span class='ivar'>@length</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_chunked?'>chunked?</span>
+        <span class='ivar'>@headers</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@length</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+      <span class='kw'>end</span>
+      <span class='kw'>return</span> <span class='lbracket'>[</span><span class='ivar'>@status</span><span class='comma'>,</span> <span class='ivar'>@headers</span><span class='comma'>,</span> <span class='ivar'>@body</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_header-instance_method">
+  
+    #<strong>get_header</strong>(key)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='[]-instance_method'>[]</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+164
+165
+166
+167</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 164</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_header'>get_header</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span> <span class='kw'>unless</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@headers</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="has_header?-instance_method">
+  
+    #<strong>has_header?</strong>(key)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_has_header?'>has_header?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span> <span class='kw'>unless</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@headers</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="no_entity_body?-instance_method">
+  
+    #<strong>no_entity_body?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_no_entity_body?'>no_entity_body?</span>
+  <span class='comment'># The response body is an enumerable body and it is not allowed to have an entity body.
+</span>  <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:each</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="#STATUS_WITH_NO_ENTITY_BODY-constant" title="Rack::Response::STATUS_WITH_NO_ENTITY_BODY (constant)">STATUS_WITH_NO_ENTITY_BODY</a></span></span><span class='lbracket'>[</span><span class='ivar'>@status</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="redirect-instance_method">
+  
+    #<strong>redirect</strong>(target, status = 302)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_redirect'>redirect</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='int'>302</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_status'>status</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_header-instance_method">
+  
+    #<strong>set_header</strong>(key, value)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='[]=-instance_method'>[]=</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+168
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 168</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_header'>set_header</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span> <span class='kw'>unless</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@headers</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="write-instance_method">
+  
+    #<strong>write</strong>(chunk)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Append a chunk to the response body.</p>
+
+<p>Converts the response into a buffered response if it wasn&#39;t already.</p>
+
+<p>NOTE: Do not mix #write and direct #body access!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/response.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_chunk'>chunk</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_buffered_body!'>buffered_body!</span>
+
+  <span class='ivar'>@writer</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_chunk'>chunk</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Jul 23 16:54:47 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

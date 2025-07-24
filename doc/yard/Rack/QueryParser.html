@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Rack::QueryParser
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Rack::QueryParser";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (Q)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Rack.html" title="Rack (module)">Rack</a></span></span>
+     &raquo; 
+    <span class="title">QueryParser</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Rack::QueryParser
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Rack::QueryParser</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="QueryParser/InvalidParameterError.html" title="Rack::QueryParser::InvalidParameterError (class)">InvalidParameterError</a></span>, <span class='object_link'><a href="QueryParser/ParameterTypeError.html" title="Rack::QueryParser::ParameterTypeError (class)">ParameterTypeError</a></span>, <span class='object_link'><a href="QueryParser/Params.html" title="Rack::QueryParser::Params (class)">Params</a></span>, <span class='object_link'><a href="QueryParser/QueryLimitError.html" title="Rack::QueryParser::QueryLimitError (class)">QueryLimitError</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="DEFAULT_SEP-constant" class="">DEFAULT_SEP =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&amp; *</span><span class='regexp_end'>/n</span></span></pre></dd>
+      
+        <dt id="COMMON_SEP-constant" class="">COMMON_SEP =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>; *</span><span class='regexp_end'>/n</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;,</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[;,] *</span><span class='regexp_end'>/n</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&amp; *</span><span class='regexp_end'>/n</span></span> <span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="ParamsTooDeepError-constant" class="">ParamsTooDeepError =
+          <div class="docstring">
+  <div class="discussion">
+    <p>ParamsTooDeepError is the old name for the error that is raised when params
+are recursively nested over the specified limit. Make it the same as
+as QueryLimitError, so that code that rescues ParamsTooDeepError error
+to handle bad query strings also now handles other limits.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'><span class='object_link'><a href="QueryParser/QueryLimitError.html" title="Rack::QueryParser::QueryLimitError (class)">QueryLimitError</a></span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#param_depth_limit-instance_method" title="#param_depth_limit (instance method)">#<strong>param_depth_limit</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute param_depth_limit.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#make_default-class_method" title="make_default (class method)">.<strong>make_default</strong>(param_depth_limit, **options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(params_class, param_depth_limit, bytesize_limit: BYTESIZE_LIMIT, params_limit: PARAMS_LIMIT)  &#x21d2; QueryParser </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of QueryParser.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#make_params-instance_method" title="#make_params (instance method)">#<strong>make_params</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new_depth_limit-instance_method" title="#new_depth_limit (instance method)">#<strong>new_depth_limit</strong>(param_depth_limit)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#normalize_params-instance_method" title="#normalize_params (instance method)">#<strong>normalize_params</strong>(params, name, v, _depth = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>normalize_params recursively expands parameters into structural types.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_nested_query-instance_method" title="#parse_nested_query (instance method)">#<strong>parse_nested_query</strong>(qs, separator = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>parse_nested_query expands a query string into structural types.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_query-instance_method" title="#parse_query (instance method)">#<strong>parse_query</strong>(qs, separator = nil, &amp;unescaper)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Stolen from Mongrel, with some small modifications: Parses a query string by breaking it up at the &#39;&amp;&#39;.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(params_class, param_depth_limit, bytesize_limit: BYTESIZE_LIMIT, params_limit: PARAMS_LIMIT)  &#x21d2; <tt><span class='object_link'><a href="" title="Rack::QueryParser (class)">QueryParser</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of QueryParser.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_params_class'>params_class</span><span class='comma'>,</span> <span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span><span class='comma'>,</span> <span class='label'>bytesize_limit:</span> <span class='const'>BYTESIZE_LIMIT</span><span class='comma'>,</span> <span class='label'>params_limit:</span> <span class='const'>PARAMS_LIMIT</span><span class='rparen'>)</span>
+  <span class='ivar'>@params_class</span> <span class='op'>=</span> <span class='id identifier rubyid_params_class'>params_class</span>
+  <span class='ivar'>@param_depth_limit</span> <span class='op'>=</span> <span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span>
+  <span class='ivar'>@bytesize_limit</span> <span class='op'>=</span> <span class='id identifier rubyid_bytesize_limit'>bytesize_limit</span>
+  <span class='ivar'>@params_limit</span> <span class='op'>=</span> <span class='id identifier rubyid_params_limit'>params_limit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="param_depth_limit-instance_method">
+  
+    #<strong>param_depth_limit</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute param_depth_limit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span>
+  <span class='ivar'>@param_depth_limit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="make_default-class_method">
+  
+    .<strong>make_default</strong>(param_depth_limit, **options)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_make_default'>make_default</span><span class='lparen'>(</span><span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="QueryParser/Params.html" title="Rack::QueryParser::Params (class)">Params</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="make_params-instance_method">
+  
+    #<strong>make_params</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+192
+193
+194</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 192</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_make_params'>make_params</span>
+  <span class='ivar'>@params_class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="new_depth_limit-instance_method">
+  
+    #<strong>new_depth_limit</strong>(param_depth_limit)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+196
+197
+198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 196</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_new_depth_limit'>new_depth_limit</span><span class='lparen'>(</span><span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@params_class</span><span class='comma'>,</span> <span class='id identifier rubyid_param_depth_limit'>param_depth_limit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="normalize_params-instance_method">
+  
+    #<strong>normalize_params</strong>(params, name, v, _depth = nil)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>normalize_params recursively expands parameters into structural types. If
+the structural types represented by two different parameter names are in
+conflict, a ParameterTypeError is raised.  The depth argument is deprecated
+and should no longer be used, it is kept for backwards compatibility with
+earlier versions of rack.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_normalize_params'>normalize_params</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='id identifier rubyid__depth'>_depth</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid__normalize_params'>_normalize_params</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_nested_query-instance_method">
+  
+    #<strong>parse_nested_query</strong>(qs, separator = nil)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>parse_nested_query expands a query string into structural types. Supported
+types are Arrays, Hashes and basic value types. It is possible to supply
+query strings with parameters of conflicting types, in this case a
+ParameterTypeError is raised. Users are encouraged to return a 400 in this
+case.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 99</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_nested_query'>parse_nested_query</span><span class='lparen'>(</span><span class='id identifier rubyid_qs'>qs</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='id identifier rubyid_make_params'>make_params</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_qs'>qs</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_qs'>qs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_check_query_string'>check_query_string</span><span class='lparen'>(</span><span class='id identifier rubyid_qs'>qs</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_separator'>separator</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#COMMON_SEP-constant" title="Rack::QueryParser::COMMON_SEP (constant)">COMMON_SEP</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_separator'>separator</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_separator'>separator</span><span class='embexpr_end'>}</span><span class='tstring_content'>] *</span><span class='regexp_end'>/n</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="#DEFAULT_SEP-constant" title="Rack::QueryParser::DEFAULT_SEP (constant)">DEFAULT_SEP</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+      <span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>=</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_unescape'>unescape</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+      <span class='id identifier rubyid__normalize_params'>_normalize_params</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+<span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="QueryParser/InvalidParameterError.html" title="Rack::QueryParser::InvalidParameterError (class)">InvalidParameterError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="parse_query-instance_method">
+  
+    #<strong>parse_query</strong>(qs, separator = nil, &amp;unescaper)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Stolen from Mongrel, with some small modifications:
+Parses a query string by breaking it up at the &#39;&amp;&#39;.  You can also use this
+to parse cookies by changing the characters used in the second parameter
+(which defaults to &#39;&amp;&#39;).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/query_parser.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parse_query'>parse_query</span><span class='lparen'>(</span><span class='id identifier rubyid_qs'>qs</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_unescaper'>unescaper</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_unescaper'>unescaper</span> <span class='op'>||=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:unescape</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='id identifier rubyid_make_params'>make_params</span>
+
+  <span class='id identifier rubyid_check_query_string'>check_query_string</span><span class='lparen'>(</span><span class='id identifier rubyid_qs'>qs</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_separator'>separator</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#COMMON_SEP-constant" title="Rack::QueryParser::COMMON_SEP (constant)">COMMON_SEP</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_separator'>separator</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_separator'>separator</span><span class='embexpr_end'>}</span><span class='tstring_content'>] *</span><span class='regexp_end'>/n</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="#DEFAULT_SEP-constant" title="Rack::QueryParser::DEFAULT_SEP (constant)">DEFAULT_SEP</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>=</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_unescaper'>unescaper</span><span class='rparen'>)</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_cur'>cur</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_cur'>cur</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span>
+        <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_v'>v</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_cur'>cur</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_v'>v</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Jul 23 16:54:47 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>
