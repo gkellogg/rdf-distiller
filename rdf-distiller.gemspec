@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'erubis',             '~> 2.7'
   s.add_runtime_dependency      'haml',               '~> 6.3'
   s.add_runtime_dependency      'json-ld-preloaded',  '~> 3.3'
-  s.add_runtime_dependency      "rack",               '~> 3.1'
+  s.add_runtime_dependency      "rack",               '~> 3.1', '>= 3.1.14'
   s.add_runtime_dependency      'rackup',             '~> 2.2'
   s.add_runtime_dependency      'rest-client',        '~> 2.1'
   s.add_runtime_dependency      'rest-client-components', '~> 1.5'
