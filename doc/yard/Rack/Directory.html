@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Rack::Directory
+  
+    &mdash; Web portal for RDF.rb.
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Rack::Directory";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Rack.html" title="Rack (module)">Rack</a></span></span>
+     &raquo; 
+    <span class="title">Directory</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Rack::Directory
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span>
+      
+        <ul class="fullTree">
+          <li><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></li>
+          
+            <li class="next">Rack::Directory</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Rack::Directory serves entries below the +root+ given, according to the
+path info of the Rack request. If a directory is found, the file&#39;s contents
+will be presented in an html based index. If a file is found, the env will
+be passed to the specified +app+.</p>
+
+<p>If +app+ is not specified, a Rack::Files of the same +root+ will be used.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Directory/DirectoryBody.html" title="Rack::Directory::DirectoryBody (class)">DirectoryBody</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="DIR_FILE-constant" class="">DIR_FILE =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;tr&gt;&lt;td class=&#39;name&#39;&gt;&lt;a href=&#39;%s&#39;&gt;%s&lt;/a&gt;&lt;/td&gt;&lt;td class=&#39;size&#39;&gt;%s&lt;/td&gt;&lt;td class=&#39;type&#39;&gt;%s&lt;/td&gt;&lt;td class=&#39;mtime&#39;&gt;%s&lt;/td&gt;&lt;/tr&gt;\n</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="DIR_PAGE_HEADER-constant" class="">DIR_PAGE_HEADER =
+          
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;-PAGE</span>
+<span class='tstring_content'>&lt;html&gt;&lt;head&gt;
+  &lt;title&gt;%s&lt;/title&gt;
+  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+  &lt;style type=&#39;text/css&#39;&gt;
+table { width:100%%; }
+.name { text-align:left; }
+.size, .mtime { text-align:right; }
+.type { width:11em; }
+.mtime { width:15em; }
+  &lt;/style&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;%s&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+&lt;th class=&#39;name&#39;&gt;Name&lt;/th&gt;
+&lt;th class=&#39;size&#39;&gt;Size&lt;/th&gt;
+&lt;th class=&#39;type&#39;&gt;Type&lt;/th&gt;
+&lt;th class=&#39;mtime&#39;&gt;Last Modified&lt;/th&gt;
+  &lt;/tr&gt;
+</span><span class='heredoc_end'>PAGE</span></pre></dd>
+      
+        <dt id="DIR_PAGE_FOOTER-constant" class="">DIR_PAGE_FOOTER =
+          
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;-PAGE</span>
+<span class='tstring_content'>&lt;/table&gt;
+&lt;hr /&gt;
+&lt;/body&gt;&lt;/html&gt;
+</span><span class='heredoc_end'>PAGE</span></pre></dd>
+      
+        <dt id="FILESIZE_FORMAT-constant" class="">FILESIZE_FORMAT =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Stolen from Ramaze</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%.1fT</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>40</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%.1fG</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>30</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%.1fM</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>20</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%.1fK</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>10</span><span class='rbracket'>]</span><span class='comma'>,</span>
+<span class='rbracket'>]</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#root-instance_method" title="#root (instance method)">#<strong>root</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The root of the directory hierarchy.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(env)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_bad_request-instance_method" title="#check_bad_request (instance method)">#<strong>check_bad_request</strong>(path_info)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rack response to use for requests with invalid paths, or nil if path is valid.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_forbidden-instance_method" title="#check_forbidden (instance method)">#<strong>check_forbidden</strong>(path_info)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rack response to use for requests with paths outside the root, or nil if path is inside the root.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#entity_not_found-instance_method" title="#entity_not_found (instance method)">#<strong>entity_not_found</strong>(path_info)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rack response to use for unreadable and non-file, non-directory entries.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#filesize_format-instance_method" title="#filesize_format (instance method)">#<strong>filesize_format</strong>(int)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Provide human readable file sizes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get-instance_method" title="#get (instance method)">#<strong>get</strong>(env)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Internals of request handling.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(root, app = nil)  &#x21d2; Directory </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Set the root directory and application for serving files.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list_directory-instance_method" title="#list_directory (instance method)">#<strong>list_directory</strong>(path_info, path, script_name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rack response to use for directories under the root.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list_path-instance_method" title="#list_path (instance method)">#<strong>list_path</strong>(env, path, path_info, script_name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Rack response to use for files and directories under the root.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#stat-instance_method" title="#stat (instance method)">#<strong>stat</strong>(path)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>File::Stat for the given path, but return nil for missing/bad entries.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(root, app = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Rack::Directory (class)">Directory</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Set the root directory and application for serving files.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_app'>app</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@root</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Files.html" title="Rack::Files (class)">Files</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Files.html#initialize-instance_method" title="Rack::Files#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@root</span><span class='rparen'>)</span>
+  <span class='ivar'>@head</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Head.html" title="Rack::Head (class)">Head</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Head.html#initialize-instance_method" title="Rack::Head#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="root-instance_method">
+  
+    #<strong>root</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The root of the directory hierarchy.  Only requests for files and
+directories inside of the root directory are supported.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span>
+  <span class='ivar'>@root</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call-instance_method">
+  
+    #<strong>call</strong>(env)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+89
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 89</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+  <span class='comment'># strip body if this is a HEAD call
+</span>  <span class='ivar'>@head</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='id identifier rubyid_env'>env</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_bad_request-instance_method">
+  
+    #<strong>check_bad_request</strong>(path_info)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rack response to use for requests with invalid paths, or nil if path is valid.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+109
+110
+111
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 109</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_bad_request'>check_bad_request</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_valid_path?'><span class='object_link'><a href="Utils.html#valid_path%3F-class_method" title="Rack::Utils.valid_path? (method)">valid_path?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bad Request\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='lbracket'>[</span><span class='int'>400</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-cascade</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pass</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_forbidden-instance_method">
+  
+    #<strong>check_forbidden</strong>(path_info)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rack response to use for requests with paths outside the root, or nil if path is inside the root.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_forbidden'>check_forbidden</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@root</span><span class='comma'>,</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='ivar'>@root</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Forbidden\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='lbracket'>[</span><span class='int'>403</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-cascade</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pass</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="entity_not_found-instance_method">
+  
+    #<strong>entity_not_found</strong>(path_info)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rack response to use for unreadable and non-file, non-directory entries.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181
+182
+183
+184
+185
+186</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 181</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_entity_not_found'>entity_not_found</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Entity not found: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path_info'>path_info</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='lbracket'>[</span><span class='int'>404</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text/plain</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_LENGTH-constant" title="Rack::CONTENT_LENGTH (constant)">CONTENT_LENGTH</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-cascade</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pass</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="filesize_format-instance_method">
+  
+    #<strong>filesize_format</strong>(int)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Provide human readable file sizes</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199
+200
+201
+202
+203</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_filesize_format'>filesize_format</span><span class='lparen'>(</span><span class='id identifier rubyid_int'>int</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="#FILESIZE_FORMAT-constant" title="Rack::Directory::FILESIZE_FORMAT (constant)">FILESIZE_FORMAT</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='op'>|</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_format'>format</span> <span class='op'>%</span> <span class='lparen'>(</span><span class='id identifier rubyid_int'>int</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span> <span class='op'>/</span> <span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_int'>int</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_size'>size</span>
+  <span class='kw'>end</span>
+
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_int'>int</span><span class='embexpr_end'>}</span><span class='tstring_content'>B</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get-instance_method">
+  
+    #<strong>get</strong>(env)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Internals of request handling.  Similar to call but does
+not remove body for HEAD requests.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 96</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_script_name'>script_name</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Rack.html#SCRIPT_NAME-constant" title="Rack::SCRIPT_NAME (constant)">SCRIPT_NAME</a></span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_path_info'>path_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_unescape_path'><span class='object_link'><a href="Utils.html#unescape_path-class_method" title="Rack::Utils.unescape_path (method)">unescape_path</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Rack.html#PATH_INFO-constant" title="Rack::PATH_INFO (constant)">PATH_INFO</a></span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_client_error_response'>client_error_response</span> <span class='op'>=</span> <span class='id identifier rubyid_check_bad_request'>check_bad_request</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_check_forbidden'>check_forbidden</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_client_error_response'>client_error_response</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@root</span><span class='comma'>,</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_list_path'>list_path</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='comma'>,</span> <span class='id identifier rubyid_script_name'>script_name</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list_directory-instance_method">
+  
+    #<strong>list_directory</strong>(path_info, path, script_name)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rack response to use for directories under the root.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 130</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list_directory'>list_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_script_name'>script_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_url_head'>url_head</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_script_name'>script_name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_part'>part</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_escape_path'><span class='object_link'><a href="Utils.html#escape_path-class_method" title="Rack::Utils.escape_path (method)">escape_path</a></span></span> <span class='id identifier rubyid_part'>part</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Globbing not safe as path could contain glob metacharacters
+</span>  <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Directory/DirectoryBody.html" title="Rack::Directory::DirectoryBody (class)">DirectoryBody</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Rack::Directory#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@root</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_stat'>stat</span> <span class='op'>=</span> <span class='id identifier rubyid_stat'>stat</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_stat'>stat</span>
+
+    <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_url_head'>url_head</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="Utils.html" title="Rack::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_escape_path'><span class='object_link'><a href="Utils.html#escape_path-class_method" title="Rack::Utils.escape_path (method)">escape_path</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_mtime'>mtime</span> <span class='op'>=</span> <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_mtime'>mtime</span><span class='period'>.</span><span class='id identifier rubyid_httpdate'>httpdate</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+      <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>directory</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span>
+      <span class='id identifier rubyid_url'>url</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_basename'>basename</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>..</span><span class='tstring_end'>&#39;</span></span>
+        <span class='id identifier rubyid_basename'>basename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Parent Directory</span><span class='tstring_end'>&#39;</span></span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_basename'>basename</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Mime.html" title="Rack::Mime (module)">Mime</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mime_type'><span class='object_link'><a href="Mime.html#mime_type-class_method" title="Rack::Mime.mime_type (method)">mime_type</a></span></span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='lparen'>(</span><span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_size'>size</span> <span class='op'>=</span> <span class='id identifier rubyid_filesize_format'>filesize_format</span><span class='lparen'>(</span><span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='lbracket'>[</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_basename'>basename</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_mtime'>mtime</span> <span class='rbracket'>]</span>
+  <span class='kw'>end</span><span class='rparen'>)</span>
+
+  <span class='lbracket'>[</span> <span class='int'>200</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Rack.html#CONTENT_TYPE-constant" title="Rack::CONTENT_TYPE (constant)">CONTENT_TYPE</a></span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/html; charset=utf-8</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span> <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list_path-instance_method">
+  
+    #<strong>list_path</strong>(env, path, path_info, script_name)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Rack response to use for files and directories under the root.
+Unreadable and non-file, non-directory entries will get a 404 response.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174
+175
+176
+177
+178</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list_path'>list_path</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_path_info'>path_info</span><span class='comma'>,</span> <span class='id identifier rubyid_script_name'>script_name</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_stat'>stat</span> <span class='op'>=</span> <span class='id identifier rubyid_stat'>stat</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_readable?'>readable?</span>
+    <span class='kw'>return</span> <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_list_directory'>list_directory</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_script_name'>script_name</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_entity_not_found'>entity_not_found</span><span class='lparen'>(</span><span class='id identifier rubyid_path_info'>path_info</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="stat-instance_method">
+  
+    #<strong>stat</strong>(path)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>File::Stat for the given path, but return nil for missing/bad entries.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'vendor/bundler/ruby/3.4.0/bundler/gems/rack-40d68f842b5f/lib/rack/directory.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_stat'>stat</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='op'>::</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_stat'>stat</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ELOOP</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Jul 23 16:54:47 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

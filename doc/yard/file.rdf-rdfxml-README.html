@@ -59,7 +59,7 @@
 
       <div id="content"><div id='filecontents'><h1 id="rdf-rdfxml-reader-writer">RDF::RDFXML reader/writer</h1>
 
-<p><a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a> reader/writer for <a href="https://rubygems.org/gems/rdf">RDF.rb</a>.</p>
+<p><a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a> reader/writer for <a href="https://rubygems.org/gems/rdf">RDF.rb</a>.</p>
 
 <p><a href="https://badge.fury.io/rb/rdf-rdfxml"><img src="https://badge.fury.io/rb/rdf-rdfxml.svg" alt="Gem Version"></a>
 <a href="https://github.com/ruby-rdf/rdf-rdfxml/actions?query=workflow%3ACI"><img src="https://github.com/ruby-rdf/rdf-rdfxml/workflows/CI/badge.svg?branch=develop" alt="Build Status"></a>
@@ -68,19 +68,19 @@
 
 <h2 id="description">DESCRIPTION</h2>
 
-<p>RDF::RDFXML is an <a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a> reader/writer for <a href="https://ruby-lang.org/">Ruby</a> using the <a href="https://rubygems.org/gems/rdf">RDF.rb</a> library suite.</p>
+<p>RDF::RDFXML is an <a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a> reader/writer for <a href="https://ruby-lang.org/">Ruby</a> using the <a href="https://rubygems.org/gems/rdf">RDF.rb</a> library suite.</p>
 
 <h2 id="features">FEATURES</h2>
 
-<p>RDF::RDFXML parses <a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a> into statements or triples and serializes triples, statements or graphs. It also serializes graphs to <a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a>.</p>
+<p>RDF::RDFXML parses <a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a> into statements or triples and serializes triples, statements or graphs. It also serializes graphs to <a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a>.</p>
 
-<p>Fully compliant <a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a> parser and serializer.</p>
+<p>Fully compliant <a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a> parser and serializer.</p>
 
 <p>Install with <code>gem install rdf-rdfxml</code></p>
 
 <ul>
 <li>100% free and unencumbered <a href="https://unlicense.org/">public domain</a> software.</li>
-<li>Implements a complete parser for <a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a>.</li>
+<li>Implements a complete parser for <a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a>.</li>
 <li>Compatible with Ruby &gt;= 3.0.</li>
 </ul>
 
@@ -104,6 +104,52 @@
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RDF.html" title="RDF (module)">RDF</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFXML.html" title="RDF::RDFXML (module)">RDFXML</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RDF/RDFXML/Writer.html" title="RDF::RDFXML::Writer (class)">Writer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'><span class='object_link'><a href="RDF/Writer.html#open-class_method" title="RDF::Writer.open (method)">open</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/test.ttl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_writer'>writer</span><span class='op'>|</span>
    <span class='id identifier rubyid_writer'>writer</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_graph'>graph</span>
 <span class='kw'>end</span>
+</code></pre>
+
+<h3 id="provisional-support-for-rdf-1-2">Provisional support for RDF 1.2</h3>
+
+<h4 id="version-announcement">Version Announcement</h4>
+
+<p>Features added for RDF 1.2 require announcement using the <code>rdf:version</code> attribute.</p>
+
+<pre class="code ruby"><code class="ruby">&lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+         xmlns:ex=&quot;http://www.example.org/&quot;
+         rdf:version=&quot;1.2&quot;&gt;
+ &lt;rdf:Description rdf:about=&#39;http://example.org/s&gt;
+   &lt;ex:p xml:lang=&quot;en&quot;&gt;value&lt;/ex:p&gt;
+ &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+</code></pre>
+
+<h4 id="initial-text-direction">Initial Text Direction</h4>
+
+<p>The Initial Text Direction of a languaged-tagged literal can be set using the <code>its:dir</code> attribute with a value of <code>&quot;ltr&quot;</code> or <code>&quot;rtl&quot;</code>. This should also be accompanied by a <code>its:version</code> attribute with the value <code>&quot;2.0&quot;</code>.</p>
+
+<pre class="code ruby"><code class="ruby">&lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+         xmlns:ex=&quot;http://www.example.org/&quot;
+         rdf:version=&quot;1.2&quot;&gt;
+ &lt;rdf:Description rdf:about=&#39;http://example.org/s&gt;
+   &lt;ex:p xml:lang=&quot;en&quot; its:dir=&quot;rtl&quot; its:version=&quot;2.0&quot;&gt;value&lt;/ex:p&gt;
+ &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
+</code></pre>
+
+<h4 id="parsetype-literal-triple-terms">parseType=&quot;Literal&quot; (Triple Terms)</h4>
+
+<p>RDF 1.2 introduces <a href="https://www.w3.org/TR/rdf12-concepts/#dfn-triple-term">triple terms</a> which allow the object of a triple to be a triple term. Note that this is diffrent from traditional RDF/XML reification.</p>
+
+<pre class="code ruby"><code class="ruby">&lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+            xmlns:ex=&quot;http://example.org/stuff/1.0/&quot;
+            xml:base=&quot;http://example.org/triples/&quot;
+            rdf:version=&quot;1.2&quot;&gt;
+  &lt;rdf:Description rdf:about=&quot;http://example.org/&quot;&gt;
+    &lt;ex:prop rdf:parseType=&quot;Triple&quot;&gt;
+      &lt;rdf:Description rdf:about=&quot;http://example.org/stuff/1.0/s&quot;&gt;
+        &lt;ex:p rdf:resource=&quot;http://example.org/stuff/1.0/o&quot; /&gt;
+      &lt;/rdf:Description&gt;
+    &lt;/ex:prop&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;
 </code></pre>
 
 <h2 id="change-log">Change Log</h2>
@@ -135,7 +181,7 @@
 
 <ul>
 <li><a href="https://rubygems.org/gems/rdf">RDF.rb</a></li>
-<li><a href="http://www.w3.org/TR/rdf-syntax-grammar/" title="RDF/XML Syntax Specification">RDF/XML</a></li>
+<li><a href="http://www.w3.org/TR/rdf12-xml/" title="RDF 1.2 XML Syntax">RDF/XML</a></li>
 <li><a href="http://rdf.greggkellogg.net">Distiller</a></li>
 <li><a href="https://ruby-rdf.github.io/rdf-rdfxml/master/frames">Documentation</a></li>
 <li><a href="https://www.w3.org/2000/10/rdf-tests/rdfcore/allTestCases.html">RDF Tests</a></li>
@@ -189,9 +235,9 @@ see <a href="https://unlicense.org/">https://unlicense.org/</a> or the accompany
 </div></div>
 
       <div id="footer">
-  Generated on Mon Nov  4 12:09:04 2024 by
+  Generated on Wed Jul 23 16:54:41 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.3.5).
+  0.9.37 (ruby-3.4.3).
 </div>
 
     </div>

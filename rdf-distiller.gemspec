@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency      'equivalent-xml',     '~> 0.6'
 
   # Sinatra dependencies
-  s.add_runtime_dependency      'sinatra',            '~> 4.0'
+  s.add_runtime_dependency      'sinatra',            '~> 4.1'
   s.add_runtime_dependency      'sass',               '~> 3.7'
   s.add_runtime_dependency      'sprockets',          '~> 4.2'
   s.add_runtime_dependency      'sprockets-helpers',  '~> 1.4'
