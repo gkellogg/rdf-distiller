@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:3.4.3
 MAINTAINER Gregg Kellogg <gregg@greggkellogg.net>
 
 WORKDIR /var/www/
@@ -19,7 +19,7 @@ RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
 
 # Ruby dependencies
 ENV LANG C.UTF-8
-RUN gem install bundler:2.0.2
+RUN gem install bundler:2.7.1
 RUN npm install
 RUN bundle install
 
