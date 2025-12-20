@@ -1,4 +1,4 @@
-FROM ruby:3.4.3
+FROM ruby:3.4.8
 MAINTAINER Gregg Kellogg <gregg@greggkellogg.net>
 
 WORKDIR /var/www/
